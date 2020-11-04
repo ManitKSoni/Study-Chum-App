@@ -10,7 +10,7 @@ class Login extends React.Component {
 
     constructor() {
         super();
-        this.onPressSignUp = this.onPressSignUp.bind(this)
+        this.onPressGoToSignUp = this.onPressGoToSignUp.bind(this)
     }
 
     state = {
@@ -18,7 +18,7 @@ class Login extends React.Component {
         password: ''
     }
 
-    onPressSignUp() {
+    onPressGoToSignUp() {
         this.props.navigation.navigate('SignUp')
     }
 
@@ -40,9 +40,9 @@ class Login extends React.Component {
                     secureTextEntry={true}
                 />
                 <TouchableOpacity style={styles.buttonLogin}>
-                    <Text >Login</Text>
+                    <Text>Login</Text>
                 </TouchableOpacity>
-                <Text style={styles.textSignUp} onPress = {this.onPressSignUp}>
+                <Text style={styles.textSignUp} onPress = {this.onPressGoToSignUp}>
                     Click Here to Sign Up for an Account!
                 </Text>
             </View>

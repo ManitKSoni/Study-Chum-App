@@ -6,10 +6,47 @@ import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'rea
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import Firebase from '../config/Firebase'
+
 class SignUp extends React.Component {
+
+    constructor() {
+        super();
+        this.onPressSignUp = this.onPressSignUp.bind(this)
+    }
+
     state = {
         email: '',
-        password: ''
+        password: '',
+        passwordConfirm: ''
+    }
+
+    /** Basic regex validation that checks for the form _@_._
+     * Source: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+     **/
+    validateEmailExpression(email){
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+    /** Check that the password the user enter matches their confirmation password **/
+    checkPasswordsMatch() {
+        return this.state.password === this.state.passwordConfirm;
+    }
+
+    onPressSignUp(){
+        const { email, password, passwordConfirm } = this.state
+        if(email === '' || password === '' || passwordConfirm === ''){
+            alert("Empty fields! Please enter your information in all the fields.")
+        }
+        else if(this.validateEmailExpression(email) && this.checkPasswordsMatch()){
+            Firebase.auth()
+                .createUserWithEmailAndPassword(email, password)
+                .then(() => this.props.navigation.navigate('Login'))
+                .catch(error => console.log(error))
+        } else{
+            alert("Invalid Credentials. Please try again.")
+        }
     }
 
     render() {
@@ -31,12 +68,13 @@ class SignUp extends React.Component {
                 />
                 <TextInput
                     style={styles.inputBox}
-                    value={this.state.password}
+                    value={this.state.passwordConfirm}
+                    onChangeText={passwordConfirm=> this.setState({ passwordConfirm })}
                     placeholder='Confirm Password'
                     secureTextEntry={true}
                 />
                 <TouchableOpacity style={styles.buttonSignUp}>
-                    <Text>Sign Up</Text>
+                    <Text onPress={this.onPressSignUp}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
         )
