@@ -1,0 +1,30 @@
+import React from 'react'
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import Home from './Home/Home';
+import Matches from './Matches/Matches';
+import Chat from './Chat/Chat';
+import Settings from './Settings/Settings'
+
+const Tab = createBottomTabNavigator();
+
+class MainTabBar extends React.Component {
+    constructor() {
+        super();
+    }
+
+    
+    render() {
+        return (
+            <Tab.Navigator>
+                <Tab.Screen name="Home" component={Home} />
+                <Tab.Screen name="Matches" component={Matches} />
+                <Tab.Screen name="Chat" component={Chat} />
+                <Tab.Screen name="Settings" component={Settings} />
+            </Tab.Navigator>
+        )
+    }
+}
+
+export default MainTabBar

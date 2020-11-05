@@ -6,7 +6,7 @@ import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'rea
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Firebase from '../config/Firebase'
+import Firebase from '../../config/Firebase'
 
 class SignUp extends React.Component {
 
