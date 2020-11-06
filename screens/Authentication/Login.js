@@ -3,8 +3,7 @@ import 'react-native-gesture-handler';
 import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, Button } from 'react-native'
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import Firebase from '../../config/Firebase'
 
 class Login extends React.Component {
 
@@ -23,13 +22,39 @@ class Login extends React.Component {
         this.props.navigation.navigate('SignUp')
     }
 
-    onPressLogin() {
-        // Check input for good value
-        // Call to server to authenticate
+    /** Basic regex validation that checks for the form _@_._
+     * Source: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+     **/
+    validateEmailExpression(email){
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+    /** Reset the stack so that user can't go to login screen again **/
+    resetStackAndNavigate(){
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }],
-          });
+        });
+    }
+
+    onPressLogin() {
+        // Check input for good value
+        const { email, password } = this.state
+        if(email === '' || password === ''){
+            alert("Empty fields! Please enter your information in all the fields.")
+        } else if(this.validateEmailExpression(email) === false){
+            alert("The email entered is invalid")
+        } else{
+            try {
+                Firebase.auth()
+                    .signInWithEmailAndPassword(email, password)
+                    .then(() => this.resetStackAndNavigate())
+                    .catch(error => console.log(error))
+            } catch (err) {
+                alert(err);
+            }
+        }
     }
 
     render() {
@@ -49,8 +74,8 @@ class Login extends React.Component {
                     placeholder='Password'
                     secureTextEntry={true}
                 />
-                <TouchableOpacity style={styles.buttonLogin}>
-                    <Text onPress = {this.onPressLogin}>Login</Text>
+                <TouchableOpacity style={styles.buttonLogin} onPress = {this.onPressLogin}>
+                    <Text>Login</Text>
                 </TouchableOpacity>
                 <Text style={styles.textSignUp} onPress = {this.onPressGoToSignUp}>
                     Click Here to Sign Up for an account!

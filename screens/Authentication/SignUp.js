@@ -3,9 +3,6 @@ import 'react-native-gesture-handler';
 import React from 'react'
 import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
 import Firebase from '../../config/Firebase'
 
 class SignUp extends React.Component {
@@ -38,14 +35,17 @@ class SignUp extends React.Component {
         const { email, password, passwordConfirm } = this.state
         if(email === '' || password === '' || passwordConfirm === ''){
             alert("Empty fields! Please enter your information in all the fields.")
-        }
-        else if(this.validateEmailExpression(email) && this.checkPasswordsMatch()){
+        } else if(this.validateEmailExpression(email) === false) {
+            alert("Please enter a valid email.")
+        }else if (password.length < 6) {
+            alert("Password should be at least 6 six characters!")
+        } else if(this.checkPasswordsMatch() === false){
+            alert("Password and Confirmation Password must match!")
+        } else{
             Firebase.auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => this.props.navigation.navigate('Login'))
                 .catch(error => console.log(error))
-        } else{
-            alert("Invalid Credentials. Please try again.")
         }
     }
 
@@ -56,7 +56,7 @@ class SignUp extends React.Component {
                     style={styles.inputBox}
                     value={this.state.email}
                     onChangeText={email => this.setState({ email })}
-                    placeholder='UCSD Email'
+                    placeholder='Email'
                     autoCapitalize='none'
                 />
                 <TextInput
@@ -73,8 +73,8 @@ class SignUp extends React.Component {
                     placeholder='Confirm Password'
                     secureTextEntry={true}
                 />
-                <TouchableOpacity style={styles.buttonSignUp}>
-                    <Text onPress={this.onPressSignUp}>Sign Up</Text>
+                <TouchableOpacity style={styles.buttonSignUp} onPress={this.onPressSignUp}>
+                    <Text>Sign Up</Text>
                 </TouchableOpacity>
             </View>
         )
