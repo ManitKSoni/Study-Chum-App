@@ -18,41 +18,57 @@ class Login extends React.Component {
         password: ''
     }
 
+    /** Navigate to sign up **/
     onPressGoToSignUp() {
         this.props.navigation.navigate('SignUp')
     }
 
-    /** Basic regex validation that checks for the form _@_._
-     * Source: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-     **/
-    validateEmailExpression(email){
-        const re = /\S+@\S+\.\S+/;
-        return re.test(email);
-    }
-
     /** Reset the stack so that user can't go to login screen again **/
-    resetStackAndNavigate(){
+    resetStackAndNavigate() {
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }],
         });
     }
 
+    /**
+     * Handles errors receives from Firebase and alerts the user.
+     * https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signinwithemailandpassword
+     */
+    loginErrorCodes(error) {
+        switch (error.code) {
+            case 'auth/invalid-email':
+                alert('That email address is invalid!')
+                break;
+            case 'auth/wrong-password':
+                alert('Incorrect password. Please try again!')
+                break;
+            case 'auth/user-disabled':
+                alert('The user has been disabled!')
+                break;
+            case 'auth/user-not-found':
+                alert('The user was not found!')
+                break;
+            default:
+                console.error(error)
+        }
+    }
+
     onPressLogin() {
         // Check input for good value
         const { email, password } = this.state
-        if(email === '' || password === ''){
+        if (email === '' || password === '') {
             alert("Empty fields! Please enter your information in all the fields.")
-        } else if(this.validateEmailExpression(email) === false){
+        } else if (this.validateEmailExpression(email) === false) {
             alert("The email entered is invalid")
-        } else{
+        } else {
             try {
                 Firebase.auth()
                     .signInWithEmailAndPassword(email, password)
                     .then(() => this.resetStackAndNavigate())
-                    .catch(error => console.log(error))
-            } catch (err) {
-                alert(err);
+                    .catch(error => this.loginErrorCodes(error))
+            } catch (error) {
+                console.error(error);
             }
         }
     }
@@ -74,10 +90,10 @@ class Login extends React.Component {
                     placeholder='Password'
                     secureTextEntry={true}
                 />
-                <TouchableOpacity style={styles.buttonLogin} onPress = {this.onPressLogin}>
+                <TouchableOpacity style={styles.buttonLogin} onPress={this.onPressLogin}>
                     <Text>Login</Text>
                 </TouchableOpacity>
-                <Text style={styles.textSignUp} onPress = {this.onPressGoToSignUp}>
+                <Text style={styles.textSignUp} onPress={this.onPressGoToSignUp}>
                     Click Here to Sign Up for an account!
                 </Text>
             </View>

@@ -18,34 +18,51 @@ class SignUp extends React.Component {
         passwordConfirm: ''
     }
 
-    /** Basic regex validation that checks for the form _@_._
-     * Source: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-     **/
-    validateEmailExpression(email){
-        const re = /\S+@\S+\.\S+/;
-        return re.test(email);
-    }
-
-    /** Check that the password the user enter matches their confirmation password **/
+    /** 
+     * Check that the password the user enter matches their confirmation password 
+     * Used as a front-end check just to ensure user knows their password
+     */
     checkPasswordsMatch() {
         return this.state.password === this.state.passwordConfirm;
     }
 
-    onPressSignUp(){
+    /**
+     * Handles errors receives from Firebase and alerts the user.
+     * https://firebase.google.com/docs/reference/js/firebase.auth.Auth#createuserwithemailandpassword
+     */
+    signUpErrorCodes(error) {
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                alert('That email address is already in use!')
+                break;
+            case 'auth/invalid-email':
+                alert('That email address is invalid!')
+                break;
+            case 'auth/weak-password':
+                alert('Weak password! Please enter at least 6 characters.')
+                break;
+            case 'auth/operation-not-allowed':
+                alert("Operation not allowed. Please contact the developers to enable this option.")
+                break;
+            default:
+                console.error(error)
+        }
+    }
+
+    /**
+     * Handles sign up with some front-end checks before sending it to Firebase
+     */
+    onPressSignUp() {
         const { email, password, passwordConfirm } = this.state
-        if(email === '' || password === '' || passwordConfirm === ''){
+        if (email === '' || password === '' || passwordConfirm === '') {
             alert("Empty fields! Please enter your information in all the fields.")
-        } else if(this.validateEmailExpression(email) === false) {
-            alert("Please enter a valid email.")
-        }else if (password.length < 6) {
-            alert("Password should be at least 6 six characters!")
-        } else if(this.checkPasswordsMatch() === false){
+        } else if (this.checkPasswordsMatch() === false) {
             alert("Password and Confirmation Password must match!")
-        } else{
+        } else {
             Firebase.auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => this.props.navigation.navigate('Login'))
-                .catch(error => console.log(error))
+                .catch(error => this.signUpErrorCodes(error))
         }
     }
 
@@ -69,7 +86,7 @@ class SignUp extends React.Component {
                 <TextInput
                     style={styles.inputBox}
                     value={this.state.passwordConfirm}
-                    onChangeText={passwordConfirm=> this.setState({ passwordConfirm })}
+                    onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
                     placeholder='Confirm Password'
                     secureTextEntry={true}
                 />
