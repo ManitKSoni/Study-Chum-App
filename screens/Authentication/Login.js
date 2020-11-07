@@ -11,6 +11,7 @@ class Login extends React.Component {
         super();
         this.onPressGoToSignUp = this.onPressGoToSignUp.bind(this)
         this.onPressLogin = this.onPressLogin.bind(this)
+        this.onPressGoToForgotPassword = this.onPressGoToForgotPassword.bind(this)
     }
 
     state = {
@@ -23,6 +24,11 @@ class Login extends React.Component {
         this.props.navigation.navigate('SignUp')
     }
 
+    /** Navigate to forgot password **/
+    onPressGoToForgotPassword() {
+        this.props.navigation.navigate('ForgotPassword')
+    }
+
     /** Reset the stack so that user can't go to login screen again **/
     resetStackAndNavigate() {
         this.props.navigation.reset({
@@ -32,7 +38,7 @@ class Login extends React.Component {
     }
 
     /**
-     * Handles errors receives from Firebase and alerts the user.
+     * Handles errors received from Firebase and alerts the user.
      * https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signinwithemailandpassword
      */
     loginErrorCodes(error) {
@@ -59,8 +65,6 @@ class Login extends React.Component {
         const { email, password } = this.state
         if (email === '' || password === '') {
             alert("Empty fields! Please enter your information in all the fields.")
-        } else if (this.validateEmailExpression(email) === false) {
-            alert("The email entered is invalid")
         } else {
             try {
                 Firebase.auth()
@@ -95,6 +99,9 @@ class Login extends React.Component {
                 </TouchableOpacity>
                 <Text style={styles.textSignUp} onPress={this.onPressGoToSignUp}>
                     Click Here to Sign Up for an account!
+                </Text>
+                <Text style={styles.textForgotPassword} onPress={this.onPressGoToForgotPassword}>
+                    Forgot Password? 
                 </Text>
             </View>
         )
@@ -134,6 +141,11 @@ const styles = StyleSheet.create({
     textSignUp: {
         padding: 10,
         color: '#007AFF',
+        fontSize: 15
+    },
+    textForgotPassword: {
+        padding: 10,
+        color: '#FFA000',
         fontSize: 15
     }
 })

@@ -27,7 +27,7 @@ class SignUp extends React.Component {
     }
 
     /**
-     * Handles errors receives from Firebase and alerts the user.
+     * Handles errors received from Firebase and alerts the user.
      * https://firebase.google.com/docs/reference/js/firebase.auth.Auth#createuserwithemailandpassword
      */
     signUpErrorCodes(error) {

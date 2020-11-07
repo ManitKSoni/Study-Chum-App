@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './screens/Authentication/Login';
 import SignUp from './screens/Authentication/SignUp';
+import ForgotPassword from './screens/Authentication/ForgotPassword';
 import MainTabBar from './screens/MainTabBar';
 
 const Stack = createStackNavigator();
@@ -19,6 +20,7 @@ export default class App extends React.Component {
           <Stack.Navigator>
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="SignUp" component={SignUp}/>
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
             <Stack.Screen name="Home" component={MainTabBar} />
           </Stack.Navigator>
         </NavigationContainer>
