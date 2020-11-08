@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard } from 'react-native'
 
 import Firebase from '../../config/Firebase'
 
@@ -53,18 +53,20 @@ class ForgotPassword extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
-                    placeholder='Enter your email'
-                    autoCapitalize='none'
-                />
-                <TouchableOpacity style={styles.buttonForgotPassword} onPress={this.onPressForgotPassword}>
-                    <Text>Send Reset Password</Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View style={styles.container}>
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.email}
+                        onChangeText={email => this.setState({ email })}
+                        placeholder='Enter your email'
+                        autoCapitalize='none'
+                    />
+                    <TouchableOpacity style={styles.buttonForgotPassword} onPress={this.onPressForgotPassword}>
+                        <Text>Send Reset Password</Text>
+                    </TouchableOpacity>
+                </View>
+            </TouchableWithoutFeedback>
         )
     }
 }

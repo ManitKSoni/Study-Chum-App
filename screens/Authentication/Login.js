@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard } from 'react-native'
 
 import Firebase from '../../config/Firebase'
 
@@ -79,31 +79,33 @@ class Login extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
-                    placeholder='Email'
-                    autoCapitalize='none'
-                />
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.password}
-                    onChangeText={password => this.setState({ password })}
-                    placeholder='Password'
-                    secureTextEntry={true}
-                />
-                <TouchableOpacity style={styles.buttonLogin} onPress={this.onPressLogin}>
-                    <Text>Login</Text>
-                </TouchableOpacity>
-                <Text style={styles.textSignUp} onPress={this.onPressGoToSignUp}>
-                    Click Here to Sign Up for an account!
-                </Text>
-                <Text style={styles.textForgotPassword} onPress={this.onPressGoToForgotPassword}>
-                    Forgot Password?
-                </Text>
-            </View>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View style={styles.container}>
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.email}
+                        onChangeText={email => this.setState({ email })}
+                        placeholder='Email'
+                        autoCapitalize='none'
+                    />
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.password}
+                        onChangeText={password => this.setState({ password })}
+                        placeholder='Password'
+                        secureTextEntry={true}
+                    />
+                    <TouchableOpacity style={styles.buttonLogin} onPress={this.onPressLogin}>
+                        <Text>Login</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.textSignUp} onPress={this.onPressGoToSignUp}>
+                        Click Here to Sign Up for an account!
+                    </Text>
+                    <Text style={styles.textForgotPassword} onPress={this.onPressGoToForgotPassword}>
+                        Forgot Password?
+                    </Text>
+                </View>
+            </TouchableWithoutFeedback>
         )
     }
 }
