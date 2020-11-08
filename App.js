@@ -1,29 +1,33 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import LoginSpinner from './screens/Loading/LoginSpinner'
 import Login from './screens/Authentication/Login';
 import SignUp from './screens/Authentication/SignUp';
 import ForgotPassword from './screens/Authentication/ForgotPassword';
 import MainTabBar from './screens/MainTabBar';
 
+
+/**Create Stack Navigator and provide it the various screens it should know for navigation */
 const Stack = createStackNavigator();
 
 export default class App extends React.Component {
   render() {
     return (
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login}/>
-            <Stack.Screen name="SignUp" component={SignUp}/>
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-            <Stack.Screen name="Home" component={MainTabBar} />
-          </Stack.Navigator>
-        </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="LoginSpinner">
+          <Stack.Screen name="LoginSpinner" component={LoginSpinner} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="Home" component={MainTabBar} />
+        </Stack.Navigator>
+      </NavigationContainer>
     )
   }
 }
@@ -37,3 +41,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+

@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text} from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
 import Firebase from '../../config/Firebase'
 
@@ -60,8 +60,8 @@ class Login extends React.Component {
         }
     }
 
+    /** Handle logging in */
     onPressLogin() {
-        // Check input for good value
         const { email, password } = this.state
         if (email === '' || password === '') {
             alert("Empty fields! Please enter your information in all the fields.")
@@ -101,7 +101,7 @@ class Login extends React.Component {
                     Click Here to Sign Up for an account!
                 </Text>
                 <Text style={styles.textForgotPassword} onPress={this.onPressGoToForgotPassword}>
-                    Forgot Password? 
+                    Forgot Password?
                 </Text>
             </View>
         )
