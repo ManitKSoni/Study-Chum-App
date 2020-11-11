@@ -4,12 +4,14 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import Firebase from '../../config/Firebase'
+import userInstance from '../Singletons/UserSingleton'
 
 class LoginSpinner extends React.Component {
 
     componentDidMount() {
         Firebase.auth().onAuthStateChanged(user => {
             if (user) {
+                userInstance.loadUser(user.uid) // Loads the user singleton
                 this.props.navigation.reset({
                     index: 0,
                     routes: [{ name: 'Home' }],

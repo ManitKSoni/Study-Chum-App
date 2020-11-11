@@ -4,6 +4,7 @@ import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard } from 'react-native'
 
 import Firebase from '../../config/Firebase'
+import userInstance from '../Singletons/UserSingleton'
 
 class Login extends React.Component {
 
@@ -31,6 +32,10 @@ class Login extends React.Component {
 
     /** Reset the stack so that user can't go to login screen again **/
     resetStackAndNavigate() {
+        const user = Firebase.auth().currentUser
+        if (user) {
+            userInstance.loadUser(user.uid) // Loads the user singleton
+        }
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }],
@@ -69,7 +74,9 @@ class Login extends React.Component {
             try {
                 Firebase.auth()
                     .signInWithEmailAndPassword(email, password)
-                    .then(() => this.resetStackAndNavigate())
+                    .then(() => {
+                        this.resetStackAndNavigate()
+                    })
                     .catch(error => this.loginErrorCodes(error))
             } catch (error) {
                 console.error(error);
