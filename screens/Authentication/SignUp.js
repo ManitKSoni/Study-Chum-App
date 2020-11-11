@@ -3,6 +3,7 @@ import 'react-native-gesture-handler';
 import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard } from 'react-native'
 
+import Firebase from '../../config/Firebase'
 
 class SignUp extends React.Component {
 
@@ -62,8 +63,6 @@ class SignUp extends React.Component {
                 .createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     alert("Successful Sign Up!")
-                    let user = userCredential.user
-                    UserModel.createUser(user.uid, user.email)
                 })
                 .catch(error => this.signUpErrorCodes(error))
         }
