@@ -5,6 +5,7 @@ import instance from '../Singletons/UserSingleton'
 
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 import PreferenceProfiles from "./PreferenceProfiles"; 
+import userInstance from "../Singletons/UserSingleton"
 
 class Matches extends React.Component{
 

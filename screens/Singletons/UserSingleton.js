@@ -37,5 +37,4 @@ class UserSingleton {
 }
 
 const userInstance = new UserSingleton();
-Object.freeze(userInstance);
 export default userInstance;
