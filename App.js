@@ -25,7 +25,8 @@ export default class App extends React.Component {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name="Home" component={MainTabBar} />
+          <Stack.Screen name="Home" component={MainTabBar} 
+             options={{headerShown:false}} />
         </Stack.Navigator>
       </NavigationContainer>
     )

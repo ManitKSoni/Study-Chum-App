@@ -1,15 +1,15 @@
 import React from 'react'
 
 import { View, Text } from 'react-native'
-import Firebase from '../../config/Firebase'
-import instance from '../Singletons/UserSingleton'
+import Firebase from '../../../config/Firebase'
+import instance from '../../Singletons/UserSingleton'
 
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
-import PreferenceProfiles from "./PreferenceProfiles"; 
+import {TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import PreferenceProfiles from "../PreferenceProfiles"; 
 
 class Matches extends React.Component{
 
-    state = {
+   /* state = {
         courseName: "", 
         availability: {
             sunday: false,
@@ -24,7 +24,7 @@ class Matches extends React.Component{
         timezone: "",
         quiet: false,
         timeOfDay: ""
-    }
+    }*
 
     addPreferenceProfile = () => {
         PreferenceProfiles.addPreferenceProfile( this.state.courseName,
@@ -34,10 +34,19 @@ class Matches extends React.Component{
 
     deletePreferenceProfile = () => {
         PreferenceProfiles.deletePreferenceProfile("CHIN 198. Directed Group Study in Chinese Studies");
+    }*/
+
+    constructor() {
+        super();
+        this.onPressGoToCourses = this.onPressGoToCourses.bind(this);
+    }
+    
+    onPressGoToCourses() {
+        this.props.navigation.navigate("Courses");
     }
     
     render() {
-        return (
+       /* return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
                     <TextInput
@@ -69,8 +78,18 @@ class Matches extends React.Component{
                     
                 </View>
             </TouchableWithoutFeedback>
+        )*/
+
+        return(
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={styles.container}>
+               <Button title="Add class" onPress={this.onPressGoToCourses}/>
+            </View>
+        </TouchableWithoutFeedback>
         )
     }
+
+    
 }
 
 const styles = StyleSheet.create({

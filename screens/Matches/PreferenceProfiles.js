@@ -1,5 +1,3 @@
-import React from 'react'
-import { View } from 'react-native'
 import Firebase from '../../config/Firebase'
 import "firebase/firestore";
 import firebase from "firebase/app";
