@@ -4,6 +4,9 @@ import Firebase from '../../config/Firebase';
 
 class Profile extends React.Component {
     state = {
+        name: '',
+        major: '',
+        classes: '',
         bio: ''
     }
 
@@ -19,15 +22,37 @@ class Profile extends React.Component {
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <div>
+
+
                 <View style={styles.container}>
                     <TextInput
                         style={styles.inputBox}
                         value={this.state.name}
-                        onChangeText={bio => this.setState({ bio })}
+                        onChangeText={name => this.setState({ name })}
                         placeholder='Name'
+                    />
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.major}
+                        onChangeText={major => this.setState({ major })}
+                        placeholder='Major'
+                    />
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.classes}
+                        onChangeText={classes => this.setState({ classes })}
+                        placeholder='Classes'
+                    />
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.bio}
+                        onChangeText={bio => this.setState({ bio })}
+                        placeholder='Bio'
                     />
                     <Button title="Save" onPress={this.onPressSave}/>
                 </View>
+                </div>
             </TouchableWithoutFeedback>
         );
     }
