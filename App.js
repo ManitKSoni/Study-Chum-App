@@ -6,11 +6,13 @@ import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import LoginSpinner from './screens/Loading/LoginSpinner'
+import LoginSpinner from './screens/Loading/LoginSpinner';
 import Login from './screens/Authentication/Login';
 import SignUp from './screens/Authentication/SignUp';
 import ForgotPassword from './screens/Authentication/ForgotPassword';
 import MainTabBar from './screens/MainTabBar';
+import Spinner from './screens/Reusable/Spinner';
+import CreateUserProfile from './screens/Authentication/CreateUserProfile'
 
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
@@ -27,6 +29,8 @@ export default class App extends React.Component {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="Home" component={MainTabBar} 
              options={{headerShown:false}} />
+          <Stack.Screen name="Spinner" component={Spinner} />
+          <Stack.Screen name="CreateUser" component={CreateUserProfile}/>
         </Stack.Navigator>
       </NavigationContainer>
     )

@@ -2,6 +2,8 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import {TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import PreferenceProfiles from "../PreferenceProfiles"
+
 
 class Timezone extends React.Component {
     
@@ -14,6 +16,7 @@ class Timezone extends React.Component {
     }
 
     onPressGoToTimeOfDay = () => {
+        PreferenceProfiles.addTimezone(this.state.timezone);
         this.props.navigation.navigate("TimeOfDay");
     }
 

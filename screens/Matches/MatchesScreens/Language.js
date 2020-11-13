@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+import PreferenceProfiles from "../PreferenceProfiles";
 
 import {TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 
@@ -13,9 +14,11 @@ class Language extends React.Component {
     }
 
     onPressGoToQuiet = () => {
+        PreferenceProfiles.addLanguage(this.state.language);
         this.props.navigation.navigate("Quiet");
     }
 
+    //TODO DO NOT LET FIELD BLANK OR BAD THINGS WILL OCCUR
     render() {
         return(
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

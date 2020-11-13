@@ -63,7 +63,6 @@ class SignUp extends React.Component {
                 .createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     alert("Successful Sign Up!")
-                    let user = userCredential.user
                 })
                 .catch(error => this.signUpErrorCodes(error))
         }

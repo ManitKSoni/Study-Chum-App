@@ -3,6 +3,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import {TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import PreferenceProfiles from "../PreferenceProfiles"
 
 class Courses extends React.Component {
 
@@ -11,6 +12,7 @@ class Courses extends React.Component {
     }
 
     onPressGoToAvailability = () => {
+        PreferenceProfiles.addCourse(this.state.courseName); 
         this.props.navigation.navigate("Availibility");
     }
 

@@ -1,11 +1,21 @@
 import Firebase from '../../config/Firebase'
 import "firebase/firestore";
 import firebase from "firebase/app";
-
+import userInstance from "../Singletons/UserSingleton";
 
 export class PreferenceProfiles {
-
      db = Firebase.firestore();
+
+     constructor() {
+        this.preferences = {
+            availability: {},
+            language: "",
+            timezone: "",
+            quiet: "",
+            timeOfDay: ""
+        };
+        this.courseName = "";
+     }
 
       /*TODO 
           * Make a search function to get exact name of course to stop errors
@@ -20,18 +30,18 @@ export class PreferenceProfiles {
      * @param quiet - quiet or talkative study sessions
      * @param timeOfDay - the time a user can study
      */
-     addPreferenceProfile(courseName, availability, language, timezone, quiet,
-                          timeOfDay) {
+     addPreferenceProfile() {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
-        var preferences = this.createPreferences(availability, language, timezone, 
-                                                 quiet, timeOfDay);
-        var preferenceProfile = this.createPreferenceProifle(preferences); 
+        var preferenceProfile = this.createPreferenceProifle(this.preferences); 
 
-        if( courseName ) {
-          courseRef.doc(courseName).update({[userID]:  preferenceProfile});
+        console.log("Adding...")
+
+       if( this.courseName ) {
+          courseRef.doc(this.courseName).update({[userID]:  preferenceProfile});
         }
         
+        console.log("done...");
     }
 
     /*
@@ -40,8 +50,10 @@ export class PreferenceProfiles {
     * @return preference profile map
     */ 
     createPreferenceProifle(preferences) {
+      
+       var userData = userInstance._user; 
         var preferenceProfle = {
-            name: "Janeothy",
+            name: userData.name,
             profilePicture: "Image.png",
             bio: "So cool",
             endorsements: 1,
@@ -51,25 +63,33 @@ export class PreferenceProfiles {
         return preferenceProfle; 
     }
 
-    /*
-    * Creates preferences map to be placed into a user's preference profile
-    * @param availability - Days of week free
-    * @param language - preferred language
-    * @param timezone - where user lives
-    * @param quiet - quiet or talkative study sessions
-    * @param timeOfDay - the time a user can study
-    * @return preferences map 
-    */
-    createPreferences(availability, language, timezone, quiet, timeOfDay) {
-        var preferences = {
-            availability: availability,
-            language: language,
-            timezone: timezone,
-            quiet: quiet,
-            timeOfDay: timeOfDay
-        }
+    addCourse(courseName) {
+        this.courseName = courseName;
+    }
 
-        return preferences; 
+    addAvailability(availability) {
+        this.preferences.availability = availability;
+    }
+
+    addTimezone(timezone) {
+        this.preferences.timezone = timezone; 
+    }
+
+    addTimeOfDay(timeOfDay) {
+        this.preferences.timeOfDay = timeOfDay; 
+    }
+
+    addLanguage(language) {
+        this.preferences.language = language; 
+    }
+
+    addQuiet(quiet) {
+        this.preferences.quiet = quiet; 
+    }
+
+    //TESTING PURPOSES
+    getPreferences() {
+        return this.preferences;
     }
 
     /*

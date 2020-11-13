@@ -1,8 +1,10 @@
 import React from 'react'
 
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacityBase } from 'react-native'
 
 import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+
+import PreferenceProfiles from "../PreferenceProfiles";
 
 class Quiet extends React.Component {
 
@@ -12,6 +14,12 @@ class Quiet extends React.Component {
 
     onPressGoToMatches = () => {
         this.props.navigation.navigate("Matches");
+    }
+
+    generateMatches = () => {
+       PreferenceProfiles.addQuiet(this.state.quiet);
+       console.log(PreferenceProfiles.getPreferences());
+       PreferenceProfiles.addPreferenceProfile(); 
     }
 
     //Add preference profile and then do matches
@@ -29,7 +37,8 @@ class Quiet extends React.Component {
                  value={this.state.quiet}
                 />  
                 <Button title="Cancel" onPress={this.onPressGoToMatches}/>
-            </View>
+                <Button title="print" onPress={this.generateMatches}/>
+                </View>
         </TouchableWithoutFeedback>
         )
     }

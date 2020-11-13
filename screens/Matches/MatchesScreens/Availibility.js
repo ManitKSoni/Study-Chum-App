@@ -3,6 +3,8 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import PreferenceProfiles from "../PreferenceProfiles"
+
 
 class Availibility extends React.Component {
      
@@ -17,7 +19,7 @@ class Availibility extends React.Component {
         saturday: false
     }
 
-    createAvailabilityMap = () => {
+    createAvailabilityMap() {
         var availability = {
             sunday: this.state.sunday,
             monday: this.state.monday,
@@ -27,7 +29,7 @@ class Availibility extends React.Component {
             friday: this.state.friday,
             saturday: this.state.saturday
         };
-        console.log(availability.monday);
+
         return availability;
     }
 
@@ -36,6 +38,8 @@ class Availibility extends React.Component {
     }
 
     onPressGoToTimezone = () => {
+        var availability = this.createAvailabilityMap();
+        PreferenceProfiles.addAvailability(availability)
         this.props.navigation.navigate("Timezone");
     }
 

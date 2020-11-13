@@ -3,6 +3,7 @@ import React from 'react'
 import { View } from 'react-native'
 
 import {TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import PreferenceProfiles from "../PreferenceProfiles"
 
 class TimeOfDay extends React.Component {
 
@@ -15,6 +16,7 @@ class TimeOfDay extends React.Component {
     }
 
     onPressGoToLanguage= () => {
+        PreferenceProfiles.addTimeOfDay(this.state.timeOfDay); 
         this.props.navigation.navigate("Language")
     }
     

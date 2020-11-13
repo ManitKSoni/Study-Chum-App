@@ -75,7 +75,7 @@ class Login extends React.Component {
                 Firebase.auth()
                     .signInWithEmailAndPassword(email, password)
                     .then(() => {
-                        this.resetStackAndNavigate()
+                        //this.resetStackAndNavigate()
                     })
                     .catch(error => this.loginErrorCodes(error))
             } catch (error) {

@@ -1,84 +1,19 @@
 import React from 'react'
 
-import { View, Text } from 'react-native'
-import Firebase from '../../../config/Firebase'
-import instance from '../../Singletons/UserSingleton'
-
-import {TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
-import PreferenceProfiles from "../PreferenceProfiles"; 
+import {View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 
 class Matches extends React.Component{
-
-   /* state = {
-        courseName: "", 
-        availability: {
-            sunday: false,
-            monday: false,
-            tuesday: false,
-            wednesday: false,
-            thursday: false,
-            friday: false,
-            saturday: false
-        },
-        language: "",
-        timezone: "",
-        quiet: false,
-        timeOfDay: ""
-    }*
-
-    addPreferenceProfile = () => {
-        PreferenceProfiles.addPreferenceProfile( this.state.courseName,
-            this.state.availability, this.state.language, this.state.timezone,
-            this.state.quiet, this.state.timeOfDay);
-    }
-
-    deletePreferenceProfile = () => {
-        PreferenceProfiles.deletePreferenceProfile("CHIN 198. Directed Group Study in Chinese Studies");
-    }*/
 
     constructor() {
         super();
         this.onPressGoToCourses = this.onPressGoToCourses.bind(this);
     }
-    
+
     onPressGoToCourses() {
         this.props.navigation.navigate("Courses");
     }
     
     render() {
-       /* return (
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                <View style={styles.container}>
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.courseName}
-                        onChangeText={courseName => this.setState({ courseName })}
-                        placeholder='Course Name'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.language}
-                        onChangeText={language => this.setState({ language })}
-                        placeholder='Language'
-                    />
-                     <TextInput
-                        style={styles.inputBox}
-                        value={this.state.timezone}
-                        onChangeText={timezone => this.setState({ timezone })}
-                        placeholder='Timezone'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.timeOfDay}
-                        onChangeText={timeOfDay => this.setState({ timeOfDay })}
-                        placeholder='Time Of Day Free'
-                    />
-                    <Button title="Submit" onPress={this.addPreferenceProfile}/>
-                    <Button title="delete test" onPress={this.deletePreferenceProfile}/>
-                    
-                </View>
-            </TouchableWithoutFeedback>
-        )*/
 
         return(
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
