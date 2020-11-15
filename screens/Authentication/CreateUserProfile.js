@@ -3,26 +3,155 @@ import 'react-native-gesture-handler';
 import React from 'react'
 
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import { HeaderBackButton } from '@react-navigation/stack';
 
 import Firebase from '../../config/Firebase'
 import userInstance from '../Singletons/UserSingleton'
 
-class CreateUserProfile extends React.Component {
+class UserProfileAnswerView extends React.Component {
 
+    constructor() {
+        super()
+    }
+
+    correctView() {
+        switch(this.props.index) {
+            case 0: 
+                return (
+                    <View style={styles.answer}>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.props.profile.firstName}
+                            onChangeText={firstName => this.props.update('firstName', firstName)}
+                            placeholder='First Name'
+                        />
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.props.profile.lastName}
+                            onChangeText={lastName => this.props.update( 'lastName', lastName )}
+                            placeholder='Last Name'
+                        />
+                    </View>
+                )
+            case 1: 
+                // TODO: Make this a dropdown 
+                return (
+                    <View style={styles.answer}>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.props.profile.major}
+                            onChangeText={major => this.props.update( 'major', major )}
+                            placeholder='Major'
+                        />
+                    </View>
+                )
+            case 2: 
+                return (
+                    <View style={styles.answer}>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.props.profile.year}
+                            onChangeText={year => this.props.update('year', year )}
+                            placeholder='Year'
+                        />
+                    </View>
+                )
+            case 3: 
+                return (
+                    <View style={styles.answer}>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.props.profile.language}
+                            onChangeText={language => this.props.update( 'language', language )}
+                            placeholder='Language'
+                        />
+                    </View>
+                )
+            case 4: 
+                return (
+                    <View style={styles.answer}>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.props.profile.bio}
+                            onChangeText={bio => this.props.update( 'bio', bio )}
+                            placeholder='Bio'
+                        />
+                    </View>
+                )
+            default: 
+                return (
+                    <View></View>
+                )
+        }
+    }
+    render() {
+        return (
+            <View>
+                {this.correctView()}
+            </View>
+        )
+    }
+}
+class CreateUserProfile extends React.Component {
+    
     state = {
-        name: '', 
-        year: '',
-        language: ''
+        index: 0,
+        userProfile: {
+            firstName: '',
+            lastName: '',
+            major: '', 
+            year: '',
+            language: '',
+            bio: ''
+        }
+    }
+
+    updateUser = (key, value) => {
+        this.state.userProfile[key] = value
+        this.setState({ userProfile: this.state.userProfile })
+    }
+
+    questions = (index) => {
+        switch(index) {
+            case 0: 
+                return "What's your name?"
+            case 1:
+                return `Hi ${this.state.userProfile.firstName}! What's your major?`
+            case 2:
+                return  `Oh, ${this.state.userProfile.major}! Very cool! What year are you graduating?`
+            case 3: 
+                return `What is your preferred language?`
+            case 4: 
+                return `Tell us a little about yourself!`
+            default:
+                return ""
+        }
+    }
+
+    continueSubmitButton() {
+        if (this.state.index < 4) {
+            return <Button title="Continue" style={styles.button} onPress={this.onPressContinue}></Button>
+        } else {
+            return <Button title="Finish" style={styles.button} onPress={this.onPressSubmit}></Button>
+        }
     }
 
     constructor() {
         super()
         this.onPressContinue = this.onPressContinue.bind(this)
+        this.onPressSubmit = this.onPressSubmit.bind(this)
     }
 
+
+    
+
     onPressContinue() {
-        // TODO: check for correct input
-        userInstance.createUser(this.state, () => {
+        this.setState({index: this.state.index + 1})
+    }
+
+    onPressSubmit() {
+        //TODO: check for correct input
+        userInstance.createUser(this.state.userProfile, () => {
             this.props.navigation.reset({
                 index: 0, 
                 routes: [{ name: 'Home'}]
@@ -30,30 +159,16 @@ class CreateUserProfile extends React.Component {
         });
     }
 
+    
+
     // TODO: UI and add more fields
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.name}
-                        onChangeText={name => this.setState({ name })}
-                        placeholder='Name'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.language}
-                        onChangeText={language => this.setState({ language })}
-                        placeholder='Language'
-                    />
-                     <TextInput
-                        style={styles.inputBox}
-                        value={this.state.year}
-                        onChangeText={year => this.setState({ year })}
-                        placeholder='Year'
-                    />
-                    <Button title="Continue" onPress={this.onPressContinue}/>        
+                    <Text style={styles.question}>{this.questions(this.state.index)}</Text>
+                    <UserProfileAnswerView index={this.state.index} profile={this.state.userProfile} update={this.updateUser}/>
+                    {this.continueSubmitButton()}     
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -64,12 +179,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
         justifyContent: 'center',
-
     },
+
     inputBox: {
-        width: '85%',
+        width: '100%',
         margin: 10,
         padding: 15,
         fontSize: 16,
@@ -77,10 +191,22 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         textAlign: 'left'
     },
-    buttonLogin: {
+
+    question: {
+        fontSize: 20,
+        padding: 20, 
+    },
+
+    answer: {
+        backgroundColor: '#fff',
+        width: '100%',
+        padding:  15
+    },
+
+    button: {
         marginTop: 5,
         marginBottom: 5,
-        paddingVertical: 10,
+        paddingVertical: 15,
         alignItems: 'center',
         backgroundColor: '#F6820D',
         borderColor: '#F6820D',
@@ -89,17 +215,8 @@ const styles = StyleSheet.create({
         width: 150,
         textAlign: 'center',
         fontSize: 15
-    },
-    textSignUp: {
-        padding: 10,
-        color: '#007AFF',
-        fontSize: 15
-    },
-    textForgotPassword: {
-        padding: 10,
-        color: '#FFA000',
-        fontSize: 15
     }
+
 })
 
 export default CreateUserProfile
