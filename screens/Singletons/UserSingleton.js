@@ -19,6 +19,8 @@ class UserSingleton {
             console.log('user does not exist')
             completion(false)
         }
+
+        console.log(this._user);
     }
 
     async createUser(user, completion) {
