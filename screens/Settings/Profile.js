@@ -1,9 +1,12 @@
 import React from 'react';
 import {View, TextInput, Button, Keyboard, TouchableWithoutFeedback, StyleSheet} from 'react-native';
+// import ImagePicker from 'react-native-image-picker';
 import Firebase from '../../config/Firebase';
+import {Image} from "react-native-web";
 
 class Profile extends React.Component {
     state = {
+        image: '',
         name: '',
         major: '',
         classes: '',
@@ -15,16 +18,40 @@ class Profile extends React.Component {
         this.onPressContinue = this.onPressContinue.bind(this);
     }
 
-    onPressSave() {
+    // launches user's photo library to pick profile picture
+    /* selectImage = () => {
+        const options= {
+            noData: true
+        }
+        ImagePicker.launchImageLibrary(options, response => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker')
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error)
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton)
+            } else {
+                const source = { uri: response.uri }
+                console.log(source)
+                this.setState({
+                    image: source
+                })
+            }
+        })
+    } */
 
-    }
+    // change the profile picture
+    changeImage() {}
+
+    // saves changes to the text fields
+    onPressSave() {}
 
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                <div>
-
-
+                <Image
+                    source={{ uri: this.state.image }}
+                    />
                 <View style={styles.container}>
                     <TextInput
                         style={styles.inputBox}
@@ -52,7 +79,6 @@ class Profile extends React.Component {
                     />
                     <Button title="Save" onPress={this.onPressSave}/>
                 </View>
-                </div>
             </TouchableWithoutFeedback>
         );
     }
