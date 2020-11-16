@@ -49,7 +49,8 @@ export default class App extends React.Component {
                 options={{headerShown:false}} />
             <Stack.Screen name="Login" component={Login} 
                 options={{headerShown:false}}/>
-            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="SignUp" component={SignUp} 
+                options={{title:""}} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             <Stack.Screen name="Home" component={MainTabBar} 
                options={{headerShown:false}} />

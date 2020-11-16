@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
 
 import Firebase from '../../config/Firebase'
 
@@ -72,6 +72,7 @@ class SignUp extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
+                    <Image style={{ width: 140, height: 120 , transform: [{rotate: '-20deg'}]}} source={require('../../assets/study_chums_logo.png')} />
                     <TextInput
                         style={styles.inputBox}
                         value={this.state.email}

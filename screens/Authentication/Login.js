@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
 
 import Firebase from '../../config/Firebase'
 import userInstance from '../Singletons/UserSingleton'
@@ -85,10 +85,17 @@ class Login extends React.Component {
         }
     }
 
+
+    tiltAngle() {
+        let tilt = Math.random() * 180
+        return Math.random() < .5 ?  -1 * tilt : tilt
+    }
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
+                    <Image style={{ width: 140, height: 120 , transform: [{rotate: `${this.tiltAngle()}deg`}]}} source={require('../../assets/study_chums_logo.png')} />
+                    <Image style={{ width: 150, height: 120}} source={require('../../assets/sick_logo.png')} />
                     <TextInput
                         style={styles.inputBox}
                         value={this.state.email}
