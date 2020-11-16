@@ -101,10 +101,10 @@ class Login extends React.Component {
                         value={this.state.password}
                         onChangeText={password => this.setState({ password })}
                         placeholder='Password'
-                        secureTextEntry={true}
+                        // secureTextEntry={true}
                     />
                     <TouchableOpacity style={styles.buttonLogin} onPress={this.onPressLogin}>
-                        <Text>Login</Text>
+                        <Text style={styles.papyrus}>Login</Text>
                     </TouchableOpacity>
                     <Text style={styles.textSignUp} onPress={this.onPressGoToSignUp}>
                         Click Here to Sign Up for an account!
@@ -124,8 +124,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        fontFamily: 'Papyrus'
 
     },
+
+    papyrus: {
+        fontFamily: 'Papyrus'
+    },
+
     inputBox: {
         width: '85%',
         margin: 10,
@@ -133,7 +139,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderColor: '#d3d3d3',
         borderBottomWidth: 1,
-        textAlign: 'left'
+        textAlign: 'left',
+        fontFamily: 'Papyrus'
     },
     buttonLogin: {
         marginTop: 5,
@@ -146,17 +153,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: 150,
         textAlign: 'center',
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: 'Papyrus'
     },
     textSignUp: {
         padding: 10,
         color: '#007AFF',
-        fontSize: 15
+        fontSize: 15, 
+        fontFamily: 'Papyrus'
     },
     textForgotPassword: {
         padding: 10,
         color: '#FFA000',
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: 'Papyrus'
     }
 })
 

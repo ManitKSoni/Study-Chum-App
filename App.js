@@ -1,10 +1,13 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import * as Font from 'expo-font';
+
 
 import LoginSpinner from './screens/Loading/LoginSpinner';
 import Login from './screens/Authentication/Login';
@@ -15,27 +18,50 @@ import Spinner from './screens/Reusable/Spinner';
 import CreateUserProfile from './screens/Authentication/CreateUserProfile'
 import Profile from './screens/Settings/Profile'
 
+let customFonts = {
+  'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
+};
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
 const Stack = createStackNavigator();
 
 export default class App extends React.Component {
+
+  state = {
+    fontsLoaded: false,
+  };
+
+  async _loadFontsAsync() {
+    await Font.loadAsync(customFonts);
+    this.setState({ fontsLoaded: true });
+  }
+  componentDidMount() {
+    this._loadFontsAsync();
+  }
+  
   render() {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="LoginSpinner">
-          <Stack.Screen name="LoginSpinner" component={LoginSpinner} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name="Home" component={MainTabBar} 
-             options={{headerShown:false}} />
-          <Stack.Screen name="Spinner" component={Spinner} />
-          <Stack.Screen name="CreateUser" component={CreateUserProfile} />
-          <Stack.Screen name="Profile" component={Profile} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    )
+    if (this.state.fontsLoaded) {
+ 
+      return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="LoginSpinner">
+            <Stack.Screen name="LoginSpinner" component={LoginSpinner} 
+                options={{headerShown:false}} />
+            <Stack.Screen name="Login" component={Login} 
+                options={{headerShown:false}}/>
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+            <Stack.Screen name="Home" component={MainTabBar} 
+               options={{headerShown:false}} />
+            <Stack.Screen name="Spinner" component={Spinner} />
+            <Stack.Screen name="CreateUser" component={CreateUserProfile} />
+            <Stack.Screen name="Profile" component={Profile} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )
+    } else {
+      return <View></View>;
+    }
   }
 }
 
@@ -48,4 +74,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
 
