@@ -2,8 +2,10 @@ import 'react-native-gesture-handler';
 
 import React from 'react'
 
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import { View, TextInput, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, Image } from 'react-native'
 import { HeaderBackButton } from '@react-navigation/stack';
+
+
 
 import Firebase from '../../config/Firebase'
 import userInstance from '../Singletons/UserSingleton'
@@ -128,38 +130,25 @@ class CreateUserProfile extends React.Component {
         }
     }
 
-    continueSubmitButton() {
-        if (this.state.index < 4) {
-            return <Button title="Continue" style={styles.button} onPress={this.onPressContinue}></Button>
-        } else {
-            return <Button title="Finish" style={styles.button} onPress={this.onPressSubmit}></Button>
-        }
-    }
-
     constructor() {
         super()
         this.onPressContinue = this.onPressContinue.bind(this)
-        this.onPressSubmit = this.onPressSubmit.bind(this)
     }
 
-
-    
 
     onPressContinue() {
-        this.setState({index: this.state.index + 1})
-    }
-
-    onPressSubmit() {
-        //TODO: check for correct input
-        userInstance.createUser(this.state.userProfile, () => {
-            this.props.navigation.reset({
-                index: 0, 
-                routes: [{ name: 'Home'}]
+        console.log("pew")
+        if (this.state.index < 4) {
+            this.setState({index: this.state.index + 1})
+        } else {
+            userInstance.createUser(this.state.userProfile, () => {
+                this.props.navigation.reset({
+                    index: 0, 
+                    routes: [{ name: 'Home'}]
+                });
             });
-        });
+        }
     }
-
-    
 
     // TODO: UI and add more fields
     render() {
@@ -167,8 +156,13 @@ class CreateUserProfile extends React.Component {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
                     <Text style={styles.question}>{this.questions(this.state.index)}</Text>
-                    <UserProfileAnswerView index={this.state.index} profile={this.state.userProfile} update={this.updateUser}/>
-                    {this.continueSubmitButton()}     
+                    <UserProfileAnswerView index={this.state.index} profile={this.state.userProfile} update={this.updateUser}/> 
+                    <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 0}}>
+                        <Image style={{ width: '100%', position: 'absolute', height: 150, zIndex: 0}} source={require('../../assets/wave_smol.png')} />  
+                        <TouchableOpacity onPress={() => this.onPressContinue()} >                 
+                            <Image style={{width: 80, height: 80, right: -300, bottom: 10}} source={require('../../assets/light_purple_arrow_gill_eye.png')} />  
+                        </TouchableOpacity>
+                    </View>  
                 </View>
             </TouchableWithoutFeedback>
         )

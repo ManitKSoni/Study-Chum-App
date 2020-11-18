@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-
+import {Picker} from '@react-native-picker/picker';
 import {TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 import PreferenceProfiles from "../PreferenceProfiles"
 
@@ -10,6 +10,7 @@ class Timezone extends React.Component {
     state = {
         timezone: ""
     }
+
 
     onPressGoToMatches = () => {
         this.props.navigation.navigate("Matches");
@@ -22,18 +23,28 @@ class Timezone extends React.Component {
 
     render() {
         return(
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
-            <TextInput
+            {/* <TextInput
                 style={styles.inputBox}
                 value={this.state.timezone}                    
                 onChangeText={timezone => this.setState({ timezone })}
                 placeholder='Timezone'
-            />
+            /> */}
+
+            <Picker
+            selectedValue={this.state.timezone}
+            style={{height: 50, width: 100}}
+            onValueChange={(itemValue, itemIndex) =>
+                this.setState({timezone: itemValue})
+            }>
+            <Picker.Item label="EST" value="EST" />
+            <Picker.Item label="PST" value="PST" />
+            </Picker>
+
             <Button title="Submit" onPress={this.onPressGoToTimeOfDay}/>
             <Button title="Cancel" onPress={this.onPressGoToMatches}/>
             </View>
-        </TouchableWithoutFeedback>
+
         )
     }
 }

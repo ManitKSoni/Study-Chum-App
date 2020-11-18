@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
 
 import Firebase from '../../config/Firebase'
 import userInstance from '../Singletons/UserSingleton'
@@ -85,10 +85,17 @@ class Login extends React.Component {
         }
     }
 
+
+    tiltAngle() {
+        let tilt = Math.random() * 180
+        return Math.random() < .5 ?  -1 * tilt : tilt
+    }
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
+                    <Image style={{ width: 140, height: 120 , transform: [{rotate: `${this.tiltAngle()}deg`}]}} source={require('../../assets/study_chums_logo.png')} />
+                    <Image style={{ width: 150, height: 120}} source={require('../../assets/sick_logo.png')} />
                     <TextInput
                         style={styles.inputBox}
                         value={this.state.email}
@@ -101,10 +108,10 @@ class Login extends React.Component {
                         value={this.state.password}
                         onChangeText={password => this.setState({ password })}
                         placeholder='Password'
-                        secureTextEntry={true}
+                        // secureTextEntry={true}
                     />
                     <TouchableOpacity style={styles.buttonLogin} onPress={this.onPressLogin}>
-                        <Text>Login</Text>
+                        <Text style={styles.papyrus}>Login</Text>
                     </TouchableOpacity>
                     <Text style={styles.textSignUp} onPress={this.onPressGoToSignUp}>
                         Click Here to Sign Up for an account!
@@ -124,8 +131,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        fontFamily: 'Papyrus'
 
     },
+
+    papyrus: {
+        fontFamily: 'Papyrus'
+    },
+
     inputBox: {
         width: '85%',
         margin: 10,
@@ -133,7 +146,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderColor: '#d3d3d3',
         borderBottomWidth: 1,
-        textAlign: 'left'
+        textAlign: 'left',
+        fontFamily: 'Papyrus'
     },
     buttonLogin: {
         marginTop: 5,
@@ -146,17 +160,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: 150,
         textAlign: 'center',
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: 'Papyrus'
     },
     textSignUp: {
         padding: 10,
         color: '#007AFF',
-        fontSize: 15
+        fontSize: 15, 
+        fontFamily: 'Papyrus'
     },
     textForgotPassword: {
         padding: 10,
         color: '#FFA000',
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: 'Papyrus'
     }
 })
 
