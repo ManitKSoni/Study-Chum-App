@@ -41,7 +41,7 @@ export class PreferenceProfiles {
           courseRef.doc(this.courseName).update({[userID]:  preferenceProfile});
         }
         
-        console.log("done...");
+        console.log("done");
     }
 
     /*
@@ -52,10 +52,11 @@ export class PreferenceProfiles {
     createPreferenceProifle(preferences) {
       
        var userData = userInstance._user; 
+       var name = userData.firstName + " " + userData.lastName; 
         var preferenceProfle = {
-            name: userData.name,
+            name: name,
             profilePicture: "Image.png",
-            bio: "So cool",
+            bio: userData.bio,
             endorsements: 1,
             preferences: preferences
         }

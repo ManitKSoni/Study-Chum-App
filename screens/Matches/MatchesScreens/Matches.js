@@ -1,16 +1,27 @@
 import React from 'react'
 
 import {View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import MatchingAlgorithm from "../MatchingAlgorithm"
 
 class Matches extends React.Component{
 
     constructor() {
         super();
         this.onPressGoToCourses = this.onPressGoToCourses.bind(this);
+        this.onPressGenerate = this.onPressGenerate.bind(this);
     }
 
     onPressGoToCourses() {
         this.props.navigation.navigate("Courses");
+    }
+
+    onPressGenerate() {
+        MatchingAlgorithm.getStudentMap("AAS 185. #BlackLivesMatter");
+        //console.log("hi");
+      //  MatchingAlgorithm.getCurrentStudent();
+        //console.log("no");
+       //MatchingAlgorithm.orderStudents(); 
+       // MatchingAlgorithm.test();
     }
     
     render() {
@@ -19,6 +30,7 @@ class Matches extends React.Component{
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
                <Button title="Add class" onPress={this.onPressGoToCourses}/>
+               <Button title="Test Generation" onPress={this.onPressGenerate}/>
             </View>
         </TouchableWithoutFeedback>
         )
