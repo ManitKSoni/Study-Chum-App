@@ -13,7 +13,7 @@ import ForgotPassword from './screens/Authentication/ForgotPassword';
 import MainTabBar from './screens/MainTabBar';
 import Spinner from './screens/Reusable/Spinner';
 import CreateUserProfile from './screens/Authentication/CreateUserProfile'
-import Profile from './screens/Settings/Profile'
+import Profile from './screens/Settings/EditProfile'
 
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */

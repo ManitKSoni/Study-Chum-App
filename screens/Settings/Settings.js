@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View, Button, Keyboard, TextInput, TouchableWithoutFeedback, StyleSheet} from 'react-native'
 // import ImagePicker from 'react-native-image-picker';
 import Firebase from '../../config/Firebase'
 import {Image} from "react-native-web";
+import Editable from "./Editable";
+
+//const [task, setTask] = useState("");
 
 class Settings extends React.Component{
 
@@ -17,7 +20,7 @@ class Settings extends React.Component{
     constructor() {
         super();
         this.onPressLogOut= this.onPressLogOut.bind(this)
-        //this.onPressContinue = this.onPressContinue.bind(this);
+        //this.onPressSubmit = this.onPressSubmit.bind(this);
     }
 
     /** Handle logging out and reset stack */
@@ -29,6 +32,11 @@ class Settings extends React.Component{
         }
     }
 
+    onPressSubmit() {
+
+    }
+
+    /** launches user's photo library to pick profile picture */
     /* selectImage = () => {
         const options= {
             noData: true
@@ -83,6 +91,12 @@ class Settings extends React.Component{
                         onChangeText={bio => this.setState({ bio })}
                         placeholder='Bio'
                     />
+                    <Button
+                        style={styles.button}
+                        title="Submit"
+                        onPress={this.onPressSubmit}
+                    />
+
                 </View>
             </TouchableWithoutFeedback>
         )

@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, TextInput, Button, Keyboard, TouchableWithoutFeedback, StyleSheet} from 'react-native';
-// import ImagePicker from 'react-native-image-picker';
+//import ImagePicker from 'react-native-image-picker';
 import Firebase from '../../config/Firebase';
 import {Image} from "react-native-web";
 
-class Profile extends React.Component {
+class EditProfile extends React.Component {
     state = {
         image: '',
         name: '',
@@ -19,7 +19,7 @@ class Profile extends React.Component {
     }
 
     // launches user's photo library to pick profile picture
-    /* selectImage = () => {
+    /*selectImage = () => {
         const options= {
             noData: true
         }
@@ -38,10 +38,7 @@ class Profile extends React.Component {
                 })
             }
         })
-    } */
-
-    // change the profile picture
-    changeImage() {}
+    }*/
 
     // saves changes to the text fields
     onPressSave() {}
@@ -50,7 +47,7 @@ class Profile extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <Image
-                    source={{ uri: this.state.image }}
+                    source={{ uri: selectImage }}
                     />
                 <View style={styles.container}>
                     <TextInput
@@ -126,4 +123,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Profile;
+export default EditProfile;
