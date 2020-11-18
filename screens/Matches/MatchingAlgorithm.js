@@ -5,7 +5,7 @@ import firebase from "firebase/app";
 var PriorityQueue = require("js-priority-queue");
 
 class MatchingAlgorithm {
-    
+
     db = Firebase.firestore(); 
     queue =  new PriorityQueue({comparator: MaxComparator}); 
 
@@ -28,7 +28,7 @@ class MatchingAlgorithm {
             this.studentsMap = doc.get("students");
             this.getCurrentStudent();
             this.orderStudents();
-            this.test();
+          //  this.test();
         } else {
             console.log("Course does not exist.");
         }

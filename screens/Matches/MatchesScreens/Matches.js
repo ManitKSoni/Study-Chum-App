@@ -9,6 +9,7 @@ class Matches extends React.Component{
         super();
         this.onPressGoToCourses = this.onPressGoToCourses.bind(this);
         this.onPressGenerate = this.onPressGenerate.bind(this);
+        this.onPressGoToMatches = this.onPressGoToMatches.bind(this);
     }
 
     onPressGoToCourses() {
@@ -20,6 +21,10 @@ class Matches extends React.Component{
         MatchingAlgorithm.getStudentMap("AAS 185. #BlackLivesMatter");
     }
     
+    onPressGoToMatches() {
+        this.props.navigation.navigate("ShowMatches");
+    }
+
     render() {
 
         return(
@@ -27,6 +32,7 @@ class Matches extends React.Component{
             <View style={styles.container}>
                <Button title="Add class" onPress={this.onPressGoToCourses}/>
                <Button title="Test Generation" onPress={this.onPressGenerate}/>
+               <Button title="Show Matches" onPress={this.onPressGoToMatches}/>
             </View>
         </TouchableWithoutFeedback>
         )
