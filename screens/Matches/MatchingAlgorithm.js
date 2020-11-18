@@ -5,13 +5,20 @@ import firebase from "firebase/app";
 var PriorityQueue = require("js-priority-queue");
 
 class MatchingAlgorithm {
+    
     db = Firebase.firestore(); 
     queue =  new PriorityQueue({comparator: MaxComparator}); 
+
     constructor() {
         studentsMap = {}; 
         currentStudent = {}; 
     }
 
+    /* 
+    * Gets the student map from the course doc and calls functions that
+    * will populate priority queue to retrieve top results.
+    * @param courseName - name of course doc
+    */ 
     async getStudentMap(courseName) {
         const docRef = this.db.collection("courses").doc(courseName);
         const doc = await docRef.get();
@@ -26,16 +33,22 @@ class MatchingAlgorithm {
             console.log("Course does not exist.");
         }
 
-
     }
 
+    /*
+    * Retrieves current users preferences and info
+    */ 
     getCurrentStudent() {
        var userID= Firebase.auth().currentUser.uid;
        this.currentStudent = this.studentsMap[userID]; 
     }
 
-    //TODO MAX HEAP PQ
 
+    /*
+    * Tallies preferences of other users that are the same as current user
+    * @param userID - the userID of preference profile
+    * @param student - the student map containing preferences
+    */ 
     tallyPreferences(userID, student) {
         
         if(userID == Firebase.auth().currentUser.uid) return; 
@@ -68,16 +81,21 @@ class MatchingAlgorithm {
 
         var queueInput = { student: student, tally: tally};
         this.queue.queue(queueInput);
-      //  console.log(this.queue.peek());
 
     }
 
+    /*
+    * Tallies each student in that is in the student map and places them in PQ
+    */ 
     orderStudents() {
        for( var [key,value] of Object.entries(this.studentsMap)) {
            this.tallyPreferences(key, value);
        }
     }
 
+    /*
+    * Prints every student in PQ
+    */
     test() {
         while(this.queue.length != 0) {
             console.log(this.queue.dequeue().student.name);
@@ -87,6 +105,7 @@ class MatchingAlgorithm {
 
 }
 
+// Comparator to create a Max Heap
 const MaxComparator = function(student1, student2) 
     {return student2.tally - student1.tally}; 
 

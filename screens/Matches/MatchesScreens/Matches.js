@@ -15,13 +15,9 @@ class Matches extends React.Component{
         this.props.navigation.navigate("Courses");
     }
 
+    //TODO allow custom inputs and place at last preference question screen
     onPressGenerate() {
         MatchingAlgorithm.getStudentMap("AAS 185. #BlackLivesMatter");
-        //console.log("hi");
-      //  MatchingAlgorithm.getCurrentStudent();
-        //console.log("no");
-       //MatchingAlgorithm.orderStudents(); 
-       // MatchingAlgorithm.test();
     }
     
     render() {
