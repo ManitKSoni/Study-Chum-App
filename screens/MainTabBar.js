@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './Home/Home';
 import MatchesNavigator from './Matches/MatchesNavigator';
-import Chat from './Chat/Chat';
+import ChatNavigator from './Chat/ChatNavigator';
 import Settings from './Settings/Settings'
 import MatchesDrawerNavigator from './Matches/MatchesDrawerNavigator'
 
@@ -21,7 +21,7 @@ class MainTabBar extends React.Component {
             <Tab.Navigator>
                 <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Matches" component={MatchesDrawerNavigator} />
-                <Tab.Screen name="Chat" component={Chat} />
+                <Tab.Screen name="Chat" component={ChatNavigator} />
                 <Tab.Screen name="Settings" component={Settings} />
             </Tab.Navigator>
         )
