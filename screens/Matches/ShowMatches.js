@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet, FlatList, Button, StatusBar, TouchableOpacity} from 'react-native'
+import { View, Text, StyleSheet, FlatList, Button, StatusBar, TouchableOpacity } from 'react-native'
 import MatchingAlgorithm from "./MatchingAlgorithm"
 
 class ShowMatches extends React.Component {
@@ -7,10 +7,10 @@ class ShowMatches extends React.Component {
     data = this.createData();
 
     createData() {
-        var pq = MatchingAlgorithm.queue; 
+        var pq = MatchingAlgorithm.queue;
         var data = []
         var count = 0;
-        while(pq.length != 0) {
+        while (pq.length != 0) {
             var currStudent = pq.dequeue();
             console.log(currStudent.student.name);
             var currData = {
@@ -18,39 +18,39 @@ class ShowMatches extends React.Component {
                 name: currStudent.student.name,
                 bio: currStudent.student.bio,
                 endorsements: currStudent.student.endorsements
-            }; 
+            };
             count++;
-            data.push(currData); 
+            data.push(currData);
         }
 
         console.log(data);
-        return data; 
+        return data;
     };
 
     render() {
-        const renderItem = ({item}) => (
-            <Item name = {item.name} 
-                bio = {item.bio} 
-                endorsements = {item.endorsements}
-                onPress = {() => this.props.navigation.navigate("Matches")}
+        const renderItem = ({ item }) => (
+            <Item name={item.name}
+                bio={item.bio}
+                endorsements={item.endorsements}
+                onPress={() => this.props.navigation.navigate("Matches")}
             />
-    
+
         );
 
         return (
             <View style={styles.container}>
-                <FlatList 
-                data = {this.data}
-                renderItem = {renderItem}
-                keyExtractor = {(item) => item.id}
+                <FlatList
+                    data={this.data}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
                 />
             </View>
         )
     }
 }
 
-const Item = ({name, bio, endorsements, onPress}) => (
-    <TouchableOpacity style={styles.item} onPress={onPress}> 
+const Item = ({ name, bio, endorsements, onPress }) => (
+    <TouchableOpacity style={styles.item} onPress={onPress}>
         <Text style={styles.text}> {name} {bio} {endorsements} </Text>
     </TouchableOpacity>
 

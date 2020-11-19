@@ -14,7 +14,6 @@ class MainTabBar extends React.Component {
         super();
     }
 
-    
     render() {
         return (
             <Tab.Navigator>
