@@ -8,6 +8,7 @@ class Channel extends React.Component {
         return (
             <View>
                 <Text>Hello! {userData[uid].name}</Text>
+                <Text>Subtext: {userData.lastSentMessage}</Text>
             </View>
         )
     }

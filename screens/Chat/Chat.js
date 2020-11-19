@@ -21,35 +21,44 @@ class Chat extends React.Component {
         console.log(data);
     }
 
+    //converts 24 hour to 12 hour format with am/pm
+    convertToStandardTime(lastSentDate) {
+        var convertedTime = "";
+        var hour = lastSentDate.getHours();
+        var minutes = lastSentDate.getMinutes();
+        if (minutes === 0) { minutes = "00"; }
+
+        if (hour === 0) {
+            convertedTime = "12" + ":" + minutes + " am";
+        } else if (hour === 12) {
+            convertedTime = "12" + ":" + minutes + " pm";
+        } else if (hour > 12) {
+            hour = hour - 12;
+            convertedTime = hour + ":" + minutes + " am";
+        } else {
+            convertedTime = hour + ":" + minutes + " am";
+        }
+        return convertedTime;
+    }
+
     /**Render the correct timestamp */
     processTimestamp(item) {
-        const secondsString = item.lastTimestamp.seconds;
-        const seconds = parseInt(secondsString);
-        var lastSentDate = new Date(0); //sets to epoch
-        lastSentDate.setUTCSeconds(seconds); // Gets todays date by adding Epoch + seconds since then
-        const todaysDate = new Date().getTime(); //Convert current date to seconds for comparison
-        const oneDay = (1 * 24 * 60 * 60 * 1000); //one day in seconds (86,400 seconds)
-        console.log(todaysDate - lastSentDate);
-        const lessThanOneDay = (todaysDate - lastSentDate) <= oneDay ? true : false;
+        //Set Epoch and then add offset to get time sent in UTC
+        const seconds = parseInt(item.lastTimestamp.seconds);
+        var lastSentDate = new Date(0);
+        lastSentDate.setUTCSeconds(seconds);
 
-        // The yourDate time is less than 1 days from now
-        if (lessThanOneDay === true) {
-            //var localDate = lastSentDate.toLocaleString('en-US');
-            var hour = lastSentDate.getHours();
-            var minutes = lastSentDate.getMinutes();
-            var hourMinuteDate = "";
-            if (hour >= 12) {
-                hour -= 12;
-                hourMinuteDate = hour + ":" + minutes + " pm";
-            } else if (hour == 0) {
-                hour = 12;
-                hourMinuteDate = hour + ":" + minutes + " am";
-            } else {
-                hourMinuteDate = hour + ":" + minutes + " am";
-            }
-            return hourMinuteDate;
+        //get the current local midnight time (12:00 AM timezone)
+        var currentDateMidnight = new Date();
+        currentDateMidnight.setHours(0, 0, 0, 0);
+
+        //check if time stamp is within the user's day (their 12:00 am to 11:59pm)
+        var oneDay = (1 * 24 * 60 * 60 * 1000);
+        const timeDifference = lastSentDate - currentDateMidnight;
+        if (timeDifference >= 0 && timeDifference < oneDay) {
+            return this.convertToStandardTime(lastSentDate); //returns hour:minute am/pm
         } else {
-            return lastSentDate.toLocaleDateString();
+            return lastSentDate.toLocaleDateString(); //returns day/month/year format
         }
     }
 
@@ -72,11 +81,13 @@ class Chat extends React.Component {
     renderItem(item, uid) {
         return (
             <TouchableWithoutFeedback onPress={() => this.onPressRow(item, uid)}>
-                <View style={styles.container}>
+                <View style={styles.row}>
                     <Image style={styles.profileImg} source={require('../../assets/study_chums_logo.png')} />
                     <View style={styles.columnContainer}>
                         <Text style={styles.name}> {item[uid].name} </Text>
-                        <Text style={styles.message}> {this.processMessage(item, uid)} </Text>
+                        <Text style={styles.messages} ellipsizeMode='tail' numberOfLines={1}>
+                            {this.processMessage(item, uid)}
+                        </Text>
                     </View>
                     <Text style={styles.timestamp}> {this.processTimestamp(item)} </Text>
                 </View>
@@ -88,7 +99,7 @@ class Chat extends React.Component {
         const buddiesArray = Object.values(this.state.buddies)
         const uid = Firebase.auth().currentUser.uid
         return (
-            <View style={styles.container}>
+            <View style = {styles.container}>
                 <FlatList
                     data={buddiesArray}
                     renderItem={({ item }) => this.renderItem(item, uid)}
@@ -99,14 +110,20 @@ class Chat extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    container :{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        backgroundColor: 'white',
+    },
+    row: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         padding: 10,
         backgroundColor: 'white',
         borderBottomColor: "gray",
-        borderBottomWidth: 0.7
+        borderBottomWidth: 0.5
     },
     columnContainer: {
         flex: 1,
@@ -125,7 +142,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     messages: {
-        fontSize: 15,
+        marginLeft: 6, 
+        fontSize: 12,
     },
     timestamp: {
         fontSize: 12,
