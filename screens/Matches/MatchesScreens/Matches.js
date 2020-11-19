@@ -1,41 +1,32 @@
 import React from 'react'
 
-import {View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import {Text,View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 import MatchingAlgorithm from "../MatchingAlgorithm"
+import ShowMatches from "../ShowMatches"
+
+
+var index = 0;
+export function changeScreen() {
+    console.log(index);
+    index = 1;
+    console.log(index);
+}
 
 class Matches extends React.Component{
 
     constructor() {
         super();
-        this.onPressGoToCourses = this.onPressGoToCourses.bind(this);
-        this.onPressGenerate = this.onPressGenerate.bind(this);
-        this.onPressGoToMatches = this.onPressGoToMatches.bind(this);
-    }
-
-    onPressGoToCourses() {
-        this.props.navigation.navigate("Courses");
-    }
-
-    //TODO allow custom inputs and place at last preference question screen
-    onPressGenerate() {
-        MatchingAlgorithm.getStudentMap("AAS 185. #BlackLivesMatter");
-    }
-    
-    onPressGoToMatches() {
-        this.props.navigation.navigate("ShowMatches");
     }
 
     render() {
-
-        return(
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View style={styles.container}>
-               <Button title="Add class" onPress={this.onPressGoToCourses}/>
-               <Button title="Test Generation" onPress={this.onPressGenerate}/>
-               <Button title="Show Matches" onPress={this.onPressGoToMatches}/>
-            </View>
-        </TouchableWithoutFeedback>
-        )
+        //console.log(index);
+       return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+           <Text> Slide to Right To See Class Matches</Text>
+        </View>
+    </TouchableWithoutFeedback>
+       )
     }
 
     
