@@ -1,26 +1,24 @@
-import React, {useState} from 'react'
-import {View, Button, Keyboard, TextInput, TouchableWithoutFeedback, StyleSheet} from 'react-native'
+import React from 'react'
+import {Button, Keyboard, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native'
 // import ImagePicker from 'react-native-image-picker';
 import Firebase from '../../config/Firebase'
-import {Image} from "react-native-web";
-import Editable from "./Editable";
-
-//const [task, setTask] = useState("");
 
 class Settings extends React.Component{
+
+    db = Firebase.firestore();
 
     state = {
         image: '',
         name: '',
         major: '',
         classes: '',
-        bio: ''
+        bio: '',
+        userDetails: ''
     }
     
     constructor() {
         super();
         this.onPressLogOut= this.onPressLogOut.bind(this)
-        //this.onPressSubmit = this.onPressSubmit.bind(this);
     }
 
     /** Handle logging out and reset stack */
@@ -32,8 +30,30 @@ class Settings extends React.Component{
         }
     }
 
-    onPressSubmit() {
+    getUserDetails() {
+        var userID = Firebase.auth().currentUser.uid;
+        return this.db.collection("users")
+            .doc(userID)
+            .get()
+            .then(function(doc) {
+                return doc.data()
+        })
+            .catch(function(error) {
+                console.log('Error getting user details: ', error)
+            })
+    }
 
+    fetchUserDetails = async () => {
+        try {
+            const userDetails = await this.getUserDetails()
+            this.setState({ userDetails })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    componentDidMount() {
+        this.fetchUserDetails();
     }
 
     /** launches user's photo library to pick profile picture */
@@ -69,7 +89,7 @@ class Settings extends React.Component{
                     />
                     <TextInput
                         style={styles.inputBox}
-                        value={this.state.name}
+                        value={this.state.userDetails.name}
                         onChangeText={name => this.setState({ name })}
                         placeholder='Name'
                     />
@@ -96,7 +116,7 @@ class Settings extends React.Component{
                         title="Submit"
                         onPress={this.onPressSubmit}
                     />
-
+                    <Text>{this.state.userDetails.name}</Text>
                 </View>
             </TouchableWithoutFeedback>
         )
