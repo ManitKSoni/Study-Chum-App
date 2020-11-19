@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacityBase } from 'react-native'
 import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 
 import PreferenceProfiles from "../PreferenceProfiles";
+import MatchingAlgorithm from "../MatchingAlgorithm"
 
 class Quiet extends React.Component {
 
@@ -16,10 +17,13 @@ class Quiet extends React.Component {
         this.props.navigation.navigate("Matches");
     }
 
+
+    //TEST! THIS MAY NOT WORK AND CRASH APP 
     generateMatches = () => {
        PreferenceProfiles.addQuiet(this.state.quiet);
-       console.log(PreferenceProfiles.getPreferences());
+       //console.log(PreferenceProfiles.getPreferences());
        PreferenceProfiles.addPreferenceProfile(); 
+       MatchingAlgorithm.getStudentMap(PreferenceProfiles.courseName, () => this.props.navigation.navigate("ShowMatches"));
     }
 
     //Add preference profile and then do matches
@@ -37,7 +41,7 @@ class Quiet extends React.Component {
                  value={this.state.quiet}
                 />  
                 <Button title="Cancel" onPress={this.onPressGoToMatches}/>
-                <Button title="print" onPress={this.generateMatches}/>
+                <Button title="Find Chums!" onPress={this.generateMatches}/>
                 </View>
         </TouchableWithoutFeedback>
         )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, FlatList, Button, StatusBar, TouchableOpacity } from 'react-native'
+import {View, Text, StyleSheet, FlatList, StatusBar, TouchableOpacity} from 'react-native'
 import MatchingAlgorithm from "./MatchingAlgorithm"
 
 class ShowMatches extends React.Component {
@@ -12,7 +12,6 @@ class ShowMatches extends React.Component {
         var count = 0;
         while (pq.length != 0) {
             var currStudent = pq.dequeue();
-            console.log(currStudent.student.name);
             var currData = {
                 id: count.toString(),
                 name: currStudent.student.name,
@@ -22,19 +21,16 @@ class ShowMatches extends React.Component {
             count++;
             data.push(currData);
         }
-
-        console.log(data);
-        return data;
+        return data; 
     };
-
+    
     render() {
-        const renderItem = ({ item }) => (
-            <Item name={item.name}
-                bio={item.bio}
-                endorsements={item.endorsements}
-                onPress={() => this.props.navigation.navigate("Matches")}
+        const renderItem = ({item}) => (
+            <Item name = {item.name} 
+                bio = {item.bio} 
+                endorsements = {item.endorsements}
+                onPress = {() => this.props.navigation.navigate("Matches")}
             />
-
         );
 
         return (
@@ -46,6 +42,7 @@ class ShowMatches extends React.Component {
                 />
             </View>
         )
+        
     }
 }
 
