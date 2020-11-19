@@ -1,22 +1,23 @@
 import React from 'react'
 
 import {Text,View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
-import MatchingAlgorithm from "../MatchingAlgorithm"
-import ShowMatches from "../ShowMatches"
-
-
-var index = 0;
-export function changeScreen() {
-    console.log(index);
-    index = 1;
-    console.log(index);
-}
 
 class Matches extends React.Component{
 
     constructor() {
         super();
     }
+
+    /*
+    * TODO: Add courses to user database
+    * Test when submitting preference profile will not cause async issues
+    * Render Matches on Matches screen,not ShowMatches
+    * Delete button
+    * Search Function or try catch maybe????
+    * Disconnect Language and Timezone
+    * Add language to Preference Profile using singleton
+    * Update course docs when user edits profile(like language, bio, etc)
+    */
 
     render() {
         //console.log(index);
