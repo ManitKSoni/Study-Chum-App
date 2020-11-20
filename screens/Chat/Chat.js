@@ -15,11 +15,13 @@ class Chat extends React.Component {
     }
 
     /** Will assign the buddies array state to database array */
-    componentWillMount() {
-
+    componentDidMount() {
         this.chatDataModel.newChatListener( (channels) => {
             this.setState({buddies: channels})
         })
+    }
+
+    componentWillUnmount() {
     }
 
     //converts 24 hour to 12 hour format with am/pm

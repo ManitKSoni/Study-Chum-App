@@ -41,7 +41,7 @@ class ChatDataModel {
                         newChannel.lastTimestamp = change.doc.get('lastTimestamp')
                         newChannel.lastSender = change.doc.get('lastSender')
                         this.channels.unshift(newChannel)
-
+                        console.log('seomthing changes')
                         break;
                     default:
                         console.log("Something went wrong")

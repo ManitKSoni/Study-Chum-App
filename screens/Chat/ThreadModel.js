@@ -16,6 +16,46 @@ class ThreadModel {
     }
 
     /**
+     * Get a listener for all messages in a thread
+     * @param {function} completion function that updates the UI based on new changes
+     */
+    async threadListener(completion) {
+        const thread = this.db.collection('chat').doc(this.channelID).collection('thread')
+            .orderBy('createdAt', 'desc')
+            //TODO: add a limit here so that we don't pull the whole chat then add some pagination
+
+        let listener = await thread.onSnapshot((snapshots) => {
+            this.messages = []
+            snapshots.forEach((doc) => {
+                let message = doc.data()
+                message['chatID'] = doc.id
+                this.messages.push(message)
+            })
+            completion(this.messages)
+        })
+        return listener // Call this to stop the listener 
+    }
+
+    /**
+     * Creates a new message in a channel
+     * @param {object} message 
+     */
+    sendMessage(message) {
+
+        // Updates the thread
+        this.db.collection('chat').doc(this.channelID).collection('thread').doc(message._id).set(message)
+
+        let isReadKey = `${this.uid}.isRead`
+        // Updates the channel
+        this.db.collection('chat').doc(this.channelID).update({
+            lastTimestamp: message.createdAt, 
+            lastSentMessage: message.text,
+            lastSender: this.uid,
+            [isReadKey]: false
+        })
+    }
+
+    /**
      * Get all messages in the thread for a channel
      * @param {string} channelID ID of channel
      * @deprecated
@@ -27,49 +67,6 @@ class ThreadModel {
         let snapshot = await query.get()
         snapshot.forEach((doc) => {
             console.log(`${doc.data().sender}: ${doc.data().message}`)
-        })
-    }
-
-    /**
-     * Get a listener for all messages in a thread
-     * @param {string} channelID ID of channel
-     * @param {function} completion function that updates the UI based on new changes
-     */
-    async threadListener(channelID, completion) {
-        const thread = this.db.collection('chat').doc(channelID).collection('thread')
-            .orderBy('timestamp', 'desc')
-            //TODO: add a limit here so that we don't pull the whole chat then add some pagination
-
-        let listener = await thread.onSnapshot((snapshots) => {
-            snapshots.forEach((doc) => {
-                this.messages.push(doc.data())
-            })
-            completion(this.messages)
-        })
-        return listener // Call this to stop the listener 
-    }
-
-    /**
-     * Creates a new message in a channel
-     * @param {string} message message to be sent
-     * @param {string} channelID ID of channel
-     */
-    sendMessage(message, channelID) {
-
-        // Updates the thread
-        this.db.collection('chat').doc(channelID).collection('thread').add({
-            message: message,
-            sender: this.uid, 
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        })
-
-        let isReadKey = `${this.uid}.isRead`
-        // Updates the channel
-        this.db.collection('chat').doc(channelID).update({
-            lastTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            lastSentMessage: message,
-            lastSender: this.uid,
-            [isReadKey]: false
         })
     }
 }

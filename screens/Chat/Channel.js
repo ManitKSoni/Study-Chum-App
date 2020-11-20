@@ -2,6 +2,8 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import Firebase from '../../config/Firebase'
+import ThreadModel from './ThreadModel'
+import userInstance from '../Singletons/UserSingleton'
 
 class Channel extends React.Component {
   //userdata - 
@@ -14,51 +16,49 @@ class Channel extends React.Component {
    },
  }*/
 
-  componentWillMount() {
-    this.setState({
-      messages: [
-        {
-        _id: 1,
-        text: 'epic bro !',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        }
-        },
-        {
-          _id: 2,
-          text: 'What side is this gonna be on',
-          createdAt: new Date(),
-          user: {
-            _id: 1,
-            name: 'lloyd',
-            avatar: 'https://placeimg.com/140/140/any',
-        }},
-      ],
-    
-    },);
-  }
+  constructor(props) {
+    super(props)
 
-  get user(){
-    return {
-      _id: userData[uid],
-      name: this.props.navigation.state.params.name
+    this.state = {
+      messages: []
     }
+  } 
+
+  parseMessage(message) {
+    const seconds = parseInt(message.createdAt.seconds);
+    var date = new Date(0);
+    date.setUTCSeconds(seconds)
+
+
+    message.createdAt = date
+    // console.log(message.createdAt, typeof(message.createdAt), date, typeof(date))
+    return message
   }
 
-  componentDidMount(){
-    //firebase shit?
-    //
+  componentDidMount() {
+    const { userData, uid } = this.props.route.params;
+    let channelID = userData.channelID 
+    this.threadModel = new ThreadModel("test", channelID)
+    this.threadListener = this.threadModel.threadListener((messages) => {
+      let parsedMessages = messages.map(this.parseMessage)
+      this.setState({
+        messages: parsedMessages
+      })
+    })
   }
+
+  componentWillUnmount() {
+    // this.threadListener() // Closes the listener
+  }
+
 
   onSend(messages = []) {
-    this.setState((previousState) => {
-      return {
-        messages: GiftedChat.append(previousState.messages, messages),
-      };
-    });
+    this.threadModel.sendMessage(messages[0])
+    // this.setState((previousState) => {
+    //   return {
+    //     messages: GiftedChat.append(previousState.messages, messages),
+    //   };
+    // });
   }
 
   render() {
@@ -67,10 +67,10 @@ class Channel extends React.Component {
       <GiftedChat
         isAnimated
         messages={this.state.messages}
-        onSend={message => this.onSend (messages)}
+        onSend={message => this.onSend(message)}
         user={{
-          _id: 1,//uid presumably
-          name: 'lloyd',//get name from data?
+          _id: uid,
+          name: userInstance._user.firstName
         }}
       />
     );
