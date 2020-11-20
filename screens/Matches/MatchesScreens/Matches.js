@@ -17,16 +17,18 @@ class Matches extends React.Component{
     * Disconnect Language and Timezone
     * Add language to Preference Profile using singleton
     * Update course docs when user edits profile(like language, bio, etc)
+    * WHEN ADDING NON-EXISTING CLASSES, THOSE CLASSES ARE STILL ADDED TO COURSES, a fix is to only have presets. 
     */
 
     render() {
+
         //console.log(index);
        return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.container}>
-           <Text> Slide to Right To See Class Matches</Text>
-        </View>
-    </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                 <View style={styles.container}>
+                      <Text> Slide to Right To See Class Matches</Text>
+                 </View>
+          </TouchableWithoutFeedback>
        )
     }
 

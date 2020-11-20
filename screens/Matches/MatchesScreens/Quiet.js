@@ -18,12 +18,9 @@ class Quiet extends React.Component {
     }
 
 
-    //TEST! THIS MAY NOT WORK AND CRASH APP 
     generateMatches = () => {
-       PreferenceProfiles.addQuiet(this.state.quiet);
-       //console.log(PreferenceProfiles.getPreferences());
-       PreferenceProfiles.addPreferenceProfile(); 
-       MatchingAlgorithm.getStudentMap(PreferenceProfiles.courseName, () => this.props.navigation.navigate("ShowMatches"));
+        PreferenceProfiles.addQuiet(this.state.quiet);
+        PreferenceProfiles.addAndShow(this.props);
     }
 
     //Add preference profile and then do matches

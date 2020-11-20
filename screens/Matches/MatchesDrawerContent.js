@@ -8,6 +8,7 @@ import MatchingAlgorithm from "./MatchingAlgorithm";
 
 function createData() {
     var data = []; 
+    //Will have to get data from database to display when updated or add to singleton maybe
     var courses = UserSingleton._user.courses; 
     for(var i = 0; i < courses.length; i++) {
         var currData = {
@@ -43,7 +44,7 @@ export function DrawerContent(props) {
 
     const data = createData();
 
-    console.log(data);
+    //console.log(data);
 
     return (
         <View style={{flex:1}}>

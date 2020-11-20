@@ -63,7 +63,8 @@ class MatchingAlgorithm {
         if(preferences.quiet === currentPref.quiet) {
             tally++; 
         }
-
+        
+        // DELETE
         if(preferences.timeOfDay === currentPref.timeOfDay) {
             tally++; 
         }
