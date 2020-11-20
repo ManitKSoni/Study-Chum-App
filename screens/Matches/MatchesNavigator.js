@@ -11,6 +11,7 @@ import Language from "./MatchesScreens/Language";
 import Timezone from "./MatchesScreens/Timezone";
 import Quiet from "./MatchesScreens/Quiet";
 import TimeOfDay from "./MatchesScreens/TimeOfDay";
+import ShowMatches from "./ShowMatches";
 
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
@@ -28,6 +29,8 @@ export default class MatchesNavigator extends React.Component {
           <Stack.Screen name="Language" component={Language}/>
           <Stack.Screen name="Quiet" component={Quiet}/>
           <Stack.Screen name="TimeOfDay" component={TimeOfDay}/>
+          <Stack.Screen name="ShowMatches" component={ShowMatches}
+            options={{headerLeft:null}}/>
         </Stack.Navigator>
     )
   }

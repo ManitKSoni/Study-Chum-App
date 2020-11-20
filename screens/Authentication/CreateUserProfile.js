@@ -104,7 +104,8 @@ class CreateUserProfile extends React.Component {
             major: '', 
             year: '',
             language: '',
-            bio: ''
+            bio: '',
+            courses: []
         }
     }
 

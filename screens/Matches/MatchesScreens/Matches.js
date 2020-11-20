@@ -1,27 +1,35 @@
 import React from 'react'
 
-import {View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import {Text,View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 
 class Matches extends React.Component{
 
     constructor() {
         super();
-        this.onPressGoToCourses = this.onPressGoToCourses.bind(this);
     }
 
-    onPressGoToCourses() {
-        this.props.navigation.navigate("Courses");
-    }
-    
+    /*
+    * TODO: Add courses to user database
+    * Test when submitting preference profile will not cause async issues
+    * Render Matches on Matches screen,not ShowMatches
+    * Delete button
+    * Search Function or try catch maybe????
+    * Disconnect Language and Timezone
+    * Add language to Preference Profile using singleton
+    * Update course docs when user edits profile(like language, bio, etc)
+    * WHEN ADDING NON-EXISTING CLASSES, THOSE CLASSES ARE STILL ADDED TO COURSES, a fix is to only have presets. 
+    */
+
     render() {
 
-        return(
+        //console.log(index);
+       return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View style={styles.container}>
-               <Button title="Add class" onPress={this.onPressGoToCourses}/>
-            </View>
-        </TouchableWithoutFeedback>
-        )
+                 <View style={styles.container}>
+                      <Text> Slide to Right To See Class Matches</Text>
+                 </View>
+          </TouchableWithoutFeedback>
+       )
     }
 
     
