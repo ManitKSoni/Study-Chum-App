@@ -89,6 +89,7 @@ class MatchingAlgorithm {
     * Tallies each student in that is in the student map and places them in PQ
     */ 
     orderStudents() {
+       this.queue.clear(); 
        for( var [key,value] of Object.entries(this.studentsMap)) {
            this.tallyPreferences(key, value);
        }

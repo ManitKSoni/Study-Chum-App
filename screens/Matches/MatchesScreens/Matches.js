@@ -9,8 +9,8 @@ class Matches extends React.Component{
     }
 
     /*
-    * TODO: Add courses to user database
-    * Test when submitting preference profile will not cause async issues
+    * TODO: 
+    * 
     * Render Matches on Matches screen,not ShowMatches
     * Delete button
     * Search Function or try catch maybe????
@@ -22,7 +22,6 @@ class Matches extends React.Component{
 
     render() {
 
-        //console.log(index);
        return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                  <View style={styles.container}>

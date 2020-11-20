@@ -4,7 +4,7 @@ import MatchingAlgorithm from "./MatchingAlgorithm"
 
 class ShowMatches extends React.Component {
 
-   // data = this.createData();
+   data = this.createData()
 
     createData() {
         var pq = MatchingAlgorithm.queue;
@@ -21,18 +21,9 @@ class ShowMatches extends React.Component {
             count++;
             data.push(currData);
         }
+
         return data; 
     };
-
-
-    // prob don't need
-    deepCopy() {
-        var currData = [];
-        for(var i = 0; i < this.data.length; i++) {
-            currData.push(this.data[i]);
-        }
-        return currData; 
-    }
     
     render() {
         const renderItem = ({item}) => (
@@ -43,20 +34,16 @@ class ShowMatches extends React.Component {
             />
         );
 
-        /*var currData = this.deepCopy(); 
-        console.log(currData);
-        this.data = []; */
-
-        var data = this.createData(); 
-        console.log(data);
-
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={data}
+                    data={this.data}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
                 />
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Matches")}>
+                    <Text> Go Back To Matches Screen </Text>
+                </TouchableOpacity>
             </View>
         )
         

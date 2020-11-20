@@ -18,7 +18,6 @@ function createData() {
         data.push(currData); 
     }
 
-   // console.log(data);
     return data; 
 };
 
@@ -33,6 +32,7 @@ const Item = ({course, onPress}) => (
 export function DrawerContent(props) {
 
     const onPressGenerate = (course) => {
+        props.navigation.navigate("Courses"); //THE GLUE (lets ShowMatches rerender)
         MatchingAlgorithm.getStudentMap(course, () => props.navigation.navigate("ShowMatches"));
     }
 
