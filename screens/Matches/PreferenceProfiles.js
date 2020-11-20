@@ -2,6 +2,7 @@ import Firebase from '../../config/Firebase'
 import "firebase/firestore";
 import firebase from "firebase/app";
 import userInstance from "../Singletons/UserSingleton";
+import MatchingAlgorithm from "./MatchingAlgorithm"
 
 export class PreferenceProfiles {
      db = Firebase.firestore();
@@ -39,9 +40,36 @@ export class PreferenceProfiles {
 
        if( this.courseName ) {
           courseRef.doc(this.courseName).update({[userID]:  preferenceProfile});
+          this.addCourseToUserArray();
         }
         
         console.log("done");
+    }
+
+    /*
+    * Adds the course name to the user's courses array 
+    */
+    addCourseToUserArray() {
+        var courseRef = this.db.collection("users");
+        var userID = Firebase.auth().currentUser.uid; 
+        var userDoc = courseRef.doc(userID);
+        userDoc.update({courses: firebase.firestore.FieldValue.arrayUnion(this.courseName)})
+        this.addCourseToSingleton(); 
+    }
+
+    addCourseToSingleton() {
+        userInstance._user.courses.push(this.courseName); 
+    }
+
+    /*
+    * Adds the preference profile to the database and starts the algorithm to 
+    * generate matches and goes the show matches.
+    * @param props - used to get navigiate(), so user can see show matches screen
+    */
+   async addAndShow(props) {
+        this.addPreferenceProfile(); 
+        MatchingAlgorithm.getStudentMap(this.courseName, 
+            () => props.navigation.navigate("ShowMatches"));
     }
 
     /*

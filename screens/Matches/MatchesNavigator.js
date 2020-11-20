@@ -29,7 +29,8 @@ export default class MatchesNavigator extends React.Component {
           <Stack.Screen name="Language" component={Language}/>
           <Stack.Screen name="Quiet" component={Quiet}/>
           <Stack.Screen name="TimeOfDay" component={TimeOfDay}/>
-          <Stack.Screen name="ShowMatches" component={ShowMatches}/>
+          <Stack.Screen name="ShowMatches" component={ShowMatches}
+            options={{headerLeft:null}}/>
         </Stack.Navigator>
     )
   }

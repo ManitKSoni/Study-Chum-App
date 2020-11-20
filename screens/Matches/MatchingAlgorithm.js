@@ -19,7 +19,7 @@ class MatchingAlgorithm {
     * will populate priority queue to retrieve top results.
     * @param courseName - name of course doc
     */ 
-    async getStudentMap(courseName) {
+    async getStudentMap(courseName, showMatchesScreen) {
         const docRef = this.db.collection("courses").doc(courseName);
         const doc = await docRef.get();
       
@@ -28,7 +28,7 @@ class MatchingAlgorithm {
             this.studentsMap = doc.get("students");
             this.getCurrentStudent();
             this.orderStudents();
-          //  this.test();
+            showMatchesScreen();
         } else {
             console.log("Course does not exist.");
         }
@@ -63,7 +63,8 @@ class MatchingAlgorithm {
         if(preferences.quiet === currentPref.quiet) {
             tally++; 
         }
-
+        
+        // DELETE
         if(preferences.timeOfDay === currentPref.timeOfDay) {
             tally++; 
         }
