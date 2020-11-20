@@ -72,7 +72,7 @@ class Login extends React.Component {
             alert("Empty fields! Please enter your information in all the fields.")
         } else {
             try {
-                Firebase.auth().signOut();
+                Firebase.auth().signOut(); // TODO: this line makes the UI a bit clunky
                 Firebase.auth()
                     .signInWithEmailAndPassword(email, password)
                     .then(() => {
