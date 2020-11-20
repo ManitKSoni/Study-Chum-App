@@ -10,27 +10,45 @@ class ChatDataModel {
     channels = []
 
     /**
-     * Creates a listener for new chats
+     * Creates a new listener for chats
+     * @param {function} completion function called after new messages
      */
     newChatListener(completion) {
         const query = this.db.collection('chat')
             .where('users', 'array-contains', this.uid)
-            .orderBy('lastTimestamp', "desc")
-            
+            .orderBy('lastTimestamp')
+
         query.onSnapshot((snapshots) => {
             snapshots.docChanges().forEach(change => {
-                switch(change.type) {
+                switch (change.type) {
                     case "added": // When a new channel is created 
-                        channels.push(change.doc.data())
+                        let json = change.doc.data()
+                        json['channelID'] = change.doc.id
+                        this.channels.unshift(json)
                         break;
                     case "modified": // When someone messages
-                        console.log("Someone messaged you", change.doc.data())
+                        let id = change.doc.id
+                        let index = 0
+                        let newChannel = null
+                        this.channels.forEach((channel, i) => {
+                            if (channel.channelID === id) {
+                                index = i
+                                newChannel = channel
+                            }
+                        })
+                        this.channels.splice(index, 1)
+                        newChannel.lastSentMessage = change.doc.get('lastSentMessage')
+                        newChannel.lastTimestamp = change.doc.get('lastTimestamp')
+                        newChannel.lastSender = change.doc.get('lastSender')
+                        this.channels.unshift(newChannel)
+
                         break;
                     default:
                         console.log("Something went wrong")
                         break;
                 }
             })
+            completion(this.channels)
         })
     }
 
@@ -58,7 +76,7 @@ class ChatDataModel {
      */
     createChannel(otherUserID, otherUserName) {
         // TODO: Need to check if channel already exists
-        
+
         this.db.collection('chat').add({
             users: [
                 otherUserID, this.uid

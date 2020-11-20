@@ -1,24 +1,25 @@
 import React from 'react'
 import { View, FlatList, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
 import Firebase from '../../config/Firebase'
+import ChatDataModel from './ChatDataModel'
 
 class Chat extends React.Component {
 
     constructor(props) {
         super(props);
         this.onPressRow = this.onPressRow.bind(this)
+        this.chatDataModel = new ChatDataModel()
         this.state = {
             buddies: []
         }
     }
 
     /** Will assign the buddies array state to database array */
-    async componentWillMount() {
-        let db = Firebase.firestore()
-        let snapshot = await db.collection('chat').get()
-        data = snapshot.docs.map(doc => doc.data())
-        this.setState({ buddies: data })
-        console.log(data);
+    componentWillMount() {
+
+        this.chatDataModel.newChatListener( (channels) => {
+            this.setState({buddies: channels})
+        })
     }
 
     //converts 24 hour to 12 hour format with am/pm
@@ -34,7 +35,7 @@ class Chat extends React.Component {
             convertedTime = "12" + ":" + minutes + " pm";
         } else if (hour > 12) {
             hour = hour - 12;
-            convertedTime = hour + ":" + minutes + " am";
+            convertedTime = hour + ":" + minutes + " pm";
         } else {
             convertedTime = hour + ":" + minutes + " am";
         }
