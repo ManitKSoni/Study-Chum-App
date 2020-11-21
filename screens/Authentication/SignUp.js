@@ -2,8 +2,11 @@ import 'react-native-gesture-handler';
 
 import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
-
+import * as Constants from '../../Constants.js'
 import Firebase from '../../config/Firebase'
+const logoHeight = 2480;
+const logoWidth = 3508;
+const logoRatio = Constants.windowWidth / logoWidth;
 
 class SignUp extends React.Component {
 
@@ -71,8 +74,13 @@ class SignUp extends React.Component {
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+
+
                 <View style={styles.container}>
-                    <Image style={{ width: 140, height: 120 , transform: [{rotate: '-20deg'}]}} source={require('../../assets/study_chums_logo.png')} />
+
+                    <Text style={styles.prompt}>
+                        Register
+                    </Text>
                     <TextInput
                         style={styles.inputBox}
                         value={this.state.email}
@@ -85,6 +93,7 @@ class SignUp extends React.Component {
                         value={this.state.password}
                         onChangeText={password => this.setState({ password })}
                         placeholder='Password'
+                        placeholderTextColor={Constants.placeholderTextcolor}
                         secureTextEntry={true}
                     />
                     <TextInput
@@ -94,44 +103,88 @@ class SignUp extends React.Component {
                         placeholder='Confirm Password'
                         secureTextEntry={true}
                     />
-                    <TouchableOpacity style={styles.buttonSignUp} onPress={this.onPressSignUp}>
-                        <Text>Sign Up</Text>
-                    </TouchableOpacity>
+                    <View style={styles.buttonLayer}>
+                        <Image style={styles.waves} source={require('../../assets/wave_blue.png')} />
+
+                        <TouchableOpacity onPress={() => this.onPressSignUp()} >
+                            <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
+                        </TouchableOpacity>
+
+                    </View>
                 </View>
+
+
             </TouchableWithoutFeedback>
+
         )
     }
 }
 
 const styles = StyleSheet.create({
+
     container: {
+        //alignContent: 'flex-start',
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
+        //alignItems: 'center',
+        paddingLeft: 0,
+        //alignContent: 'flex-start',
+        //justifyContent: 'center'
+    },
+    prompt: {
+        paddingTop: Constants.windowHeight * .15,
+        fontSize: 36,
+        fontFamily: 'MrsEaves-Bold',
+        color: '#000',
+        textAlign: 'left',
+        letterSpacing: 0,
+        alignSelf: 'flex-start',
+        paddingLeft: Constants.windowWidth * .075,
+        paddingBottom: Constants.windowHeight * .02,
+        //alignSelf: 'flex-end',
+        //paddingRight: Constants.windowWidth*.075
+
     },
     inputBox: {
         width: '85%',
-        margin: 10,
-        padding: 15,
-        fontSize: 16,
-        borderColor: '#d3d3d3',
-        borderBottomWidth: 1,
+        margin: 16,
+        fontFamily: 'ProximaNova',
+        //padding: 10,
+        //paddingLeft: 0,
+        alignSelf: 'center',
+        fontSize: 24,
+        borderColor: Constants.boxGrey,
+        borderBottomWidth: .5,
         textAlign: 'left'
     },
-    buttonSignUp: {
-        marginTop: 5,
-        marginBottom: 5,
-        paddingVertical: 15,
-        alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
-        borderWidth: 1,
-        borderRadius: 5,
-        width: 150,
-        textAlign: 'center',
-        fontSize: 15
+    buttonLayer: {
+        flex: 1
     },
+    waves: {
+        position: 'absolute',
+        width: Constants.windowWidth,
+        height: logoHeight * logoRatio, // no y repeat
+        maxHeight: Constants.windowHeight * .3,
+        aspectRatio: 1,
+        bottom: 0,
+        resizeMode: 'repeat',
+        overflow: 'hidden',
+    },
+    fishButton: {
+        height: Constants.windowHeight * .11,
+        width: Constants.windowWidth * .11,
+        //alignSelf: 'flex-start',
+        //position: 'absolute',
+        //paddingTop: Constants.windowHeight*.4,
+        aspectRatio: 1,
+        //paddingLeft: ,
+        left: Constants.windowWidth * .7,
+        top: Constants.windowHeight * .3,
+        //bottom: 0,
+        //left: 0,
+        //position: 'relative',
+        overflow: 'visible',
+    }
 })
 
 export default SignUp

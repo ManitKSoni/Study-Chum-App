@@ -6,12 +6,13 @@ import { Dimensions, View, TextInput, StyleSheet, TouchableOpacity, Text, Toucha
 import Firebase from '../../config/Firebase'
 import userInstance from '../Singletons/UserSingleton'
 import { RotationGestureHandler } from 'react-native-gesture-handler';
+import * as Constants from '../../Constants.js'
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+//const windowWidth = Dimensions.get('window').width;
+//const windowHeight = Dimensions.get('window').height;
 const logoHeight = 443;
 const logoWidth = 512
-const logoRatio = windowWidth / logoWidth;
+const logoRatio = Constants.windowWidth / logoWidth;
 
 class Login extends React.Component {
 
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     imgContainer: {
-        paddingTop: windowHeight / 15,
+        paddingTop: Constants.windowHeight / 15,
         flexDirection: 'column',
         resizeMode: 'contain',
         alignItems: 'center'
@@ -177,16 +178,16 @@ const styles = StyleSheet.create({
 
     studyChumsLogo: {
         resizeMode: 'contain',
-        width: windowWidth,
+        width: Constants.windowWidth,//windowWidth,
         height: logoHeight * logoRatio,
-        maxHeight: windowHeight / 5,
+        maxHeight: Constants.windowHeight / 5,
         overflow: 'hidden',
         justifyContent: 'space-around',
         transform: [{rotate: `331deg`}], //331 normal
     },
     studyChumsTextLogo: {
-        maxWidth: (9 * windowWidth / 10),
-        maxHeight: windowHeight / 7,
+        maxWidth: (9 * Constants.windowWidth / 10),
+        maxHeight: Constants.windowHeight / 7,
         justifyContent: 'center',
         resizeMode: 'contain',
     },
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 15,
         fontSize: 16,
-        borderColor: '#707070',
+        borderColor: Constants.boxGrey,
         borderBottomWidth: 1,
         textAlign: 'left',
         borderLeftWidth: 1,
@@ -205,12 +206,12 @@ const styles = StyleSheet.create({
         fontFamily: 'ProximaNova'
     },
     buttonLogin: {
-        marginTop: windowHeight*.02,
+        marginTop: Constants.windowHeight*.02,
         marginBottom: 5,
         paddingVertical: 10,
         alignItems: 'center',
-        backgroundColor: '#6320EE',
-        borderColor: '#6320EE',
+        backgroundColor: Constants.primaryColor,
+        borderColor: Constants.primaryColor,
         borderWidth: 1,
         borderRadius: 5,
         width: '85%',
@@ -221,19 +222,19 @@ const styles = StyleSheet.create({
     },
     textSignUp: {
         position: 'absolute',
-        top: windowHeight*.9,
+        top: Constants.windowHeight*.9,
         padding: 10,
-        color: '#707070',
+        color: Constants.boxGrey,
         fontSize: 15,
         fontFamily: 'ProximaNova',
     },
     textForgotPassword: {
         fontSize: 12,
         fontFamily: 'ProximaNova',
-        color: '#707070',
+        color: Constants.boxGrey,
         textAlign: 'right',
         alignSelf: 'flex-end',
-        paddingRight: windowWidth*.075
+        paddingRight: Constants.windowWidth*.075
 
     }
 })
