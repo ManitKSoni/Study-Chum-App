@@ -34,7 +34,6 @@ class UserSingleton {
                 console.log(error)
             })
         this._user = user
-        
     }
 }
 

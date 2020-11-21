@@ -2,6 +2,7 @@ import Firebase from '../../config/Firebase'
 import "firebase/firestore";
 import firebase from "firebase/app";
 import userInstance from "../Singletons/UserSingleton";
+import MatchingAlgorithm from "./MatchingAlgorithm"
 
 export class PreferenceProfiles {
      db = Firebase.firestore();
@@ -12,7 +13,6 @@ export class PreferenceProfiles {
             language: "",
             timezone: "",
             quiet: "",
-            timeOfDay: ""
         };
         this.courseName = "";
      }
@@ -23,25 +23,47 @@ export class PreferenceProfiles {
         */ 
      /*  
      * Adds preference profile of current user to chosen course.
-     * @param courseName - The name of course being updated
-     * @param availability - Days of week free
-     * @param language - preferred language
-     * @param timezone - where user lives
-     * @param quiet - quiet or talkative study sessions
-     * @param timeOfDay - the time a user can study
      */
      addPreferenceProfile() {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
+        this.addLanguagePreference(); 
         var preferenceProfile = this.createPreferenceProifle(this.preferences); 
 
         console.log("Adding...")
 
        if( this.courseName ) {
           courseRef.doc(this.courseName).update({[userID]:  preferenceProfile});
+          this.addCourseToUserArray();
         }
         
-        console.log("done...");
+        console.log("done");
+    }
+
+    /*
+    * Adds the course name to the user's courses array 
+    */
+    addCourseToUserArray() {
+        var courseRef = this.db.collection("users");
+        var userID = Firebase.auth().currentUser.uid; 
+        var userDoc = courseRef.doc(userID);
+        userDoc.update({courses: firebase.firestore.FieldValue.arrayUnion(this.courseName)})
+        this.addCourseToSingleton(); 
+    }
+
+    addCourseToSingleton() {
+        userInstance._user.courses.push(this.courseName); 
+    }
+
+    /*
+    * Adds the preference profile to the database and starts the algorithm to 
+    * generate matches and goes the show matches.
+    * @param props - used to get navigiate(), so user can see show matches screen
+    */
+   async addAndShow(props) {
+        this.addPreferenceProfile(); 
+        MatchingAlgorithm.getStudentMap(this.courseName, 
+            () => props.navigation.navigate("ShowMatches"));
     }
 
     /*
@@ -52,10 +74,11 @@ export class PreferenceProfiles {
     createPreferenceProifle(preferences) {
       
        var userData = userInstance._user; 
+       var name = userData.firstName + " " + userData.lastName; 
         var preferenceProfle = {
-            name: userData.name,
+            name: name,
             profilePicture: "Image.png",
-            bio: "So cool",
+            bio: userData.bio,
             endorsements: 1,
             preferences: preferences
         }
@@ -63,24 +86,19 @@ export class PreferenceProfiles {
         return preferenceProfle; 
     }
 
+    /*
+    * Adds language to preference profile from singleton
+    */ 
+   addLanguagePreference() {
+    this.preferences.language = userInstance._user.language; 
+}
+
     addCourse(courseName) {
         this.courseName = courseName;
     }
 
     addAvailability(availability) {
         this.preferences.availability = availability;
-    }
-
-    addTimezone(timezone) {
-        this.preferences.timezone = timezone; 
-    }
-
-    addTimeOfDay(timeOfDay) {
-        this.preferences.timeOfDay = timeOfDay; 
-    }
-
-    addLanguage(language) {
-        this.preferences.language = language; 
     }
 
     addQuiet(quiet) {

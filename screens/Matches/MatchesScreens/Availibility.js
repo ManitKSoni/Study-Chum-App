@@ -37,13 +37,11 @@ class Availibility extends React.Component {
         this.props.navigation.navigate("Matches");
     }
 
-    onPressGoToTimezone = () => {
+    onPressGoToQuiet = () => {
         var availability = this.createAvailabilityMap();
         PreferenceProfiles.addAvailability(availability)
-        this.props.navigation.navigate("Timezone");
+        this.props.navigation.navigate("Quiet");
     }
-
-    onPressGoTo
 
     render() {
      
@@ -99,9 +97,8 @@ class Availibility extends React.Component {
                  onValueChange={(saturday) => this.setState({saturday})}
                  value={this.state.saturday}
                 />
-                <Button title="Submit" onPress={this.onPressGoToTimezone}/>
+                <Button title="Submit" onPress={this.onPressGoToQuiet}/>
                 <Button title="Cancel" onPress={this.onPressGoToMatches}/>
-                <Button title="test" onPress={this.createAvailabilityMap}/>
                
             </View>
         </TouchableWithoutFeedback>
