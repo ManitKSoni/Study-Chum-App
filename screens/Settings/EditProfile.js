@@ -1,84 +1,141 @@
 import React from 'react';
-import {View, TextInput, Button, Keyboard, TouchableWithoutFeedback, StyleSheet} from 'react-native';
+import {
+    View,
+    TextInput,
+    Button,
+    Keyboard,
+    TouchableWithoutFeedback,
+    StyleSheet,
+    TouchableOpacity,
+    Text
+} from 'react-native';
 //import ImagePicker from 'react-native-image-picker';
 import Firebase from '../../config/Firebase';
 import {Image} from "react-native-web";
 
 class EditProfile extends React.Component {
+
+    db = Firebase.firestore();
+    userID = Firebase.auth().currentUser.uid;
+    unsubscribe;
+
     state = {
-        image: '',
-        name: '',
+        firstName: '',
+        lastName: '',
         major: '',
-        classes: '',
+        year: '',
         bio: ''
     }
 
     constructor(props) {
         super(props);
-        this.onPressContinue = this.onPressContinue.bind(this);
-    }
-
-    // launches user's photo library to pick profile picture
-    /*selectImage = () => {
-        const options= {
-            noData: true
-        }
-        ImagePicker.launchImageLibrary(options, response => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker')
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error)
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton)
-            } else {
-                const source = { uri: response.uri }
-                console.log(source)
+        this.onPressSave = this.onPressSave.bind(this);
+        this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
+            doc => {
                 this.setState({
-                    image: source
+                    userDetails: doc.data()
                 })
             }
-        })
-    }*/
-
-    // saves changes to the text fields
-    onPressSave() {}
-
-    render() {
-        return (
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                <Image
-                    source={{ uri: selectImage }}
-                    />
-                <View style={styles.container}>
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.name}
-                        onChangeText={name => this.setState({ name })}
-                        placeholder='Name'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.major}
-                        onChangeText={major => this.setState({ major })}
-                        placeholder='Major'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.classes}
-                        onChangeText={classes => this.setState({ classes })}
-                        placeholder='Classes'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.bio}
-                        onChangeText={bio => this.setState({ bio })}
-                        placeholder='Bio'
-                    />
-                    <Button title="Save" onPress={this.onPressSave}/>
-                </View>
-            </TouchableWithoutFeedback>
         );
     }
+
+    onPressSave() {
+        var userID = Firebase.auth().currentUser.uid;
+        this.db.collection('users').doc(userID).update({
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            major: this.state.major,
+            year: this.state.year,
+            bio: this.state.bio
+        });
+        this.unsubscribe();
+        this.props.navigation.navigate("Settings");
+    }
+
+    getUserDetails() {
+        var userID = Firebase.auth().currentUser.uid;
+        return this.db.collection("users")
+            .doc(userID)
+            .get()
+            .then(function(doc) {
+                return doc.data()
+            })
+            .catch(function(error) {
+                console.log('Error getting user details: ', error)
+            })
+    }
+
+    fetchUserDetails = async () => {
+        try {
+            const userDetails = await this.getUserDetails()
+            this.setState({
+                firstName: userDetails.firstName,
+                lastName: userDetails.lastName,
+                major: userDetails.major,
+                year: userDetails.year,
+                bio: userDetails.bio
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    componentDidMount() {
+        this.fetchUserDetails();
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
+    render() {
+        return(<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={styles.container}>
+                <TextInput
+                    style={styles.inputBox}
+                    value={this.state.firstName}
+                    onChangeText={firstName => this.setState({ firstName })}
+                    placeholder='First Name'
+                    autoCapitalize='none'
+                />
+                <TextInput
+                    style={styles.inputBox}
+                    value={this.state.lastName}
+                    onChangeText={lastName => this.setState({ lastName })}
+                    placeholder='Last Name'
+                    autoCapitalize='none'
+                />
+                <TextInput
+                    style={styles.inputBox}
+                    value={this.state.major}
+                    onChangeText={major => this.setState({ major })}
+                    placeholder='Major'
+                    autoCapitalize='none'
+                />
+                <TextInput
+                    style={styles.inputBox}
+                    value={this.state.year}
+                    onChangeText={year => this.setState({ year })}
+                    placeholder='Graduation Year'
+                    autoCapitalize='none'
+                />
+                <TextInput
+                    style={styles.inputBox}
+                    value={this.state.bio}
+                    onChangeText={bio => this.setState({ bio })}
+                    placeholder='Bio'
+                    autoCapitalize='none'
+                />
+                <Button
+                    style={styles.button}
+                    title="Save"
+                    onPress={this.onPressSave}
+                />
+            </View>
+        </TouchableWithoutFeedback>
+        )
+    }
+
 }
 
 const styles = StyleSheet.create({

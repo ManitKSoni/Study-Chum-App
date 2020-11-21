@@ -13,7 +13,7 @@ import ForgotPassword from './screens/Authentication/ForgotPassword';
 import MainTabBar from './screens/MainTabBar';
 import Spinner from './screens/Reusable/Spinner';
 import CreateUserProfile from './screens/Authentication/CreateUserProfile'
-import Profile from './screens/Settings/EditProfile'
+import Settings from "./screens/Settings/SettingsNavigator";
 
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
@@ -32,7 +32,7 @@ export default class App extends React.Component {
              options={{headerShown:false}} />
           <Stack.Screen name="Spinner" component={Spinner} />
           <Stack.Screen name="CreateUser" component={CreateUserProfile} />
-          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="Settings" component={Settings} />
         </Stack.Navigator>
       </NavigationContainer>
     )
