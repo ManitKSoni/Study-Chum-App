@@ -9,15 +9,13 @@ import {
     TouchableOpacity,
     Text
 } from 'react-native';
-//import ImagePicker from 'react-native-image-picker';
 import Firebase from '../../config/Firebase';
-import {Image} from "react-native-web";
 
 class EditProfile extends React.Component {
 
     db = Firebase.firestore();
     userID = Firebase.auth().currentUser.uid;
-    unsubscribe;
+    unsubscribe; // used to stop checking firestore for updates
 
     state = {
         firstName: '',
@@ -30,17 +28,25 @@ class EditProfile extends React.Component {
     constructor(props) {
         super(props);
         this.onPressSave = this.onPressSave.bind(this);
+        // subscribes to the document holding the current user's profile details
+        // renders updates on screen based on changes to firestore
         this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
             doc => {
                 this.setState({
-                    userDetails: doc.data()
+                    firstName: doc.data().firstName,
+                    lastName: doc.data().lastName,
+                    major: doc.data().major,
+                    year: doc.data().year,
+                    bio: doc.data().bio
                 })
             }
         );
     }
 
+    /** Updates user data in firestore and navigates to EditProfile form */
     onPressSave() {
         var userID = Firebase.auth().currentUser.uid;
+        // update user data
         this.db.collection('users').doc(userID).update({
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -52,6 +58,7 @@ class EditProfile extends React.Component {
         this.props.navigation.navigate("Settings");
     }
 
+    /** Gets the initial user details */
     getUserDetails() {
         var userID = Firebase.auth().currentUser.uid;
         return this.db.collection("users")
@@ -65,6 +72,7 @@ class EditProfile extends React.Component {
             })
     }
 
+    /** Initializes state variables based on the firestore data */
     fetchUserDetails = async () => {
         try {
             const userDetails = await this.getUserDetails()
@@ -80,6 +88,7 @@ class EditProfile extends React.Component {
         }
     }
 
+    /** Called on Settings screen being rendered */
     componentDidMount() {
         this.fetchUserDetails();
     }

@@ -16,7 +16,7 @@ import ForgotPassword from './screens/Authentication/ForgotPassword';
 import MainTabBar from './screens/MainTabBar';
 import Spinner from './screens/Reusable/Spinner';
 import CreateUserProfile from './screens/Authentication/CreateUserProfile'
-import Settings from "./screens/Settings/SettingsNavigator";
+import SettingsNavigator from "./screens/Settings/SettingsNavigator";
 
 let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
@@ -56,7 +56,7 @@ export default class App extends React.Component {
                options={{headerShown:false}} />
             <Stack.Screen name="Spinner" component={Spinner} />
             <Stack.Screen name="CreateUser" component={CreateUserProfile} />
-            <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="Settings" component={SettingsNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       )

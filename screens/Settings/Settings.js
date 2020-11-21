@@ -20,6 +20,8 @@ class Settings extends React.Component{
         super(props);
         this.onPressLogOut = this.onPressLogOut.bind(this);
         this.onPressEditProfile = this.onPressEditProfile(this);
+        // subscribes to the document holding the current user's profile details
+        // renders updates on screen based on changes to firestore
         this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
             doc => {
                 this.setState({
@@ -39,10 +41,12 @@ class Settings extends React.Component{
         }
     }
 
+    /** Navigates to EditProfile form */
     onPressEditProfile() {
         this.props.navigation.navigate("EditProfile");
     }
 
+    /** Gets the initial user details */
     getUserDetails() {
         return this.db.collection("users")
             .doc(this.userID)
@@ -55,6 +59,7 @@ class Settings extends React.Component{
             })
     }
 
+    /** Initializes state variables based on the firestore data */
     fetchUserDetails = async () => {
         try {
             const userDetails = await this.getUserDetails()
@@ -64,6 +69,7 @@ class Settings extends React.Component{
         }
     }
 
+    /** Called on Settings screen being rendered */
     componentDidMount() {
         this.fetchUserDetails();
     }
