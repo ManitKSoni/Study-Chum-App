@@ -34,10 +34,7 @@ export default class MatchesNavigator extends React.Component {
           <Stack.Screen name="Courses" component={Courses} 
             options={{headerLeft:null}} />
           <Stack.Screen name="Availibility" component={Availibility}/>
-          <Stack.Screen name="Timezone" component={Timezone}/>
-          <Stack.Screen name="Language" component={Language}/>
           <Stack.Screen name="Quiet" component={Quiet}/>
-          <Stack.Screen name="TimeOfDay" component={TimeOfDay}/>
           <Stack.Screen name="ShowMatches" component={ShowMatches}
              options = {{
               gestureEnabled: false,

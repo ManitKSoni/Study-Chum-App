@@ -13,7 +13,6 @@ export class PreferenceProfiles {
             language: "",
             timezone: "",
             quiet: "",
-            timeOfDay: ""
         };
         this.courseName = "";
      }
@@ -24,16 +23,11 @@ export class PreferenceProfiles {
         */ 
      /*  
      * Adds preference profile of current user to chosen course.
-     * @param courseName - The name of course being updated
-     * @param availability - Days of week free
-     * @param language - preferred language
-     * @param timezone - where user lives
-     * @param quiet - quiet or talkative study sessions
-     * @param timeOfDay - the time a user can study
      */
      addPreferenceProfile() {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
+        this.addLanguagePreference(); 
         var preferenceProfile = this.createPreferenceProifle(this.preferences); 
 
         console.log("Adding...")
@@ -92,24 +86,19 @@ export class PreferenceProfiles {
         return preferenceProfle; 
     }
 
+    /*
+    * Adds language to preference profile from singleton
+    */ 
+   addLanguagePreference() {
+    this.preferences.language = userInstance._user.language; 
+}
+
     addCourse(courseName) {
         this.courseName = courseName;
     }
 
     addAvailability(availability) {
         this.preferences.availability = availability;
-    }
-
-    addTimezone(timezone) {
-        this.preferences.timezone = timezone; 
-    }
-
-    addTimeOfDay(timeOfDay) {
-        this.preferences.timeOfDay = timeOfDay; 
-    }
-
-    addLanguage(language) {
-        this.preferences.language = language; 
     }
 
     addQuiet(quiet) {

@@ -64,14 +64,10 @@ class MatchingAlgorithm {
             tally++; 
         }
         
-        // DELETE
-        if(preferences.timeOfDay === currentPref.timeOfDay) {
+        // TODO: put back when in user singleton
+       /* if(preferences.timezone === currentPref.timezone) {
             tally++; 
-        }
-
-        if(preferences.timezone === currentPref.timezone) {
-            tally++; 
-        }
+        }*/
 
         var availability = preferences.availability; 
         var currentAvailibility = currentPref.availability;
