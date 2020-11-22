@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Keyboard, StyleSheet, Text, Image, TextInput, TouchableWithoutFeedback, View} from 'react-native'
 //import ImagePicker from 'react-native-image-picker';
-//import { Text, Button, withStyles, Avatar, Icon} from 'react-native-ui-kitten';
+//import { withStyles, Avatar, Icon} from 'react-native-ui-kitten';
 import Firebase from '../../config/Firebase';
 
 
@@ -19,7 +19,7 @@ class Settings extends React.Component{
     constructor(props) {
         super(props);
         this.onPressLogOut = this.onPressLogOut.bind(this);
-        this.onPressEditProfile = this.onPressEditProfile(this);
+        this.onPressEditProfile = this.onPressEditProfile.bind(this);
         // subscribes to the document holding the current user's profile details
         // renders updates on screen based on changes to firestore
         this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(

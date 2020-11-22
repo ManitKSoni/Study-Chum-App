@@ -108,8 +108,6 @@ class Login extends React.Component {
                         <Image style={styles.studyChumsTextLogo} source={require('../../assets/logo_trimmed.png')} />
                     </View>
 
-
-
                     <View style={styles.loginContainer}>
                         <TextInput
                             style={styles.inputBox}
@@ -157,7 +155,6 @@ const styles = StyleSheet.create({
         height: '100%',
         flex: 1,
     },
-
     ProximaNova: {
         fontFamily: 'ProximaNova'
     },

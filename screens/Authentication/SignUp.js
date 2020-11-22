@@ -4,9 +4,6 @@ import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image, ImageBackground } from 'react-native'
 import * as Constants from '../../Constants.js'
 import Firebase from '../../config/Firebase'
-const logoHeight = 2480;
-const logoWidth = 3508;
-const logoRatio = Constants.windowWidth / logoWidth;
 
 class SignUp extends React.Component {
 
@@ -20,6 +17,7 @@ class SignUp extends React.Component {
         password: '',
         passwordConfirm: ''
     }
+
 
     /** 
      * Check that the password the user enter matches their confirmation password 
@@ -75,35 +73,33 @@ class SignUp extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.prompt}> Register </Text>
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.state.email}
-                            onChangeText={email => this.setState({ email })}
-                            placeholder='Email'
-                            autoCapitalize='none'
-                        />
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.state.password}
-                            onChangeText={password => this.setState({ password })}
-                            placeholder='Password'
-                            placeholderTextColor={Constants.placeholderTextcolor}
-                            secureTextEntry={true}
-                        />
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.state.passwordConfirm}
-                            onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-                            placeholder='Confirm Password'
-                            secureTextEntry={true}
-                        />
-                    </View>
+                    <Text style={styles.prompt}> Register </Text>
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.email}
+                        onChangeText={email => this.setState({ email })}
+                        placeholder='Email'
+                        autoCapitalize='none'
+                    />
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.password}
+                        onChangeText={password => this.setState({ password })}
+                        placeholder='Password'
+                        placeholderTextColor={Constants.placeholderTextcolor}
+                        secureTextEntry={true}
+                    />
+                    <TextInput
+                        style={styles.inputBox}
+                        value={this.state.passwordConfirm}
+                        onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
+                        placeholder='Confirm Password'
+                        secureTextEntry={true}
+                    />
 
                     <View style={styles.buttonLayer}>
-                        <ImageBackground style={styles.waves} source={require('../../assets/wave_blue.png')} >
-                            <View style = {styles.posFish}>
+                        <ImageBackground style={styles.waves} source={require('../../assets/wave.png')} >
+                            <View style={styles.posFish}>
                                 <TouchableOpacity onPress={() => this.onPressSignUp()} >
                                     <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
                                 </TouchableOpacity>
@@ -155,7 +151,7 @@ const styles = StyleSheet.create({
     },
     waves: {
         width: Constants.windowWidth,
-        height: logoHeight * logoRatio,
+        height: Constants.waveHeight * Constants.waveWidthRatio,
         resizeMode: 'contain',
     },
     fishButton: {
@@ -164,11 +160,12 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         alignSelf: 'flex-end',
     },
-    posFish :{
-        flex: 1, 
+    posFish: {
+        flex: 1,
+        alignSelf: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingRight: 20, 
+        paddingRight: 20,
         paddingBottom: 45,
     },
 })
