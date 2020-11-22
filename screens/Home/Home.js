@@ -5,11 +5,13 @@ import * as Constants from '../../Constants.js'
 class Home extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {img: <Image style={{
-            width: Constants.windowWidth * .8,
-            height: Constants.windowWidth * .8,
-            resizeMode: 'contain', transform: [{ rotate: `${this.tiltAngle()}deg` }]
-        }} source={require('../../assets/study_chums_logo.png')} ></Image>}
+        this.state = {
+            img: <Image style={{
+                width: Constants.windowWidth * .8,
+                height: Constants.windowWidth * .8,
+                resizeMode: 'contain', transform: [{ rotate: `${this.tiltAngle()}deg` }]
+            }} source={require('../../assets/study_chums_logo.png')} ></Image>
+        }
         this.onButtonPress = this.onButtonPress.bind(this)
         this.tiltAngle = this.tiltAngle.bind(this)
     }
@@ -20,11 +22,11 @@ class Home extends React.Component {
     onButtonPress = () => {
         var ang = this.tiltAngle();
         this.setState({
-          img: <Image style={{
-            width: Constants.windowWidth * .8,
-            height: Constants.windowWidth * .8,
-            resizeMode: 'contain', transform: [{ rotate: `${ang}deg` }]
-        }} source={require('../../assets/study_chums_logo.png')} ></Image>
+            img: <Image style={{
+                width: Constants.windowWidth * .8,
+                height: Constants.windowWidth * .8,
+                resizeMode: 'contain', transform: [{ rotate: `${ang}deg` }]
+            }} source={require('../../assets/study_chums_logo.png')} ></Image>
         });
     }
 
