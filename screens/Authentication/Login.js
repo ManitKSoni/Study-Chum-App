@@ -93,11 +93,6 @@ class Login extends React.Component {
         }
     }
 
-
-    tiltAngle() {
-        let tilt = Math.random() * 180
-        return Math.random() < .5 ? -1 * tilt : tilt
-    }
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

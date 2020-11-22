@@ -8,7 +8,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import * as Font from 'expo-font';
 
-
 import LoginSpinner from './screens/Loading/LoginSpinner';
 import Login from './screens/Authentication/Login';
 import SignUp from './screens/Authentication/SignUp';
@@ -17,6 +16,8 @@ import MainTabBar from './screens/MainTabBar';
 import Spinner from './screens/Reusable/Spinner';
 import CreateUserProfile from './screens/Authentication/CreateUserProfile'
 import SettingsNavigator from "./screens/Settings/SettingsNavigator";
+
+import * as MajorsList from './MajorsList';
 
 let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
@@ -40,7 +41,10 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this._loadFontsAsync();
-    Expo.Asset.fromModule(require("./assets/wave.png")).downloadAsync()
+    Expo.Asset.fromModule(require('./assets/wave.png')).downloadAsync();
+    Expo.Asset.fromModule(require('./assets/study_chums_logo.png')).downloadAsync();
+    Expo.Asset.fromModule(require('./assets/sick_logo.png')).downloadAsync();
+    console.log(MajorsList.majorsList2);
   }
 
   render() {
