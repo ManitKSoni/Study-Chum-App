@@ -9,8 +9,9 @@ import Courses from "./MatchesScreens/Courses"
 import Availibility from './MatchesScreens/Availibility';
 import Blank from "./MatchesScreens/Blank";
 import Quiet from "./MatchesScreens/Quiet";
-import ShowMatches from "./ShowMatches";
+import ShowMatches from "./MatchesScreens/ShowMatches";
 import Remote from "./MatchesScreens/Remote";
+import UserProfile from "./MatchesScreens/UserProfile"
 import {Icon} from 'react-native-elements';
 
 
@@ -78,6 +79,8 @@ export default class MatchesNavigator extends React.Component {
             }}/>  
             
             <Stack.Screen name="Blank" component={Blank} options={{headerShown:null}}/> 
+
+            <Stack.Screen name="UserProfile" component={UserProfile}/>
 
         </Stack.Navigator>
     )
