@@ -41,7 +41,6 @@ class ChatDataModel {
                         newChannel.lastTimestamp = change.doc.get('lastTimestamp')
                         newChannel.lastSender = change.doc.get('lastSender')
                         this.channels.unshift(newChannel)
-                        console.log('seomthing changes')
                         break;
                     default:
                         console.log("Something went wrong")
@@ -95,22 +94,6 @@ class ChatDataModel {
             lastSentMessage: "",
             lastSender: ""
         })
-    }
-
-    /**
-     * Queries for all the channels that the user is involved in
-     * @deprecated
-     */
-    async getAllChannels() {
-        const query = this.db.collection('chat')
-            .where('users', 'array-contains', this.uid)
-            .orderBy('lastTimestamp')
-
-        let snapshot = await query.get()
-        let map = snapshot.docs.map(doc => doc.data())
-        console.log("map")
-        console.log(map)
-        return map
     }
 }
 
