@@ -1,10 +1,11 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet, FlatList, View, StatusBar} from 'react-native';
-import {DrawerContentScrollView} from "@react-navigation/drawer";
 import {Drawer} from 'react-native-paper'
 import UserSingleton from "../Singletons/UserSingleton"; 
 import MatchingAlgorithm from "./MatchingAlgorithm";
-
+import SavedData from "./SavedData"
+import Swipeout from "react-native-swipeout"; 
+import PreferenceProfiles from "./PreferenceProfiles"
 
 function createData() {
     var data = []; 
@@ -21,23 +22,35 @@ function createData() {
     return data; 
 };
 
+function deletePreferenceProfile(props,course) {
+    PreferenceProfiles.deletePreferenceProfile(course);
+    props.navigation.closeDrawer(); 
 
-const Item = ({course, onPress}) => (
+}
+
+const Item = ({props, course, onPress}) => (
+    
+  <Swipeout buttonWidth={70} backgroundColor={"#FFFFFF"} sensitivity={1000} 
+    autoClose={true} left={[{text:"Delete", backgroundColor:"red",
+     onPress: () => deletePreferenceProfile(props,course)}]} >
     <TouchableOpacity style={styles.item} onPress={onPress}> 
         <Text style={styles.courses}> {course} </Text>
     </TouchableOpacity>
+   </Swipeout>
+  
 )
 
 
 export function DrawerContent(props) {
 
     const onPressGenerate = (course) => {
-        props.navigation.navigate("Courses"); //THE GLUE (lets ShowMatches rerender)
+        props.navigation.navigate("Blank"); //THE GLUE (lets ShowMatches rerender)
+        SavedData.changeTitle(course);
         MatchingAlgorithm.getStudentMap(course, () => props.navigation.navigate("ShowMatches"));
     }
 
     const renderItem = ({item}) => (
-        <Item course = {item.course} 
+        <Item props={props} course = {item.course} 
             onPress = {() => onPressGenerate(item.course)}
         />
     );
