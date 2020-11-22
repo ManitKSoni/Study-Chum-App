@@ -26,9 +26,11 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+    "react-native-cli": "^2.0.1",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-gifted-chat": "^0.16.3",
+    "react-native-image-picker": "^0.28.0",
     "react-native-paper": "^4.4.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
@@ -39,8 +41,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
-    "react-editext": "^3.17.1",
-    "react-native-image-picker": "^2.3.4"
+    "react-editext": "^3.17.1"
   },
   "private": true
 }
