@@ -148,6 +148,7 @@ class Settings extends React.Component{
             path: 'images',
           },
         };
+        
         ImagePicker.launchImageLibrary(options, (response) => {
           console.log('Response = ', response);
     
