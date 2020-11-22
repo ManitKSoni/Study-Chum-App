@@ -37,8 +37,10 @@ export default class App extends React.Component {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
   }
+
   componentDidMount() {
     this._loadFontsAsync();
+    Expo.Asset.fromModule(require("./assets/wave.png")).downloadAsync()
   }
 
   render() {
