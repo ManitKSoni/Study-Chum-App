@@ -75,7 +75,6 @@ class SignUp extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                    <View style={styles.textContainer}>
                         <Text style={styles.prompt}> Register </Text>
                         <TextInput
                             style={styles.inputBox}
@@ -99,7 +98,6 @@ class SignUp extends React.Component {
                             placeholder='Confirm Password'
                             secureTextEntry={true}
                         />
-                    </View>
 
                     <View style={styles.buttonLayer}>
                         <ImageBackground style={styles.waves} source={require('../../assets/wave_blue.png')} >
@@ -166,6 +164,7 @@ const styles = StyleSheet.create({
     },
     posFish :{
         flex: 1, 
+        alignSelf: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
         paddingRight: 20, 
