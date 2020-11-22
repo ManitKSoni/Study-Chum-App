@@ -1,27 +1,39 @@
 import React from 'react'
-import {View, Button, Keyboard, TextInput, TouchableWithoutFeedback, StyleSheet} from 'react-native'
-// import ImagePicker from 'react-native-image-picker';
-import Firebase from '../../config/Firebase'
-import {Image} from "react-native-web";
+import {Button, Keyboard, StyleSheet, Text, Image, TextInput, TouchableWithoutFeedback, View} from 'react-native'
+//import ImagePicker from 'react-native-image-picker';
+//import { Text, Button, withStyles, Avatar, Icon} from 'react-native-ui-kitten';
+import Firebase from '../../config/Firebase';
+
 
 class Settings extends React.Component{
 
+    db = Firebase.firestore();
+    userID = Firebase.auth().currentUser.uid;
+    unsubscribe;
+
     state = {
-        image: '',
-        name: '',
-        major: '',
-        classes: '',
-        bio: ''
+        bio: '',
+        userDetails: ''
     }
     
-    constructor() {
-        super();
-        this.onPressLogOut= this.onPressLogOut.bind(this)
-        //this.onPressContinue = this.onPressContinue.bind(this);
+    constructor(props) {
+        super(props);
+        this.onPressLogOut = this.onPressLogOut.bind(this);
+        this.onPressEditProfile = this.onPressEditProfile(this);
+        // subscribes to the document holding the current user's profile details
+        // renders updates on screen based on changes to firestore
+        this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
+            doc => {
+                this.setState({
+                    userDetails: doc.data()
+                })
+            }
+        );
     }
 
     /** Handle logging out and reset stack */
     onPressLogOut() {
+        this.unsubscribe();
         try {
             Firebase.auth().signOut();
         } catch (e) {
@@ -29,6 +41,44 @@ class Settings extends React.Component{
         }
     }
 
+    /** Navigates to EditProfile form */
+    onPressEditProfile() {
+        this.props.navigation.navigate("EditProfile");
+    }
+
+    /** Gets the initial user details */
+    getUserDetails() {
+        return this.db.collection("users")
+            .doc(this.userID)
+            .get()
+            .then(function(doc) {
+                return doc.data()
+        })
+            .catch(function(error) {
+                console.log('Error getting user details: ', error)
+            })
+    }
+
+    /** Initializes state variables based on the firestore data */
+    fetchUserDetails = async () => {
+        try {
+            const userDetails = await this.getUserDetails()
+            this.setState({ userDetails })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    /** Called on Settings screen being rendered */
+    componentDidMount() {
+        this.fetchUserDetails();
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
+    /** launches user's photo library to pick profile picture */
     /* selectImage = () => {
         const options= {
             noData: true
@@ -59,29 +109,26 @@ class Settings extends React.Component{
                         title="Log out"
                         onPress={this.onPressLogOut}
                     />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.name}
-                        onChangeText={name => this.setState({ name })}
-                        placeholder='Name'
+                    <Image
+                        style={styles.image}
+                        source={require('./tumblr_inline_pazyiucOAC1v37n4k_1280.jpg')}
                     />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.major}
-                        onChangeText={major => this.setState({ major })}
-                        placeholder='Major'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.classes}
-                        onChangeText={classes => this.setState({ classes })}
-                        placeholder='Classes'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.bio}
-                        onChangeText={bio => this.setState({ bio })}
-                        placeholder='Bio'
+                    <Text
+                        style={styles.text}>
+                        {this.state.userDetails.firstName + " " + this.state.userDetails.lastName}
+                    </Text>
+                    <Text
+                        style={styles.text}>
+                        {this.state.userDetails.major + " " + this.state.userDetails.year}
+                    </Text>
+                    <Text
+                        style={styles.text}>
+                        {this.state.userDetails.bio}
+                    </Text>
+                    <Button
+                        style={styles.button}
+                        title="Edit Profile"
+                        onPress={this.onPressEditProfile}
                     />
                 </View>
             </TouchableWithoutFeedback>
@@ -96,7 +143,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    inputBox: {
+    text: {
         width: '100%',
         margin: 10,
         padding: 15,
@@ -118,8 +165,14 @@ const styles = StyleSheet.create({
         width: 150,
         textAlign: 'center',
         fontSize: 15
+    },
+
+    image: {
+        alignSelf: 'center',
+        width: 100,
+        height: 100
     }
 
 })
 
-export default Settings
+export default Settings;

@@ -16,10 +16,12 @@ import ForgotPassword from './screens/Authentication/ForgotPassword';
 import MainTabBar from './screens/MainTabBar';
 import Spinner from './screens/Reusable/Spinner';
 import CreateUserProfile from './screens/Authentication/CreateUserProfile'
-import Profile from './screens/Settings/Profile'
+import SettingsNavigator from "./screens/Settings/SettingsNavigator";
 
 let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
+  'ProximaNova': require('./assets/Fonts/ProximaNova.ttf'),
+  'MrsEaves-Bold' : require('./assets/Fonts/MrsEaves-Bold.ttf')
 };
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
@@ -38,25 +40,25 @@ export default class App extends React.Component {
   componentDidMount() {
     this._loadFontsAsync();
   }
-  
+
   render() {
     if (this.state.fontsLoaded) {
- 
+
       return (
         <NavigationContainer>
           <Stack.Navigator initialRouteName="LoginSpinner">
-            <Stack.Screen name="LoginSpinner" component={LoginSpinner} 
+            <Stack.Screen name="LoginSpinner" component={LoginSpinner}
                 options={{headerShown:false}} />
-            <Stack.Screen name="Login" component={Login} 
+            <Stack.Screen name="Login" component={Login}
                 options={{headerShown:false}}/>
-            <Stack.Screen name="SignUp" component={SignUp} 
+            <Stack.Screen name="SignUp" component={SignUp}
                 options={{title:""}} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            <Stack.Screen name="Home" component={MainTabBar} 
+            <Stack.Screen name="Home" component={MainTabBar}
                options={{headerShown:false}} />
             <Stack.Screen name="Spinner" component={Spinner} />
             <Stack.Screen name="CreateUser" component={CreateUserProfile} />
-            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Settings" component={SettingsNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       )
@@ -75,5 +77,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-
