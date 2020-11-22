@@ -10,8 +10,12 @@ import PreferenceProfiles from "./PreferenceProfiles"
 function createData() {
     var data = []; 
     //Will have to get data from database to display when updated or add to singleton maybe
-    var courses = UserSingleton._user.courses; 
-    for(var i = 0; i < courses.length; i++) {
+    var courses = UserSingleton._user.courses;
+    let unique = courses.filter((c, index) => {
+        return courses.indexOf(c) === index;
+    });
+
+    for(var i = 0; i < unique.length; i++) {
         var currData = {
             id: i.toString(),
             course: courses[i]
