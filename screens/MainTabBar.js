@@ -1,4 +1,5 @@
 import React from 'react'
+import {Image, StyleSheet} from 'react-native'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -17,7 +18,40 @@ class MainTabBar extends React.Component {
 
     render() {
         return (
-            <Tab.Navigator>
+            <Tab.Navigator screenOptions={({route}) => ({
+                tabBarIcon: ({focused, color, size}) => {
+
+                    switch(route.name) {
+                        case 'Home':
+                            if (focused) {
+                                return <Image style={styles.icon} source={require('../assets/home_selected.png')} />
+                            } else {
+                                return <Image style={styles.icon} source={require('../assets/home_unselected.png')} />
+                            }
+                        case 'Matches':
+                            if (focused) {
+                                return <Image style={styles.icon} source={require('../assets/matches_selected.png')} />
+                            } else {
+                                return <Image style={styles.icon} source={require('../assets/matches_unselected.png')} />
+                            }
+                        case 'Chat':
+                            if (focused) {
+                                return <Image style={styles.icon} source={require('../assets/chat_selected.png')} />
+                            } else {
+                                return <Image style={styles.icon} source={require('../assets/chat_unselected.png')} />
+                            }
+                        case 'Settings':
+                            if (focused) {
+                                return <Image style={styles.icon} source={require('../assets/settings_selected.png')} />
+                            } else {
+                                return <Image style={styles.icon} source={require('../assets/settings_unselected.png')} />
+                            }
+                    }
+                },
+            })} 
+            tabBarOptions={{
+                showLabel: false
+            }}>
                 <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Matches" component={MatchesDrawerNavigator} />
                 <Tab.Screen name="Chat" component={ChatNavigator} />
@@ -26,5 +60,17 @@ class MainTabBar extends React.Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    icon: {
+        resizeMode: 'contain',
+        width: 35,
+        height: 35,
+        // maxHeight: Constants.windowHeight / 5,
+        overflow: 'hidden',
+        justifyContent: 'space-around',
+        // transform: [{rotate: `331deg`}], //331 normal
+    }
+})
 
 export default MainTabBar

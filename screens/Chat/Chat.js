@@ -74,9 +74,11 @@ class Chat extends React.Component {
 
     /** Handles an individual channel and launches a new screen passing data required **/
     onPressRow(item, uid) {
+
         this.props.navigation.navigate("Channel", {
             userData: item,
             uid: uid,
+            title: item[uid].name
         });
     }
 

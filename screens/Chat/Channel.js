@@ -30,7 +30,8 @@ class Channel extends React.Component {
   }
 
   componentDidMount() {
-    const { userData, uid } = this.props.route.params;
+    const { userData, uid, title } = this.props.route.params;
+    this.props.navigation.setOptions({title: title})
     let channelID = userData.channelID 
     this.threadModel = new ThreadModel(channelID)
     this.unsubscribe = this.threadModel.threadListener((messages) => {
