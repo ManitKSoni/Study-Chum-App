@@ -26,7 +26,7 @@ class Home extends React.Component {
             resizeMode: 'contain', transform: [{ rotate: `${ang}deg` }]
         }} source={require('../../assets/study_chums_logo.png')} ></Image>
         });
-      }
+    }
 
     render() {
         return (

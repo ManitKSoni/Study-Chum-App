@@ -98,6 +98,7 @@ class Login extends React.Component {
         let tilt = Math.random() * 180
         return Math.random() < .5 ? -1 * tilt : tilt
     }
+    
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -232,7 +233,6 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         alignSelf: 'flex-end',
         paddingRight: Constants.windowWidth*.075
-
     }
 })
 
