@@ -27,7 +27,7 @@ export default class MatchesNavigator extends React.Component {
             options = {{
               title: "Matches",
               headerStyle: {backgroundColor: "#8075FF"},
-              headerTitleStyle: {color:"#FFFFFF"},
+              headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova"},
               headerLeft: () => (
                 <Icon name="menu" size={30} containerStyle={{paddingLeft:5}} color="#FFFFFF"
                 backgroundColor="#009387" onPress={()=> this.props.navigation.openDrawer()}/>
@@ -80,7 +80,7 @@ export default class MatchesNavigator extends React.Component {
             
             <Stack.Screen name="Blank" component={Blank} options={{headerShown:null}}/> 
 
-            <Stack.Screen name="UserProfile" component={UserProfile}/>
+            <Stack.Screen name="UserProfile" component={UserProfile} options={{headerLeft:null}}/>
 
         </Stack.Navigator>
     )
