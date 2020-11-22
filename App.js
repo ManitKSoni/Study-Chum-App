@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,7 +21,7 @@ import SettingsNavigator from "./screens/Settings/SettingsNavigator";
 let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
   'ProximaNova': require('./assets/Fonts/ProximaNova.ttf'),
-  'MrsEaves-Bold' : require('./assets/Fonts/MrsEaves-Bold.ttf')
+  'MrsEaves-Bold': require('./assets/Fonts/MrsEaves-Bold.ttf')
 };
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
@@ -45,19 +45,19 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.fontsLoaded) {
-
       return (
         <NavigationContainer>
           <Stack.Navigator initialRouteName="LoginSpinner">
             <Stack.Screen name="LoginSpinner" component={LoginSpinner}
-                options={{headerShown:false}} />
+              options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login}
-                options={{headerShown:false}}/>
+              options={{ headerShown: false }} />
             <Stack.Screen name="SignUp" component={SignUp}
-                options={{title:""}} />
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+              options={displayOnlyBackArrow} />
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword}
+              options={displayOnlyBackArrow} />
             <Stack.Screen name="Home" component={MainTabBar}
-               options={{headerShown:false}} />
+              options={{ headerShown: false }} />
             <Stack.Screen name="Spinner" component={Spinner} />
             <Stack.Screen name="CreateUser" component={CreateUserProfile} />
             <Stack.Screen name="Settings" component={SettingsNavigator} />
@@ -70,12 +70,12 @@ export default class App extends React.Component {
   }
 }
 
-/** Place holder style sheets **/
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const displayOnlyBackArrow = {
+  title: "",
+  headerStyle: {
+    elevation: 0,
+    shadowOpacity: 0,
+    borderBottomWidth: 0,
+  }
+};
+
