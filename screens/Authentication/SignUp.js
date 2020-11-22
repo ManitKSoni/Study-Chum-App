@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image, ImageBackground } from 'react-native'
 import * as Constants from '../../Constants.js'
 import Firebase from '../../config/Firebase'
 const logoHeight = 2480;
@@ -74,46 +74,44 @@ class SignUp extends React.Component {
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-
-
                 <View style={styles.container}>
-
-                    <Text style={styles.prompt}>
-                        Register
-                    </Text>
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.email}
-                        onChangeText={email => this.setState({ email })}
-                        placeholder='Email'
-                        autoCapitalize='none'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.password}
-                        onChangeText={password => this.setState({ password })}
-                        placeholder='Password'
-                        placeholderTextColor={Constants.placeholderTextcolor}
-                        secureTextEntry={true}
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.passwordConfirm}
-                        onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-                        placeholder='Confirm Password'
-                        secureTextEntry={true}
-                    />
-                    <View style={styles.buttonLayer}>
-                        <Image style={styles.waves} source={require('../../assets/wave_blue.png')} />
-
-                        <TouchableOpacity onPress={() => this.onPressSignUp()} >
-                            <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
-                        </TouchableOpacity>
-
+                    <View style={styles.textContainer}>
+                        <Text style={styles.prompt}> Register </Text>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.email}
+                            onChangeText={email => this.setState({ email })}
+                            placeholder='Email'
+                            autoCapitalize='none'
+                        />
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.password}
+                            onChangeText={password => this.setState({ password })}
+                            placeholder='Password'
+                            placeholderTextColor={Constants.placeholderTextcolor}
+                            secureTextEntry={true}
+                        />
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.passwordConfirm}
+                            onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
+                            placeholder='Confirm Password'
+                            secureTextEntry={true}
+                        />
                     </View>
+
+                    <View style={styles.buttonLayer}>
+                        <ImageBackground style={styles.waves} source={require('../../assets/wave_blue.png')} >
+                            <View style = {styles.posFish}>
+                                <TouchableOpacity onPress={() => this.onPressSignUp()} >
+                                    <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
+                                </TouchableOpacity>
+                            </View>
+                        </ImageBackground>
+                    </View>
+
                 </View>
-
-
             </TouchableWithoutFeedback>
 
         )
@@ -121,36 +119,29 @@ class SignUp extends React.Component {
 }
 
 const styles = StyleSheet.create({
-
     container: {
-        //alignContent: 'flex-start',
+        alignContent: 'flex-start',
         flex: 1,
         backgroundColor: '#fff',
-        //alignItems: 'center',
-        paddingLeft: 0,
-        //alignContent: 'flex-start',
-        //justifyContent: 'center'
+    },
+    textContainer: {
+        flex: 1,
     },
     prompt: {
         paddingTop: Constants.windowHeight * .15,
         fontSize: 36,
         fontFamily: 'MrsEaves-Bold',
-        color: '#000',
+        color: 'black',
         textAlign: 'left',
         letterSpacing: 0,
         alignSelf: 'flex-start',
-        paddingLeft: Constants.windowWidth * .075,
+        paddingLeft: Constants.windowWidth * .045,
         paddingBottom: Constants.windowHeight * .02,
-        //alignSelf: 'flex-end',
-        //paddingRight: Constants.windowWidth*.075
-
     },
     inputBox: {
         width: '85%',
         margin: 16,
         fontFamily: 'ProximaNova',
-        //padding: 10,
-        //paddingLeft: 0,
         alignSelf: 'center',
         fontSize: 24,
         borderColor: Constants.boxGrey,
@@ -158,33 +149,28 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     },
     buttonLayer: {
-        flex: 1
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
     },
     waves: {
-        position: 'absolute',
         width: Constants.windowWidth,
-        height: logoHeight * logoRatio, // no y repeat
-        maxHeight: Constants.windowHeight * .3,
-        aspectRatio: 1,
-        bottom: 0,
-        resizeMode: 'repeat',
-        overflow: 'hidden',
+        height: logoHeight * logoRatio,
+        resizeMode: 'contain',
     },
     fishButton: {
-        height: Constants.windowHeight * .11,
-        width: Constants.windowWidth * .11,
-        //alignSelf: 'flex-start',
-        //position: 'absolute',
-        //paddingTop: Constants.windowHeight*.4,
-        aspectRatio: 1,
-        //paddingLeft: ,
-        left: Constants.windowWidth * .7,
-        top: Constants.windowHeight * .3,
-        //bottom: 0,
-        //left: 0,
-        //position: 'relative',
-        overflow: 'visible',
-    }
+        height: Constants.windowHeight * 0.20,
+        width: Constants.windowWidth * 0.20,
+        resizeMode: 'contain',
+        alignSelf: 'flex-end',
+    },
+    posFish :{
+        flex: 1, 
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        paddingRight: 20, 
+        paddingBottom: 45,
+    },
 })
 
 export default SignUp
