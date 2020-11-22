@@ -9,7 +9,9 @@ import Courses from "./MatchesScreens/Courses"
 import Availibility from './MatchesScreens/Availibility';
 import Blank from "./MatchesScreens/Blank";
 import Quiet from "./MatchesScreens/Quiet";
-import ShowMatches from "./ShowMatches";
+import ShowMatches from "./MatchesScreens/ShowMatches";
+import Remote from "./MatchesScreens/Remote";
+import UserProfile from "./MatchesScreens/UserProfile"
 import {Icon} from 'react-native-elements';
 
 
@@ -62,14 +64,23 @@ export default class MatchesNavigator extends React.Component {
               gestureEnabled: false,
               headerStyle: {backgroundColor: "#8075FF"},
               headerTitleStyle: {color:"#FFFFFF"},
-              title: "Matches",
+              title: "ShowMatches",
               headerLeft: () => (
                 <Icon name="menu" size ={30} containerStyle={{paddingLeft:5}} color="#FFFFFF"
                 backgroundColor="#009387" onPress={()=> this.props.navigation.openDrawer()}/>
               )
             }}/>
 
+          <Stack.Screen name="Remote" component={Remote}
+           options = {{
+            headerLeft:null, 
+            headerStyle: {backgroundColor: "#8075FF"},
+            headerTitleStyle: {color:"#FFFFFF"},
+            }}/>  
+            
             <Stack.Screen name="Blank" component={Blank} options={{headerShown:null}}/> 
+
+            <Stack.Screen name="UserProfile" component={UserProfile}/>
 
         </Stack.Navigator>
     )
