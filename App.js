@@ -20,8 +20,8 @@ import SettingsNavigator from "./screens/Settings/SettingsNavigator";
 
 let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
-  'ProximaNova': require('./assets/Fonts/ProximaNova.ttf')
-
+  'ProximaNova': require('./assets/Fonts/ProximaNova.ttf'),
+  'MrsEaves-Bold' : require('./assets/Fonts/MrsEaves-Bold.ttf')
 };
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
