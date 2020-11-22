@@ -70,6 +70,12 @@ class MatchingAlgorithm {
             tally++; 
         }*/
 
+        //TODO: turn on once people update their added courses
+        /*
+        if(preferences.remote === currentPref.remote) {
+            tally++; 
+        }*/ 
+
         var availability = preferences.availability; 
         var currentAvailibility = currentPref.availability;
 

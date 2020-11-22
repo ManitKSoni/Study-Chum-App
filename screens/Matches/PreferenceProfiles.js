@@ -14,6 +14,7 @@ export class PreferenceProfiles {
             language: "",
             timezone: "",
             quiet: false,
+            remote: false
         };
         this.courseName = "";
      }
@@ -105,6 +106,10 @@ export class PreferenceProfiles {
 
     addQuiet(quiet) {
         this.preferences.quiet = quiet; 
+    }
+
+    addRemote(remote) {
+        this.preferences.remote = remote;
     }
 
     //TESTING PURPOSES

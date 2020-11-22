@@ -10,6 +10,7 @@ import Availibility from './MatchesScreens/Availibility';
 import Blank from "./MatchesScreens/Blank";
 import Quiet from "./MatchesScreens/Quiet";
 import ShowMatches from "./ShowMatches";
+import Remote from "./MatchesScreens/Remote";
 import {Icon} from 'react-native-elements';
 
 
@@ -62,13 +63,20 @@ export default class MatchesNavigator extends React.Component {
               gestureEnabled: false,
               headerStyle: {backgroundColor: "#8075FF"},
               headerTitleStyle: {color:"#FFFFFF"},
-              title: "Matches",
+              title: "ShowMatches",
               headerLeft: () => (
                 <Icon name="menu" size ={30} containerStyle={{paddingLeft:5}} color="#FFFFFF"
                 backgroundColor="#009387" onPress={()=> this.props.navigation.openDrawer()}/>
               )
             }}/>
 
+          <Stack.Screen name="Remote" component={Remote}
+           options = {{
+            headerLeft:null, 
+            headerStyle: {backgroundColor: "#8075FF"},
+            headerTitleStyle: {color:"#FFFFFF"},
+            }}/>  
+            
             <Stack.Screen name="Blank" component={Blank} options={{headerShown:null}}/> 
 
         </Stack.Navigator>

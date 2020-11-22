@@ -37,10 +37,10 @@ class Availibility extends React.Component {
         this.props.navigation.navigate("Matches");
     }
 
-    onPressGoToQuiet = () => {
+    onPressGoToRemote = () => {
         var availability = this.createAvailabilityMap();
         PreferenceProfiles.addAvailability(availability)
-        this.props.navigation.navigate("Quiet");
+        this.props.navigation.navigate("Remote");
     }
 
     render() {
@@ -97,7 +97,7 @@ class Availibility extends React.Component {
                  onValueChange={(saturday) => this.setState({saturday})}
                  value={this.state.saturday}
                 />
-                <Button title="Submit" onPress={this.onPressGoToQuiet}/>
+                <Button title="Submit" onPress={this.onPressGoToRemote}/>
                 <Button title="Cancel" onPress={this.onPressGoToMatches}/>
                
             </View>
