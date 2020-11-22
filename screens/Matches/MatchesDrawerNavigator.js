@@ -11,7 +11,7 @@ export default class MatchesDrawerNavigator extends React.Component {
 
     render() {
         return(
-            <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}>
+            <Drawer.Navigator edgeWidth={0} drawerContent={props => <DrawerContent {...props}/>}>
                 <Drawer.Screen name="Matches" component={MatchesNavigator}/>
             </Drawer.Navigator>
         )
