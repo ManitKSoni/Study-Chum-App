@@ -29,6 +29,7 @@ class MatchingAlgorithm {
             this.getCurrentStudent();
             this.orderStudents();
             showMatchesScreen();
+            
         } else {
             console.log("Course does not exist.");
         }
@@ -76,7 +77,7 @@ class MatchingAlgorithm {
             if( currentAvailibility[day] === free && free) tally++;
         }
 
-        var queueInput = { student: student, tally: tally};
+        var queueInput = { student: student, userID: userID, tally: tally};
         this.queue.queue(queueInput);
 
     }

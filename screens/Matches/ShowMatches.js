@@ -15,6 +15,7 @@ class ShowMatches extends React.Component {
             var currStudent = pq.dequeue();
             var currData = {
                 id: count.toString(),
+                userID: currStudent.userID, //use to go to user profile
                 name: currStudent.student.name,
                 bio: currStudent.student.bio,
                 endorsements: currStudent.student.endorsements
