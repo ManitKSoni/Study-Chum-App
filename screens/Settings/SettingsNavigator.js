@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 export default class SettingsNavigator extends React.Component {
     render() {
         return (
-            <Stack.Navigator initialRouteName="Settings">
+            <Stack.Navigator>
                 <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="EditProfile" component={EditProfile} />
             </Stack.Navigator>
