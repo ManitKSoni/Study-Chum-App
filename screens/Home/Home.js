@@ -19,7 +19,6 @@ class Home extends React.Component {
     }
     onButtonPress = () => {
         var ang = this.tiltAngle();
-        console.log("hi");
         this.setState({
           img: <Image style={{
             width: Constants.windowWidth * .8,
@@ -27,7 +26,6 @@ class Home extends React.Component {
             resizeMode: 'contain', transform: [{ rotate: `${ang}deg` }]
         }} source={require('../../assets/study_chums_logo.png')} ></Image>
         });
-        //this.forceUpdate();
       }
 
     render() {
@@ -51,12 +49,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
-    image: {
-        width: Constants.windowWidth * .8,//windowWidth,
-        height: Constants.windowWidth * .8,
-        resizeMode: 'contain',
-        //height: Constants.waveWidthRatio,
-    }
 });
 
 
