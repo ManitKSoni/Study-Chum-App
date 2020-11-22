@@ -227,7 +227,6 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         alignSelf: 'flex-end',
         paddingRight: Constants.windowWidth*.075
-
     }
 })
 
