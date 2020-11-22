@@ -23,8 +23,6 @@ class Quiet extends React.Component {
         PreferenceProfiles.addAndShow(this.props);
     }
 
-    //Add preference profile and then do matches
-
     render() {
      
         return(

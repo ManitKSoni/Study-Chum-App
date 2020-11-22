@@ -1,10 +1,11 @@
 import React from 'react'
 import {View, Text, StyleSheet, FlatList, StatusBar, TouchableOpacity} from 'react-native'
-import MatchingAlgorithm from "./MatchingAlgorithm"
+import MatchingAlgorithm from "../MatchingAlgorithm"
+import SavedData from "../SavedData"
 
 class ShowMatches extends React.Component {
 
-   // data = this.createData();
+   data = this.createData()
 
     createData() {
         var pq = MatchingAlgorithm.queue;
@@ -14,6 +15,7 @@ class ShowMatches extends React.Component {
             var currStudent = pq.dequeue();
             var currData = {
                 id: count.toString(),
+                userID: currStudent.userID, //use to go to user profile
                 name: currStudent.student.name,
                 bio: currStudent.student.bio,
                 endorsements: currStudent.student.endorsements
@@ -21,42 +23,37 @@ class ShowMatches extends React.Component {
             count++;
             data.push(currData);
         }
+
         return data; 
     };
-
-
-    // prob don't need
-    deepCopy() {
-        var currData = [];
-        for(var i = 0; i < this.data.length; i++) {
-            currData.push(this.data[i]);
-        }
-        return currData; 
-    }
     
+    onPressGoToUserProfile = (uid) => {
+        SavedData.renderProfile(uid, ()=>this.props.navigation.navigate("UserProfile"));
+    }
+
+   
     render() {
+        
         const renderItem = ({item}) => (
+        
             <Item name = {item.name} 
                 bio = {item.bio} 
                 endorsements = {item.endorsements}
-                onPress = {() => this.props.navigation.navigate("Matches")}
+                onPress = {() => this.onPressGoToUserProfile(item.userID)}
             />
         );
 
-        /*var currData = this.deepCopy(); 
-        console.log(currData);
-        this.data = []; */
-
-        var data = this.createData(); 
-        console.log(data);
-
         return (
             <View style={styles.container}>
+                <Text> {SavedData.title} </Text>
                 <FlatList
-                    data={data}
+                    data={this.data}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
                 />
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Matches")}>
+                    <Text> Go Back To Matches Screen </Text>
+                </TouchableOpacity>
             </View>
         )
         

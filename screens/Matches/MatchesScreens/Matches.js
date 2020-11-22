@@ -9,20 +9,17 @@ class Matches extends React.Component{
     }
 
     /*
-    * TODO: Add courses to user database
-    * Test when submitting preference profile will not cause async issues
+    * TODO: 
+    * 
     * Render Matches on Matches screen,not ShowMatches
     * Delete button
     * Search Function or try catch maybe????
-    * Disconnect Language and Timezone
-    * Add language to Preference Profile using singleton
     * Update course docs when user edits profile(like language, bio, etc)
     * WHEN ADDING NON-EXISTING CLASSES, THOSE CLASSES ARE STILL ADDED TO COURSES, a fix is to only have presets. 
     */
 
     render() {
 
-        //console.log(index);
        return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                  <View style={styles.container}>

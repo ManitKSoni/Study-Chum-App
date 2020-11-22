@@ -29,6 +29,7 @@ class MatchingAlgorithm {
             this.getCurrentStudent();
             this.orderStudents();
             showMatchesScreen();
+            
         } else {
             console.log("Course does not exist.");
         }
@@ -64,14 +65,16 @@ class MatchingAlgorithm {
             tally++; 
         }
         
-        // DELETE
-        if(preferences.timeOfDay === currentPref.timeOfDay) {
+        // TODO: put back when in user singleton
+       /* if(preferences.timezone === currentPref.timezone) {
             tally++; 
-        }
+        }*/
 
-        if(preferences.timezone === currentPref.timezone) {
+        //TODO: turn on once people update their added courses
+        /*
+        if(preferences.remote === currentPref.remote) {
             tally++; 
-        }
+        }*/ 
 
         var availability = preferences.availability; 
         var currentAvailibility = currentPref.availability;
@@ -80,7 +83,7 @@ class MatchingAlgorithm {
             if( currentAvailibility[day] === free && free) tally++;
         }
 
-        var queueInput = { student: student, tally: tally};
+        var queueInput = { student: student, userID: userID, tally: tally};
         this.queue.queue(queueInput);
 
     }
@@ -89,6 +92,7 @@ class MatchingAlgorithm {
     * Tallies each student in that is in the student map and places them in PQ
     */ 
     orderStudents() {
+       this.queue.clear(); 
        for( var [key,value] of Object.entries(this.studentsMap)) {
            this.tallyPreferences(key, value);
        }

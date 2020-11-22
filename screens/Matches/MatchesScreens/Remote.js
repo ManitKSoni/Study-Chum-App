@@ -1,50 +1,47 @@
 import React from 'react'
+
 import { View, Text } from 'react-native'
-import {Picker} from '@react-native-picker/picker';
-import {TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+
+import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 import PreferenceProfiles from "../PreferenceProfiles"
 
 
-class Timezone extends React.Component {
-    
+class Remote extends React.Component {
+     
+
     state = {
-        timezone: ""
+        remote: false
     }
 
+    createAvailabilityMap() {
+        return availability;
+    }
 
     onPressGoToMatches = () => {
         this.props.navigation.navigate("Matches");
     }
 
-    onPressGoToTimeOfDay = () => {
-        PreferenceProfiles.addTimezone(this.state.timezone);
-        this.props.navigation.navigate("TimeOfDay");
+    onPressGoToQuiet = () => {
+        PreferenceProfiles.addRemote(this.state.remote); 
+        this.props.navigation.navigate("Quiet");
     }
 
     render() {
+     
         return(
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
-            {/* <TextInput
-                style={styles.inputBox}
-                value={this.state.timezone}                    
-                onChangeText={timezone => this.setState({ timezone })}
-                placeholder='Timezone'
-            /> */}
-
-            <Picker
-            selectedValue={this.state.timezone}
-            style={{height: 50, width: 100}}
-            onValueChange={(itemValue, itemIndex) =>
-                this.setState({timezone: itemValue})
-            }>
-            <Picker.Item label="EST" value="EST" />
-            <Picker.Item label="PST" value="PST" />
-            </Picker>
-
-            <Button title="Submit" onPress={this.onPressGoToTimeOfDay}/>
-            <Button title="Cancel" onPress={this.onPressGoToMatches}/>
+            <Text> Chill? </Text>
+                <Switch 
+                 trackColor={{ false: "#FF0000", true: "00FF00" }}
+                 ios_backgroundColor="#3e3e3e"
+                 onValueChange={(remote) => this.setState({remote})}
+                 value={this.state.remote}
+                />
+                <Button title="Submit" onPress={this.onPressGoToQuiet}/>
+                <Button title="Cancel" onPress={this.onPressGoToMatches}/>
             </View>
-
+        </TouchableWithoutFeedback>
         )
     }
 }
@@ -91,4 +88,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Timezone; 
+export default Remote; 

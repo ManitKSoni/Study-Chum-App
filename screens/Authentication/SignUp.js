@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
-
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image, ImageBackground } from 'react-native'
+import * as Constants from '../../Constants.js'
 import Firebase from '../../config/Firebase'
 
 class SignUp extends React.Component {
@@ -17,6 +17,7 @@ class SignUp extends React.Component {
         password: '',
         passwordConfirm: ''
     }
+
 
     /** 
      * Check that the password the user enter matches their confirmation password 
@@ -72,7 +73,7 @@ class SignUp extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                    <Image style={{ width: 140, height: 120 , transform: [{rotate: '-20deg'}]}} source={require('../../assets/study_chums_logo.png')} />
+                    <Text style={styles.prompt}> Register </Text>
                     <TextInput
                         style={styles.inputBox}
                         value={this.state.email}
@@ -85,6 +86,7 @@ class SignUp extends React.Component {
                         value={this.state.password}
                         onChangeText={password => this.setState({ password })}
                         placeholder='Password'
+                        placeholderTextColor={Constants.placeholderTextcolor}
                         secureTextEntry={true}
                     />
                     <TextInput
@@ -94,43 +96,77 @@ class SignUp extends React.Component {
                         placeholder='Confirm Password'
                         secureTextEntry={true}
                     />
-                    <TouchableOpacity style={styles.buttonSignUp} onPress={this.onPressSignUp}>
-                        <Text>Sign Up</Text>
-                    </TouchableOpacity>
+
+                    <View style={styles.buttonLayer}>
+                        <ImageBackground style={styles.waves} source={require('../../assets/wave.png')} >
+                            <View style={styles.posFish}>
+                                <TouchableOpacity onPress={() => this.onPressSignUp()} >
+                                    <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
+                                </TouchableOpacity>
+                            </View>
+                        </ImageBackground>
+                    </View>
+
                 </View>
             </TouchableWithoutFeedback>
+
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
+        alignContent: 'flex-start',
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
+    },
+    textContainer: {
+        flex: 1,
+    },
+    prompt: {
+        paddingTop: Constants.windowHeight * .15,
+        fontSize: 36,
+        fontFamily: 'MrsEaves-Bold',
+        color: 'black',
+        textAlign: 'left',
+        letterSpacing: 0,
+        alignSelf: 'flex-start',
+        paddingLeft: Constants.windowWidth * .045,
+        paddingBottom: Constants.windowHeight * .02,
     },
     inputBox: {
         width: '85%',
-        margin: 10,
-        padding: 15,
-        fontSize: 16,
-        borderColor: '#d3d3d3',
-        borderBottomWidth: 1,
+        margin: 16,
+        fontFamily: 'ProximaNova',
+        alignSelf: 'center',
+        fontSize: 24,
+        borderColor: Constants.boxGrey,
+        borderBottomWidth: .5,
         textAlign: 'left'
     },
-    buttonSignUp: {
-        marginTop: 5,
-        marginBottom: 5,
-        paddingVertical: 15,
-        alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
-        borderWidth: 1,
-        borderRadius: 5,
-        width: 150,
-        textAlign: 'center',
-        fontSize: 15
+    buttonLayer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+    },
+    waves: {
+        width: Constants.windowWidth,
+        height: Constants.waveHeight * Constants.waveWidthRatio,
+        resizeMode: 'contain',
+    },
+    fishButton: {
+        height: Constants.windowHeight * 0.20,
+        width: Constants.windowWidth * 0.20,
+        resizeMode: 'contain',
+        alignSelf: 'flex-end',
+    },
+    posFish: {
+        flex: 1,
+        alignSelf: 'flex-end',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        paddingRight: 20,
+        paddingBottom: 45,
     },
 })
 

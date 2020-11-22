@@ -3,6 +3,7 @@ import "firebase/firestore";
 import firebase from "firebase/app";
 import userInstance from "../Singletons/UserSingleton";
 import MatchingAlgorithm from "./MatchingAlgorithm"
+import SavedData from "./SavedData"
 
 export class PreferenceProfiles {
      db = Firebase.firestore();
@@ -12,8 +13,8 @@ export class PreferenceProfiles {
             availability: {},
             language: "",
             timezone: "",
-            quiet: "",
-            timeOfDay: ""
+            quiet: false,
+            remote: false
         };
         this.courseName = "";
      }
@@ -24,16 +25,11 @@ export class PreferenceProfiles {
         */ 
      /*  
      * Adds preference profile of current user to chosen course.
-     * @param courseName - The name of course being updated
-     * @param availability - Days of week free
-     * @param language - preferred language
-     * @param timezone - where user lives
-     * @param quiet - quiet or talkative study sessions
-     * @param timeOfDay - the time a user can study
      */
      addPreferenceProfile() {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
+        this.addLanguagePreference(); 
         var preferenceProfile = this.createPreferenceProifle(this.preferences); 
 
         console.log("Adding...")
@@ -68,6 +64,7 @@ export class PreferenceProfiles {
     */
    async addAndShow(props) {
         this.addPreferenceProfile(); 
+        SavedData.changeTitle(this.courseName);
         MatchingAlgorithm.getStudentMap(this.courseName, 
             () => props.navigation.navigate("ShowMatches"));
     }
@@ -92,6 +89,13 @@ export class PreferenceProfiles {
         return preferenceProfle; 
     }
 
+    /*
+    * Adds language to preference profile from singleton
+    */ 
+   addLanguagePreference() {
+    this.preferences.language = userInstance._user.language; 
+}
+
     addCourse(courseName) {
         this.courseName = courseName;
     }
@@ -100,20 +104,12 @@ export class PreferenceProfiles {
         this.preferences.availability = availability;
     }
 
-    addTimezone(timezone) {
-        this.preferences.timezone = timezone; 
-    }
-
-    addTimeOfDay(timeOfDay) {
-        this.preferences.timeOfDay = timeOfDay; 
-    }
-
-    addLanguage(language) {
-        this.preferences.language = language; 
-    }
-
     addQuiet(quiet) {
         this.preferences.quiet = quiet; 
+    }
+
+    addRemote(remote) {
+        this.preferences.remote = remote;
     }
 
     //TESTING PURPOSES
@@ -125,14 +121,25 @@ export class PreferenceProfiles {
     * Deletes preference profile of current user. 
     * @param courseName - the name of doc being updated
     */
-    deletePreferenceProfile(courseName) {
+    async deletePreferenceProfile(courseName) {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
+        var userRef = this.db.collection("users");
         
         if( courseName ) {
-           var deletedPreferenceProfile = courseRef.doc(courseName).update(
-               {[userID]: firebase.firestore.FieldValue.delete()})
+            courseRef.doc(courseName).update(
+               {[userID]: firebase.firestore.FieldValue.delete()});
+            
+            userRef.doc(Firebase.auth().currentUser.uid).update({
+                courses: firebase.firestore.FieldValue.arrayRemove(courseName)
+            });
+            
+            var courses =  userInstance._user.courses
+            courses.splice(courses.indexOf(courseName),1);
+            console.log(courses); 
+
         }
+
     }
     
 }

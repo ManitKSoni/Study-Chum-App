@@ -1,10 +1,18 @@
 import 'react-native-gesture-handler';
 
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
+import { Dimensions, View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
 
 import Firebase from '../../config/Firebase'
 import userInstance from '../Singletons/UserSingleton'
+import { RotationGestureHandler } from 'react-native-gesture-handler';
+import * as Constants from '../../Constants.js'
+
+//const windowWidth = Dimensions.get('window').width;
+//const windowHeight = Dimensions.get('window').height;
+const logoHeight = 443;
+const logoWidth = 512
+const logoRatio = Constants.windowWidth / logoWidth;
 
 class Login extends React.Component {
 
@@ -72,7 +80,7 @@ class Login extends React.Component {
             alert("Empty fields! Please enter your information in all the fields.")
         } else {
             try {
-                Firebase.auth().signOut(); // TODO: this line makes the UI a bit clunky
+                Firebase.auth().signOut();
                 Firebase.auth()
                     .signInWithEmailAndPassword(email, password)
                     .then(() => {
@@ -85,41 +93,48 @@ class Login extends React.Component {
         }
     }
 
-
-    tiltAngle() {
-        let tilt = Math.random() * 180
-        return Math.random() < .5 ?  -1 * tilt : tilt
-    }
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+
                 <View style={styles.container}>
-                    <Image style={{ width: 140, height: 120 , transform: [{rotate: `${this.tiltAngle()}deg`}]}} source={require('../../assets/study_chums_logo.png')} />
-                    <Image style={{ width: 150, height: 120}} source={require('../../assets/sick_logo.png')} />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.email}
-                        onChangeText={email => this.setState({ email })}
-                        placeholder='Email'
-                        autoCapitalize='none'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.password}
-                        onChangeText={password => this.setState({ password })}
-                        placeholder='Password'
-                        // secureTextEntry={true}
-                    />
-                    <TouchableOpacity style={styles.buttonLogin} onPress={this.onPressLogin}>
-                        <Text style={styles.papyrus}>Login</Text>
-                    </TouchableOpacity>
+                    <View style={styles.imgContainer}>
+                        <Image style={styles.studyChumsLogo} source={require('../../assets/study_chums_logo.png')} />
+                        <Image style={styles.studyChumsTextLogo} source={require('../../assets/logo_trimmed.png')} />
+                    </View>
+
+                    <View style={styles.loginContainer}>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.email}
+                            onChangeText={email => this.setState({ email })}
+                            placeholder='Email'
+                            autoCapitalize='none'
+                        />
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.password}
+                            onChangeText={password => this.setState({ password })}
+                            placeholder='Password'
+                            secureTextEntry={true}
+                        />
+                        <Text style={styles.textForgotPassword} onPress={this.onPressGoToForgotPassword}>
+                            Forgot Password?
+                        </Text>
+                        <TouchableOpacity style={styles.buttonLogin} onPress={this.onPressLogin}>
+                            <Text style={{ color: 'white', fontSize: 18 }}>Log In</Text>
+                        </TouchableOpacity>
+                    </View>
+
+
+
                     <Text style={styles.textSignUp} onPress={this.onPressGoToSignUp}>
-                        Click Here to Sign Up for an account!
+                        Don't have an account? Sign up
                     </Text>
-                    <Text style={styles.textForgotPassword} onPress={this.onPressGoToForgotPassword}>
-                        Forgot Password?
-                    </Text>
+
+
                 </View>
+
             </TouchableWithoutFeedback>
         )
     }
@@ -127,53 +142,92 @@ class Login extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexDirection: 'column',
         backgroundColor: '#fff',
         alignItems: 'center',
+        alignContent: 'flex-start',
+        fontFamily: 'ProximaNova',
+        height: '100%',
+        flex: 1,
+    },
+    ProximaNova: {
+        fontFamily: 'ProximaNova'
+    },
+    loginContainer: {
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        alignContent: 'flex-start',
+        width: '100%',
+        fontFamily: 'ProximaNova',
+        height: '100%',
+    },
+    imgContainer: {
+        paddingTop: Constants.windowHeight / 15,
+        flexDirection: 'column',
+        resizeMode: 'contain',
+        alignItems: 'center'
+    },
+
+    studyChumsLogo: {
+        resizeMode: 'contain',
+        width: Constants.windowWidth,//windowWidth,
+        height: logoHeight * logoRatio,
+        maxHeight: Constants.windowHeight / 5,
+        overflow: 'hidden',
+        justifyContent: 'space-around',
+        transform: [{rotate: `331deg`}], //331 normal
+    },
+    studyChumsTextLogo: {
+        maxWidth: (9 * Constants.windowWidth / 10),
+        maxHeight: Constants.windowHeight / 7,
         justifyContent: 'center',
-        fontFamily: 'Papyrus'
-
+        resizeMode: 'contain',
     },
-
-    papyrus: {
-        fontFamily: 'Papyrus'
-    },
-
     inputBox: {
         width: '85%',
-        margin: 10,
+        margin: 5,
         padding: 15,
         fontSize: 16,
-        borderColor: '#d3d3d3',
+        borderColor: Constants.boxGrey,
         borderBottomWidth: 1,
         textAlign: 'left',
-        fontFamily: 'Papyrus'
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        fontFamily: 'ProximaNova'
     },
     buttonLogin: {
-        marginTop: 5,
+        marginTop: Constants.windowHeight*.02,
         marginBottom: 5,
         paddingVertical: 10,
         alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
+        backgroundColor: Constants.primaryColor,
+        borderColor: Constants.primaryColor,
         borderWidth: 1,
         borderRadius: 5,
-        width: 150,
+        width: '85%',
         textAlign: 'center',
-        fontSize: 15,
-        fontFamily: 'Papyrus'
+        fontSize: 25,
+        fontFamily: 'ProximaNova',
+        
     },
     textSignUp: {
+        position: 'absolute',
+        top: Constants.windowHeight*.9,
         padding: 10,
-        color: '#007AFF',
-        fontSize: 15, 
-        fontFamily: 'Papyrus'
+        color: Constants.boxGrey,
+        fontSize: 15,
+        fontFamily: 'ProximaNova',
     },
     textForgotPassword: {
-        padding: 10,
-        color: '#FFA000',
-        fontSize: 15,
-        fontFamily: 'Papyrus'
+        fontSize: 12,
+        fontFamily: 'ProximaNova',
+        color: Constants.boxGrey,
+        textAlign: 'right',
+        alignSelf: 'flex-end',
+        paddingRight: Constants.windowWidth*.075
+
     }
 })
 
