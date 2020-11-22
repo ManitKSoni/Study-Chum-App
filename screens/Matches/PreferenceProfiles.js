@@ -12,7 +12,7 @@ export class PreferenceProfiles {
             availability: {},
             language: "",
             timezone: "",
-            quiet: "",
+            quiet: false,
         };
         this.courseName = "";
      }

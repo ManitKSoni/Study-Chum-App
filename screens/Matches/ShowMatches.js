@@ -1,6 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, FlatList, StatusBar, TouchableOpacity} from 'react-native'
 import MatchingAlgorithm from "./MatchingAlgorithm"
+import SavedData from "./SavedData"
 
 class ShowMatches extends React.Component {
 
@@ -26,6 +27,7 @@ class ShowMatches extends React.Component {
     };
     
     render() {
+
         const renderItem = ({item}) => (
             <Item name = {item.name} 
                 bio = {item.bio} 
@@ -36,6 +38,7 @@ class ShowMatches extends React.Component {
 
         return (
             <View style={styles.container}>
+                <Text> {SavedData.title} </Text>
                 <FlatList
                     data={this.data}
                     renderItem={renderItem}

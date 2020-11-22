@@ -4,6 +4,7 @@ import {DrawerContentScrollView} from "@react-navigation/drawer";
 import {Drawer} from 'react-native-paper'
 import UserSingleton from "../Singletons/UserSingleton"; 
 import MatchingAlgorithm from "./MatchingAlgorithm";
+import SavedData from "./SavedData"
 
 
 function createData() {
@@ -33,6 +34,7 @@ export function DrawerContent(props) {
 
     const onPressGenerate = (course) => {
         props.navigation.navigate("Courses"); //THE GLUE (lets ShowMatches rerender)
+        SavedData.changeTitle(course);
         MatchingAlgorithm.getStudentMap(course, () => props.navigation.navigate("ShowMatches"));
     }
 
