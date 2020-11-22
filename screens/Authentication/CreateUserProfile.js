@@ -1,10 +1,8 @@
 import 'react-native-gesture-handler';
-
 import React from 'react'
 
 import { View, TextInput, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ImageBackground, Image } from 'react-native'
 import { HeaderBackButton } from '@react-navigation/stack';
-
 
 import * as Constants from '../../Constants.js'
 import Firebase from '../../config/Firebase'
