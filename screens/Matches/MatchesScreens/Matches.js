@@ -23,7 +23,8 @@ class Matches extends React.Component{
        return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                  <View style={styles.container}>
-                      <Text> Slide to Right To See Class Matches</Text>
+                      <Text> Use Top Left Button to Add Class to Find Matches For</Text>
+                      <Text> On a Class Swipe Left to Right to Delete Selected Class </Text>
                  </View>
           </TouchableWithoutFeedback>
        )

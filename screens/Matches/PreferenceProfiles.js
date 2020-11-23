@@ -19,10 +19,6 @@ export class PreferenceProfiles {
         this.courseName = "";
      }
 
-      /*TODO 
-          * Make a search function to get exact name of course to stop errors
-          * Get data from profile to get name, profilePicture, bio, endorsements
-        */ 
      /*  
      * Adds preference profile of current user to chosen course.
      */
