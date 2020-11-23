@@ -8,6 +8,7 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import * as FileSystem from 'expo-file-system';
 import {Fragment} from 'react'
 import * as Constants from '../../../Constants.js'
+import {Icon} from 'react-native-elements';
 
 class Courses extends React.Component {
 
@@ -52,6 +53,10 @@ class Courses extends React.Component {
     render() {
         return (
             <Fragment>
+                 <Icon name="x" type="foundation" size={35} color="black" 
+                    containerStyle={{paddingTop:25, paddingLeft:325}} 
+                    onPress={this.onPressGoToMatches}
+                />
                 <View styles={styles.container}>
                     <Text style={styles.question}>What class?</Text>
                 </View>
@@ -118,10 +123,10 @@ const styles = StyleSheet.create({
             textAlign: 'left',
             letterSpacing: 0,
             alignSelf: 'flex-start',
-            paddingBottom: Constants.windowHeight * .02,
+            paddingBottom: Constants.windowHeight * .1,
             padding: Constants.windowWidth * .1,
             backgroundColor: 'white',
-            width: '100%'
+            width: '100%',
     },
     // entire search and dropbox
     searchContainer: {
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
     },
     // each entry in the dropdown list
     searchItem: {
-        backgroundColor: 'gray',
+        backgroundColor: 'grey',
         marginHorizontal: 5,
         marginVertical: 5,
     },
