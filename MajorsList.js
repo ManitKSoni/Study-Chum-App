@@ -1,4 +1,4 @@
-export const majorsList = [
+export const majorsArray = [
 "Aerospace Engineering",
 "Anthropology (Archaeology)",
 "Anthropology (Biological Anthropology)",

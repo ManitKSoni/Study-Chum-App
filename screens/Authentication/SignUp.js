@@ -109,7 +109,6 @@ class SignUp extends React.Component {
 
                 </View>
             </TouchableWithoutFeedback>
-
         )
     }
 }

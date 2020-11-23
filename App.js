@@ -17,8 +17,6 @@ import Spinner from './screens/Reusable/Spinner';
 import CreateUserProfile from './screens/Authentication/CreateUserProfile'
 import SettingsNavigator from "./screens/Settings/SettingsNavigator";
 
-import * as MajorsList from './MajorsList';
-
 let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
   'ProximaNova': require('./assets/Fonts/ProximaNova.ttf'),
