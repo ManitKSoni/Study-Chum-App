@@ -52,58 +52,53 @@ class Courses extends React.Component {
 
     render() {
         return (
-            <Fragment>
-                 <Icon name="x" type="foundation" size={35} color="black" 
-                    containerStyle={{paddingTop:25, paddingLeft:325}} 
-                    onPress={this.onPressGoToMatches}
-                />
-                <View styles={styles.container}>
-                    <Text style={styles.question}>What class?</Text>
-                </View>
-                <SearchableDropdown
-                    onItemSelect={(item) => {
-                        const items = [];
-                        items.push(item)
-                        console.log(items)
-                        this.setState({selectedItem: items});
-                        console.log(this.state.selectedItem)
-                    }}
-                    containerStyle={styles.searchContainer}
-                    itemStyle={styles.searchItem}
-                    itemTextStyle={styles.searchItemText}
-                    itemsContainerStyle={styles.searchItemsContainer}
-                    items={this.items}
-                    //defaultIndex={0}
-                    resetValue={false}
-                    textInputProps={
-                        {
-                            placeholder: "Choose a Class",
-                            underlineColorAndroid: "transparent",
-                            style: styles.searchTextInput
-                        }
-                    }
-                    listProps={
-                        {
-                            nestedScrollEnabled: true,
-                        }
-                    }
-                />
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View style={styles.container}>
+                    <Icon name="x" type="foundation" size={35} color="black"
+                       containerStyle={styles.iconStyle}
+                       onPress={this.onPressGoToMatches} />
 
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                    <View style={styles.container}>
-                        <View style={styles.buttonLayer}>
-                            <ImageBackground style={styles.waves} source={require('../../../assets/wave.png')} >
-                                <View style={styles.posFish}>
-                                    <TouchableOpacity onPress={() => this.onPressGoToAvailability()} >
-                                        <Image style={styles.fishButton} source={require('../../../assets/fish_button.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                            </ImageBackground>
-                        </View>
+                    <View>
+                        <Text style={styles.prompt}> What class?</Text>
+                        <Fragment>
+                           <SearchableDropdown
+                               onItemSelect={(item) => {
+                                   const items = [];
+                                   items.push(item)
+                                   console.log(items)
+                                   this.setState({selectedItem: items});
+                                   console.log(this.state.selectedItem)
+                               }}
+                               containerStyle={styles.searchContainer}
+                               itemStyle={styles.searchItem}
+                               itemTextStyle={styles.searchItemText}
+                               itemsContainerStyle={styles.searchItemsContainer}
+                               items={this.items}
+                               resetValue={false}
+                               textInputProps={
+                                   {
+                                       placeholder: "Choose a Class",
+                                       underlineColorAndroid: "transparent",
+                                       style: styles.searchTextInput
+                                   }
+                               }
+                               listProps={{ nestedScrollEnabled: true, }}
+                           />
+                        </Fragment>
                     </View>
-                </TouchableWithoutFeedback>
-            </Fragment>
-        );
+
+                    <ImageBackground style={styles.waves} source={require('../../../assets/wave.png')} >
+                        <View style={styles.posFish}>
+                            <TouchableOpacity onPress={() => this.onPressGoToAvailability()} >
+                                <Image style={styles.fishButton} source={require('../../../assets/fish_button.png')} />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+
+                </View>
+            </TouchableWithoutFeedback>
+
+        )
     }
 }
 
@@ -111,22 +106,32 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
+        //alignItems: 'center',
+        justifyContent: 'space-between',
+        minHeight: Math.round(Constants.windowHeight)
     },
-    question: {
-            paddingTop: Constants.windowHeight * .15,
-            fontSize: 36,
-            fontFamily: 'Papyrus',
-            lineHeight: 40,
-            color: 'black',
-            textAlign: 'left',
-            letterSpacing: 0,
-            alignSelf: 'flex-start',
-            paddingBottom: Constants.windowHeight * .1,
-            padding: Constants.windowWidth * .1,
-            backgroundColor: 'white',
-            width: '100%',
+
+    iconStyle: {
+        paddingTop: Constants.windowHeight * 0.05 ,
+        paddingLeft: Constants.windowWidth * 0.85,
+        backgroundColor: 'white',
+        position: 'absolute',
+        alignSelf: 'center',
+        zIndex: 999,
+    },
+    prompt: {
+        paddingTop: Constants.windowHeight * .15,
+        fontSize: 36,
+        // lineHeight: 40,
+        color: 'black',
+        textAlign: 'left',
+        letterSpacing: 0,
+        alignSelf: 'flex-start',
+        paddingLeft: Constants.windowWidth * .075,
+        paddingBottom: Constants.windowHeight * .02,
+        backgroundColor: 'white',
+        width: '100%',
+        fontFamily: 'Buenard-Bold'
     },
     // entire search and dropbox
     searchContainer: {
@@ -165,30 +170,31 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     buttonLayer: {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            zIndex: 0
-        },
-        waves: {
-            width: Constants.windowWidth,
-            height: Constants.waveHeight * Constants.waveWidthRatio,
-            resizeMode: 'contain',
-        },
-        fishButton: {
-            height: Constants.windowHeight * 0.20,
-            width: Constants.windowWidth * 0.20,
-            resizeMode: 'contain',
-            alignSelf: 'flex-end',
-        },
-        posFish: {
-            flex: 1,
-            alignSelf: 'flex-end',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            paddingRight: 20,
-            paddingBottom: 45,
-        },
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        zIndex: 0
+    },
+    waves: {
+        width: Constants.windowWidth,
+        height: Constants.waveHeight * Constants.waveWidthRatio,
+        //resizeMode: 'contain',
+
+    },
+    fishButton: {
+        height: Constants.windowHeight * 0.20,
+        width: Constants.windowWidth * 0.20,
+        resizeMode: 'contain',
+        //alignSelf: 'flex-end',
+    },
+    posFish: {
+        flex: 1,
+        alignSelf: 'flex-end',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        paddingRight: Constants.waveWidth*0.01,
+        paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
+    },
     //<Button title="Cancel" onPress={this.onPressGoToMatches}/>
 })
 
