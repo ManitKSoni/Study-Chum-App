@@ -21,7 +21,7 @@ let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
   'ProximaNova': require('./assets/Fonts/ProximaNova.ttf'),
   'MrsEaves-Bold': require('./assets/Fonts/MrsEaves-Bold.ttf'),
-  //'Buenard-Bold': require('./assets/Fonts/Buenard-Bold.ttf'),
+  'Buenard-Bold': require('./assets/Fonts/Buenard-Bold.ttf'),
 };
 
 let imageAssets = [

@@ -39,25 +39,8 @@ class CreateUserProfile extends React.Component {
     updateUser = (key, value) => {
         this.state.userProfile[key] = value
         this.setState({ userProfile: this.state.userProfile })
+        console.log(this.state.userProfile)
     }
-
-    /** 
-    questions = (index) => {
-        switch (index) {
-            case 0:
-                return "What's your name?"
-            case 1:
-                return "What's your major?"
-            case 2:
-                return "What year are you graduating?"
-            case 3:
-                return "What is your preferred language?"
-            case 4:
-                return "Tell us a little about yourself!"
-            default:
-                return ""
-        }
-    } **/
 
     onPressContinue() {
         if (this.state.index < this.questions.length) {

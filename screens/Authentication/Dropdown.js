@@ -1,46 +1,11 @@
 import React, { Fragment } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 
 import * as Constants from '../../Constants.js'
 
-
-var Language = [
-    {
-        id: 1,
-        name: 'English',
-    },
-    {
-        id: 2,
-        name: 'Spanish',
-    },
-    {
-        id: 3,
-        name: 'French',
-    },
-    {
-        id: 4,
-        name: 'German',
-    },
-    {
-        id: 5,
-        name: 'Chinese',
-    },
-    {
-        id: 6,
-        name: 'Japanese',
-    },
-    {
-        id: 7,
-        name: 'Korean',
-    },
-    {
-        id: 8,
-        name: 'Sanskrit',
-    },
-];
-
 class Dropdown extends React.Component {
+
     constructor() {
         super()
     }
@@ -50,44 +15,60 @@ class Dropdown extends React.Component {
             <Fragment>
                 <SearchableDropdown
                     onItemSelect={(item) => {
-                        //this.setState({ userProfile.year : items });
-                        this.props.update('year', item.name)
-                        console.log(this.props.profile)
+                        this.props.update(item.name)
                     }}
-                    containerStyle={{ padding: 5 }}
-                    itemStyle={{
-                        padding: 10,
-                        marginTop: 2,
-                        backgroundColor: '#ddd',
-                        borderColor: '#bbb',
-                        borderWidth: 1,
-                        borderRadius: 5,
-                    }}
-                    itemTextStyle={{ color: '#222' }}
-                    itemsContainerStyle={{ maxHeight: 115 }}
+                    containerStyle={styles.searchContainer}
+                    itemStyle={styles.searchItem}
+                    itemTextStyle={styles.searchItemText}
+                    itemsContainerStyle={styles.searchItemsContainer}
                     items={this.props.items}
                     resetValue={false}
                     textInputProps={
                         {
-                            placeholder: "choose a year!",
+                            placeholder: this.props.placeHolder,
                             underlineColorAndroid: "transparent",
-                            style: {
-                                padding: 12,
-                                borderWidth: 1,
-                                borderColor: '#ccc',
-                                borderRadius: 5,
-                            },
+                            style: styles.searchTextInput
                         }
                     }
-                    listProps={
-                        {
-                            nestedScrollEnabled: true,
-                        }
-                    }
+                    listProps={{nestedScrollEnabled: true}}
                 />
             </Fragment>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    searchContainer: {
+        padding : 15,
+        backgroundColor: 'white'
+    },
+    searchItem: {
+        backgroundColor: 'grey',
+        marginHorizontal: 5,
+        marginVertical: 5,
+    },
+    searchItemText: {
+        color: 'black',
+        fontSize: 16,
+        backgroundColor: 'grey',
+    },
+    searchItemsContainer: {
+        maxHeight: 140,
+        backgroundColor: 'grey',
+        width: '90%',
+        alignSelf: 'center',
+    },
+    searchTextInput: {
+        width: '90%',
+        margin: 16,
+        fontFamily: 'ProximaNova',
+        alignSelf: 'center',
+        fontSize: 24,
+        borderColor: Constants.boxGrey,
+        borderBottomWidth: .5,
+        textAlign: 'left',
+        backgroundColor: 'white'
+    },
+})
 
 export default Dropdown
