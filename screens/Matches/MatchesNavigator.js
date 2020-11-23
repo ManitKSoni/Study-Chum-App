@@ -19,6 +19,12 @@ import {Icon} from 'react-native-elements';
 const Stack = createStackNavigator();
 
 export default class MatchesNavigator extends React.Component {
+
+  /*cancel = () => {
+    this.props.navigation.navigate("Courses")
+    this.props.navigation.navigate("Matches")
+  }*/
+
   render() {
     return (
         <Stack.Navigator>
@@ -37,25 +43,19 @@ export default class MatchesNavigator extends React.Component {
 
           <Stack.Screen name="Courses" component={Courses} 
             options = {{
-              headerLeft:null, 
-              headerStyle: {backgroundColor: "#8075FF"},
-              headerTitleStyle: {color:"#FFFFFF"},
+              headerShown:null, 
             }} 
           />
 
           <Stack.Screen name="Availibility" component={Availibility}
             options = {{
-              headerLeft:null, 
-              headerStyle: {backgroundColor: "#8075FF"},
-              headerTitleStyle: {color:"#FFFFFF"},
+              headerShown:null, 
           }}
           />
 
           <Stack.Screen name="Quiet" component={Quiet}
             options = {{
-              headerLeft:null, 
-              headerStyle: {backgroundColor: "#8075FF"},
-              headerTitleStyle: {color:"#FFFFFF"},
+              headerShown: false
             }}
           />
 
@@ -67,15 +67,13 @@ export default class MatchesNavigator extends React.Component {
               title: "ShowMatches",
               headerLeft: () => (
                 <Icon name="menu" size ={30} containerStyle={{paddingLeft:5}} color="#FFFFFF"
-                backgroundColor="#009387" onPress={()=> this.props.navigation.openDrawer()}/>
+                backgroundColor="#009387" onPress={() => this.props.navigation.openDrawer()}/>
               )
             }}/>
 
           <Stack.Screen name="Remote" component={Remote}
            options = {{
-            headerLeft:null, 
-            headerStyle: {backgroundColor: "#8075FF"},
-            headerTitleStyle: {color:"#FFFFFF"},
+            headerShown:null, 
             }}/>  
             
             <Stack.Screen name="Blank" component={Blank} options={{headerShown:null}}/> 
@@ -86,3 +84,4 @@ export default class MatchesNavigator extends React.Component {
     )
   }
 }
+
