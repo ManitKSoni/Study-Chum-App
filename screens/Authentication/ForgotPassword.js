@@ -56,23 +56,23 @@ class ForgotPassword extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                    <Text style={styles.prompt}> Enter your email </Text>
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.email}
-                        onChangeText={email => this.setState({ email })}
-                        placeholder='Enter your email'
-                        autoCapitalize='none'
-                    />
-                    <View style={styles.buttonLayer}>
-                        <ImageBackground style={styles.waves} source={require('../../assets/wave.png')} >
-                            <View style = {styles.posFish}>
-                                <TouchableOpacity onPress={() => this.onPressForgotPassword()} >
-                                    <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
-                                </TouchableOpacity>
-                            </View>
-                        </ImageBackground>
+                    <View>
+                        <Text style={styles.prompt}> Enter your email </Text>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.email}
+                            onChangeText={email => this.setState({ email })}
+                            placeholder='Email'
+                            autoCapitalize='none'
+                        />
                     </View>
+                    <ImageBackground style={styles.waves} source={require('../../assets/wave.png')} >
+                        <View style={styles.posFish}>
+                            <TouchableOpacity onPress={() => this.onPressForgotPassword()} >
+                                <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -83,16 +83,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        alignContent: 'flex-start',
+        justifyContent: 'space-between',
+        minHeight: Math.round(Constants.windowHeight)
     },
     prompt: {
         paddingTop: Constants.windowHeight * .15,
         fontSize: 36,
-        fontFamily: 'MrsEaves-Bold',
+        fontFamily: 'Buenard-Bold',
         color: 'black',
         textAlign: 'left',
-        letterSpacing: 0,
-        alignSelf: 'flex-start',
         paddingLeft: Constants.windowWidth * .045,
         paddingBottom: Constants.windowHeight * .02,
     },
@@ -106,29 +105,22 @@ const styles = StyleSheet.create({
         borderBottomWidth: .5,
         textAlign: 'left'
     },
-    buttonLayer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-    },
     waves: {
         width: Constants.windowWidth,
         height: Constants.waveHeight * Constants.waveWidthRatio,
-        resizeMode: 'contain',
     },
     fishButton: {
         height: Constants.windowHeight * 0.20,
         width: Constants.windowWidth * 0.20,
         resizeMode: 'contain',
-        alignSelf: 'flex-end',
     },
-    posFish :{
-        flex: 1, 
+    posFish: {
+        flex: 1,
         alignSelf: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingRight: 20, 
-        paddingBottom: 45,
+        paddingRight: Constants.waveWidth*0.01,
+        paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
     },
 })
 
