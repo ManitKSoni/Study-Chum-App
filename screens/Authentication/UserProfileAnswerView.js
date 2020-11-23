@@ -71,6 +71,10 @@ class UserProfileAnswerView extends React.Component {
                 id: 7,
                 name: 'Korean',
             },
+            {
+                id: 8,
+                name: 'Sanskrit',
+            },
         ];
     }
 
