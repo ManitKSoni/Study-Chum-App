@@ -76,22 +76,19 @@ const styles = StyleSheet.create({
     waves: {
         width: Constants.windowWidth,
         height: Constants.waveHeight * Constants.waveWidthRatio,
-        resizeMode: 'contain',
-
     },
     fishButton: {
         height: Constants.windowHeight * 0.20,
         width: Constants.windowWidth * 0.20,
         resizeMode: 'contain',
-        alignSelf: 'flex-end',
     },
     posFish: {
         flex: 1,
         alignSelf: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingRight: 20,
-        paddingBottom: 45,
+        paddingRight: Constants.waveWidth*0.01,
+        paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
     },
     buttonLayer: {
         flex: 1,

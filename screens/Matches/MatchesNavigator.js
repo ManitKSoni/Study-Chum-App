@@ -20,11 +20,6 @@ const Stack = createStackNavigator();
 
 export default class MatchesNavigator extends React.Component {
 
-  /*cancel = () => {
-    this.props.navigation.navigate("Courses")
-    this.props.navigation.navigate("Matches")
-  }*/
-
   render() {
     return (
         <Stack.Navigator>

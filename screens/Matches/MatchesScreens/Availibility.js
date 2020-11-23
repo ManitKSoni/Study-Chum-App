@@ -2,8 +2,10 @@ import React from 'react'
 
 import { View, Text } from 'react-native'
 
-import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, ImageBackground, Image, TouchableOpacity } from 'react-native'
 import PreferenceProfiles from "../PreferenceProfiles"
+import {Icon} from 'react-native-elements';
+import * as Constants from '../../../Constants.js'
 
 
 class Availibility extends React.Component {
@@ -47,59 +49,72 @@ class Availibility extends React.Component {
      
         return(
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View style={styles.container}>
-            <Text> Sunday </Text>
-                <Switch 
-                 trackColor={{ false: "#FF0000", true: "00FF00" }}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={(sunday) => this.setState({sunday})}
-                 value={this.state.sunday}
-                />
-                <Text> Monday </Text>
-                <Switch 
-                 trackColor={{ false: "#FF0000", true: "00FF00" }}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={(monday) => this.setState({monday})}
-                 value={this.state.monday}
-                />
-                <Text> Tuesday </Text>
-                <Switch 
-                 trackColor={{ false: "#FF0000", true: "00FF00" }}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={(tuesday) => this.setState({tuesday})}
-                 value={this.state.tuesday}
-                />
-                <Text> Wednesday </Text>
-                <Switch 
-                 trackColor={{ false: "#FF0000", true: "00FF00" }}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={(wednesday) => this.setState({wednesday})}
-                 value={this.state.wednesday}
-                />
-                <Text> Thursday </Text>
-                <Switch 
-                 trackColor={{ false: "#FF0000", true: "00FF00" }}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={(thursday) => this.setState({thursday})}
-                 value={this.state.thursday}
-                />
-                <Text> Friday </Text>
-                <Switch 
-                 trackColor={{ false: "#FF0000", true: "00FF00" }}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={(friday) => this.setState({friday})}
-                 value={this.state.friday}
-                />
-                <Text> Saturday </Text>
-                <Switch 
-                 trackColor={{ false: "#FF0000", true: "00FF00" }}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={(saturday) => this.setState({saturday})}
-                 value={this.state.saturday}
-                />
-                <Button title="Submit" onPress={this.onPressGoToRemote}/>
-                <Button title="Cancel" onPress={this.onPressGoToMatches}/>
-               
+                <View style={styles.container1}>
+                    <Icon name="x" type="foundation" size={35} color="black" 
+                        containerStyle={{paddingTop:25, paddingLeft:325}} 
+                        onPress={this.onPressGoToMatches}
+                    />
+                <View style={styles.container2}>
+                    <Text style={styles.header}> What days are you free?</Text>
+                    <Text> Sunday </Text>
+                    <Switch 
+                        trackColor={{ false: "#FF0000", true: "00FF00" }}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={(sunday) => this.setState({sunday})}
+                        value={this.state.sunday}
+                    />
+                    <Text> Monday </Text>
+                    <Switch 
+                        trackColor={{ false: "#FF0000", true: "00FF00" }}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={(monday) => this.setState({monday})}
+                        value={this.state.monday}
+                    />
+                    <Text> Tuesday </Text>
+                    <Switch 
+                        trackColor={{ false: "#FF0000", true: "00FF00" }}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={(tuesday) => this.setState({tuesday})}
+                        value={this.state.tuesday}
+                    />
+                    <Text> Wednesday </Text>
+                    <Switch 
+                        trackColor={{ false: "#FF0000", true: "00FF00" }}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={(wednesday) => this.setState({wednesday})}
+                        value={this.state.wednesday}
+                    />
+                    <Text> Thursday </Text>
+                    <Switch 
+                        trackColor={{ false: "#FF0000", true: "00FF00" }}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={(thursday) => this.setState({thursday})}
+                        value={this.state.thursday}
+                    />
+                    <Text> Friday </Text>
+                    <Switch 
+                        trackColor={{ false: "#FF0000", true: "00FF00" }}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={(friday) => this.setState({friday})}
+                        value={this.state.friday}
+                    />
+                    <Text> Saturday </Text>
+                    <Switch 
+                        trackColor={{ false: "#FF0000", true: "00FF00" }}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={(saturday) => this.setState({saturday})}
+                        value={this.state.saturday}
+                    />
+                </View>
+                <View style={styles.buttonLayer}>
+                        <ImageBackground style={styles.waves} source={require('../../../assets/wave.png')} >
+                            <View style={styles.posFish}>
+                                <TouchableOpacity onPress={()=>this.onPressGoToRemote()} >
+                                    <Image style={styles.fishButton} source={require('../../../assets/fish_button.png')} />
+                                </TouchableOpacity>
+                            </View>
+                        </ImageBackground>
+                </View>
             </View>
         </TouchableWithoutFeedback>
         )
@@ -107,45 +122,46 @@ class Availibility extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    container1: {
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
-    inputBox: {
-        width: '85%',
-        margin: 10,
-        padding: 15,
-        fontSize: 16,
-        borderColor: '#d3d3d3',
-        borderBottomWidth: 1,
-        textAlign: 'left'
+    container2: {
+        paddingTop: 20,
+        alignItems: 'center'
     },
-    buttonLogin: {
-        marginTop: 5,
-        marginBottom: 5,
-        paddingVertical: 10,
-        alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
-        borderWidth: 1,
-        borderRadius: 5,
-        width: 150,
-        textAlign: 'center',
-        fontSize: 15
+    waves: {
+        width: Constants.windowWidth,
+        height: Constants.waveHeight * Constants.waveWidthRatio,
     },
-    textSignUp: {
-        padding: 10,
-        color: '#007AFF',
-        fontSize: 15
+    fishButton: {
+        height: Constants.windowHeight * 0.20,
+        width: Constants.windowWidth * 0.20,
+        resizeMode: 'contain',
     },
-    textForgotPassword: {
-        padding: 10,
-        color: '#FFA000',
-        fontSize: 15
-    }
+    posFish: {
+        flex: 1,
+        alignSelf: 'flex-end',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        paddingRight: Constants.waveWidth*0.01,
+        paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
+    },
+    buttonLayer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        zIndex: 0
+    },
+    header: {
+        fontSize:24,
+        paddingRight: 70,
+        paddingBottom: 20
+    },
+
 })
 
 export default Availibility; 
