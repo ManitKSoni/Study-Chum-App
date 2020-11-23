@@ -73,39 +73,39 @@ class SignUp extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                    <Text style={styles.prompt}> Register </Text>
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.email}
-                        onChangeText={email => this.setState({ email })}
-                        placeholder='Email'
-                        autoCapitalize='none'
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.password}
-                        onChangeText={password => this.setState({ password })}
-                        placeholder='Password'
-                        placeholderTextColor={Constants.placeholderTextcolor}
-                        secureTextEntry={true}
-                    />
-                    <TextInput
-                        style={styles.inputBox}
-                        value={this.state.passwordConfirm}
-                        onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-                        placeholder='Confirm Password'
-                        secureTextEntry={true}
-                    />
-
-                    <View style={styles.buttonLayer}>
-                        <ImageBackground style={styles.waves} source={require('../../assets/wave.png')} >
-                            <View style={styles.posFish}>
-                                <TouchableOpacity onPress={() => this.onPressSignUp()} >
-                                    <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
-                                </TouchableOpacity>
-                            </View>
-                        </ImageBackground>
+                    <View>
+                        <Text style={styles.prompt}> Register </Text>
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.email}
+                            onChangeText={email => this.setState({ email })}
+                            placeholder='Email'
+                            autoCapitalize='none'
+                        />
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.password}
+                            onChangeText={password => this.setState({ password })}
+                            placeholder='Password'
+                            placeholderTextColor={Constants.placeholderTextcolor}
+                            secureTextEntry={true}
+                        />
+                        <TextInput
+                            style={styles.inputBox}
+                            value={this.state.passwordConfirm}
+                            onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
+                            placeholder='Confirm Password'
+                            secureTextEntry={true}
+                        />
                     </View>
+
+                    <ImageBackground style={styles.waves} source={require('../../assets/wave.png')} >
+                        <View style={styles.posFish}>
+                            <TouchableOpacity onPress={() => this.onPressSignUp()} >
+                                <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
 
                 </View>
             </TouchableWithoutFeedback>
@@ -116,9 +116,10 @@ class SignUp extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        alignContent: 'flex-start',
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: 'white',
+        justifyContent: 'space-between',
+        minHeight: Math.round(Constants.windowHeight)
     },
     textContainer: {
         flex: 1,
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     prompt: {
         paddingTop: Constants.windowHeight * .15,
         fontSize: 36,
-        fontFamily: 'MrsEaves-Bold',
+        fontFamily: 'Buenard-Bold',
         color: 'black',
         textAlign: 'left',
         letterSpacing: 0,
@@ -144,29 +145,22 @@ const styles = StyleSheet.create({
         borderBottomWidth: .5,
         textAlign: 'left'
     },
-    buttonLayer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-    },
     waves: {
         width: Constants.windowWidth,
         height: Constants.waveHeight * Constants.waveWidthRatio,
-        resizeMode: 'contain',
     },
     fishButton: {
         height: Constants.windowHeight * 0.20,
         width: Constants.windowWidth * 0.20,
         resizeMode: 'contain',
-        alignSelf: 'flex-end',
     },
     posFish: {
         flex: 1,
         alignSelf: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingRight: 20,
-        paddingBottom: 45,
+        paddingRight: Constants.waveWidth*0.01,
+        paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
     },
 })
 
