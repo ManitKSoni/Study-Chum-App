@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { View, Text } from 'react-native'
+import { View, Text, ImageBackground, Image } from 'react-native'
 
 import {TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
 import PreferenceProfiles from "../PreferenceProfiles"
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import * as FileSystem from 'expo-file-system';
 import {Fragment} from 'react'
-
+import * as Constants from '../../../Constants.js'
 
 class Courses extends React.Component {
 
@@ -29,14 +29,19 @@ class Courses extends React.Component {
     }
 
     state = {
-        selectedItem: [{}]
+        selectedItem: []
     }
 
     onPressGoToAvailability = () => {
-        PreferenceProfiles.addCourse(this.state.selectedItem[0].name);
-        console.log("eat pant");
-        console.log(this.state.selectedItem[0].name);
-        this.props.navigation.navigate("Availibility");
+        //console.log(this.state.selectedItem[0].name === undefined)
+        if (this.state.selectedItem.length == 0) {
+            alert("Please select a course from the list!")
+        } else {
+            PreferenceProfiles.addCourse(this.state.selectedItem[0].name);
+            console.log("eat pant");
+            console.log(this.state.selectedItem[0].name);
+            this.props.navigation.navigate("Availibility");
+        }
     }
 
     onPressGoToMatches = () => {
@@ -47,6 +52,9 @@ class Courses extends React.Component {
     render() {
         return (
             <Fragment>
+                <View styles={styles.container}>
+                    <Text style={styles.question}>What class?</Text>
+                </View>
                 <SearchableDropdown
                     onItemSelect={(item) => {
                         const items = [];
@@ -55,21 +63,10 @@ class Courses extends React.Component {
                         this.setState({selectedItem: items});
                         console.log(this.state.selectedItem)
                     }}
-                    containerStyle={{padding : 5}}
-                    onRemoveItem={(item,index) => {
-                        const items = this.state.selectedItem.filter((sitem) => sitem.id !== item.id);
-                        this.setState({selectedItems: item });
-                    }}
-                    itemStyle={{
-                        padding: 10,
-                        marginTop: 2,
-                        backgroundColor: '#ddd',
-                        borderColor: '#bbb',
-                        borderWidth: 1,
-                        borderRadius: 5,
-                    }}
-                    itemTextStyle={{ color: '#222' }}
-                    itemsContainerStyle={{ maxHeight: 140 }}
+                    containerStyle={styles.searchContainer}
+                    itemStyle={styles.searchItem}
+                    itemTextStyle={styles.searchItemText}
+                    itemsContainerStyle={styles.searchItemsContainer}
                     items={this.items}
                     //defaultIndex={0}
                     resetValue={false}
@@ -77,13 +74,7 @@ class Courses extends React.Component {
                         {
                             placeholder: "Choose a Class",
                             underlineColorAndroid: "transparent",
-                            style: {
-                                padding: 12,
-                                borderWidth: 1,
-                                borderColor: '#ccc',
-                                borderRadius: 5,
-                            },
-                            //onTextChange: text => alert(text)
+                            style: styles.searchTextInput
                         }
                     }
                     listProps={
@@ -92,11 +83,18 @@ class Courses extends React.Component {
                         }
                     }
                 />
+
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                     <View style={styles.container}>
-
-                        <Button title="Submit" onPress={this.onPressGoToAvailability}/>
-                        <Button title="Cancel" onPress={this.onPressGoToMatches}/>
+                        <View style={styles.buttonLayer}>
+                            <ImageBackground style={styles.waves} source={require('../../../assets/wave.png')} >
+                                <View style={styles.posFish}>
+                                    <TouchableOpacity onPress={() => this.onPressGoToAvailability()} >
+                                        <Image style={styles.fishButton} source={require('../../../assets/fish_button.png')} />
+                                    </TouchableOpacity>
+                                </View>
+                            </ImageBackground>
+                        </View>
                     </View>
                 </TouchableWithoutFeedback>
             </Fragment>
@@ -107,44 +105,86 @@ class Courses extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
-
     },
-    inputBox: {
+    question: {
+            paddingTop: Constants.windowHeight * .15,
+            fontSize: 36,
+            fontFamily: 'Papyrus',
+            lineHeight: 40,
+            color: 'black',
+            textAlign: 'left',
+            letterSpacing: 0,
+            alignSelf: 'flex-start',
+            paddingBottom: Constants.windowHeight * .02,
+            padding: Constants.windowWidth * .1,
+            backgroundColor: 'white',
+            width: '100%'
+    },
+    // entire search and dropbox
+    searchContainer: {
+        padding : 15,
+        backgroundColor: 'white'
+    },
+    // each entry in the dropdown list
+    searchItem: {
+        backgroundColor: 'gray',
+        marginHorizontal: 5,
+        marginVertical: 5,
+    },
+    // text in the drop down list
+    searchItemText: {
+        color: 'black',
+        fontSize: 24,
+        backgroundColor: 'white',
+    },
+    // whole dropdown list
+    searchItemsContainer: {
+        maxHeight: 140,
+        backgroundColor: 'white',
         width: '85%',
-        margin: 10,
-        padding: 15,
-        fontSize: 16,
-        borderColor: '#d3d3d3',
-        borderBottomWidth: 1,
-        textAlign: 'left'
+        alignSelf: 'center',
     },
-    buttonLogin: {
-        marginTop: 5,
-        marginBottom: 5,
-        paddingVertical: 10,
-        alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
-        borderWidth: 1,
-        borderRadius: 5,
-        width: 150,
-        textAlign: 'center',
-        fontSize: 15
+    // input box
+    searchTextInput: {
+        width: '85%',
+        margin: 16,
+        fontFamily: 'ProximaNova',
+        alignSelf: 'center',
+        fontSize: 24,
+        borderColor: Constants.boxGrey,
+        borderBottomWidth: .5,
+        textAlign: 'left',
+        backgroundColor: 'white'
     },
-    textSignUp: {
-        padding: 10,
-        color: '#007AFF',
-        fontSize: 15
-    },
-    textForgotPassword: {
-        padding: 10,
-        color: '#FFA000',
-        fontSize: 15
-    },
-
+    buttonLayer: {
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            zIndex: 0
+        },
+        waves: {
+            width: Constants.windowWidth,
+            height: Constants.waveHeight * Constants.waveWidthRatio,
+            resizeMode: 'contain',
+        },
+        fishButton: {
+            height: Constants.windowHeight * 0.20,
+            width: Constants.windowWidth * 0.20,
+            resizeMode: 'contain',
+            alignSelf: 'flex-end',
+        },
+        posFish: {
+            flex: 1,
+            alignSelf: 'flex-end',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            paddingRight: 20,
+            paddingBottom: 45,
+        },
+    //<Button title="Cancel" onPress={this.onPressGoToMatches}/>
 })
 
 export default Courses;
