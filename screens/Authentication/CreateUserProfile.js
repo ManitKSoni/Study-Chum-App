@@ -43,7 +43,7 @@ class CreateUserProfile extends React.Component {
     }
 
     onPressContinue() {
-        if (this.state.index < this.questions.length) {
+        if (this.state.index < this.questions.length-1) {
             this.setState({ index: this.state.index + 1 })
         } else {
             userInstance.createUser(this.state.userProfile, () => {

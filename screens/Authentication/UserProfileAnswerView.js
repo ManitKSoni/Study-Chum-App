@@ -2,7 +2,8 @@ import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native'
 
 import * as Constants from '../../Constants.js'
-import * as MajorsList from '../../MajorsList';
+import * as MajorsList from '../../MajorsList'
+import * as Timezones from '../../TimezonesList'
 import Dropdown from './Dropdown.js'
 
 class UserProfileAnswerView extends React.Component {
@@ -70,27 +71,49 @@ class UserProfileAnswerView extends React.Component {
                 id: 7,
                 name: 'Korean',
             },
-            {
-                id: 8,
-                name: 'Sanskrit',
-            },
         ];
     }
 
-    getTimezonesArray(){
+    /** 
+        const timezonesArray = Timezones.timezonesArray;
+        var data = []
+        for (var i = 0; i < timezonesArray.length; i++) {
+            var currData = {
+                id: i.toString(),
+                name: timezonesArray[i]
+            };
+            data.push(currData);
+        }
+        return data; 
+    **/
+    getTimezonesArray() {
         return [
             {
-                id: 0,
-                name: 'Timezone UTC 8 BLAH BLAH'
-            }
-        ]
+                id: 1,
+                name: 'PST',
+            },
+            {
+                id: 2,
+                name: 'MST',
+            },
+            {
+                id: 3,
+                name: 'CST',
+            },
+            {
+                id: 4,
+                name: 'EST',
+            },
+        ];
     }
 
     updateField(key) {
         return (value) => { this.props.update(key, value) }
     }
 
-    /**Order of render: Name, Major, Year, Language, Timezone, Bio */
+    /** 
+     * Order of render: Name, Major, Year, Language, Timezone, Bio 
+     */
     correctView() {
         switch (this.props.index) {
             case 0:
@@ -113,36 +136,43 @@ class UserProfileAnswerView extends React.Component {
             case 1:
                 return (
                     <View style={styles.answer}>
-                        <Dropdown items={this.getMajorsArray()} update={this.updateField('major')} placeHolder={'Major'}/>
+                        <Dropdown items={this.getMajorsArray()} update={this.updateField('major')} placeHolder={'Major'} />
                     </View>
                 )
             case 2:
                 return (
                     <View style={styles.answer}>
-                        <Dropdown items={this.getYearsArray()} update={this.updateField('year')} placeHolder={'Year'} /> 
+                        {/* BOOTLEG METHOD DO NOT TOUCH THIS */}
+                        <View></View>
+                        <Dropdown items={this.getYearsArray()} update={this.updateField('year')} placeHolder={'Year'} />
                     </View>
                 )
             case 3:
                 return (
                     <View style={styles.answer}>
-                        <Dropdown items={this.getLanguagesArray()} update={this.updateField('language')} placeHolder={'Language'}/>
+                        <Dropdown items={this.getLanguagesArray()} update={this.updateField('language')} placeHolder={'Language'} />
                     </View>
                 )
             case 4:
                 return (
                     <View style={styles.answer}>
-                        <Dropdown items={this.getTimezonesArray()} update={this.updateField('timezone')} placeHolder={'Timezone UTC+8:00'} />
+                        {/* BOOTLEG METHOD DO NOT TOUCH THIS */}
+                        <View></View>
+                        <Dropdown items={this.getTimezonesArray()} update={this.updateField('timezone')}
+                            placeHolder={"PST"} />
                     </View>
                 )
             case 5:
                 return (
-                    //TODO textbox input with max char limit and dynamic expansion
                     <View style={styles.answer}>
                         <TextInput
-                            style={styles.inputBox}
+                            style={styles.borderBox}
+                            multiline={true}
+                            maxLength={160}
+                            numberOfLines={4}
                             value={this.props.profile.bio}
                             onChangeText={bio => this.props.update('bio', bio)}
-                            placeholder='Bio'
+                            placeholder='Start Typing Here...'
                         />
                     </View>
                 )
@@ -177,6 +207,17 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 15
     },
+    borderBox: {
+        fontFamily: 'ProximaNova',
+        width: '90%',
+        padding: 10,
+        alignSelf: 'center',
+        fontSize: 20,
+        textAlignVertical: 'top',
+        borderWidth: 0.6,
+        borderColor: Constants.boxGrey,
+        borderRadius: 5,
+    }, 
 })
 
 export default UserProfileAnswerView
