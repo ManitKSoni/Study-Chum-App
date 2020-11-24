@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     buttonTextOff: {
         fontFamily: 'ProximaNova',
         fontSize: 30,
-        color: 'black',
+        color: 'grey',
         textAlign: 'center',
     },
     on: {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.secondaryColor,
         padding: 10,
         borderColor: 'grey',
-        height: '25%',
+        //height: '25%',
         width: Constants.windowWidth * 0.3,
         borderWidth: 1,
         borderRadius: 5,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         padding: 10,
         borderColor: 'grey',
-        height: '25%',
+        //height: '25%',
         width: Constants.windowWidth * 0.3,
         borderWidth: 1,
         borderRadius: 5,
