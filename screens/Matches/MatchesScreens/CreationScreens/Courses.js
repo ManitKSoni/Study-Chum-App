@@ -3,11 +3,11 @@ import React from 'react'
 import { View, Text, ImageBackground, Image } from 'react-native'
 
 import {TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
-import PreferenceProfiles from "../PreferenceProfiles"
+import PreferenceProfiles from "../../PreferenceProfiles"
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import * as FileSystem from 'expo-file-system';
 import {Fragment} from 'react'
-import * as Constants from '../../../Constants.js'
+import * as Constants from '../../../../Constants.js'
 import {Icon} from 'react-native-elements';
 
 class Courses extends React.Component {
@@ -87,10 +87,10 @@ class Courses extends React.Component {
                         </Fragment>
                     </View>
 
-                    <ImageBackground style={styles.waves} source={require('../../../assets/wave.png')} >
+                    <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
                         <View style={styles.posFish}>
                             <TouchableOpacity onPress={() => this.onPressGoToAvailability()} >
-                                <Image style={styles.fishButton} source={require('../../../assets/fish_button.png')} />
+                                <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
                             </TouchableOpacity>
                         </View>
                     </ImageBackground>

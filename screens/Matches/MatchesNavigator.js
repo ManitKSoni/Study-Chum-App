@@ -4,15 +4,17 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Matches from "./MatchesScreens/Matches"; 
-import Courses from "./MatchesScreens/Courses"
-import Availibility from './MatchesScreens/Availibility';
+import Matches from "./MatchesScreens/MatchingScreens/Matches"; 
+import Courses from "./MatchesScreens/CreationScreens/Courses"
+import Availibility from './MatchesScreens/CreationScreens/Availibility';
 import Blank from "./MatchesScreens/Blank";
-import Quiet from "./MatchesScreens/Quiet";
-import ShowMatches from "./MatchesScreens/ShowMatches";
-import Remote from "./MatchesScreens/Remote";
-import UserProfile from "./MatchesScreens/UserProfile"
+import Quiet from "./MatchesScreens/CreationScreens/Quiet";
+import ShowMatches from "./MatchesScreens/MatchingScreens/ShowMatches";
+import Remote from "./MatchesScreens/CreationScreens/Remote";
+import UserProfile from "./MatchesScreens/MatchingScreens/UserProfile"
 import {Icon} from 'react-native-elements';
+import EditPreferences from './MatchesScreens/EditingScreens/EditPreferences';
+import EditAvailability from './MatchesScreens/EditingScreens/EditAvailability';
 
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
@@ -59,10 +61,14 @@ export default class MatchesNavigator extends React.Component {
               gestureEnabled: false,
               headerStyle: {backgroundColor: "#8075FF"},
               headerTitleStyle: {color:"#FFFFFF"},
-              title: "ShowMatches",
+              title: "Matches",
               headerLeft: () => (
                 <Icon name="menu" size ={30} containerStyle={{paddingLeft:5}} color="#FFFFFF"
                 backgroundColor="#009387" onPress={() => this.props.navigation.openDrawer()}/>
+              ),
+              headerRight: () => (
+                <Icon name="edit" size={30} type="material" containerStyle={{paddingRight:5}} 
+                  color="#FFFFFF" onPress={() => this.props.navigation.navigate("EditPreferences")}/>
               )
             }}/>
 
@@ -74,6 +80,17 @@ export default class MatchesNavigator extends React.Component {
             <Stack.Screen name="Blank" component={Blank} options={{headerShown:null}}/> 
 
             <Stack.Screen name="UserProfile" component={UserProfile} options={{headerLeft:null}}/>
+
+            <Stack.Screen name="EditPreferences" component={EditPreferences} 
+              options={{
+                headerLeft:null,
+                headerStyle: {backgroundColor: "#8075FF"},
+                headerTitleStyle: {color:"#FFFFFF"},
+                title: "Edit Preferences",
+                }}
+            />
+
+            <Stack.Screen name="EditAvailability" component={EditAvailability} options={{headerShown:null}}/>
 
         </Stack.Navigator>
     )

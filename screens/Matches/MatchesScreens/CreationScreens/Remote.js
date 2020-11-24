@@ -3,8 +3,8 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import {Keyboard, Switch, StyleSheet, TouchableWithoutFeedback, Button,  ImageBackground, Image, TouchableOpacity} from 'react-native'
-import PreferenceProfiles from "../PreferenceProfiles"
-import * as Constants from '../../../Constants.js'
+import PreferenceProfiles from "../../PreferenceProfiles"
+import * as Constants from '../../../../Constants.js'
 import {Icon} from 'react-native-elements';
 
 class Remote extends React.Component {
@@ -46,10 +46,10 @@ class Remote extends React.Component {
                     />  
                 </View>
                 <View style={styles.buttonLayer}>
-                        <ImageBackground style={styles.waves} source={require('../../../assets/wave.png')} >
+                        <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
                             <View style={styles.posFish}>
                                 <TouchableOpacity onPress={() => this.onPressGoToQuiet()} >
-                                    <Image style={styles.fishButton} source={require('../../../assets/fish_button.png')} />
+                                    <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
                                 </TouchableOpacity>
                             </View>
                         </ImageBackground>

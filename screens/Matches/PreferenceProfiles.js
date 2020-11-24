@@ -137,6 +137,17 @@ export class PreferenceProfiles {
         }
 
     }
+
+    async editAvailability(availability,courseName) {
+        var courseRef = this.db.collection("courses");
+        var userID = "students." + Firebase.auth().currentUser.uid; 
+        var key = userID + ".preferences.availability"
+        if( courseName ) {
+            courseRef.doc(courseName).update(
+                {[key]: availability}
+            )
+        }
+    }
     
 }
 

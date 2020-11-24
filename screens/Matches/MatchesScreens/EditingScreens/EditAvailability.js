@@ -3,12 +3,13 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, ImageBackground, Image, TouchableOpacity } from 'react-native'
-import PreferenceProfiles from "../PreferenceProfiles"
+import PreferenceProfiles from "../../PreferenceProfiles"
 import {Icon} from 'react-native-elements';
-import * as Constants from '../../../Constants.js'
+import * as Constants from '../../../../Constants.js'
+import SavedData from "../../SavedData"; 
 
 
-class Availibility extends React.Component {
+class EditAvailibility extends React.Component {
      
 
     state = {
@@ -35,14 +36,14 @@ class Availibility extends React.Component {
         return availability;
     }
 
-    onPressGoToMatches = () => {
-        this.props.navigation.navigate("Matches");
+    onPressCancel = () => {
+        this.props.navigation.navigate("EditPreferences");
     }
 
-    onPressGoToRemote = () => {
+    onPressGoBackToEditPreferences = () => {
         var availability = this.createAvailabilityMap();
-        PreferenceProfiles.addAvailability(availability)
-        this.props.navigation.navigate("Remote");
+        PreferenceProfiles.editAvailability(availability, SavedData.title);
+        this.props.navigation.navigate("EditPreferences");
     }
 
     render() {
@@ -52,7 +53,7 @@ class Availibility extends React.Component {
                 <View style={styles.container1}>
                     <Icon name="x" type="foundation" size={35} color="black" 
                         containerStyle={{paddingTop:25, paddingLeft:325}} 
-                        onPress={this.onPressGoToMatches}
+                        onPress={this.onPressCancel}
                     />
                 <View style={styles.container2}>
                     <Text style={styles.header}> What days are you free?</Text>
@@ -107,10 +108,10 @@ class Availibility extends React.Component {
                     />
                 </View>
                 <View style={styles.buttonLayer}>
-                        <ImageBackground style={styles.waves} source={require('../../../assets/wave.png')} >
+                        <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
                             <View style={styles.posFish}>
-                                <TouchableOpacity onPress={()=>this.onPressGoToRemote()} >
-                                    <Image style={styles.fishButton} source={require('../../../assets/fish_button.png')} />
+                                <TouchableOpacity onPress={()=>this.onPressGoBackToEditPreferences()} >
+                                    <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
                                 </TouchableOpacity>
                             </View>
                         </ImageBackground>
@@ -164,4 +165,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Availibility; 
+export default EditAvailibility; 

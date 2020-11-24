@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableOpacity} from 'react-native';
-import SavedData from "../SavedData"
+import SavedData from "../../SavedData"
 
 class UserProfile extends React.Component {
 

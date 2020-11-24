@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, FlatList, StatusBar, TouchableOpacity} from 'react-native'
-import MatchingAlgorithm from "../MatchingAlgorithm"
-import SavedData from "../SavedData"
+import MatchingAlgorithm from "../../MatchingAlgorithm"
+import SavedData from "../../SavedData"
 
 class ShowMatches extends React.Component {
 
