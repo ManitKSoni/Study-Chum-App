@@ -17,6 +17,7 @@ import EditPreferences from './MatchesScreens/EditingScreens/EditPreferences';
 import EditAvailability from './MatchesScreens/EditingScreens/EditAvailability';
 import EditQuiet from "./MatchesScreens/EditingScreens/EditQuiet"
 import EditRemote from "./MatchesScreens/EditingScreens/EditRemote"
+import Channel from "./../Chat/Channel"
 
 import * as Constants from '../../Constants.js'
 
@@ -83,6 +84,8 @@ export default class MatchesNavigator extends React.Component {
 
           <Stack.Screen name="UserProfile" component={UserProfile} 
             options={{headerShown:null}}/>
+
+          <Stack.Screen name="ChatChannel" component={Channel} />
 
           <Stack.Screen name="EditPreferences" component={EditPreferences} 
               options={{

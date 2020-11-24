@@ -55,16 +55,18 @@ class ChatDataModel {
      * Looks for a certain channel and if it doesn't exist, creates one
      * @param {string} otherUserID ID of other user
      */
-    async getChannel(otherUserID) {
+    async getChannel(otherUserID, otherUserName, completion) {
+        let uid = this.uid + '.name'
         const query = this.db.collection('chat')
             .where('users', 'array-contains', this.uid)
-            .where('users', 'array-contains', otherUserID)
+            .where(uid, '==', otherUserName)
 
         let snapshot = await query.get()
         if (snapshot.empty) {
-            this.createChannel()
+            console.log("channel created")
+            this.createChannel(otherUserID, otherUserName, completion)
         } else {
-            return snapshot.docs[0].data()
+            completion(snapshot.docs[0].id)
         }
     }
 
@@ -73,10 +75,9 @@ class ChatDataModel {
      * @param {string} otherUserID ID of other user
      * @param {string} otherUserName name of other user
      */
-    createChannel(otherUserID, otherUserName) {
-        // TODO: Need to check if channel already exists
+    async createChannel(otherUserID, otherUserName, completion) {
 
-        this.db.collection('chat').add({
+        let docRef = await this.db.collection('chat').add({
             users: [
                 otherUserID, this.uid
             ], // TODO: fill in real info
@@ -94,6 +95,8 @@ class ChatDataModel {
             lastSentMessage: "",
             lastSender: ""
         })
+        console.log(`Channel id: ${docRef.id}`)
+        completion(docRef.id)
     }
 }
 
