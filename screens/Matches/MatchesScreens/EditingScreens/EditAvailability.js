@@ -42,72 +42,97 @@ class EditAvailibility extends React.Component {
 
     onPressGoBackToEditPreferences = () => {
         var availability = this.createAvailabilityMap();
+        console.log(availability);
         PreferenceProfiles.editAvailability(availability, SavedData.title);
         this.props.navigation.navigate("EditPreferences");
     }
+
+    ToggleSunday = () => {
+        this.state.sunday ?  this.setState({ sunday: false })
+            :  this.setState({ sunday: true });
+    };
+    ToggleMonday = () => {
+        this.state.monday ?  this.setState({ monday: false })
+            :  this.setState({ monday: true });
+
+    };
+    ToggleTuesday = () => {
+        this.state.tuesday ?  this.setState({ tuesday: false })
+            :  this.setState({ tuesday: true });
+
+    };
+    ToggleWednesday = () => {
+        this.state.wednesday ?  this.setState({ wednesday: false })
+            :  this.setState({ wednesday: true });
+
+    };
+    ToggleThursday = () => {
+        this.state.thursday ?  this.setState({ thursday: false })
+            :  this.setState({ thursday: true });
+
+    };
+    ToggleFriday = () => {
+        this.state.friday ?  this.setState({ friday: false })
+            :  this.setState({ friday: true });
+
+    };
+    ToggleSaturday = () => {
+        this.state.saturday ?  this.setState({ saturday: false })
+            :  this.setState({ saturday: true });
+
+    };
 
     render() {
      
         return(
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container1}>
-                    <Icon name="x" type="foundation" size={35} color="black" 
-                        containerStyle={{paddingTop:25, paddingLeft:325}} 
+                    <Icon name="x" type="foundation" size={35} color="black"
+                          containerStyle={styles.iconStyle}
                         onPress={this.onPressCancel}
                     />
-                <View style={styles.container2}>
-                    <Text style={styles.header}> What days are you free?</Text>
-                    <Text> Sunday </Text>
-                    <Switch 
-                        trackColor={{ false: "#FF0000", true: "00FF00" }}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={(sunday) => this.setState({sunday})}
-                        value={this.state.sunday}
-                    />
-                    <Text> Monday </Text>
-                    <Switch 
-                        trackColor={{ false: "#FF0000", true: "00FF00" }}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={(monday) => this.setState({monday})}
-                        value={this.state.monday}
-                    />
-                    <Text> Tuesday </Text>
-                    <Switch 
-                        trackColor={{ false: "#FF0000", true: "00FF00" }}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={(tuesday) => this.setState({tuesday})}
-                        value={this.state.tuesday}
-                    />
-                    <Text> Wednesday </Text>
-                    <Switch 
-                        trackColor={{ false: "#FF0000", true: "00FF00" }}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={(wednesday) => this.setState({wednesday})}
-                        value={this.state.wednesday}
-                    />
-                    <Text> Thursday </Text>
-                    <Switch 
-                        trackColor={{ false: "#FF0000", true: "00FF00" }}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={(thursday) => this.setState({thursday})}
-                        value={this.state.thursday}
-                    />
-                    <Text> Friday </Text>
-                    <Switch 
-                        trackColor={{ false: "#FF0000", true: "00FF00" }}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={(friday) => this.setState({friday})}
-                        value={this.state.friday}
-                    />
-                    <Text> Saturday </Text>
-                    <Switch 
-                        trackColor={{ false: "#FF0000", true: "00FF00" }}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={(saturday) => this.setState({saturday})}
-                        value={this.state.saturday}
-                    />
-                </View>
-                <View style={styles.buttonLayer}>
+                    <View>
+                        <Text style={styles.prompt}> What days are you free?</Text>
+                        <View style={styles.container2}>
+
+                            <TouchableOpacity
+                                style={this.state.sunday ? styles.dayButtonSelected : styles.dayButtonUnselected}
+                                onPress={this.ToggleSunday} >
+                                <Text style={this.state.sunday ? styles.dayButtonTextSelected : styles.dayButtonTextUnselected}>Sunday</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={this.state.monday ? styles.dayButtonSelected : styles.dayButtonUnselected}
+                                onPress={this.ToggleMonday} >
+                                <Text style={this.state.monday ? styles.dayButtonTextSelected : styles.dayButtonTextUnselected}>Monday</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={this.state.tuesday ? styles.dayButtonSelected : styles.dayButtonUnselected}
+                                onPress={this.ToggleTuesday} >
+                                <Text style={this.state.tuesday ? styles.dayButtonTextSelected : styles.dayButtonTextUnselected}>Tuesday</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={this.state.wednesday ? styles.dayButtonSelected : styles.dayButtonUnselected}
+                                onPress={this.ToggleWednesday} >
+                                <Text style={this.state.wednesday ? styles.dayButtonTextSelected : styles.dayButtonTextUnselected}>Wednesday</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={this.state.thursday ? styles.dayButtonSelected : styles.dayButtonUnselected}
+                                onPress={this.ToggleThursday} >
+                                <Text style={this.state.thursday ? styles.dayButtonTextSelected : styles.dayButtonTextUnselected}>Thursday</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={this.state.friday ? styles.dayButtonSelected : styles.dayButtonUnselected}
+                                onPress={this.ToggleFriday} >
+                                <Text style={this.state.friday ? styles.dayButtonTextSelected : styles.dayButtonTextUnselected}>Friday</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={this.state.saturday ? styles.dayButtonSelected : styles.dayButtonUnselected}
+                                onPress={this.ToggleSaturday} >
+                                <Text style={this.state.saturday ? styles.dayButtonTextSelected : styles.dayButtonTextUnselected}>Saturday</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.buttonLayer}>
                         <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
                             <View style={styles.posFish}>
                                 <TouchableOpacity onPress={()=>this.onPressGoBackToEditPreferences()} >
@@ -115,9 +140,10 @@ class EditAvailibility extends React.Component {
                                 </TouchableOpacity>
                             </View>
                         </ImageBackground>
+                    </View>
+
                 </View>
-            </View>
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
         )
     }
 }
@@ -125,14 +151,22 @@ class EditAvailibility extends React.Component {
 const styles = StyleSheet.create({
     container1: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-
+        backgroundColor: 'white',
+        justifyContent: 'space-between',
+        minHeight: Math.round(Constants.windowHeight)
     },
     container2: {
-        paddingTop: 20,
-        alignItems: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    iconStyle: {
+        paddingTop: Constants.windowHeight * 0.05 ,
+        paddingLeft: Constants.windowWidth * 0.85,
+        backgroundColor: 'white',
+        position: 'absolute',
+        alignSelf: 'center',
+        zIndex: 999,
     },
     waves: {
         width: Constants.windowWidth,
@@ -157,10 +191,57 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         zIndex: 0
     },
-    header: {
-        fontSize:24,
-        paddingRight: 70,
-        paddingBottom: 20
+    prompt: {
+        paddingTop: Constants.windowHeight * .15,
+        fontSize: 36,
+        // lineHeight: 40,
+        color: 'black',
+        textAlign: 'left',
+        letterSpacing: 0,
+        alignSelf: 'flex-start',
+        paddingLeft: Constants.windowWidth * .075,
+        paddingBottom: Constants.windowHeight * .02,
+        backgroundColor: 'white',
+        width: '100%',
+        fontFamily: 'Buenard-Bold'
+    },
+    dayButtonTextSelected: {
+        fontSize:30,
+        width: Constants.windowWidth * 0.50,
+        textAlign: 'center',
+        margin: 3,
+        color: 'white',
+        fontFamily: 'ProximaNova',
+    },
+    dayButtonTextUnselected: {
+        fontSize:30,
+        width: Constants.windowWidth * 0.50,
+        textAlign: 'center',
+        margin: 3,
+        color: 'gray',
+        fontFamily: 'ProximaNova',
+    },
+    dayButtonUnselected: {
+        fontSize:30,
+        width: Constants.windowWidth * 0.5,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 8,
+        margin: 3,
+        backgroundColor: 'white',
+        alignItems: 'center',
+
+    },
+    dayButtonSelected: {
+        fontSize:30,
+        width: Constants.windowWidth * 0.5,
+        borderColor: Constants.secondaryColor,
+        borderWidth: 1,
+        borderRadius: 8,
+        margin: 3,
+        backgroundColor: Constants.secondaryColor,
+        alignItems: 'center',
+
     },
 
 })
