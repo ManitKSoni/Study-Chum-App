@@ -222,11 +222,11 @@ class Settings extends React.Component{
                             </View>
                              <View style={styles.btnParentSection}>
                                 <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
-                                  <Text style={styles.btnText}>Choose File</Text>
+                                  <Text style={styles.btnText}>Change Profile Picture</Text>
                                 </TouchableOpacity>
-                            <TouchableOpacity onPress={this.launchImageLibrary} style={styles.btnSection}  >
+                            {/* <TouchableOpacity onPress={this.launchImageLibrary} style={styles.btnSection}  >
                                 <Text style={styles.btnText}>Directly Launch Image Library</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                             <Button style={styles.button}title="Edit Profile"onPress={this.onPressEditProfile}/>
                             <Button style={styles.button} title="Log out" onPress={this.onPressLogOut}/>
                             </View>
