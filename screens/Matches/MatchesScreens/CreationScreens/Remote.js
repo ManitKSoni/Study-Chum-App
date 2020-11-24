@@ -14,43 +14,53 @@ class Remote extends React.Component {
         remote: false
     }
 
+    onPressToggle = (id) => {
+        this.setState({remote:id});
+    };
 
     onPressGoToMatches = () => {
         this.props.navigation.navigate("Matches");
     }
 
     onPressGoToQuiet = () => {
+        console.log(this.state.remote);
         PreferenceProfiles.addRemote(this.state.remote); 
         this.props.navigation.navigate("Quiet");
     }
 
     render() {
-     
         return(
-       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
                 <Icon name="x" type="foundation" size={35} color="black" 
-                    containerStyle={{paddingTop:25, paddingLeft:325}} 
+                    containerStyle={styles.iconStyle}
                     onPress={this.onPressGoToMatches}
                 />
-                <View style={styles.container}>
-                    <Text style={styles.text}> Online or offline? </Text>
-                     <Switch 
-                      trackColor={{ false: "#FF0000", true: "00FF00" }}
-                      ios_backgroundColor="#3e3e3e"
-                      onValueChange={(remote) => this.setState({remote})}
-                      value={this.state.remote}
-                    />  
+                <Text style={styles.prompt}>Study environment?</Text>
+
+                <View style={styles.buttonsContainer}>
+
+                    <TouchableOpacity
+                        activeOpacity = {0.9}
+                        style = {this.state.remote === true ? styles.on : styles.off}
+                        onPress={ ()=>this.onPressToggle(true) }>
+                        <Text style={this.state.remote === true ? styles.buttonTextOn : styles.buttonTextOff}>Remote</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity = {0.9}
+                        style = {this.state.remote === false ? styles.on : styles.off }
+                        onPress={ ()=>this.onPressToggle(false) }>
+                        <Text style={this.state.remote === false ? styles.buttonTextOn : styles.buttonTextOff}>In-person</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.buttonLayer}>
-                        <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
-                            <View style={styles.posFish}>
-                                <TouchableOpacity onPress={() => this.onPressGoToQuiet()} >
-                                    <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
-                                </TouchableOpacity>
-                            </View>
-                        </ImageBackground>
-                </View>
+
+                <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
+                    <View style={styles.posFish}>
+                        <TouchableOpacity onPress={() => this.onPressGoToQuiet()} >
+                            <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
             </View>
         </TouchableWithoutFeedback>
         )
@@ -59,25 +69,81 @@ class Remote extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom:20
+       flex: 1,
+       backgroundColor: 'white',
+       //alignItems: 'center',
+       justifyContent: 'space-between',
+       minHeight: Math.round(Constants.windowHeight)
     },
-    text: {
+    iconStyle: {
+        paddingTop: Constants.windowHeight * 0.05 ,
+        paddingLeft: Constants.windowWidth * 0.85,
+        backgroundColor: 'white',
+        position: 'absolute',
+        alignSelf: 'center',
+        zIndex: 999,
+    },
+    prompt: {
+        paddingTop: Constants.windowHeight * .15,
+        fontSize: 36,
+        // lineHeight: 40,
+        color: 'black',
+        textAlign: 'left',
+        letterSpacing: 0,
+        alignSelf: 'flex-start',
+        paddingLeft: Constants.windowWidth * .075,
+        paddingBottom: Constants.windowHeight * .02,
+        backgroundColor: 'white',
+        width: '100%',
+        fontFamily: 'Buenard-Bold'
+    },
+    buttonsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonTextOn: {
+        fontFamily: 'ProximaNova',
         fontSize: 30,
-        paddingRight: 125,
-        paddingBottom: 60
+        color: 'white',
+        textAlign: 'center',
+    },
+    buttonTextOff: {
+        fontFamily: 'ProximaNova',
+        fontSize: 30,
+        color: 'black',
+        textAlign: 'center',
+    },
+    on: {
+        //backgroundColor: '#A8C0E6',
+        backgroundColor: Constants.secondaryColor,
+        padding: 10,
+        borderColor: 'grey',
+        height: '25%',
+        width: Constants.windowWidth * 0.37,
+        borderWidth: 1,
+        borderRadius: 5,
+    },
+    off: {
+        backgroundColor:'white',
+        padding: 10,
+        borderColor: 'grey',
+        height: '25%',
+        width: Constants.windowWidth * 0.37,
+        borderWidth: 1,
+        borderRadius: 5,
     },
     waves: {
         width: Constants.windowWidth,
         height: Constants.waveHeight * Constants.waveWidthRatio,
+        //resizeMode: 'contain',
     },
     fishButton: {
         height: Constants.windowHeight * 0.20,
         width: Constants.windowWidth * 0.20,
         resizeMode: 'contain',
+        //alignSelf: 'flex-end',
     },
     posFish: {
         flex: 1,
