@@ -53,6 +53,11 @@ export function DrawerContent(props) {
         MatchingAlgorithm.getStudentMap(course, () => props.navigation.navigate("ShowMatches", {name: course}));
     }
 
+    var onPressGoToCourses = () => {
+        props.navigation.navigate("Blank"); 
+        props.navigation.navigate("Courses");
+    }
+
     const renderItem = ({item}) => (
         <Item props={props} course = {item.course} 
             onPress = {() => onPressGenerate(item.course)}
@@ -60,8 +65,6 @@ export function DrawerContent(props) {
     );
 
     const data = createData();
-
-    //console.log(data);
 
     return (
         <View style={{flex:1}}>
@@ -79,7 +82,7 @@ export function DrawerContent(props) {
                          keyExtractor = {(item) => item.id}
                      />
                     </View>
-                    <TouchableOpacity onPress = {() => props.navigation.navigate("Courses")}>
+                    <TouchableOpacity onPress = {onPressGoToCourses}>
                         <Text style={styles.addButton}> + Add a class</Text>
                     </TouchableOpacity>
             
