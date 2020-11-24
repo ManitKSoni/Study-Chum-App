@@ -103,16 +103,20 @@ const styles = StyleSheet.create({
     },
 
     courses: {
-        fontSize: 36,
-        textAlign: 'left'
+        fontSize: 30,
+        textAlign: 'left',
+        fontFamily: 'ProximaNova'
     },
 
     header: {
         fontSize: 24,
         textAlign: 'center',
+        fontFamily: 'ProximaNova'
     },
 
     addButton: {
-        fontSize: 36
+        fontSize: 30,
+        fontFamily: 'ProximaNova',
+        color: 'grey'
     }
 });

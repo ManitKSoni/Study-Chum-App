@@ -140,12 +140,14 @@ const styles = StyleSheet.create({
     },
     // each entry in the dropdown list
     searchItem: {
+        borderBottomWidth: 1,
         backgroundColor: 'grey',
         marginHorizontal: 5,
         marginVertical: 5,
     },
     // text in the drop down list
     searchItemText: {
+        fontFamily: 'ProximaNova',
         color: 'black',
         fontSize: 24,
         backgroundColor: 'white',
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     searchItemsContainer: {
         maxHeight: 140,
         backgroundColor: 'white',
-        width: '85%',
+        width: '86%',
         alignSelf: 'center',
     },
     // input box
