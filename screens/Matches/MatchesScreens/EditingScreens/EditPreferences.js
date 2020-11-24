@@ -8,7 +8,7 @@ class EditPreferences extends React.Component {
     onPressGoToShowMatches = () => {
         this.props.navigation.navigate("Blank");
         MatchingAlgorithm.getStudentMap(SavedData.title, 
-            () => this.props.navigation.navigate("ShowMatches"));
+            () => this.props.navigation.navigate("ShowMatches", {name:SavedData.title}));
     }
 
     render() {

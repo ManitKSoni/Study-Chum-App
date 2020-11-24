@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         zIndex: 0
     },
+    
 })
 
 export default Remote; 

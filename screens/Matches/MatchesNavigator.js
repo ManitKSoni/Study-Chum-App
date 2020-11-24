@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, StyleSheet } from '@react-navigation/stack';
 
 import Matches from "./MatchesScreens/MatchingScreens/Matches"; 
 import Courses from "./MatchesScreens/CreationScreens/Courses"
@@ -18,6 +18,8 @@ import EditAvailability from './MatchesScreens/EditingScreens/EditAvailability';
 import EditQuiet from "./MatchesScreens/EditingScreens/EditQuiet"
 import EditRemote from "./MatchesScreens/EditingScreens/EditRemote"
 
+import * as Constants from '../../Constants.js'
+
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
 const Stack = createStackNavigator();
@@ -31,25 +33,22 @@ export default class MatchesNavigator extends React.Component {
           <Stack.Screen name="Matches" component={Matches} 
             options = {{
               title: "Matches",
-              headerStyle: {backgroundColor: "#8075FF"},
-              headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova"},
+              headerStyle: {backgroundColor: Constants.secondaryColor},
+              headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
+                fontSize:Constants.headerFontSize},
               headerLeft: () => (
-                <Icon name="menu" size={30} containerStyle={{paddingLeft:5}} color="#FFFFFF"
+                <Icon name="menu" size={40} containerStyle={{paddingLeft:5}} color="#FFFFFF"
                 backgroundColor="#009387" onPress={()=> this.props.navigation.openDrawer()}/>
               )
             }}
           />
 
           <Stack.Screen name="Courses" component={Courses} 
-            options = {{
-              headerShown:null, 
-            }} 
+            options = {{headerShown:null}} 
           />
 
-          <Stack.Screen name="Availibility" component={Availibility}
-            options = {{
-              headerShown:null, 
-          }}
+          <Stack.Screen name="Availibility" component={Availibility} 
+            options = {{headerShown:null}}
           />
 
           <Stack.Screen name="Quiet" component={Quiet}
@@ -59,47 +58,52 @@ export default class MatchesNavigator extends React.Component {
           />
 
           <Stack.Screen name="ShowMatches" component={ShowMatches}
-             options = {{
-              gestureEnabled: false,
-              headerStyle: {backgroundColor: "#8075FF"},
-              headerTitleStyle: {color:"#FFFFFF"},
-              title: "Matches",
-              headerLeft: () => (
-                <Icon name="menu" size ={30} containerStyle={{paddingLeft:5}} color="#FFFFFF"
-                backgroundColor="#009387" onPress={() => this.props.navigation.openDrawer()}/>
-              ),
-              headerRight: () => (
-                <Icon name="edit" size={30} type="material" containerStyle={{paddingRight:5}} 
+             options = {({ route }) => ({ 
+                title: route.params.name,
+                gestureEnabled: false,
+                headerStyle: {backgroundColor: Constants.secondaryColor},
+                headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
+                  fontSize:Constants.headerFontSize},
+                headerLeft: () => (
+                  <Icon name="menu" size ={40} containerStyle={{paddingLeft:5}} color="#FFFFFF"
+                  backgroundColor="#009387" onPress={() => this.props.navigation.openDrawer()}/>
+                ),
+                headerRight: () => (
+                  <Icon name="edit" size={31} type="material" containerStyle={{paddingRight:5}} 
                   color="#FFFFFF" onPress={() => this.props.navigation.navigate("EditPreferences")}/>
-              )
-            }}/>
+                )
+              })}
+            />
 
-          <Stack.Screen name="Remote" component={Remote}
-           options = {{
-            headerShown:null, 
-            }}/>  
+          <Stack.Screen name="Remote" component={Remote} 
+            options = {{headerShown:null}}/>  
             
-            <Stack.Screen name="Blank" component={Blank} options={{headerShown:null}}/> 
+          <Stack.Screen name="Blank" component={Blank} 
+            options={{headerShown:null}}/> 
 
-            <Stack.Screen name="UserProfile" component={UserProfile} options={{headerLeft:null}}/>
+          <Stack.Screen name="UserProfile" component={UserProfile} 
+            options={{headerShown:null}}/>
 
-            <Stack.Screen name="EditPreferences" component={EditPreferences} 
+          <Stack.Screen name="EditPreferences" component={EditPreferences} 
               options={{
                 headerLeft:null,
-                headerStyle: {backgroundColor: "#8075FF"},
-                headerTitleStyle: {color:"#FFFFFF"},
+                headerStyle: {backgroundColor: Constants.secondaryColor},
+                headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
+                  fontSize:Constants.headerFontSize},
                 title: "Edit Preferences",
                 }}
             />
 
-            <Stack.Screen name="EditAvailability" component={EditAvailability} options={{headerShown:null}}/>
+          <Stack.Screen name="EditAvailability" component={EditAvailability} 
+            options={{headerShown:null}}/>
 
-            <Stack.Screen name="EditQuiet" component={EditQuiet} options={{headerShown:null}}/>
+          <Stack.Screen name="EditQuiet" component={EditQuiet} 
+            options={{headerShown:null}}/>
 
-            <Stack.Screen name="EditRemote" component={EditRemote} options={{headerShown:null}}/>
+          <Stack.Screen name="EditRemote" component={EditRemote} 
+            options={{headerShown:null}}/>
 
         </Stack.Navigator>
     )
   }
 }
-
