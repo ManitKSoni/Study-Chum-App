@@ -50,7 +50,7 @@ class Remote extends React.Component {
                         activeOpacity = {0.9}
                         style = {this.state.remote === false ? styles.on : styles.off }
                         onPress={ ()=>this.onPressToggle(false) }>
-                        <Text style={this.state.remote === false ? styles.buttonTextOn : styles.buttonTextOff}>In-person</Text>
+                        <Text style={this.state.remote === false ? styles.buttonTextOn : styles.buttonTextOff}>IRL</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     buttonTextOff: {
         fontFamily: 'ProximaNova',
         fontSize: 30,
-        color: 'black',
+        color: 'grey',
         textAlign: 'center',
     },
     on: {
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
         backgroundColor: Constants.secondaryColor,
         padding: 10,
         borderColor: 'grey',
-        height: '25%',
-        width: Constants.windowWidth * 0.37,
+        //height: '25%',
+        width: Constants.windowWidth * 0.33,
         borderWidth: 1,
         borderRadius: 5,
     },
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         padding: 10,
         borderColor: 'grey',
-        height: '25%',
-        width: Constants.windowWidth * 0.37,
+        //height: '25%',
+        width: Constants.windowWidth * 0.33,
         borderWidth: 1,
         borderRadius: 5,
     },
