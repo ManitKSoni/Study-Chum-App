@@ -209,57 +209,32 @@ class Settings extends React.Component{
                         <StatusBar barStyle="dark-content" />
                         <SafeAreaView>
                             <View style={styles.body}>
-                              <Text style={{textAlign:'center',fontSize:20,paddingBottom:10}} >Pick Images from Camera & Gallery</Text>
                               <View style={styles.ImageSections}>
                                 <View>
                                     {this.renderFileData()}
-                                    <Text  style={{textAlign:'center'}}>Base 64 String</Text>
+                                    <Text style={{textAlign:'center',fontSize:22,paddingBottom:25}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
                                  </View>
-                                 <View>
-                                      {this.renderFileUri()}
-                                     <Text style={{textAlign:'center'}}>File Uri</Text>
-                                </View>
+                                 
                             </View>
-
+                            <View style={styles.textAlign}>
+                                   <Text style={{textAlign:'center', fontSize:20, paddingBottom:10}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
+                                   <Text style={{textAlign:'center', fontSize:20, paddingBottom:10}} >{this.state.userDetails.bio}</Text>
+                            </View>
                              <View style={styles.btnParentSection}>
                                 <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
                                   <Text style={styles.btnText}>Choose File</Text>
                                 </TouchableOpacity>
-
-                            <TouchableOpacity onPress={this.launchCamera} style={styles.btnSection}  >
-                                <Text style={styles.btnText}>Directly Launch Camera</Text>
-                            </TouchableOpacity>
-
                             <TouchableOpacity onPress={this.launchImageLibrary} style={styles.btnSection}  >
                                 <Text style={styles.btnText}>Directly Launch Image Library</Text>
                             </TouchableOpacity>
+                            <Button style={styles.button}title="Edit Profile"onPress={this.onPressEditProfile}/>
+                            <Button style={styles.button} title="Log out" onPress={this.onPressLogOut}/>
                             </View>
 
                         </View>
-                        </SafeAreaView>
+                      </SafeAreaView>
                     </Fragment>
-                    <Text
-                        style={styles.text}>
-                        {this.state.userDetails.firstName + " " + this.state.userDetails.lastName}
-                    </Text>
-                    <Text
-                        style={styles.text}>
-                        {this.state.userDetails.major + " " + this.state.userDetails.year}
-                    </Text>
-                    <Text
-                        style={styles.text}>
-                        {this.state.userDetails.bio}
-                    </Text>
-                    <Button
-                        style={styles.button}
-                        title="Edit Profile"
-                        onPress={this.onPressEditProfile}
-                    />
-                     <Button
-                        style={styles.button}
-                        title="Log out"
-                        onPress={this.onPressLogOut}
-                    />
+                    
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -287,12 +262,13 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginBottom: 5,
         paddingVertical: 15,
+        paddingBottom: 10,
         alignItems: 'center',
         backgroundColor: '#F6820D',
         borderColor: '#F6820D',
         borderWidth: 1,
         borderRadius: 5,
-        width: 150,
+        width: 200,
         textAlign: 'center',
         fontSize: 15
     },
