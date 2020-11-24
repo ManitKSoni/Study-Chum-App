@@ -34,7 +34,7 @@ class EditRemote extends React.Component {
             <View style={styles.container}>
                 <Icon name="x" type="foundation" size={35} color="black"
                     containerStyle={styles.iconStyle}
-                    onPress={this.onPressGoToMatches}
+                    onPress={this.onPressCancel}
                 />
                 <Text style={styles.prompt}>Study environment?</Text>
 
