@@ -26,7 +26,11 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+<<<<<<< HEAD
     "react-native-cli": "^2.0.1",
+=======
+    "react-native-dropdown-picker": "^3.7.1",
+>>>>>>> f924b5509583582a21cc026e959cec705c185e9d
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-gifted-chat": "^0.16.3",
@@ -35,6 +39,7 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
+    "react-native-searchable-dropdown": "^1.1.1",
     "react-native-swipeable": "^0.6.0",
     "react-native-swipeout": "^2.3.6",
     "react-native-table-component": "^1.2.1",

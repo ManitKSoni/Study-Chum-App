@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, FlatList, StatusBar, TouchableOpacity} from 'react-native'
-import MatchingAlgorithm from "./MatchingAlgorithm"
-import SavedData from "./SavedData"
+import MatchingAlgorithm from "../../MatchingAlgorithm"
+import SavedData from "../../SavedData"
 
 class ShowMatches extends React.Component {
 
@@ -27,13 +27,19 @@ class ShowMatches extends React.Component {
         return data; 
     };
     
-    render() {
+    onPressGoToUserProfile = (uid) => {
+        SavedData.renderProfile(uid, ()=>this.props.navigation.navigate("UserProfile"));
+    }
 
+   
+    render() {
+        
         const renderItem = ({item}) => (
+        
             <Item name = {item.name} 
                 bio = {item.bio} 
                 endorsements = {item.endorsements}
-                onPress = {() => this.props.navigation.navigate("Matches")}
+                onPress = {() => this.onPressGoToUserProfile(item.userID)}
             />
         );
 

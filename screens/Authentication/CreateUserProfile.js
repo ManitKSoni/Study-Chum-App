@@ -1,109 +1,36 @@
 import 'react-native-gesture-handler';
-
-import React from 'react'
-
-import { View, TextInput, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ImageBackground, Image } from 'react-native'
-import { HeaderBackButton } from '@react-navigation/stack';
-
+import React from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ImageBackground, Image } from 'react-native'
 
 import * as Constants from '../../Constants.js'
-import Firebase from '../../config/Firebase'
 import userInstance from '../Singletons/UserSingleton'
+import UserProfileAnswerView from './UserProfileAnswerView'
 
-class UserProfileAnswerView extends React.Component {
+class CreateUserProfile extends React.Component {
+
+    questions = [
+        "What's your name?",
+        "What's your major?",
+        "What year are you graduating?",
+        "What is your preferred language?",
+        "Timezone?",
+        "Tell us a little about yourself!",
+    ]
 
     constructor() {
         super()
+        this.onPressContinue = this.onPressContinue.bind(this)
     }
 
-    correctView() {
-        switch(this.props.index) {
-            case 0: 
-                return (
-                    <View style={styles.answer}>
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.props.profile.firstName}
-                            onChangeText={firstName => this.props.update('firstName', firstName)}
-                            placeholder='First Name'
-                        />
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.props.profile.lastName}
-                            onChangeText={lastName => this.props.update( 'lastName', lastName )}
-                            placeholder='Last Name'
-                        />
-                    </View>
-                )
-            case 1: 
-                // TODO: Make this a dropdown 
-                return (
-                    <View style={styles.answer}>
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.props.profile.major}
-                            onChangeText={major => this.props.update( 'major', major )}
-                            placeholder='Major'
-                        />
-                    </View>
-                )
-            case 2: 
-                return (
-                    <View style={styles.answer}>
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.props.profile.year}
-                            onChangeText={year => this.props.update('year', year )}
-                            placeholder='Year'
-                        />
-                    </View>
-                )
-            case 3: 
-                return (
-                    <View style={styles.answer}>
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.props.profile.language}
-                            onChangeText={language => this.props.update( 'language', language )}
-                            placeholder='Language'
-                        />
-                    </View>
-                )
-            case 4: 
-                return (
-                    <View style={styles.answer}>
-                        <TextInput
-                            style={styles.inputBox}
-                            value={this.props.profile.bio}
-                            onChangeText={bio => this.props.update( 'bio', bio )}
-                            placeholder='Bio'
-                        />
-                    </View>
-                )
-            default: 
-                return (
-                    <View></View>
-                )
-        }
-    }
-    render() {
-        return (
-            <View>
-                {this.correctView()}
-            </View>
-        )
-    }
-}
-class CreateUserProfile extends React.Component {
-    
     state = {
         index: 0,
         userProfile: {
             firstName: '',
             lastName: '',
-            major: '', 
+            major: '',
             year: '',
             language: '',
+            timezone: '',
             bio: '',
             courses: []
         }
@@ -112,62 +39,37 @@ class CreateUserProfile extends React.Component {
     updateUser = (key, value) => {
         this.state.userProfile[key] = value
         this.setState({ userProfile: this.state.userProfile })
+        console.log(this.state.userProfile)
     }
-
-    questions = (index) => {
-        switch(index) {
-            case 0: 
-                return "What's your name?" 
-            case 1:
-                return "What's your major?"
-            case 2:
-                return  "What year are you graduating?"
-            case 3: 
-                return "What is your preferred language?"
-            case 4: 
-                return "Tell us a little about yourself!"
-            default:
-                return ""
-        }
-    }
-
-    constructor() {
-        super()
-        this.onPressContinue = this.onPressContinue.bind(this)
-    }
-
 
     onPressContinue() {
-        if (this.state.index < 4) {
-            this.setState({index: this.state.index + 1})
+        if (this.state.index < this.questions.length-1) {
+            this.setState({ index: this.state.index + 1 })
         } else {
             userInstance.createUser(this.state.userProfile, () => {
                 this.props.navigation.reset({
-                    index: 0, 
-                    routes: [{ name: 'Home'}]
+                    index: 0,
+                    routes: [{ name: 'Home' }]
                 });
             });
         }
     }
 
-    // TODO: UI and add more fields
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                    <Text style={styles.question}>{this.questions(this.state.index)}</Text>
-                    <UserProfileAnswerView index={this.state.index} profile={this.state.userProfile} update={this.updateUser}/> 
-
-                    <View style={styles.buttonLayer}>
-                        <ImageBackground style={styles.waves} source={require('../../assets/wave.png')} >
-                            <View style={styles.posFish}>
-                                <TouchableOpacity onPress={() => this.onPressContinue()} >
-                                    <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
-                                </TouchableOpacity>
-                            </View>
-                        </ImageBackground>
+                    <View>
+                        <Text style={styles.question}>{this.questions[this.state.index]}</Text>
+                        <UserProfileAnswerView style={{ zIndex: 9999 }} index={this.state.index} profile={this.state.userProfile} update={this.updateUser} />
                     </View>
-
+                    <ImageBackground style={styles.waves} source={require('../../assets/wave.png')} >
+                        <View style={styles.posFish}>
+                            <TouchableOpacity onPress={() => this.onPressContinue()} >
+                                <Image style={styles.fishButton} source={require('../../assets/fish_button.png')} />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -177,25 +79,14 @@ class CreateUserProfile extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
+        backgroundColor: 'white',
+        justifyContent: 'space-between',
+        minHeight: Math.round(Constants.windowHeight)
     },
-
-    inputBox: {
-        width: '85%',
-        margin: 16,
-        fontFamily: 'ProximaNova',
-        alignSelf: 'center',
-        fontSize: 24,
-        borderColor: Constants.boxGrey,
-        borderBottomWidth: .5,
-        textAlign: 'left'
-    },
-
     question: {
         paddingTop: Constants.windowHeight * .15,
         fontSize: 36,
-        fontFamily: 'MrsEaves-Bold',
+        fontFamily: 'Buenard-Bold',
         lineHeight: 40,
         color: 'black',
         textAlign: 'left',
@@ -204,36 +95,22 @@ const styles = StyleSheet.create({
         paddingBottom: Constants.windowHeight * .02,
         padding: Constants.windowWidth * .1,
     },
-
-    answer: {
-        backgroundColor: '#fff',
-        width: '100%',
-        padding:  15
-    },
-
-    buttonLayer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-    },
     waves: {
         width: Constants.windowWidth,
         height: Constants.waveHeight * Constants.waveWidthRatio,
-        resizeMode: 'contain',
     },
     fishButton: {
         height: Constants.windowHeight * 0.20,
         width: Constants.windowWidth * 0.20,
         resizeMode: 'contain',
-        alignSelf: 'flex-end',
     },
     posFish: {
         flex: 1,
         alignSelf: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingRight: 20,
-        paddingBottom: 45,
+        paddingRight: Constants.waveWidth * 0.01,
+        paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
     },
 
 })

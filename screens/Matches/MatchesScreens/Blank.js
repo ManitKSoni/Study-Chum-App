@@ -1,5 +1,5 @@
 import React from 'react'
-import { View} from 'react-native'
+import {View} from 'react-native'
 
 //For rerendering purposes
 class Blank extends React.Component {

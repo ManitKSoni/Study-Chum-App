@@ -8,7 +8,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import * as Font from 'expo-font';
 
-
 import LoginSpinner from './screens/Loading/LoginSpinner';
 import Login from './screens/Authentication/Login';
 import SignUp from './screens/Authentication/SignUp';
@@ -21,8 +20,24 @@ import SettingsNavigator from "./screens/Settings/SettingsNavigator";
 let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
   'ProximaNova': require('./assets/Fonts/ProximaNova.ttf'),
-  'MrsEaves-Bold': require('./assets/Fonts/MrsEaves-Bold.ttf')
+  'MrsEaves-Bold': require('./assets/Fonts/MrsEaves-Bold.ttf'),
+  'Buenard-Bold': require('./assets/Fonts/Buenard-Bold.ttf'),
 };
+
+let imageAssets = [
+  require('./assets/home_selected.png'),
+  require('./assets/home_unselected.png'),
+  require('./assets/matches_selected.png'),
+  require('./assets/matches_unselected.png'),
+  require('./assets/chat_selected.png'),
+  require('./assets/chat_unselected.png'),
+  require('./assets/settings_selected.png'),
+  require('./assets/settings_unselected.png'),
+  require('./assets/wave.png'),
+  require('./assets/fish_button.png'),
+  require('./assets/study_chums_logo.png'),
+  require('./assets/logo_trimmed.png'),
+]
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
 const Stack = createStackNavigator();
@@ -31,20 +46,37 @@ export default class App extends React.Component {
 
   state = {
     fontsLoaded: false,
+    imagesLoaded: false,
   };
 
   async _loadFontsAsync() {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
   }
+ 
+  async _loadImagesAsync() {
+    await Expo.Asset.fromModule(require('./assets/home_selected.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/home_unselected.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/matches_selected.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/matches_unselected.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/chat_selected.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/chat_unselected.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/settings_selected.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/settings_unselected.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/wave.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/fish_button.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/study_chums_logo.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/logo_trimmed.png')).downloadAsync();
+    this.setState({ imagesLoaded: true });
+  }
 
   componentDidMount() {
     this._loadFontsAsync();
-    Expo.Asset.fromModule(require("./assets/wave.png")).downloadAsync()
+    this._loadImagesAsync();
   }
 
   render() {
-    if (this.state.fontsLoaded) {
+    if (this.state.fontsLoaded && this.state.imagesLoaded) {
       return (
         <NavigationContainer>
           <Stack.Navigator initialRouteName="LoginSpinner">

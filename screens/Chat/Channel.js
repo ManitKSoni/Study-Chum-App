@@ -1,20 +1,11 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, KeyboardAvoidingView } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import Firebase from '../../config/Firebase'
 import ThreadModel from './ThreadModel'
 import userInstance from '../Singletons/UserSingleton'
 
 class Channel extends React.Component {
-  //userdata - 
-  /*Object {
-   "message": "Sup",
-   "sender": "m1rSvXdEDUT6QatUUWEmSIXO5Wl1",
-   "timestamp": Object {
-     "nanoseconds": 232000000,
-     "seconds": 1605762669,
-   },
- }*/
 
   constructor(props) {
     super(props)
@@ -22,48 +13,48 @@ class Channel extends React.Component {
     this.state = {
       messages: []
     }
+    this.unsubscribe = () => {}
   } 
 
   parseMessage(message) {
+    if (message.createdAt == NaN) {
+      return null
+    }
+
     const seconds = parseInt(message.createdAt.seconds);
     var date = new Date(0);
     date.setUTCSeconds(seconds)
 
-
     message.createdAt = date
-    // console.log(message.createdAt, typeof(message.createdAt), date, typeof(date))
     return message
   }
 
   componentDidMount() {
-    const { userData, uid } = this.props.route.params;
+    const { userData, uid, title } = this.props.route.params;
+    this.props.navigation.setOptions({title: title})
     let channelID = userData.channelID 
-    this.threadModel = new ThreadModel("test", channelID)
-    this.threadListener = this.threadModel.threadListener((messages) => {
+    this.threadModel = new ThreadModel(channelID)
+    this.unsubscribe = this.threadModel.threadListener((messages) => {
       let parsedMessages = messages.map(this.parseMessage)
       this.setState({
-        messages: parsedMessages
+        messages: parsedMessages.concat(this.state.messages)
       })
     })
   }
 
   componentWillUnmount() {
-    // this.threadListener() // Closes the listener
+    this.unsubscribe() // Closes the listener
   }
 
 
   onSend(messages = []) {
     this.threadModel.sendMessage(messages[0])
-    // this.setState((previousState) => {
-    //   return {
-    //     messages: GiftedChat.append(previousState.messages, messages),
-    //   };
-    // });
   }
 
   render() {
     const { userData, uid } = this.props.route.params;
     return (
+      <View style={{flex: 1}}>
       <GiftedChat
         isAnimated
         messages={this.state.messages}
@@ -73,6 +64,7 @@ class Channel extends React.Component {
           name: userInstance._user.firstName
         }}
       />
+     </View>
     );
   }
 }

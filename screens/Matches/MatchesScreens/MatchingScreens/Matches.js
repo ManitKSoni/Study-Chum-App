@@ -11,11 +11,9 @@ class Matches extends React.Component{
     /*
     * TODO: 
     * 
-    * Render Matches on Matches screen,not ShowMatches
-    * Delete button
-    * Search Function or try catch maybe????
     * Update course docs when user edits profile(like language, bio, etc)
-    * WHEN ADDING NON-EXISTING CLASSES, THOSE CLASSES ARE STILL ADDED TO COURSES, a fix is to only have presets. 
+    * When editing pref profile, get info and send to SavedData (change the flow of data) LOW PRIO 
+    * When deleting from ShowMatches on current matches, still shows current matches
     */
 
     render() {
@@ -23,7 +21,8 @@ class Matches extends React.Component{
        return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                  <View style={styles.container}>
-                      <Text> Slide to Right To See Class Matches</Text>
+                      <Text> Use Top Left Button to Add Class to Find Matches For</Text>
+                      <Text> On a Class Swipe Left to Right to Delete Selected Class </Text>
                  </View>
           </TouchableWithoutFeedback>
        )

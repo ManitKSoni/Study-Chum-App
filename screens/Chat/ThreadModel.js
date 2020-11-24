@@ -8,10 +8,9 @@ var firebase = require('firebase')
 class ThreadModel {
     db = Firebase.firestore()
     uid = Firebase.auth().currentUser.uid
-    messages = []
+    // messages = []
 
-    constructor(otherUserID, channelID) {
-        this.otherUserID = otherUserID
+    constructor(channelID) {
         this.channelID = channelID
     }
 
@@ -19,21 +18,24 @@ class ThreadModel {
      * Get a listener for all messages in a thread
      * @param {function} completion function that updates the UI based on new changes
      */
-    async threadListener(completion) {
+    threadListener(completion) {
         const thread = this.db.collection('chat').doc(this.channelID).collection('thread')
             .orderBy('createdAt', 'desc')
             //TODO: add a limit here so that we don't pull the whole chat then add some pagination
 
-        let listener = await thread.onSnapshot((snapshots) => {
-            this.messages = []
-            snapshots.forEach((doc) => {
-                let message = doc.data()
-                message['chatID'] = doc.id
-                this.messages.push(message)
+            const listener = thread.onSnapshot((snapshots) => {
+                let messages = []
+                snapshots.docChanges().forEach(change => {
+                    switch(change.type) {
+                        case "added":
+                            let message = change.doc.data()
+                            message['chatID'] = change.doc.id
+                            messages.push(message)
+                    }
+                })
+                completion(messages)
             })
-            completion(this.messages)
-        })
-        return listener // Call this to stop the listener 
+            return listener
     }
 
     /**
@@ -52,21 +54,6 @@ class ThreadModel {
             lastSentMessage: message.text,
             lastSender: this.uid,
             [isReadKey]: false
-        })
-    }
-
-    /**
-     * Get all messages in the thread for a channel
-     * @param {string} channelID ID of channel
-     * @deprecated
-     */
-    async getThread(channelID) {
-        let query = this.db.collection('chat').doc(channelID).collection('thread')
-            .orderBy("timestamp")
-            
-        let snapshot = await query.get()
-        snapshot.forEach((doc) => {
-            console.log(`${doc.data().sender}: ${doc.data().message}`)
         })
     }
 }

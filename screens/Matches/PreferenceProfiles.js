@@ -14,14 +14,11 @@ export class PreferenceProfiles {
             language: "",
             timezone: "",
             quiet: false,
+            remote: false
         };
         this.courseName = "";
      }
 
-      /*TODO 
-          * Make a search function to get exact name of course to stop errors
-          * Get data from profile to get name, profilePicture, bio, endorsements
-        */ 
      /*  
      * Adds preference profile of current user to chosen course.
      */
@@ -107,6 +104,10 @@ export class PreferenceProfiles {
         this.preferences.quiet = quiet; 
     }
 
+    addRemote(remote) {
+        this.preferences.remote = remote;
+    }
+
     //TESTING PURPOSES
     getPreferences() {
         return this.preferences;
@@ -135,6 +136,36 @@ export class PreferenceProfiles {
 
         }
 
+    }
+
+    async editAvailability(availability,courseName) {
+        var courseRef = this.db.collection("courses");
+        var userID = "students." + Firebase.auth().currentUser.uid; 
+        var key = userID + ".preferences.availability"
+        if( courseName ) {
+            courseRef.doc(courseName).update({[key]: availability}
+            )
+        }
+    }
+
+    async editQuiet(quiet,courseName) {
+        var courseRef = this.db.collection("courses");
+        var userID = "students." + Firebase.auth().currentUser.uid; 
+        var key = userID + ".preferences.quiet"
+        if( courseName ) {
+            courseRef.doc(courseName).update({[key]: quiet}
+            )
+        }
+    }
+
+    async editRemote(remote,courseName) {
+        var courseRef = this.db.collection("courses");
+        var userID = "students." + Firebase.auth().currentUser.uid; 
+        var key = userID + ".preferences.remote"
+        if( courseName ) {
+            courseRef.doc(courseName).update({[key]: remote}
+            )
+        }
     }
     
 }
