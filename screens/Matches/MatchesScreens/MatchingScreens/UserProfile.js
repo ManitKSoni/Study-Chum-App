@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import SavedData from "../../SavedData"
 
 class UserProfile extends React.Component {
@@ -9,16 +9,30 @@ class UserProfile extends React.Component {
     render() {
        const profile = SavedData.profile;  
         return (
-            <View> 
-                <Text>{profile.firstName} {profile.lastName}</Text>
-                <Text>{profile.bio}</Text>
+            <View style={styles.container}> 
+                <Text style={styles.text}>{profile.firstName} {profile.lastName}</Text>
+                <Text style={styles.text}>{profile.bio}</Text>
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate("ShowMatches")}>
-                    <Text>Go back</Text>
+                    <Text style={styles.text}>Go back</Text>
                 </TouchableOpacity>
             </View>
         )
     }
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingBottom:20
+    }, 
+    text: {
+        fontSize: 24
+    }
+
+})
 
 export default UserProfile

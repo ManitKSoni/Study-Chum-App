@@ -9,6 +9,7 @@ import * as FileSystem from 'expo-file-system';
 import {Fragment} from 'react'
 import * as Constants from '../../../../Constants.js'
 import {Icon} from 'react-native-elements';
+import UserSingleton from "../../../Singletons/UserSingleton"
 
 class Courses extends React.Component {
 
@@ -37,6 +38,8 @@ class Courses extends React.Component {
         //console.log(this.state.selectedItem[0].name === undefined)
         if (this.state.selectedItem.length == 0) {
             alert("Please select a course from the list!")
+        } else if(UserSingleton._user.courses.includes(this.state.selectedItem[0].name)) {
+            alert("Class already added! Check sidebar.")
         } else {
             PreferenceProfiles.addCourse(this.state.selectedItem[0].name);
             console.log("eat pant");
@@ -197,7 +200,6 @@ const styles = StyleSheet.create({
         paddingRight: Constants.waveWidth*0.01,
         paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
     },
-    //<Button title="Cancel" onPress={this.onPressGoToMatches}/>
 })
 
 export default Courses;
