@@ -62,7 +62,7 @@ export class PreferenceProfiles {
         this.addPreferenceProfile(); 
         SavedData.changeTitle(this.courseName);
         MatchingAlgorithm.getStudentMap(this.courseName, 
-            () => props.navigation.navigate("ShowMatches"));
+            () => props.navigation.navigate("ShowMatches", {name: this.courseName}));
     }
 
     /*
