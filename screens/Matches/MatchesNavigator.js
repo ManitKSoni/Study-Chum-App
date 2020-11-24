@@ -15,6 +15,8 @@ import UserProfile from "./MatchesScreens/MatchingScreens/UserProfile"
 import {Icon} from 'react-native-elements';
 import EditPreferences from './MatchesScreens/EditingScreens/EditPreferences';
 import EditAvailability from './MatchesScreens/EditingScreens/EditAvailability';
+import EditQuiet from "./MatchesScreens/EditingScreens/EditQuiet"
+import EditRemote from "./MatchesScreens/EditingScreens/EditRemote"
 
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
@@ -91,6 +93,10 @@ export default class MatchesNavigator extends React.Component {
             />
 
             <Stack.Screen name="EditAvailability" component={EditAvailability} options={{headerShown:null}}/>
+
+            <Stack.Screen name="EditQuiet" component={EditQuiet} options={{headerShown:null}}/>
+
+            <Stack.Screen name="EditRemote" component={EditRemote} options={{headerShown:null}}/>
 
         </Stack.Navigator>
     )

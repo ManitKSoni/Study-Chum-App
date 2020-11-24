@@ -3,49 +3,49 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import {Keyboard, Switch, StyleSheet, TouchableWithoutFeedback, Button,  ImageBackground, Image, TouchableOpacity} from 'react-native'
-import PreferenceProfiles from "../../PreferenceProfiles"
 import * as Constants from '../../../../Constants.js'
+import PreferenceProfiles from "../../PreferenceProfiles";
 import {Icon} from 'react-native-elements';
+import SavedData from "../../SavedData"
 
-class Remote extends React.Component {
-     
+class EditQuiet extends React.Component {
 
     state = {
-        remote: false
+        quiet: false 
+    }
+
+    onPressCancel = () => {
+        this.props.navigation.navigate("EditPreferences");
     }
 
 
-    onPressGoToMatches = () => {
-        this.props.navigation.navigate("Matches");
-    }
-
-    onPressGoToQuiet = () => {
-        PreferenceProfiles.addRemote(this.state.remote); 
-        this.props.navigation.navigate("Quiet");
+    onPressGoBackToEditPreferences = () => {
+      PreferenceProfiles.editQuiet(this.state.quiet, SavedData.title)
+      this.props.navigation.navigate("EditPreferences");
     }
 
     render() {
      
         return(
-       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
                 <Icon name="x" type="foundation" size={35} color="black" 
                     containerStyle={{paddingTop:25, paddingLeft:325}} 
-                    onPress={this.onPressGoToMatches}
+                    onPress={this.onPressCancel}
                 />
                 <View style={styles.container}>
-                    <Text style={styles.text}> Online or offline? </Text>
+                    <Text style={styles.text}> Chill? </Text>
                      <Switch 
                       trackColor={{ false: "#FF0000", true: "00FF00" }}
                       ios_backgroundColor="#3e3e3e"
-                      onValueChange={(remote) => this.setState({remote})}
-                      value={this.state.remote}
+                      onValueChange={(quiet) => this.setState({quiet})}
+                      value={this.state.quiet}
                     />  
                 </View>
                 <View style={styles.buttonLayer}>
                         <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
                             <View style={styles.posFish}>
-                                <TouchableOpacity onPress={() => this.onPressGoToQuiet()} >
+                                <TouchableOpacity onPress={() => this.onPressGoBackToEditPreferences()} >
                                     <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
                                 </TouchableOpacity>
                             </View>
@@ -54,6 +54,7 @@ class Remote extends React.Component {
             </View>
         </TouchableWithoutFeedback>
         )
+
     }
 }
 
@@ -67,25 +68,28 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 30,
-        paddingRight: 125,
-        paddingBottom: 60
+        paddingRight: 260,
+        paddingBottom: 60,
     },
     waves: {
         width: Constants.windowWidth,
         height: Constants.waveHeight * Constants.waveWidthRatio,
+        resizeMode: 'contain',
+
     },
     fishButton: {
         height: Constants.windowHeight * 0.20,
         width: Constants.windowWidth * 0.20,
         resizeMode: 'contain',
+        alignSelf: 'flex-end',
     },
     posFish: {
         flex: 1,
         alignSelf: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingRight: Constants.waveWidth*0.01,
-        paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
+        paddingRight: 20,
+        paddingBottom: 45,
     },
     buttonLayer: {
         flex: 1,
@@ -95,4 +99,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Remote; 
+export default EditQuiet; 

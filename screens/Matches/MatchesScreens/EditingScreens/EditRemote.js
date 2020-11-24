@@ -6,22 +6,22 @@ import {Keyboard, Switch, StyleSheet, TouchableWithoutFeedback, Button,  ImageBa
 import PreferenceProfiles from "../../PreferenceProfiles"
 import * as Constants from '../../../../Constants.js'
 import {Icon} from 'react-native-elements';
+import SavedData from "../../SavedData"
 
-class Remote extends React.Component {
+class EditRemote extends React.Component {
      
 
     state = {
         remote: false
     }
 
-
-    onPressGoToMatches = () => {
-        this.props.navigation.navigate("Matches");
+    onPressCancel = () => {
+        this.props.navigation.navigate("EditPreferences");
     }
 
-    onPressGoToQuiet = () => {
-        PreferenceProfiles.addRemote(this.state.remote); 
-        this.props.navigation.navigate("Quiet");
+    onPressGoBackToPreferences = () => {
+        PreferenceProfiles.editRemote(this.state.remote, SavedData.title);
+        this.props.navigation.navigate("EditPreferences");
     }
 
     render() {
@@ -31,7 +31,7 @@ class Remote extends React.Component {
             <View style={styles.container}>
                 <Icon name="x" type="foundation" size={35} color="black" 
                     containerStyle={{paddingTop:25, paddingLeft:325}} 
-                    onPress={this.onPressGoToMatches}
+                    onPress={this.onPressCancel}
                 />
                 <View style={styles.container}>
                     <Text style={styles.text}> Online or offline? </Text>
@@ -45,7 +45,7 @@ class Remote extends React.Component {
                 <View style={styles.buttonLayer}>
                         <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
                             <View style={styles.posFish}>
-                                <TouchableOpacity onPress={() => this.onPressGoToQuiet()} >
+                                <TouchableOpacity onPress={() => this.onPressGoBackToPreferences()} >
                                     <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
                                 </TouchableOpacity>
                             </View>
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Remote; 
+export default EditRemote; 

@@ -143,8 +143,27 @@ export class PreferenceProfiles {
         var userID = "students." + Firebase.auth().currentUser.uid; 
         var key = userID + ".preferences.availability"
         if( courseName ) {
-            courseRef.doc(courseName).update(
-                {[key]: availability}
+            courseRef.doc(courseName).update({[key]: availability}
+            )
+        }
+    }
+
+    async editQuiet(quiet,courseName) {
+        var courseRef = this.db.collection("courses");
+        var userID = "students." + Firebase.auth().currentUser.uid; 
+        var key = userID + ".preferences.quiet"
+        if( courseName ) {
+            courseRef.doc(courseName).update({[key]: quiet}
+            )
+        }
+    }
+
+    async editRemote(remote,courseName) {
+        var courseRef = this.db.collection("courses");
+        var userID = "students." + Firebase.auth().currentUser.uid; 
+        var key = userID + ".preferences.remote"
+        if( courseName ) {
+            courseRef.doc(courseName).update({[key]: remote}
             )
         }
     }

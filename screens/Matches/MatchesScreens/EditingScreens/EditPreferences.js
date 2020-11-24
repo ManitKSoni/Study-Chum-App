@@ -14,13 +14,13 @@ class EditPreferences extends React.Component {
     render() {
         return (
             <View style={styles.container}> 
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate("EditAvailability")}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditAvailability")}>
                     <Text style={styles.text}> Edit Availability </Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditQuiet")}>
                     <Text style={styles.text}> Loud/Quiet </Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditRemote")}>
                     <Text style={styles.text}>Edit In person/Remote</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.onPressGoToShowMatches}>
