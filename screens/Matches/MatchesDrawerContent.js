@@ -50,7 +50,7 @@ export function DrawerContent(props) {
     const onPressGenerate = (course) => {
         props.navigation.navigate("Blank"); //THE GLUE (lets ShowMatches rerender)
         SavedData.changeTitle(course);
-        MatchingAlgorithm.getStudentMap(course, () => props.navigation.navigate("ShowMatches"));
+        MatchingAlgorithm.getStudentMap(course, () => props.navigation.navigate("ShowMatches", {name: course}));
     }
 
     const renderItem = ({item}) => (
@@ -103,16 +103,20 @@ const styles = StyleSheet.create({
     },
 
     courses: {
-        fontSize: 36,
-        textAlign: 'left'
+        fontSize: 30,
+        textAlign: 'left',
+        fontFamily: 'ProximaNova'
     },
 
     header: {
         fontSize: 24,
         textAlign: 'center',
+        fontFamily: 'ProximaNova'
     },
 
     addButton: {
-        fontSize: 36
+        fontSize: 30,
+        fontFamily: 'ProximaNova',
+        color: 'grey'
     }
 });

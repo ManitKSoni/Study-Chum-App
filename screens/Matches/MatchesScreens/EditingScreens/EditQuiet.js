@@ -14,6 +14,10 @@ class EditQuiet extends React.Component {
         quiet: false 
     }
 
+    onPressToggle = (id) => {
+            this.setState({quiet:id});
+    };
+
     onPressCancel = () => {
         this.props.navigation.navigate("EditPreferences");
     }
@@ -26,70 +30,129 @@ class EditQuiet extends React.Component {
 
     render() {
      
-        return(
-     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    return(
+         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
-                <Icon name="x" type="foundation" size={35} color="black" 
-                    containerStyle={{paddingTop:25, paddingLeft:325}} 
-                    onPress={this.onPressCancel}
+                <Icon name="x" type="foundation" size={35} color="black"
+                    containerStyle={styles.iconStyle}
+                    onPress={this.onPressGoToMatches}
                 />
-                <View style={styles.container}>
-                    <Text style={styles.text}> Chill? </Text>
-                     <Switch 
-                      trackColor={{ false: "#FF0000", true: "00FF00" }}
-                      ios_backgroundColor="#3e3e3e"
-                      onValueChange={(quiet) => this.setState({quiet})}
-                      value={this.state.quiet}
-                    />  
-                </View>
-                <View style={styles.buttonLayer}>
-                        <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
-                            <View style={styles.posFish}>
-                                <TouchableOpacity onPress={() => this.onPressGoBackToEditPreferences()} >
-                                    <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
-                                </TouchableOpacity>
-                            </View>
-                        </ImageBackground>
-                </View>
-            </View>
-        </TouchableWithoutFeedback>
-        )
+                <Text style={styles.prompt}>Study volume?</Text>
 
+                <View style={styles.buttonsContainer}>
+
+                    <TouchableOpacity
+                        activeOpacity = {0.9}
+                        style = {this.state.quiet === true ? styles.on : styles.off}
+                        onPress={ ()=>this.onPressToggle(true) }>
+                        <Text style={this.state.quiet === true ? styles.buttonTextOn : styles.buttonTextOff}>Quiet</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity = {0.9}
+                        style = {this.state.quiet === false ? styles.on : styles.off }
+                        onPress={ ()=>this.onPressToggle(false) }>
+                        <Text style={this.state.quiet === false ? styles.buttonTextOn : styles.buttonTextOff}>Chatty</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <ImageBackground style={styles.waves} source={require('../../../../assets/wave.png')} >
+                    <View style={styles.posFish}>
+                        <TouchableOpacity onPress={() => this.onPressGoBackToEditPreferences()} >
+                            <Image style={styles.fishButton} source={require('../../../../assets/fish_button.png')} />
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+            </View>
+         </TouchableWithoutFeedback>
+         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom:20
+       flex: 1,
+       backgroundColor: 'white',
+       //alignItems: 'center',
+       justifyContent: 'space-between',
+       minHeight: Math.round(Constants.windowHeight)
     },
-    text: {
+    iconStyle: {
+        paddingTop: Constants.windowHeight * 0.05 ,
+        paddingLeft: Constants.windowWidth * 0.85,
+        backgroundColor: 'white',
+        position: 'absolute',
+        alignSelf: 'center',
+        zIndex: 999,
+    },
+    prompt: {
+        paddingTop: Constants.windowHeight * .15,
+        fontSize: 36,
+        // lineHeight: 40,
+        color: 'black',
+        textAlign: 'left',
+        letterSpacing: 0,
+        alignSelf: 'flex-start',
+        paddingLeft: Constants.windowWidth * .075,
+        paddingBottom: Constants.windowHeight * .02,
+        backgroundColor: 'white',
+        width: '100%',
+        fontFamily: 'Buenard-Bold'
+    },
+    buttonsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonTextOn: {
+        fontFamily: 'ProximaNova',
         fontSize: 30,
-        paddingRight: 260,
-        paddingBottom: 60,
+        color: 'white',
+        textAlign: 'center',
+    },
+    buttonTextOff: {
+        fontFamily: 'ProximaNova',
+        fontSize: 30,
+        color: 'grey',
+        textAlign: 'center',
+    },
+    on: {
+        //backgroundColor: '#A8C0E6',
+        backgroundColor: Constants.secondaryColor,
+        padding: 10,
+        borderColor: 'grey',
+        //height: '25%',
+        width: Constants.windowWidth * 0.3,
+        borderWidth: 1,
+        borderRadius: 5,
+    },
+    off: {
+        backgroundColor:'white',
+        padding: 10,
+        borderColor: 'grey',
+        //height: '25%',
+        width: Constants.windowWidth * 0.3,
+        borderWidth: 1,
+        borderRadius: 5,
     },
     waves: {
         width: Constants.windowWidth,
         height: Constants.waveHeight * Constants.waveWidthRatio,
-        resizeMode: 'contain',
-
+        //resizeMode: 'contain',
     },
     fishButton: {
         height: Constants.windowHeight * 0.20,
         width: Constants.windowWidth * 0.20,
         resizeMode: 'contain',
-        alignSelf: 'flex-end',
+        //alignSelf: 'flex-end',
     },
     posFish: {
         flex: 1,
         alignSelf: 'flex-end',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingRight: 20,
-        paddingBottom: 45,
+        paddingRight: Constants.waveWidth*0.01,
+        paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
     },
     buttonLayer: {
         flex: 1,
