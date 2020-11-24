@@ -50,7 +50,6 @@ export function DrawerContent(props) {
     const onPressGenerate = (course) => {
         props.navigation.navigate("Blank"); //THE GLUE (lets ShowMatches rerender)
         SavedData.changeTitle(course);
-      //  this.props.navigation.navigate('', {title: 'WHATEVER'})
         MatchingAlgorithm.getStudentMap(course, () => props.navigation.navigate("ShowMatches", {name: course}));
     }
 
