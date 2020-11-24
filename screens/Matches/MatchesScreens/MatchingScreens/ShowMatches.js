@@ -31,7 +31,7 @@ class ShowMatches extends React.Component {
     };
     
     onPressGoToUserProfile = (uid) => {
-        SavedData.renderProfile(uid, ()=>this.props.navigation.navigate("UserProfile"));
+        SavedData.renderProfile(uid, ()=>this.props.navigation.navigate("UserProfile", {userID: uid}));
     }
 
    
