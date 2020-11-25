@@ -1,0 +1,16 @@
+export const languagesArray = [
+    "English",
+    "Spanish",
+    "French",
+    "Hindi",
+    "German", 
+    "Russian",
+    "Chinese",
+    "Japanese",
+    "Korean",
+    "Portuguese",
+    "Indonesian",
+    "Arabic",
+    "Latin",
+    "Sanskrit",
+];

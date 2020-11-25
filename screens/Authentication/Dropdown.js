@@ -25,9 +25,12 @@ class Dropdown extends React.Component {
                     resetValue={false}
                     textInputProps={
                         {
+                            style: styles.searchTextInput,
+                            multiline: true,
+                            textAlign: 'left',
+                            allowFontScaling: true,
                             placeholder: this.props.placeHolder,
                             underlineColorAndroid: "transparent",
-                            style: styles.searchTextInput
                         }
                     }
                     listProps={{nestedScrollEnabled: true}}
@@ -43,23 +46,25 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     searchItem: {
-        backgroundColor: 'grey',
+        backgroundColor: 'white',
         marginHorizontal: 5,
         marginVertical: 5,
+        borderBottomWidth: 1,
     },
     searchItemText: {
+        fontFamily: 'ProximaNova',
         color: 'black',
-        fontSize: 16,
-        backgroundColor: 'grey',
+        fontSize: 20,
+        backgroundColor: 'white',
     },
     searchItemsContainer: {
         maxHeight: 140,
-        backgroundColor: 'grey',
-        width: '90%',
+        backgroundColor: 'white',
+        width: '86%',
         alignSelf: 'center',
     },
     searchTextInput: {
-        width: '90%',
+        width: '85%',
         margin: 16,
         fontFamily: 'ProximaNova',
         alignSelf: 'center',

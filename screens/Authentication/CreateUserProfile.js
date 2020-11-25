@@ -39,7 +39,6 @@ class CreateUserProfile extends React.Component {
     updateUser = (key, value) => {
         this.state.userProfile[key] = value
         this.setState({ userProfile: this.state.userProfile })
-        console.log(this.state.userProfile)
     }
 
     onPressContinue() {

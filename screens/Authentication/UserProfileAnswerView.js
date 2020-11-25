@@ -2,14 +2,28 @@ import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native'
 
 import * as Constants from '../../Constants.js'
-import * as MajorsList from '../../MajorsList'
+import * as Majors from '../../MajorsList'
 import * as Timezones from '../../TimezonesList'
+import * as Languages from '../../LanguagesList'
 import Dropdown from './Dropdown.js'
 
 class UserProfileAnswerView extends React.Component {
 
     constructor() {
         super()
+    }
+
+    /** Generic function for generating {id, name} element-based array based on string array */
+    createItemsFromArray(array){
+        var data = []
+        for (var i = 0; i < array.length; i++) {
+            var currData = {
+                id: i.toString(),
+                name: array[i]
+            };
+            data.push(currData);
+        }
+        return data;
     }
 
     /** Return the next 5 years including the current year **/
@@ -29,86 +43,15 @@ class UserProfileAnswerView extends React.Component {
     }
 
     getMajorsArray() {
-        const majorsArray = MajorsList.majorsArray;
-        var data = []
-        for (var i = 0; i < majorsArray.length; i++) {
-            var currData = {
-                id: i.toString(),
-                name: majorsArray[i]
-            };
-            data.push(currData);
-        }
-        return data;
+        return this.createItemsFromArray(Majors.majorsArray);
     }
 
     getLanguagesArray() {
-        return [
-            {
-                id: 1,
-                name: 'English',
-            },
-            {
-                id: 2,
-                name: 'Spanish',
-            },
-            {
-                id: 3,
-                name: 'French',
-            },
-            {
-                id: 4,
-                name: 'German',
-            },
-            {
-                id: 5,
-                name: 'Chinese',
-            },
-            {
-                id: 6,
-                name: 'Japanese',
-            },
-            {
-                id: 7,
-                name: 'Korean',
-            },
-            {
-                id: 8,
-                name: 'Sanskrit',
-            },
-        ];
+        return this.createItemsFromArray(Languages.languagesArray);
     }
 
-    /** 
-        const timezonesArray = Timezones.timezonesArray;
-        var data = []
-        for (var i = 0; i < timezonesArray.length; i++) {
-            var currData = {
-                id: i.toString(),
-                name: timezonesArray[i]
-            };
-            data.push(currData);
-        }
-        return data; 
-    **/
     getTimezonesArray() {
-        return [
-            {
-                id: 1,
-                name: 'PST',
-            },
-            {
-                id: 2,
-                name: 'MST',
-            },
-            {
-                id: 3,
-                name: 'CST',
-            },
-            {
-                id: 4,
-                name: 'EST',
-            },
-        ];
+        return this.createItemsFromArray(Timezones.timezonesArray);
     }
 
     updateField(key) {
@@ -186,6 +129,7 @@ class UserProfileAnswerView extends React.Component {
                 )
         }
     }
+    
     render() {
         return (
             <View>
