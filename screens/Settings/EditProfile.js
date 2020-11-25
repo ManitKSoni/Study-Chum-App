@@ -10,12 +10,12 @@ import {
     Text
 } from 'react-native';
 import Firebase from '../../config/Firebase';
+import Settings from "./Settings";
 
 class EditProfile extends React.Component {
 
     db = Firebase.firestore();
     userID = Firebase.auth().currentUser.uid;
-    unsubscribe; // used to stop checking firestore for updates
 
     state = {
         firstName: '',
@@ -28,19 +28,6 @@ class EditProfile extends React.Component {
     constructor(props) {
         super(props);
         this.onPressSave = this.onPressSave.bind(this);
-        // subscribes to the document holding the current user's profile details
-        // renders updates on screen based on changes to firestore
-        this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
-            doc => {
-                this.setState({
-                    firstName: doc.data().firstName,
-                    lastName: doc.data().lastName,
-                    major: doc.data().major,
-                    year: doc.data().year,
-                    bio: doc.data().bio
-                })
-            }
-        );
     }
 
     /** Updates user data in firestore and navigates to EditProfile form */
@@ -54,7 +41,7 @@ class EditProfile extends React.Component {
             year: this.state.year,
             bio: this.state.bio
         });
-        this.unsubscribe();
+
         this.props.navigation.navigate("Settings");
     }
 
@@ -91,10 +78,6 @@ class EditProfile extends React.Component {
     /** Called on Settings screen being rendered */
     componentDidMount() {
         this.fetchUserDetails();
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     render() {

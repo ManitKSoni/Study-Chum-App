@@ -1,6 +1,5 @@
 import React,{ Fragment, Component }  from 'react';
-import {Button, Keyboard, StyleSheet, Text, Image, TextInput, TouchableWithoutFeedback, View,SafeAreaView,
-    ScrollView,
+import {Button, Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
     TouchableOpacity} from 'react-native';
@@ -25,20 +24,10 @@ class Settings extends React.Component{
         super(props);
         this.onPressLogOut = this.onPressLogOut.bind(this);
         this.onPressEditProfile = this.onPressEditProfile.bind(this);
-        // subscribes to the document holding the current user's profile details
-        // renders updates on screen based on changes to firestore
-        this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
-            doc => {
-                this.setState({
-                    userDetails: doc.data()
-                })
-            }
-        );
     }
 
     /** Handle logging out and reset stack */
     onPressLogOut() {
-        this.unsubscribe();
         try {
             Firebase.auth().signOut();
         } catch (e) {
@@ -77,10 +66,6 @@ class Settings extends React.Component{
     /** Called on Settings screen being rendered */
     componentDidMount() {
         this.fetchUserDetails();
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     /** launches user's photo library to pick profile picture */
@@ -171,6 +156,8 @@ class Settings extends React.Component{
         });
     
       }
+
+    /** functions are for when project is refactored into an Android Studio package */
     renderFileData() {
         if (this.state.fileData) {
           return <Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
@@ -182,7 +169,8 @@ class Settings extends React.Component{
           />
         }
       }
-    
+
+    /** functions are for when project is refactored into an Android Studio package */
     renderFileUri() {
         if (this.state.fileUri) {
           return <Image
