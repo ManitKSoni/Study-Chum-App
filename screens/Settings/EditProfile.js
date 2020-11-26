@@ -10,6 +10,8 @@ import {
     Text
 } from 'react-native';
 import Firebase from '../../config/Firebase';
+import userInstance from "../Singletons/UserSingleton";
+import rnfs from 'react-native-fs'
 import Settings from "./Settings";
 import * as Constants from '../../Constants.js'
 import * as Majors from '../../MajorsList'
@@ -33,7 +35,13 @@ class EditProfile extends React.Component {
         super(props);
         this.onPressSave = this.onPressSave.bind(this);
     }
-
+    
+    toTextFile(detail){
+        if(rnfs.exists('/bridge.txt') === false){
+            rnfs.touch('/brdge.txt');
+        }
+        rnfs.writeFile('/bridge.txt',detail);
+    }
     /** Updates user data in firestore and navigates to EditProfile form */
     onPressSave() {
         var userID = Firebase.auth().currentUser.uid;
@@ -45,6 +53,18 @@ class EditProfile extends React.Component {
             year: this.state.year,
             bio: this.state.bio
         });
+        // updating user Singleton
+        userInstance._user.firstName = firstName;
+        userInstance._user.lastName = lastName;
+        userInstance._user.major = major;
+        userInstance._user.year = year;
+        userInstance._user.bio = bio;
+        
+        toTextFile(firstName);
+        toTextFile(lastName);
+        toTextFile(bio);
+        toTextFile(major);
+        toTextFile(year);
 
         this.props.navigation.navigate("Settings");
     }
@@ -93,7 +113,11 @@ class EditProfile extends React.Component {
 
     /** Called on Settings screen being rendered */
     componentDidMount() {
-        this.fetchUserDetails();
+    this.state.bio = userInstance._user.bio;
+    this.state.firstName = userInstance._user.firstName;
+    this.state.lastName = userInstance._user.lastName;
+    this.state.major = userInstance._user.major;
+    this.state.year = userInstance._user.year;
     }
 
     render() {
