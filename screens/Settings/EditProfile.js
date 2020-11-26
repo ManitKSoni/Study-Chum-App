@@ -11,6 +11,10 @@ import {
 } from 'react-native';
 import Firebase from '../../config/Firebase';
 import Settings from "./Settings";
+import * as Constants from '../../Constants.js'
+import * as Majors from '../../MajorsList'
+import * as Languages from '../../LanguagesList'
+import Dropdown from "../Authentication/Dropdown";
 
 class EditProfile extends React.Component {
 
@@ -75,6 +79,18 @@ class EditProfile extends React.Component {
         }
     }
 
+    getMajorsArray() {
+        return this.createItemsFromArray(Majors.majorsArray);
+    }
+
+    getLanguagesArray() {
+        return this.createItemsFromArray(Languages.languagesArray);
+    }
+
+    updateField(key) {
+        return (value) => { this.props.update(key, value) }
+    }
+
     /** Called on Settings screen being rendered */
     componentDidMount() {
         this.fetchUserDetails();
@@ -82,7 +98,7 @@ class EditProfile extends React.Component {
 
     render() {
         return(<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <TextInput
                     style={styles.inputBox}
                     value={this.state.firstName}
@@ -97,13 +113,9 @@ class EditProfile extends React.Component {
                     placeholder='Last Name'
                     autoCapitalize='none'
                 />
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.major}
-                    onChangeText={major => this.setState({ major })}
-                    placeholder='Major'
-                    autoCapitalize='none'
-                />
+                <View style={styles.answer}>
+                    <Dropdown items={this.getMajorsArray()} update={this.updateField('major')} placeHolder={'Major'} />
+                </View>
                 <TextInput
                     style={styles.inputBox}
                     value={this.state.year}
@@ -114,15 +126,15 @@ class EditProfile extends React.Component {
                 <TextInput
                     style={styles.inputBox}
                     value={this.state.bio}
+                    marginHorizontal={2}
+                    maxLength={140}
                     onChangeText={bio => this.setState({ bio })}
                     placeholder='Bio'
                     autoCapitalize='none'
                 />
-                <Button
-                    style={styles.button}
-                    title="Save"
-                    onPress={this.onPressSave}
-                />
+                <TouchableOpacity onPress={this.onPressSave} style={styles.btnSection}  >
+                    <Text style={styles.btnText}>Save</Text>
+                </TouchableOpacity>
             </View>
         </TouchableWithoutFeedback>
         )
@@ -145,7 +157,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderColor: '#d3d3d3',
         borderBottomWidth: 1,
-        textAlign: 'left'
+        textAlign: 'left',
+        paddingHorizontal: 20
     },
     buttonLogin: {
         marginTop: 5,
@@ -169,6 +182,21 @@ const styles = StyleSheet.create({
         padding: 10,
         color: '#FFA000',
         fontSize: 15
+    },
+    btnSection: {
+        width: 225,
+        height: 50,
+        backgroundColor: '#DCDCDC',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 3,
+        marginBottom:10
+    },
+    btnText: {
+        textAlign: 'center',
+        color: 'gray',
+        fontSize: 14,
+        fontWeight:'bold'
     }
 })
 
