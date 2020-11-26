@@ -94,7 +94,6 @@ class Home extends React.Component {
 
     setModalVisible = (visible) => {
         this.setState({ show: visible});
-        console.log(this.state.modalVisable);
     }
 
     // returns the current date in yyyy-mm-dd format
