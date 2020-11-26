@@ -1,13 +1,18 @@
  
 import React from 'react'
-import { View, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Text, Button, Alert } from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity, Text, Button, Alert, Modal, TextInput } from 'react-native'
 import * as Constants from '../../Constants.js'
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import {Agenda} from 'react-native-calendars';
  
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            img: <Image style={{
+                width: Constants.windowHeight * .35,
+                height: Constants.windowHeight * .35,
+                resizeMode: 'contain'
+            }} source={require('../../assets/study_chums_logo.png')} ></Image>,
             // currently filled with test events.
             // would be populated with events from the database in the future
             items: {
@@ -19,12 +24,8 @@ class Home extends React.Component {
                 '2020-11-27': [{name: 'Study session with Spicoli',time: '4:20 PM'},{name: 'Study session with Chicken Joe',time: '5:00 PM'}],
                 '2020-12-03': [{name: 'Study session with Kendall',time: '5:00 PM'}],
               },
-            img: <Image style={{
-                width: Constants.windowHeight * .35,
-                height: Constants.windowHeight * .35,
-                resizeMode: 'contain'
-            }} source={require('../../assets/study_chums_logo.png')} ></Image>
-        }
+            show: false
+        };
     }
  
     render() {
@@ -49,7 +50,39 @@ class Home extends React.Component {
                             agendaTodayColor: '#8075FF',
                             }}
                         />
+                        <Modal
+                          animationType="slide"
+                          transparent={true}
+                          visible={this.state.show}
+                          onRequestClose={() => {
+                            Alert.alert("Modal has been closed.");
+                          }}
+                        >
+                            <View style = {styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <TextInput 
+                                        style={{height: 80}}
+                                        placeholder="Type an event description"
+                                        
+                                    />
+                                    
+                                    <View style={{flexDirection:"row"}}>
+                                        <Button style={{justifyContent: 'flex-start',}}
+                                            color='#8075FF'
+                                            title="Cancel"
+                                            onPress={() => this.setModalVisible(false)}
+                                        />
+                                        <Button tyle={{justifyContent: 'flex-end',}}
+                                            color='#8075FF'
+                                            title="Add Event"
+                                            onPress={() => this.setModalVisible(false)}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
                         <Button
+                        onPress={() => this.setModalVisible(true)}
                         title='Add an Event'
                         color='#8075FF'
                     />
@@ -57,6 +90,11 @@ class Home extends React.Component {
                     
             </View>
         );
+    }
+
+    setModalVisible = (visible) => {
+        this.setState({ show: visible});
+        console.log(this.state.modalVisable);
     }
 
     // returns the current date in yyyy-mm-dd format
@@ -120,6 +158,29 @@ const styles = StyleSheet.create({
     calendar: {
         flex: 1,
         height: Constants.windowHeight * .4,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+    margin: 20,
+    width: Constants.windowWidth * 0.9,
+    height: 300,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
     },
     text: {
         fontSize:12,
