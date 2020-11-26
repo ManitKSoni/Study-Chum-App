@@ -6,6 +6,7 @@ import {Button, Keyboard, StyleSheet, Text, Image, TextInput, TouchableWithoutFe
     TouchableOpacity} from 'react-native';
 import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
+import { BottomNavigation } from 'react-native-paper';
 
 
 class Settings extends React.Component{
@@ -169,13 +170,13 @@ class Settings extends React.Component{
                               <View style={styles.ImageSections}>
                                 <View>
                                     {this.showImage()}
-                                    <Text style={{textAlign:'center',fontSize:22,paddingBottom:25}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
                                  </View>
-                                 
                             </View>
                             <View style={styles.textAlign}>
-                                   <Text style={{textAlign:'center', fontSize:20, paddingBottom:10}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
-                                   <Text style={{textAlign:'center', fontSize:20, paddingBottom:10}} >{this.state.userDetails.bio}</Text>
+                                   <Text style={{textAlign:'center',fontSize:30,paddingBottom:25, paddingTop:100}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
+                                   <Text style={{textAlign:'left', fontSize:20, paddingBottom:10, paddingHorizontal:30}} >{this.state.userDetails.classes}</Text>
+                                   <Text style={{textAlign:'left', fontSize:20, paddingBottom:10, paddingHorizontal:30}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
+                                   <Text style={{textAlign:'left', fontSize:20, paddingBottom:10, paddingHorizontal:30}} >{this.state.userDetails.bio}</Text>
                             </View>
                              <View style={styles.btnParentSection}>
                                 <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
@@ -185,8 +186,8 @@ class Settings extends React.Component{
                             <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
                                 <Text style={styles.btnText}>Edit Profile</Text>
                             </TouchableOpacity> 
-                            <TouchableOpacity onPress={this.onPressLogOut} style={styles.btnSection}  >
-                                <Text style={styles.btnText}>LogOut</Text>
+                            <TouchableOpacity onPress={this.onPressLogOut} style={styles.logoutbtnText}  >
+                                <Text style={styles.logoutbtnText}>Log Out</Text>
                             </TouchableOpacity> 
                             
                             
@@ -202,6 +203,12 @@ class Settings extends React.Component{
 }
 
 const styles = StyleSheet.create({
+
+    afterPic: {
+      flex: 1,
+      paddingTop:20,
+      alignItems: 'center',
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -288,9 +295,27 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom:10
       },
+      logoutbtnSection: {
+        width: 225,
+        height: 50,
+        backgroundColor: '#DCDCDC',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        bottom: 0,
+        borderRadius: 3,
+        marginBottom:10
+      },
+      
       btnText: {
         textAlign: 'center',
         color: 'gray',
+        fontSize: 14,
+        fontWeight:'bold'
+      },
+      logoutbtnText: {
+        textAlign: 'center',
+        color: '#B80808',
         fontSize: 14,
         fontWeight:'bold'
       }
