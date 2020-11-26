@@ -9,6 +9,8 @@ import ChatNavigator from './Chat/ChatNavigator';
 import SettingsNavigator from './Settings/SettingsNavigator'
 import MatchesDrawerNavigator from './Matches/MatchesDrawerNavigator'
 
+import * as Constants from '../Constants.js'
+
 const Tab = createBottomTabNavigator();
 
 class MainTabBar extends React.Component {
@@ -66,10 +68,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         width: 35,
         height: 35,
-        // maxHeight: Constants.windowHeight / 5,
         overflow: 'hidden',
         justifyContent: 'space-around',
-        // transform: [{rotate: `331deg`}], //331 normal
     }
 })
 
