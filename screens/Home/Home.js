@@ -1,6 +1,6 @@
  
 import React from 'react'
-import { View, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Text, Button } from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Text, Button, Alert } from 'react-native'
 import * as Constants from '../../Constants.js'
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
  
@@ -11,17 +11,17 @@ class Home extends React.Component {
             // currently filled with test events.
             // would be populated with events from the database in the future
             items: {
-                '2020-11-22': [{name: 'Study session with Dylan \n',time: '9:00 AM'},{name: 'Study session with Edward \n',time: '5:00 PM'}],
-                '2020-11-23': [{name: 'Study session with Julio \n',time: '2:00 PM'}],
-                '2020-11-24': [{name: 'Study session with Jessica \n',time: '12:00 PM'},{name: 'Study session with Bruno \n',time: '4:00 PM'}],
-                '2020-11-25': [{name: 'Study session with Mary \n',time: '7:00 AM'}],
-                '2020-11-26': [{name: 'Study session with John \n',time: '10:00 AM'}],
-                '2020-11-27': [{name: 'Study session with Spicoli \n',time: '4:20 PM'}],
-                '2020-11-28': [{name: 'Study session with Kendall \n',time: '5:00 PM'}],
+                '2020-11-22': [{name: 'Study session with Dylan',time: '9:00 AM'},{name: 'Study session with Edward',time: '5:00 PM'}],
+                '2020-11-23': [{name: 'Study session with Julio',time: '2:00 PM'}],
+                '2020-11-24': [{name: 'Study session with Jessica',time: '12:00 PM'},{name: 'Study session with Bruno',time: '4:00 PM'}],
+                '2020-11-25': [{name: 'Study session with Mary',time: '10:00 PM'}],
+                '2020-11-26': [{name: 'Study session with John',time: '10:00 AM'}],
+                '2020-11-27': [{name: 'Study session with Spicoli',time: '4:20 PM'},{name: 'Study session with Chicken Joe',time: '5:00 PM'}],
+                '2020-12-03': [{name: 'Study session with Kendall',time: '5:00 PM'}],
               },
             img: <Image style={{
-                width: Constants.windowWidth * .8,
-                height: Constants.windowWidth * .8,
+                width: Constants.windowHeight * .35,
+                height: Constants.windowHeight * .35,
                 resizeMode: 'contain'
             }} source={require('../../assets/study_chums_logo.png')} ></Image>
         }
@@ -32,16 +32,13 @@ class Home extends React.Component {
             <View style={styles.container}>
                     <View style>
                         {this.state.img}
-                        <Agenda
+                        <Agenda style={styles.calendar}
                             items={this.state.items}
-                            renderItem={(item, firstItemInDay) =>
-                                {return (<Text style={styles.text}>{item.name}{item.time}</Text>);}}
-                            renderEmptyData = {(item, firstItemInDay) =>
-                                {return (<Text style={styles.text}></Text>);}}
-                            //renderDay={(day, item) => {return (<Text>{item.name}</Text>);}}
-                            //ScrollRange={50}
+                            loadItemsForMonth={this.loadItems.bind(this)}
+                            renderItem={this.renderItem.bind(this)}
+                            rowHasChanged={this.rowHasChanged.bind(this)} 
+                            selected={ this.getTodaysDate.bind(this) }
                             theme={{
-                            //backgroundColor: '#ffffff',
                             calendarBackground: '#ffffff',
                             selectedDayBackgroundColor: '#8075FF',
                             selectedDayTextColor: '#FFFFFF',
@@ -50,18 +47,65 @@ class Home extends React.Component {
                             agendaKnobColor: '#000000',
                             monthTextColor: '#8075FF',
                             agendaTodayColor: '#8075FF',
-                            width:Constants.windowWidth
                             }}
                         />
+                        <Button
+                        title='Add an Event'
+                        color='#8075FF'
+                    />
                     </View>
-                   <Button
- 
-                   title='Add an Event'
-                   color='#8075FF'
-                   />
+                    
             </View>
-        )
+        );
     }
+
+    // returns the current date in yyyy-mm-dd format
+    getTodaysDate = () => {
+        var year = new Date().getFullYear();
+        var month = new Date().getMonth() + 1;
+        var day = new Date().getDate();
+        var formattedDate = year + "-" + month + "-" + day;
+        return (formattedDate);
+    }
+
+    // loads the day items to be displayed on the agenda 
+    loadItems(day) {
+        setTimeout(() => {
+          for (let i = -15; i < 60; i++) {
+            const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+            const strTime = this.timeToString(time);
+            if (!this.state.items[strTime]) {
+              this.state.items[strTime] = [];
+            }
+          }
+          const newItems = {};
+          Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+          this.setState({
+            items: newItems
+          });
+        }, 1000);
+      }
+
+      // displays the description and time of an event item
+      renderItem(item) {
+        return (
+          <TouchableOpacity
+            onPress={() => Alert.alert(item.name, item.time)}
+          >
+            <Text style={styles.text}>{item.name + '\n'}{item.time}</Text>
+          </TouchableOpacity>
+        );
+      }
+
+      timeToString(time) {
+        const date = new Date(time);
+        return date.toISOString().split('T')[0];
+      }
+
+      rowHasChanged(r1, r2) {
+        return r1.name !== r2.name;
+      }
+
 }
  
 const styles = StyleSheet.create({
@@ -69,12 +113,16 @@ const styles = StyleSheet.create({
         width:Constants.windowWidth,
         paddingTop:50,
         paddingBottom: 25,
-        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',  
     },
+    calendar: {
+        flex: 1,
+        height: Constants.windowHeight * .4,
+    },
     text: {
+        fontSize:12,
         paddingTop:40,
         paddingRight:10,
         textAlign:'left'
