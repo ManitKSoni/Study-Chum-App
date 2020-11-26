@@ -60,12 +60,56 @@ class Home extends React.Component {
                         >
                             <View style = {styles.centeredView}>
                                 <View style={styles.modalView}>
+                                    <Text style={{paddingBottom: 10}}>
+                                        Event Description
+                                    </Text>
                                     <TextInput 
-                                        style={{height: 80}}
+                                        style={{height: 20}}
                                         placeholder="Type an event description"
                                         
                                     />
-                                    
+                                    <View style={styles.dateSelection} >
+                                        <Text style={{paddingRight:40}}>
+                                            Month:
+                                        </Text>
+                                        <TextInput  
+                                        style={{height: 20,}}
+                                        keyboardType = 'numeric'
+                                        maxLength = {2}
+                                        placeholder="MM"
+                                        />
+                                    </View>
+                                    <View style={styles.dateSelection}>
+                                        <Text style={{paddingRight:40}}>
+                                            Day: 
+                                        </Text>
+                                        <TextInput 
+                                        style={{height: 20,}}
+                                        keyboardType = 'numeric'
+                                        maxLength = {2}
+                                        placeholder="DD"
+                                        />
+                                    </View>
+                                    <View style={styles.dateSelection}>
+                                        <Text style={{paddingRight:40}}>
+                                            Year: 
+                                        </Text>
+                                        <TextInput 
+                                        style={{height: 20,}}
+                                        keyboardType = 'numeric'
+                                        maxLength = {4}
+                                        placeholder="YYYY"
+                                        />
+                                    </View>
+                                    <View style={styles.dateSelection}>
+                                        <Text style={{paddingRight:40}}>
+                                            Time: 
+                                        </Text>
+                                        <TextInput 
+                                        style={{height: 20,}}
+                                        placeholder="00:00"
+                                        />
+                                    </View>
                                     <View style={{flexDirection:"row"}}>
                                         <Button style={{justifyContent: 'flex-start',}}
                                             color='#8075FF'
@@ -165,9 +209,9 @@ const styles = StyleSheet.create({
         marginTop: 22
     },
     modalView: {
-    margin: 20,
-    width: Constants.windowWidth * 0.9,
-    height: 300,
+        margin: 20,
+        width: Constants.windowWidth * 0.9,
+        height: 300,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
@@ -186,6 +230,12 @@ const styles = StyleSheet.create({
         paddingTop:40,
         paddingRight:10,
         textAlign:'left'
+    },
+    dateSelection: {
+        flexDirection:"row", 
+        justifyContent: "center", 
+        alignItems: "center",
+        padding: 10
     }
 });
  
