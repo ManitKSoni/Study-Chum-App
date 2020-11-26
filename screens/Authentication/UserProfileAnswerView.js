@@ -3,7 +3,6 @@ import { View, TextInput, StyleSheet } from 'react-native'
 
 import * as Constants from '../../Constants.js'
 import * as Majors from '../../MajorsList'
-import * as Timezones from '../../TimezonesList'
 import * as Languages from '../../LanguagesList'
 import Dropdown from './Dropdown.js'
 
@@ -48,10 +47,6 @@ class UserProfileAnswerView extends React.Component {
 
     getLanguagesArray() {
         return this.createItemsFromArray(Languages.languagesArray);
-    }
-
-    getTimezonesArray() {
-        return this.createItemsFromArray(Timezones.timezonesArray);
     }
 
     updateField(key) {
@@ -101,15 +96,6 @@ class UserProfileAnswerView extends React.Component {
                     </View>
                 )
             case 4:
-                return (
-                    <View style={styles.answer}>
-                        {/* BOOTLEG METHOD DO NOT TOUCH THIS */}
-                        <View></View>
-                        <Dropdown items={this.getTimezonesArray()} update={this.updateField('timezone')}
-                            placeHolder={"PST"} />
-                    </View>
-                )
-            case 5:
                 return (
                     <View style={styles.answer}>
                         <TextInput

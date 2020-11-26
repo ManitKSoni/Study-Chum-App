@@ -13,7 +13,6 @@ class CreateUserProfile extends React.Component {
         "What's your major?",
         "What year are you graduating?",
         "What is your preferred language?",
-        "Timezone?",
         "Tell us a little about yourself!",
     ]
 
@@ -30,10 +29,16 @@ class CreateUserProfile extends React.Component {
             major: '',
             year: '',
             language: '',
-            timezone: '',
+            timezone: this.getLocalTimezoneFromDevice(),
             bio: '',
             courses: []
         }
+    }
+
+    getLocalTimezoneFromDevice(){
+        var split = new Date().toString().split(" ");
+        var timeZoneFormatted = split[split.length - 2] + " " + split[split.length - 1];
+        return timeZoneFormatted;
     }
 
     updateUser = (key, value) => {
