@@ -3,9 +3,10 @@ import {Button, Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, Vie
     StatusBar,
     Dimensions,
     TouchableOpacity} from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+//import ImagePicker from 'react-native-image-picker';
 //import { withStyles, Avatar, Icon} from 'react-native-ui-kitten';
 import Firebase from '../../config/Firebase';
+import * as ImagePicker from "expo-image-picker";
 
 
 class Settings extends React.Component{
@@ -16,10 +17,11 @@ class Settings extends React.Component{
 
     state = {
         bio: '',
-        userDetails: ''
+        userDetails: '',
+        image: null
     }
-    
-    
+
+
     constructor(props) {
         super(props);
         this.onPressLogOut = this.onPressLogOut.bind(this);
@@ -66,6 +68,7 @@ class Settings extends React.Component{
     /** Called on Settings screen being rendered */
     componentDidMount() {
         this.fetchUserDetails();
+        this.renderFileData();
     }
 
     /** launches user's photo library to pick profile picture */
@@ -89,8 +92,45 @@ class Settings extends React.Component{
             }
         })
     } */
-    
-    chooseImage = () => {
+
+    /*
+    * Opens the image picker on user's phone
+    */
+    chooseImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if(!result.cancelled) {
+        console.log("In library")
+        this.setState({image: result.uri});
+        console.log(this.state.image);
+        this.uploadImage(result.uri, this.userID)
+          .then(() => {
+            console.log("Success")
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+      }
+    }
+
+    /*
+    * Uploads image to firebase using UID
+    * @param uri - image uri that saves to firebase
+    * @param userID - UID for unique key
+    */
+    uploadImage = async (uri, userID) => {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+      var ref = Firebase.storage().ref().child("images/" + userID)
+      return ref.put(blob);
+    }
+
+   /* chooseImage = () => {
         let options = {
           title: 'Select Image',
           customButtons: [
@@ -103,7 +143,7 @@ class Settings extends React.Component{
         };
         ImagePicker.showImagePicker(options, (response) => {
           console.log('Response = ', response);
-    
+
           if (response.didCancel) {
             console.log('User cancelled image picker');
           } else if (response.error) {
@@ -113,7 +153,7 @@ class Settings extends React.Component{
             alert(response.customButton);
           } else {
             const source = { uri: response.uri };
-    
+
             // You can also display the image using data:
             // const source = { uri: 'data:image/jpeg;base64,' + response.data };
             // alert(JSON.stringify(response));s
@@ -125,18 +165,18 @@ class Settings extends React.Component{
             });
           }
         });
-      }
-      launchImageLibrary = () => {
+      }*/
+    /* launchImageLibrary = () => {
         let options = {
           storageOptions: {
             skipBackup: true,
             path: 'images',
           },
         };
-        
+
         ImagePicker.launchImageLibrary(options, (response) => {
           console.log('Response = ', response);
-    
+
           if (response.didCancel) {
             console.log('User cancelled image picker');
           } else if (response.error) {
@@ -154,11 +194,10 @@ class Settings extends React.Component{
             });
           }
         });
-    
-      }
 
-    /** functions are for when project is refactored into an Android Studio package */
-    renderFileData() {
+      }*/
+
+    /*renderFileData() {
         if (this.state.fileData) {
           return <Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
             style={styles.images}
@@ -168,10 +207,39 @@ class Settings extends React.Component{
             style={styles.images}
           />
         }
+      }*/
+
+      /*
+      * Retrieves image from firebase. If it does not exist,
+      * the state will stay null
+      */
+      async renderFileData() {
+
+        var storage = Firebase.storage();
+        var imagePath = storage.ref('images/' + this.userID);
+        try{
+        var image = await imagePath.getDownloadURL();
+
+          this.setState({image:image})
+        } catch(err) {
+          console.log("No image on database")
+        }
+
       }
 
-    /** functions are for when project is refactored into an Android Studio package */
-    renderFileUri() {
+      /*
+      * If the image state is null, show default image.
+      * Otherwise show image from firebase
+      */
+      showImage = () => {
+        if(!this.state.image) {
+          return (<Image source={require('../../assets/dummy.png')} style={styles.images}/>)
+        } else {
+          return (<Image source = {{uri:this.state.image}} style={styles.images}/>)
+        }
+      }
+
+  /*  renderFileUri() {
         if (this.state.fileUri) {
           return <Image
             source={{ uri: this.state.fileUri }}
@@ -183,12 +251,13 @@ class Settings extends React.Component{
             style={styles.images}
           />
         }
-      }
+      }*/
+
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                   
+
                     {/* <Image
                         style={styles.image}
                         source={require('./tumblr_inline_pazyiucOAC1v37n4k_1280.jpg')}
@@ -199,10 +268,10 @@ class Settings extends React.Component{
                             <View style={styles.body}>
                               <View style={styles.ImageSections}>
                                 <View>
-                                    {this.renderFileData()}
+                                    {this.showImage()}
                                     <Text style={{textAlign:'center',fontSize:22,paddingBottom:25}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
                                  </View>
-                                 
+
                             </View>
                             <View style={styles.textAlign}>
                                    <Text style={{textAlign:'center', fontSize:20, paddingBottom:10}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
@@ -218,11 +287,10 @@ class Settings extends React.Component{
                             <Button style={styles.button}title="Edit Profile"onPress={this.onPressEditProfile}/>
                             <Button style={styles.button} title="Log out" onPress={this.onPressLogOut}/>
                             </View>
-
                         </View>
                       </SafeAreaView>
                     </Fragment>
-                    
+
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -269,7 +337,7 @@ const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: '#F6820D',
       },
-    
+
       body: {
         backgroundColor: '#FFF',
         justifyContent: 'center',

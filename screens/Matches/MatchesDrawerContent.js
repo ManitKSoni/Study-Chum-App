@@ -34,7 +34,7 @@ function deletePreferenceProfile(props,course) {
 
 const Item = ({props, course, onPress}) => (
     
-  <Swipeout buttonWidth={70} backgroundColor={"#FFFFFF"} sensitivity={1000} 
+  <Swipeout butttonWidth={70} backgroundColor={"#FFFFFF"} sensitivity={0} 
     autoClose={true} left={[{text:"Delete", backgroundColor:"red",
      onPress: () => deletePreferenceProfile(props,course)}]} >
     <TouchableOpacity style={styles.item} onPress={onPress}> 
