@@ -14,7 +14,7 @@ class MatchingAlgorithm {
         currentStudent = {}; 
     }
 
-    /* 
+    /**  
     * Gets the student map from the course doc and calls functions that
     * will populate priority queue to retrieve top results.
     * @param courseName - name of course doc
@@ -36,7 +36,7 @@ class MatchingAlgorithm {
 
     }
 
-    /*
+    /** 
     * Retrieves current users preferences and info
     */ 
     getCurrentStudent() {
@@ -45,7 +45,7 @@ class MatchingAlgorithm {
     }
 
 
-    /*
+    /** 
     * Tallies preferences of other users that are the same as current user
     * @param userID - the userID of preference profile
     * @param student - the student map containing preferences
@@ -88,7 +88,7 @@ class MatchingAlgorithm {
 
     }
 
-    /*
+    /** 
     * Tallies each student in that is in the student map and places them in PQ
     */ 
     orderStudents() {
@@ -111,8 +111,13 @@ class MatchingAlgorithm {
 }
 
 // Comparator to create a Max Heap
-const MaxComparator = function(student1, student2) 
-    {return student2.tally - student1.tally}; 
+const MaxComparator = function(student1, student2) {
+    // If tallies are the same, put in alphabetical order
+    if(student1.tally === student2.tally) {
+        return student1.student.name.localeCompare(student2.student.name);
+    }
+    return student2.tally - student1.tally
+}; 
 
 const MA = new MatchingAlgorithm();
 export default MA; 

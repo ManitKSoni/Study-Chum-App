@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import {View, Text, StyleSheet, FlatList, StatusBar, TouchableOpacity, Image} from 'react-native'
+import React from 'react'
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator} from 'react-native'
 import MatchingAlgorithm from "../../MatchingAlgorithm"
 import SavedData from "../../SavedData"
 import * as Constants from '../../../../Constants.js'
@@ -7,6 +7,10 @@ import Firebase from '../../../../config/Firebase';
 
 class ShowMatches extends React.Component {
 
+    /**
+     * Gets all data from PQ from MatchingAlgorithm for each user in courses 
+     * database
+     */
    async createData() {
         var pq = MatchingAlgorithm.queue;
         var data = []
@@ -34,32 +38,34 @@ class ShowMatches extends React.Component {
         data: [],
         loaded: false
     }
+
     constructor(props) {
         super(props);
     }
 
+    /**
+     * Retrieves all data of users from the PQ from MatchingAlgorithm.js
+     */
     async componentDidMount() {
         var data = await this.createData();
         this.setState({data: data})
         this.setState({loaded:true})
     }
-
-    async getImages(data) {
-        var images = new Map(); 
-        for(var i = 0; i < data.length; i++) {
-            var imageURI = await this.getImage(data[i].userID);
-            var x = {image: imageURI}
-            images.set(data[i].userID, x);
-        }
-        this.setState({images, images})
-    }
-
     
+    /**
+     * Go to pressed user's profile
+     * @param uid - The pressed users UID to retrieve their info in SavedData 
+     */
     onPressGoToUserProfile = (uid) => {
-        SavedData.renderProfile(uid, ()=>this.props.navigation.navigate("UserProfile", {userID: uid}));
+        SavedData.renderProfile(uid, () => 
+            this.props.navigation.navigate("UserProfile", {userID: uid}));
         console.log(uid)
     }
 
+    /**
+     * Retrieves image of users in current course's database
+     * @param userID - The image ID to retrieve from firebase storage
+     */
     async getImage(userID) {
 
         var storage = Firebase.storage();
@@ -86,7 +92,8 @@ class ShowMatches extends React.Component {
                 onPress = {() => this.onPressGoToUserProfile(item.userID)}
             />
         );
-
+        
+        //Show Matches once all users' data is retrieved
         if(this.state.loaded) {
             if(this.state.data.length!=0){
                 return (
@@ -109,46 +116,78 @@ class ShowMatches extends React.Component {
                 )
             }
         } else {
+            // Show spinner when loading matches
             return (
                 <View style={styles.loadingContainer}>
-                    <Text style={styles.loadingText}> Loading...</Text>
+                    <Text style={styles.loadingText}> Matching...</Text>
+                    <ActivityIndicator size="large" color={Constants.secondaryColor} />
                 </View>
             )
         }
     }
 }
 
+/**
+ * Each slot of flatlist that is linked to a user
+ */
 const Item = ({ name, bio, endorsements, onPress, URI, tally }) => (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-        <Text style={styles.name}> {name} </Text>
-        <Text style={styles.text}> {bio}  </Text>
+    /*<TouchableOpacity style={styles.item} onPress={onPress}>
+        <Text style={styles.name}>  
+            <Image source={{uri:URI}} style={styles.images}/> 
+            {name} {"\n"} 
+            <Text style={styles.text}> {bio}  </Text>
+        
+         </Text>
+       
         <Text style={styles.tally}> {tally}  </Text>
-        <Image source={{uri:URI}} style={styles.images}/>
+      
+    </TouchableOpacity>*/
+
+    <TouchableOpacity style={styles.item} onPress={onPress}>
+        <View style={styles.itemRow}> 
+            <View style={styles.itemColumn}> 
+                <Image source={{uri:URI}} style={styles.images}/> 
+            </View>
+       
+      
+            <View>
+                <View style = {styles.centerText}> 
+                    <Text style={styles.name}>  
+                        {name} {"\n"} 
+                        <Text style={styles.bio}> {bio}  </Text>
+                        {/*<Text style={styles.tally}> {tally}  </Text>*/}
+                    </Text>
+                </View>
+            </View>
+        </View>
+       
+    
+      
     </TouchableOpacity>
 
 )
 
 const styles = StyleSheet.create({
     container: {
-        //flex: 1,
-        //marginTop: StatusBar.currentHeight || 0,
         paddingTop:.5
     },
     item: {
         borderColor: 'black',
         borderWidth: 1,
         marginHorizontal:.15,
-        height:50,
-        width: Constants.windowWidth 
+        height:80,
+        width: Constants.windowWidth,
+        paddingTop:2,
     },
 
     name: {
-        fontSize: 20,
+        fontSize: 24,
         fontFamily: "ProximaNova"
     },
     bio: {
         fontSize: 16,
-        fontFamily: "ProximaNova"
+        fontFamily: "ProximaNova",
+        color: 'grey'
     },
     tally: {
         fontSize: 25,
@@ -161,11 +200,15 @@ const styles = StyleSheet.create({
 
     },
     images: {
-        width: 30,
-        height: 30,
+        width: 75,
+        height: 75,
         borderColor: 'black',
         borderWidth: 1,
         marginHorizontal: 3,
+        width: 75,
+        height: 75,
+        borderRadius:75/2,
+        resizeMode: 'contain',
       },
       loadingContainer: {
         flex: 1,
@@ -176,7 +219,18 @@ const styles = StyleSheet.create({
           fontSize: 36,
           fontFamily: "ProximaNova",
           color: Constants.secondaryColor
-      }
+      },
+      itemColumn: {
+        flexDirection: 'column',
+        width: '22%',
+      },
+      itemRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+      },
+      centerText: {
+        paddingTop: 15,
+      },
 });
 
 export default ShowMatches; 
