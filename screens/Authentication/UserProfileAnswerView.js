@@ -153,5 +153,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     }, 
 })
-
+const UPAV = new UserProfileAnswerView();
+export {UPAV};
 export default UserProfileAnswerView
