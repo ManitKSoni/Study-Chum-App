@@ -165,10 +165,9 @@ const styles = StyleSheet.create({
     container2: {
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     iconStyle: {
-        paddingTop: Constants.windowHeight * 0.05 ,
+        paddingTop: Constants.windowHeight * 0.05,
         paddingLeft: Constants.windowWidth * 0.85,
         backgroundColor: 'white',
         position: 'absolute',
@@ -192,28 +191,19 @@ const styles = StyleSheet.create({
         paddingRight: Constants.waveWidth*0.01,
         paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
     },
-    buttonLayer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        zIndex: 0
-    },
     prompt: {
         paddingTop: Constants.windowHeight * .15,
-        fontSize: 36,
-        // lineHeight: 40,
+        fontSize: Constants.windowWidth*0.08,
+        fontFamily: 'Buenard-Bold',
         color: 'black',
         textAlign: 'left',
         letterSpacing: 0,
         alignSelf: 'flex-start',
-        paddingLeft: Constants.windowWidth * .075,
+        paddingLeft: Constants.windowWidth * .045,
         paddingBottom: Constants.windowHeight * .02,
-        backgroundColor: 'white',
-        width: '100%',
-        fontFamily: 'Buenard-Bold'
     },
     dayButtonTextSelected: {
-        fontSize:30,
+        fontSize: Constants.windowHeight*0.03,
         width: Constants.windowWidth * 0.50,
         textAlign: 'center',
         margin: 3,
@@ -221,7 +211,7 @@ const styles = StyleSheet.create({
         fontFamily: 'ProximaNova',
     },
     dayButtonTextUnselected: {
-        fontSize:30,
+        fontSize: Constants.windowHeight*0.03,
         width: Constants.windowWidth * 0.50,
         textAlign: 'center',
         margin: 3,
@@ -229,7 +219,7 @@ const styles = StyleSheet.create({
         fontFamily: 'ProximaNova',
     },
     dayButtonUnselected: {
-        fontSize:30,
+        fontSize: 30,
         width: Constants.windowWidth * 0.5,
         borderColor: 'black',
         borderWidth: 1,
@@ -240,7 +230,7 @@ const styles = StyleSheet.create({
 
     },
     dayButtonSelected: {
-        fontSize:30,
+        fontSize: 30,
         width: Constants.windowWidth * 0.5,
         borderColor: Constants.secondaryColor,
         borderWidth: 1,
@@ -250,6 +240,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
+
 
 })
 

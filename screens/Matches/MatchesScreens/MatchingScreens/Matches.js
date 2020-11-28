@@ -10,7 +10,8 @@ class Matches extends React.Component{
         this.state = {img: <Image style={{
         width: Constants.windowWidth * .8,
         height: Constants.windowWidth * .8,
-        resizeMode: 'contain', transform: [{rotate: `${this.tiltAngle()}deg`}]
+        resizeMode: 'contain',
+        //transform: [{rotate: `${this.tiltAngle()}deg`}]
         }} source={require('../../../../assets/study_chums_logo.png')} />}
         this.onButtonPress = this.onButtonPress.bind(this)
         this.tiltAngle = this.tiltAngle.bind(this)

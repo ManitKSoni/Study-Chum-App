@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import MatchingAlgorithm from "../../MatchingAlgorithm"
 import SavedData from "../../SavedData"
 import PreferenceProfiles from "../../PreferenceProfiles"
+import * as Constants from "../../../../Constants";
 
 class EditPreferences extends React.Component {
 
@@ -30,24 +31,37 @@ class EditPreferences extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}> 
-                <Text> {SavedData.title} </Text>
-                <TouchableOpacity onPress={this.onPressEditAvailability}>
-                    <Text style={styles.text}> Edit Availability </Text>
+            <View style={styles.container}>
+
+                <TouchableOpacity
+                    style = {styles.border}
+                    onPress={this.onPressEditAvailability}>
+                    <Text style={styles.text}> Availability </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditQuiet")}>
+                <TouchableOpacity
+                    style = {styles.border}
+                    onPress={() => this.props.navigation.navigate("EditQuiet")}>
                     <Text style={styles.text}> Loud/Quiet </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditRemote")}>
-                    <Text style={styles.text}>Edit In person/Remote</Text>
+                <TouchableOpacity
+                    style = {styles.border}
+                    onPress={() => this.props.navigation.navigate("EditRemote")}>
+                    <Text style={styles.text}> In person/Remote</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.onPressGoToShowMatches}>
-                    <Text style={styles.text}>Go back to matches</Text>
+                <TouchableOpacity
+                    style = {styles.border}
+                    onPress={this.onPressGoToShowMatches}>
+                    <Text style={styles.text}> Go back to matches</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.deletePreferenceProfile}>
-                    <Text style={styles.deleteButton}> Delete Class Profile </Text>
-                </TouchableOpacity>
+                <View style={styles.container2}>
+                    <TouchableOpacity
+                        style = {styles.borderDelete}
+                        onPress={this.deletePreferenceProfile}>
+                        <Text style={styles.deleteButton}> Delete Class Profile </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
+
         )
     }
 }
@@ -55,18 +69,45 @@ class EditPreferences extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        //backgroundColor: '#fff',
+        //alignItems: 'center',
+        //justifyContent: 'center',
+        paddingBottom:20,
+    },
+    container2: {
+        //backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom:20
-    }, 
+        paddingBottom: 15,
+        bottom: 0,
+        position: 'absolute',
+        width: '100%'
+    },
     text: {
-        fontSize: 24
+        fontSize: 32,
+        borderBottomWidth: 1,
+        borderBottomColor: 'black',
+        paddingVertical: 5,
+        paddingLeft: 4,
+
     },
     deleteButton: {
-        fontSize: 24,
-        color: 'grey'
+        fontSize: 32,
+        color: 'grey',
+        margin: 5,
     },
+    border: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray',
+        marginLeft: Constants.windowWidth * .025,
+        width: '95%',
+    },
+    borderDelete: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray',
+        borderTopWidth: 1,
+        borderTopColor: 'gray',
+        margin: 6,
+    }
 
 })
 
