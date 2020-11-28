@@ -82,12 +82,20 @@ class Chat extends React.Component {
         });
     }
 
+    generateImage(image) {
+        if (image == null) {
+            return <Image source={require('../../assets/study_chums_logo.png')} style={styles.profileImg}/>
+        } else {
+            return <Image source={{uri:image}} style={styles.profileImg}/>
+        }
+    }
+
     /** Function to render a specific channel/row of the flatlist **/
     renderItem(item, uid) {
         return (
             <TouchableWithoutFeedback onPress={() => this.onPressRow(item, uid)}>
                 <View style={styles.row}>
-                    <Image style={styles.profileImg} source={require('../../assets/study_chums_logo.png')} />
+                {this.generateImage(item.userImage)}
                     <View style={styles.columnContainer}>
                         <Text style={styles.name}> {item[uid].name} </Text>
                         <Text style={styles.messages} ellipsizeMode='tail' numberOfLines={1}>
@@ -153,7 +161,18 @@ const styles = StyleSheet.create({
     timestamp: {
         fontSize: 12,
         padding: 15,
-    }
+    },
+    images: {
+        width: 75,
+        height: 75,
+        borderColor: 'black',
+        borderWidth: 1,
+        marginHorizontal: 3,
+        width: 75,
+        height: 75,
+        borderRadius:75/2,
+        resizeMode: 'contain',
+      },
 })
 
 export default Chat
