@@ -1,11 +1,33 @@
 import React from 'react'
 
-import {Text,View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import {Text,View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, Image } from 'react-native'
+import * as Constants from '../../../../Constants.js'
 
 class Matches extends React.Component{
 
     constructor() {
         super();
+        this.state = {img: <Image style={{
+        width: Constants.windowWidth * .8,
+        height: Constants.windowWidth * .8,
+        resizeMode: 'contain', transform: [{rotate: `${this.tiltAngle()}deg`}]
+        }} source={require('../../../../assets/study_chums_logo.png')} />}
+        this.onButtonPress = this.onButtonPress.bind(this)
+        this.tiltAngle = this.tiltAngle.bind(this)
+    }
+    tiltAngle() {
+        let tilt = Math.random() * 180
+        return Math.random() < .5 ? -1 * tilt : tilt
+    }
+    onButtonPress = () => {
+        var ang = this.tiltAngle();
+        this.setState({
+            img: <Image style={{
+            width: Constants.windowWidth * .8,
+            height: Constants.windowWidth * .8,
+                resizeMode: 'contain', transform: [{rotate: `${ang}deg`}]
+            }} source={require('../../../../assets/study_chums_logo.png')} />
+        });
     }
 
     /*
@@ -21,8 +43,12 @@ class Matches extends React.Component{
        return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                  <View style={styles.container}>
-                      <Text> Use Top Left Button to Add Class to Find Matches For</Text>
-                      <Text> On a Class Swipe Left to Right to Delete Selected Class </Text>
+                     <TouchableOpacity onPress={this.onButtonPress}>
+                         <View style>
+                             {this.state.img}
+                         </View>
+                     </TouchableOpacity>
+                     <Text style={{fontSize: 16, paddingTop: 50,}}> Use Top Left Icon to Add a Class and Find a Chum!</Text>
                  </View>
           </TouchableWithoutFeedback>
        )

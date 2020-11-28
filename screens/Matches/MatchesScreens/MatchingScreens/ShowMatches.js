@@ -154,7 +154,11 @@ const Item = ({ name, bio, endorsements, onPress, URI, tally }) => (
                 <View style = {styles.centerText}> 
                     <Text style={styles.name}>  
                         {name} {"\n"} 
-                        <Text style={styles.bio}> {bio}  </Text>
+                        <Text style={styles.bio}>
+                            {((bio).length > 45) ?
+                            (((bio).substring(0,45-3)) + '...') :
+                            bio}
+                        </Text>
                         {/*<Text style={styles.tally}> {tally}  </Text>*/}
                     </Text>
                 </View>
@@ -200,15 +204,14 @@ const styles = StyleSheet.create({
 
     },
     images: {
-        width: 75,
-        height: 75,
+        width: 65,
+        height: 65,
         borderColor: 'black',
         borderWidth: 1,
-        marginHorizontal: 3,
-        width: 75,
-        height: 75,
-        borderRadius:75/2,
+        marginHorizontal: 5,
+        borderRadius:65/2,
         resizeMode: 'contain',
+        marginVertical: 5,
       },
       loadingContainer: {
         flex: 1,
