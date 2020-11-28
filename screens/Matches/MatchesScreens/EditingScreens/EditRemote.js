@@ -74,11 +74,11 @@ class EditRemote extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-       flex: 1,
-       backgroundColor: 'white',
-       //alignItems: 'center',
-       justifyContent: 'space-between',
-       minHeight: Math.round(Constants.windowHeight)
+        flex: 1,
+        backgroundColor: 'white',
+        //alignItems: 'center',
+        justifyContent: 'space-between',
+        minHeight: Math.round(Constants.windowHeight)
     },
     iconStyle: {
         paddingTop: Constants.windowHeight * 0.05 ,

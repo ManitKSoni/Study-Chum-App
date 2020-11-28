@@ -155,8 +155,8 @@ const Item = ({ name, bio, endorsements, onPress, URI, tally }) => (
                     <Text style={styles.name}>  
                         {name} {"\n"} 
                         <Text style={styles.bio}>
-                            {((bio).length > 45) ?
-                            (((bio).substring(0,45-3)) + '...') :
+                            {((bio).length > (Constants.windowWidth/10)) ?
+                            (((bio).substring(0,(Constants.windowWidth/10)-3)) + '...') :
                             bio}
                         </Text>
                         {/*<Text style={styles.tally}> {tally}  </Text>*/}
