@@ -76,9 +76,7 @@ export class PreferenceProfiles {
        var name = userData.firstName + " " + userData.lastName; 
         var preferenceProfle = {
             name: name,
-            profilePicture: "Image.png",
             bio: userData.bio,
-            endorsements: 1,
             preferences: preferences
         }
 

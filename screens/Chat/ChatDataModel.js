@@ -18,12 +18,15 @@ class ChatDataModel {
             .where('users', 'array-contains', this.uid)
             .orderBy('lastTimestamp')
 
-        query.onSnapshot((snapshots) => {
-            snapshots.docChanges().forEach(change => {
+        query.onSnapshot(async (snapshots) => {
+            // snapshots.docChanges().forEach(async change => {
+            for (change of snapshots.docChanges()) {
                 switch (change.type) {
                     case "added": // When a new channel is created 
                         let json = change.doc.data()
+                        json['userImage'] = await this.getImage(this.getOtherUserID(json.users))
                         json['channelID'] = change.doc.id
+
                         this.channels.unshift(json)
                         break;
                     case "modified": // When someone messages
@@ -46,8 +49,10 @@ class ChatDataModel {
                         console.log("Something went wrong")
                         break;
                 }
-            })
+            
+            }
             completion(this.channels)
+            
         })
     }
 
@@ -83,13 +88,11 @@ class ChatDataModel {
             ], // TODO: fill in real info
             [this.uid]: {
                 name: otherUserName,
-                picture: 'pictureLink.jpg',
-                isRead: false
+                isRead: false,
             },
             [otherUserID]: {
                 name: `${userInstance._user.firstName} ${userInstance._user.lastName}`,
-                picture: 'pictureLink.jpg',
-                isRead: false
+                isRead: false,
             },
             lastTimestamp: "",
             lastSentMessage: "",
@@ -97,6 +100,31 @@ class ChatDataModel {
         })
         console.log(`Channel id: ${docRef.id}`)
         completion(docRef.id)
+    }
+
+    /**
+     * Retrieves image of users in current course's database
+     * @param userID - The image ID to retrieve from firebase storage
+     */
+    async getImage(userID) {
+
+        var storage = Firebase.storage();
+        var imagePath = storage.ref('images/' + userID);
+        var imageURI = null
+        try{
+            imageURI = await imagePath.getDownloadURL(); 
+    
+        } catch(err) {
+          console.log("No image on database")
+          imageURI = null;
+        }
+    
+        return imageURI; 
+    }
+
+    getOtherUserID(userArray) {
+        let uid = userArray[0] == this.uid ? userArray[1] : userArray[0]
+        return uid
     }
 }
 

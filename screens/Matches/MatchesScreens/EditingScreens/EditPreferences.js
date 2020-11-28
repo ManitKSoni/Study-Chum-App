@@ -23,11 +23,16 @@ class EditPreferences extends React.Component {
         this.props.navigation.navigate("Matches") 
     }
 
+    onPressEditAvailability = () => {
+        this.props.navigation.navigate("Blank");
+        this.props.navigation.navigate("EditAvailability");
+    }
+
     render() {
         return (
             <View style={styles.container}> 
                 <Text> {SavedData.title} </Text>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("EditAvailability")}>
+                <TouchableOpacity onPress={this.onPressEditAvailability}>
                     <Text style={styles.text}> Edit Availability </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate("EditQuiet")}>

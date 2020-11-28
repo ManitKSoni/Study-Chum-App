@@ -2,7 +2,7 @@ import React from 'react'
 
 import { View, Text } from 'react-native'
 
-import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, ImageBackground, Image, TouchableOpacity } from 'react-native'
+import {StyleSheet, TouchableWithoutFeedback, Keyboard, ImageBackground, Image, TouchableOpacity } from 'react-native'
 import PreferenceProfiles from "../../PreferenceProfiles"
 import {Icon} from 'react-native-elements';
 import * as Constants from '../../../../Constants.js'
@@ -36,6 +36,16 @@ class EditAvailibility extends React.Component {
         return availability;
     }
 
+    componentDidMount() {
+        this.setState({sunday:SavedData.profile.availability.sunday});
+        this.setState({monday:SavedData.profile.availability.monday});
+        this.setState({tuesday:SavedData.profile.availability.tuesday});
+        this.setState({wednesday:SavedData.profile.availability.wednesday});
+        this.setState({thursday:SavedData.profile.availability.thursday});
+        this.setState({friday:SavedData.profile.availability.friday});
+        this.setState({saturday:SavedData.profile.availability.saturday});
+    }
+
     onPressCancel = () => {
         this.props.navigation.navigate("EditPreferences");
     }
@@ -44,6 +54,7 @@ class EditAvailibility extends React.Component {
         var availability = this.createAvailabilityMap();
         console.log(availability);
         PreferenceProfiles.editAvailability(availability, SavedData.title);
+        SavedData.profile.availability = availability;
         this.props.navigation.navigate("EditPreferences");
     }
 
@@ -59,22 +70,18 @@ class EditAvailibility extends React.Component {
     ToggleTuesday = () => {
         this.state.tuesday ?  this.setState({ tuesday: false })
             :  this.setState({ tuesday: true });
-
     };
     ToggleWednesday = () => {
         this.state.wednesday ?  this.setState({ wednesday: false })
             :  this.setState({ wednesday: true });
-
     };
     ToggleThursday = () => {
         this.state.thursday ?  this.setState({ thursday: false })
             :  this.setState({ thursday: true });
-
     };
     ToggleFriday = () => {
         this.state.friday ?  this.setState({ friday: false })
             :  this.setState({ friday: true });
-
     };
     ToggleSaturday = () => {
         this.state.saturday ?  this.setState({ saturday: false })
