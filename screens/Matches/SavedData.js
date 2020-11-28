@@ -1,6 +1,7 @@
 import Firebase from '../../config/Firebase'
 import "firebase/firestore";
 class SavedData {
+
     constructor(){
         this.title = "";
         this.profile = {}
@@ -8,6 +9,10 @@ class SavedData {
 
     changeTitle(courseName) {
         this.title = courseName; 
+    }
+
+    setProfile(preferences) {
+        this.profile = preferences; 
     }
 
     async renderProfile(uid, goToUserProfile) {
@@ -23,7 +28,6 @@ class SavedData {
         }
         console.log("Done");
     }
-
 
 }
 

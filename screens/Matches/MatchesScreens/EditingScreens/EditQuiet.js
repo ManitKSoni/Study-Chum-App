@@ -2,7 +2,7 @@ import React from 'react'
 
 import { View, Text } from 'react-native'
 
-import {Keyboard, Switch, StyleSheet, TouchableWithoutFeedback, Button,  ImageBackground, Image, TouchableOpacity} from 'react-native'
+import {Keyboard, StyleSheet, TouchableWithoutFeedback, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import * as Constants from '../../../../Constants.js'
 import PreferenceProfiles from "../../PreferenceProfiles";
 import {Icon} from 'react-native-elements';
@@ -14,18 +14,23 @@ class EditQuiet extends React.Component {
         quiet: false 
     }
 
+    componentDidMount() {
+      this.setState({quiet: SavedData.profile.quiet});
+    }
+
     onPressToggle = (id) => {
-            this.setState({quiet:id});
+        this.setState({quiet:id});
     };
 
     onPressCancel = () => {
-        this.props.navigation.navigate("EditPreferences");
+        this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 
 
     onPressGoBackToEditPreferences = () => {
+      SavedData.profile.quiet = this.state.quiet; 
       PreferenceProfiles.editQuiet(this.state.quiet, SavedData.title)
-      this.props.navigation.navigate("EditPreferences");
+      this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 
     render() {
@@ -70,11 +75,11 @@ class EditQuiet extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-       flex: 1,
-       backgroundColor: 'white',
-       //alignItems: 'center',
-       justifyContent: 'space-between',
-       minHeight: Math.round(Constants.windowHeight)
+        flex: 1,
+        backgroundColor: 'white',
+        //alignItems: 'center',
+        justifyContent: 'space-between',
+        minHeight: Math.round(Constants.windowHeight)
     },
     iconStyle: {
         paddingTop: Constants.windowHeight * 0.05 ,
