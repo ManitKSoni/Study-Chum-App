@@ -1,8 +1,9 @@
  
-import React from 'react'
-import { View, StyleSheet, Image, TouchableOpacity, Text, Button, Alert, Modal, TextInput } from 'react-native'
-import * as Constants from '../../Constants.js'
+import React from 'react';
+import { View, StyleSheet, Image, TouchableOpacity, Text, Button, Alert, Modal, TextInput } from 'react-native';
+import * as Constants from '../../Constants.js';
 import {Agenda} from 'react-native-calendars';
+import Firebase from '../../config/Firebase';
  
 class Home extends React.Component {
     constructor(props) {
@@ -21,10 +22,17 @@ class Home extends React.Component {
                 '2020-11-24': [{name: 'Study session with Jessica',time: '12:00 PM'},{name: 'Study session with Bruno',time: '4:00 PM'}],
                 '2020-11-25': [{name: 'Study session with Mary',time: '10:00 PM'}],
                 '2020-11-26': [{name: 'Study session with John',time: '10:00 AM'}],
-                '2020-11-27': [{name: 'Study session with Spicoli',time: '4:20 PM'},{name: 'Study session with Chicken Joe',time: '5:00 PM'}],
+                '2020-11-28': [{name: 'Study session with Spicoli',time: '4:20 PM'},{name: 'Study session with Chicken Joe',time: '5:00 PM'}],
                 '2020-12-03': [{name: 'Study session with Kendall',time: '5:00 PM'}],
               },
-            show: false
+            // tells wether the add event pop-up is shown
+            show: false,
+            // event creation input
+            month: '',
+            day: '',
+            year: '',
+            name: '',
+            time: ''
         };
     }
  
@@ -38,7 +46,7 @@ class Home extends React.Component {
                             loadItemsForMonth={this.loadItems.bind(this)}
                             renderItem={this.renderItem.bind(this)}
                             rowHasChanged={this.rowHasChanged.bind(this)} 
-                            selected={ this.getTodaysDate.bind(this) }
+                            selected={ this.getTodaysDate }
                             theme={{
                             calendarBackground: '#ffffff',
                             selectedDayBackgroundColor: '#8075FF',
@@ -66,7 +74,7 @@ class Home extends React.Component {
                                     <TextInput 
                                         style={{height: 20}}
                                         placeholder="Type an event description"
-                                        
+                                        onChangeText={name => this.setState({ name })}
                                     />
                                     <View style={styles.dateSelection} >
                                         <Text style={{paddingRight:40}}>
@@ -77,6 +85,7 @@ class Home extends React.Component {
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="MM"
+                                        onChangeText={month => this.setState({ month })}
                                         />
                                     </View>
                                     <View style={styles.dateSelection}>
@@ -88,6 +97,7 @@ class Home extends React.Component {
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="DD"
+                                        onChangeText={day => this.setState({ day })}
                                         />
                                     </View>
                                     <View style={styles.dateSelection}>
@@ -99,6 +109,7 @@ class Home extends React.Component {
                                         keyboardType = 'numeric'
                                         maxLength = {4}
                                         placeholder="YYYY"
+                                        onChangeText={year => this.setState({ year })}
                                         />
                                     </View>
                                     <View style={styles.dateSelection}>
@@ -108,6 +119,7 @@ class Home extends React.Component {
                                         <TextInput 
                                         style={{height: 20,}}
                                         placeholder="00:00"
+                                        onChangeText={time => this.setState({ time })}
                                         />
                                     </View>
                                     <View style={{flexDirection:"row"}}>
@@ -119,7 +131,7 @@ class Home extends React.Component {
                                         <Button tyle={{justifyContent: 'flex-end',}}
                                             color='#8075FF'
                                             title="Add Event"
-                                            onPress={() => this.setModalVisible(false)}
+                                            onPress={this.onPressAdd.bind(this)}
                                         />
                                     </View>
                                 </View>
@@ -136,8 +148,16 @@ class Home extends React.Component {
         );
     }
 
+    // modifies the visibility of the add event pop-up
     setModalVisible = (visible) => {
         this.setState({ show: visible});
+    }
+
+    // handles the addition of 
+    onPressAdd() {
+        var date = this.state.year + '-' + this.state.month + '-' + this.state.day;
+        console.log(this.state.name, date, this.state.time);
+        this.setModalVisible(false);
     }
 
     // returns the current date in yyyy-mm-dd format
