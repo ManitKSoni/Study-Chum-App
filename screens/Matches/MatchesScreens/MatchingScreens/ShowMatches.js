@@ -25,7 +25,7 @@ class ShowMatches extends React.Component {
                 bio: currStudent.student.bio,
                 endorsements: currStudent.student.endorsements,
                 uri: URI,
-                tally: currStudent.tally
+                tally: currStudent.tally,
             };
             count++;
             data.push(currData);
@@ -89,7 +89,7 @@ class ShowMatches extends React.Component {
                 endorsements = {item.endorsements}
                 URI = {item.uri} 
                 tally = {item.tally}
-                onPress = {() => this.onPressGoToUserProfile(item.userID)}
+                onPress = {() => this.onPressGoToUserProfile(item.userID, item.preferences)}
             />
         );
         

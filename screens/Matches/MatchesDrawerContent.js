@@ -44,7 +44,6 @@ const Item = ({props, course, onPress}) => (
   
 )
 
-
 export function DrawerContent(props) {
 
     const onPressGenerate = (course) => {

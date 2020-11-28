@@ -10,6 +10,10 @@ class SavedData {
         this.title = courseName; 
     }
 
+    setProfile(preferences) {
+        this.profile = preferences; 
+    }
+
     async renderProfile(uid, goToUserProfile) {
         const db = Firebase.firestore(); 
         const usersRef = db.collection("users").doc(uid);

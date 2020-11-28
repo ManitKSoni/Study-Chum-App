@@ -1,6 +1,7 @@
 import Firebase from '../../config/Firebase'
 import "firebase/firestore";
 import firebase from "firebase/app";
+import SavedData from "./SavedData";
 
 var PriorityQueue = require("js-priority-queue");
 
@@ -42,6 +43,7 @@ class MatchingAlgorithm {
     getCurrentStudent() {
        var userID= Firebase.auth().currentUser.uid;
        this.currentStudent = this.studentsMap[userID]; 
+       SavedData.setProfile(this.currentStudent.preferences);
     }
 
 

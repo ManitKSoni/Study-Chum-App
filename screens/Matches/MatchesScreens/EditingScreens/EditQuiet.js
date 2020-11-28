@@ -14,8 +14,12 @@ class EditQuiet extends React.Component {
         quiet: false 
     }
 
+    componentDidMount() {
+      this.setState({quiet: SavedData.profile.quiet});
+    }
+
     onPressToggle = (id) => {
-            this.setState({quiet:id});
+        this.setState({quiet:id});
     };
 
     onPressCancel = () => {
@@ -24,6 +28,7 @@ class EditQuiet extends React.Component {
 
 
     onPressGoBackToEditPreferences = () => {
+      SavedData.profile.quiet = this.state.quiet; 
       PreferenceProfiles.editQuiet(this.state.quiet, SavedData.title)
       this.props.navigation.navigate("EditPreferences");
     }
