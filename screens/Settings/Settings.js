@@ -175,9 +175,9 @@ class Settings extends React.Component{
                             </View>
                             <View style={styles.textAlign}>
                                    <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
-                                   <Text style={{textAlign:'left', fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.classes}</Text>
-                                   <Text style={{textAlign:'left', fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
-                                   <Text style={{textAlign:'left', fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.bio}</Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.classes}</Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.bio}</Text>
                             </View>
                              <View style={styles.btnParentSection}>
                                 <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
