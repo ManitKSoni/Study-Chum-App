@@ -12,6 +12,7 @@ import {
 import Firebase from '../../config/Firebase';
 import Dropdown from '../Authentication/Dropdown.js';
 import {UPAV} from '../Authentication/UserProfileAnswerView.js';
+import * as Constants from '../../Constants.js'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 
 class EditProfile extends React.Component {

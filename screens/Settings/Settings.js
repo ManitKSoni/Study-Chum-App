@@ -6,6 +6,7 @@ import {Button, Keyboard, StyleSheet, Text, Image, TextInput, TouchableWithoutFe
     TouchableOpacity} from 'react-native';
 import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
+import * as Constants from '../../Constants.js'
 import { BottomNavigation } from 'react-native-paper';
 
 
@@ -173,10 +174,10 @@ class Settings extends React.Component{
                                  </View>
                             </View>
                             <View style={styles.textAlign}>
-                                   <Text style={{textAlign:'center',fontSize:30,paddingBottom:25, paddingTop:100}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
-                                   <Text style={{textAlign:'left', fontSize:20, paddingBottom:10, paddingHorizontal:30}} >{this.state.userDetails.classes}</Text>
-                                   <Text style={{textAlign:'left', fontSize:20, paddingBottom:10, paddingHorizontal:30}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
-                                   <Text style={{textAlign:'left', fontSize:20, paddingBottom:10, paddingHorizontal:30}} >{this.state.userDetails.bio}</Text>
+                                   <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
+                                   <Text style={{textAlign:'left', fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.classes}</Text>
+                                   <Text style={{textAlign:'left', fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
+                                   <Text style={{textAlign:'left', fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.bio}</Text>
                             </View>
                              <View style={styles.btnParentSection}>
                                 <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
@@ -213,6 +214,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         justifyContent: 'center',
+        fontFamily: 'ProximaNova',
     },
     contImg : {
         flex: 1,
@@ -233,7 +235,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderColor: '#d3d3d3',
         borderBottomWidth: 1,
-        textAlign: 'left'
+        textAlign: 'left',
+        fontFamily: 'ProximaNova',
     },
 
     button: {
@@ -248,6 +251,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: 200,
         textAlign: 'center',
+        fontFamily: 'ProximaNova',
         fontSize: 15
     },
 
@@ -311,11 +315,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'gray',
         fontSize: 14,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        fontFamily: 'ProximaNova',
       },
       logoutbtnText: {
         textAlign: 'center',
         color: '#B80808',
+        fontFamily: 'ProximaNova',
         fontSize: 14,
         fontWeight:'bold'
       }
