@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 
 import React from 'react';
 
-import { createStackNavigator, StyleSheet } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import SavedData from "./SavedData"
 import MatchingAlgorithm from "./MatchingAlgorithm"
@@ -104,7 +104,7 @@ export default class MatchesNavigator extends React.Component {
                 ),
                 headerStyle: {backgroundColor: Constants.secondaryColor},
                 headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
-                  fontSize:32},
+                  fontSize:Constants.headerFontSize},
                 title: "Edit " + route.params.title
                 })}
             />

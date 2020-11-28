@@ -41,17 +41,12 @@ class EditPreferences extends React.Component {
                 <TouchableOpacity
                     style = {styles.border}
                     onPress={() => this.props.navigation.navigate("EditQuiet")}>
-                    <Text style={styles.text}> Loud/Quiet </Text>
+                    <Text style={styles.text}> Quiet/Chatty </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style = {styles.border}
                     onPress={() => this.props.navigation.navigate("EditRemote")}>
-                    <Text style={styles.text}> In person/Remote</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style = {styles.border}
-                    onPress={this.onPressGoToShowMatches}>
-                    <Text style={styles.text}> Go back to matches</Text>
+                    <Text style={styles.text}> IRL/Remote</Text>
                 </TouchableOpacity>
                 <View style={styles.container2}>
                     <TouchableOpacity

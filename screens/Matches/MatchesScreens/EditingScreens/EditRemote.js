@@ -2,7 +2,7 @@ import React from 'react'
 
 import { View, Text } from 'react-native'
 
-import {Keyboard, Switch, StyleSheet, TouchableWithoutFeedback, ImageBackground, Image, TouchableOpacity} from 'react-native'
+import {Keyboard, StyleSheet, TouchableWithoutFeedback, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import PreferenceProfiles from "../../PreferenceProfiles"
 import * as Constants from '../../../../Constants.js'
 import {Icon} from 'react-native-elements';
@@ -24,13 +24,13 @@ class EditRemote extends React.Component {
     };
 
     onPressCancel = () => {
-        this.props.navigation.navigate("EditPreferences");
+        this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 
     onPressGoBackToEditPreferences = () => {
         SavedData.profile.remote = this.state.remote; 
         PreferenceProfiles.editRemote(this.state.remote, SavedData.title);
-        this.props.navigation.navigate("EditPreferences");
+        this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 
     render() {

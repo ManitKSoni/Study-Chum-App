@@ -47,7 +47,7 @@ class EditAvailibility extends React.Component {
     }
 
     onPressCancel = () => {
-        this.props.navigation.navigate("EditPreferences");
+        this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 
     onPressGoBackToEditPreferences = () => {
@@ -55,7 +55,7 @@ class EditAvailibility extends React.Component {
         console.log(availability);
         PreferenceProfiles.editAvailability(availability, SavedData.title);
         SavedData.profile.availability = availability;
-        this.props.navigation.navigate("EditPreferences");
+        this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 
     ToggleSunday = () => {

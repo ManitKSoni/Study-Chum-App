@@ -23,7 +23,6 @@ class ShowMatches extends React.Component {
                 userID: currStudent.userID, //use to go to user profile
                 name: currStudent.student.name,
                 bio: currStudent.student.bio,
-                endorsements: currStudent.student.endorsements,
                 uri: URI,
                 tally: currStudent.tally,
             };
@@ -103,9 +102,6 @@ class ShowMatches extends React.Component {
                             renderItem={renderItem}
                             keyExtractor={(item) => item.id}
                         />
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("Matches")}>
-                            <Text> Go Back To Matches Screen </Text>
-                        </TouchableOpacity>
                     </View>
                 )
             } else {
@@ -130,18 +126,7 @@ class ShowMatches extends React.Component {
 /**
  * Each slot of flatlist that is linked to a user
  */
-const Item = ({ name, bio, endorsements, onPress, URI, tally }) => (
-    /*<TouchableOpacity style={styles.item} onPress={onPress}>
-        <Text style={styles.name}>  
-            <Image source={{uri:URI}} style={styles.images}/> 
-            {name} {"\n"} 
-            <Text style={styles.text}> {bio}  </Text>
-        
-         </Text>
-       
-        <Text style={styles.tally}> {tally}  </Text>
-      
-    </TouchableOpacity>*/
+const Item = ({ name, bio, onPress, URI, tally }) => (
 
     <TouchableOpacity style={styles.item} onPress={onPress}>
         <View style={styles.itemRow}> 
