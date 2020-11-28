@@ -210,7 +210,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginHorizontal: 5,
         borderRadius:65/2,
-        resizeMode: 'contain',
         marginVertical: 5,
       },
       loadingContainer: {

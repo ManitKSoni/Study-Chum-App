@@ -1,6 +1,7 @@
 import Firebase from '../../config/Firebase'
 import "firebase/firestore";
 class SavedData {
+    
     constructor(){
         this.title = "";
         this.profile = {}
