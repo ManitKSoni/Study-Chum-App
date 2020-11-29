@@ -155,6 +155,9 @@ class Settings extends React.Component{
                                         justifyContent: 'center',
                                         borderRadius: 3}}>
                                         {this.showImage()}
+                                        <View style ={styles.img_icon}>
+                                            <Image source ={require('../../assets/edit_bubble_icon.png')} style={styles.img_icon}/>
+                                        </View>
                                     </TouchableOpacity>
                                 </View>
                                 <View
@@ -206,6 +209,13 @@ const styles = StyleSheet.create({
         width: Constants.windowWidth * 0.55,
         borderRadius: 100,
         backgroundColor: '#000'
+    },
+    img_icon: {
+        height: Dimensions.get('screen').height * 0.05,
+        width: Dimensions.get('screen').width * 0.10,
+        left: Constants.windowWidth * 0.08,
+        top: Constants.windowHeight * -0.01,
+        backgroundColor: 'transparent'
     },
     body: {
         backgroundColor: '#FFF',
