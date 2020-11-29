@@ -1,4 +1,4 @@
-import React,{ Fragment, Component }  from 'react';
+import React,{ Fragment }  from 'react';
 import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
@@ -6,7 +6,6 @@ import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAr
 import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
 import * as Constants from '../../Constants.js'
-import { BottomNavigation } from 'react-native-paper';
 import userInstance from "../Singletons/UserSingleton";
 
 
@@ -142,8 +141,8 @@ class Settings extends React.Component{
                             <View style={styles.body}>
                                 <View style={styles.ImageSections}>
                                     <TouchableOpacity onPress={this.chooseImage} style={{
-                                        height: Constants.windowHeight * 0.35,
-                                        width: Constants.windowWidth * 0.4,
+                                        height: Constants.windowHeight * 0.29,
+                                        width: Constants.windowWidth * 0.55,
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         borderRadius: 3}}>
@@ -152,13 +151,13 @@ class Settings extends React.Component{
                                 </View>
                                 <View
                                     style={styles.textAlign}>
-                                    <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .02}} >
+                                    <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .02}} >
                                         {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
                                     </Text>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.055, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
                                         {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
                                     </Text>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.055, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
                                         {this.props.route.params.bio || this.state.bio}
                                     </Text>
                                 </View>
@@ -182,11 +181,6 @@ class Settings extends React.Component{
 
 const styles = StyleSheet.create({
 
-    afterPic: {
-        flex: 1,
-        paddingTop:20,
-        alignItems: 'center'
-    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -200,48 +194,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF'
     },
     img: {
-        height: 200,
-        width: 200,
+        height: Constants.windowHeight * 0.29,
+        width: Constants.windowWidth * 0.55,
         borderRadius: 100,
         backgroundColor: '#000'
     },
-
-    text: {
-        width: '100%',
-        margin: 10,
-        padding: 15,
-        fontSize: 16,
-        borderColor: '#d3d3d3',
-        borderBottomWidth: 1,
-        textAlign: 'left',
-        fontFamily: 'ProximaNova'
-    },
-
-    button: {
-        marginTop: 5,
-        marginBottom: 5,
-        paddingVertical: 15,
-        paddingBottom: 10,
-        alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
-        borderWidth: 1,
-        borderRadius: 5,
-        width: 200,
-        textAlign: 'center',
-        fontFamily: 'ProximaNova',
-        fontSize: 15
-    },
-
-    image: {
-        alignSelf: 'center',
-        width: 100,
-        height: 100
-    },
-    scrollView: {
-        backgroundColor: '#F6820D',
-    },
-
     body: {
         backgroundColor: '#FFF',
         justifyContent: 'center',
@@ -256,13 +213,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 0,
         justifyContent: 'center',
-    },
-    images: {
-        width: 150,
-        height: 150,
-        borderColor: 'black',
-        borderWidth: 1,
-        marginHorizontal: 3
     },
     btnParentSection: {
         alignItems: 'center',
@@ -288,19 +238,18 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom:10
     },
-
     btnText: {
         textAlign: 'center',
         color: 'gray',
-        fontSize: 14,
+        fontSize: Constants.windowWidth*0.038,
         fontWeight:'bold',
         fontFamily: 'ProximaNova',
     },
     logoutbtnText: {
         textAlign: 'center',
-        color: '#B80808',
+        color: '#b80808',
         fontFamily: 'ProximaNova',
-        fontSize: 14,
+        fontSize: Constants.windowWidth*0.038,
         fontWeight:'bold'
     }
 })

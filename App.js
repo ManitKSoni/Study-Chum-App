@@ -22,6 +22,7 @@ let customFonts = {
   'ProximaNova': require('./assets/Fonts/ProximaNova.ttf'),
   'MrsEaves-Bold': require('./assets/Fonts/MrsEaves-Bold.ttf'),
   'Buenard-Bold': require('./assets/Fonts/Buenard-Bold.ttf'),
+  'DroidSansMono' : require('./assets/Fonts/DroidSansMono.ttf')
 };
 
 let imageAssets = [
@@ -68,6 +69,7 @@ export default class App extends React.Component {
     await Expo.Asset.fromModule(require('./assets/study_chums_logo.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/logo_trimmed.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/dummy.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/study_chums_title.png')).downloadAsync();
     this.setState({ imagesLoaded: true });
   }
 
