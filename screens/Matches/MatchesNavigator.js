@@ -2,7 +2,10 @@ import 'react-native-gesture-handler';
 
 import React from 'react';
 
-import { createStackNavigator, StyleSheet } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import SavedData from "./SavedData"
+import MatchingAlgorithm from "./MatchingAlgorithm"
 
 import Matches from "./MatchesScreens/MatchingScreens/Matches"; 
 import Courses from "./MatchesScreens/CreationScreens/Courses"
@@ -26,6 +29,12 @@ import * as Constants from '../../Constants.js'
 const Stack = createStackNavigator();
 
 export default class MatchesNavigator extends React.Component {
+
+  onPressGoToShowMatches = () => {
+    this.props.navigation.navigate("Blank");
+    MatchingAlgorithm.getStudentMap(SavedData.title, 
+        () => this.props.navigation.navigate("ShowMatches", {name:SavedData.title}));
+  }
 
   render() {
     return (
@@ -71,7 +80,7 @@ export default class MatchesNavigator extends React.Component {
                 ),
                 headerRight: () => (
                   <Icon name="edit" size={31} type="material" containerStyle={{paddingRight:5}} 
-                  color="#FFFFFF" onPress={() => this.props.navigation.navigate("EditPreferences")}/>
+                  color="#FFFFFF" onPress={() => this.props.navigation.navigate("EditPreferences", {title:SavedData.title})}/>
                 )
               })}
             />
@@ -88,13 +97,16 @@ export default class MatchesNavigator extends React.Component {
           <Stack.Screen name="ChatChannel" component={Channel} />
 
           <Stack.Screen name="EditPreferences" component={EditPreferences} 
-              options={{
-                headerLeft:null,
+              options={({ route }) => ({ 
+                headerLeft: () => (
+                  <Icon name="arrow-left" type="foundation" size={40} containerStyle={{paddingLeft:7}}
+                  color="#FFFFFF" onPress={this.onPressGoToShowMatches}/>
+                ),
                 headerStyle: {backgroundColor: Constants.secondaryColor},
                 headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
                   fontSize:Constants.headerFontSize},
-                title: "Edit Preferences",
-                }}
+                title: "Edit " + route.params.title
+                })}
             />
 
           <Stack.Screen name="EditAvailability" component={EditAvailability} 

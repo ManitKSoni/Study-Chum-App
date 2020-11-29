@@ -2,7 +2,7 @@ import React from 'react'
 
 import { View, Text } from 'react-native'
 
-import {Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, ImageBackground, Image, TouchableOpacity } from 'react-native'
+import {StyleSheet, TouchableWithoutFeedback, Keyboard, ImageBackground, Image, TouchableOpacity } from 'react-native'
 import PreferenceProfiles from "../../PreferenceProfiles"
 import {Icon} from 'react-native-elements';
 import * as Constants from '../../../../Constants.js'
@@ -36,15 +36,26 @@ class EditAvailibility extends React.Component {
         return availability;
     }
 
+    componentDidMount() {
+        this.setState({sunday:SavedData.profile.availability.sunday});
+        this.setState({monday:SavedData.profile.availability.monday});
+        this.setState({tuesday:SavedData.profile.availability.tuesday});
+        this.setState({wednesday:SavedData.profile.availability.wednesday});
+        this.setState({thursday:SavedData.profile.availability.thursday});
+        this.setState({friday:SavedData.profile.availability.friday});
+        this.setState({saturday:SavedData.profile.availability.saturday});
+    }
+
     onPressCancel = () => {
-        this.props.navigation.navigate("EditPreferences");
+        this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 
     onPressGoBackToEditPreferences = () => {
         var availability = this.createAvailabilityMap();
         console.log(availability);
         PreferenceProfiles.editAvailability(availability, SavedData.title);
-        this.props.navigation.navigate("EditPreferences");
+        SavedData.profile.availability = availability;
+        this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 
     ToggleSunday = () => {
@@ -59,22 +70,18 @@ class EditAvailibility extends React.Component {
     ToggleTuesday = () => {
         this.state.tuesday ?  this.setState({ tuesday: false })
             :  this.setState({ tuesday: true });
-
     };
     ToggleWednesday = () => {
         this.state.wednesday ?  this.setState({ wednesday: false })
             :  this.setState({ wednesday: true });
-
     };
     ToggleThursday = () => {
         this.state.thursday ?  this.setState({ thursday: false })
             :  this.setState({ thursday: true });
-
     };
     ToggleFriday = () => {
         this.state.friday ?  this.setState({ friday: false })
             :  this.setState({ friday: true });
-
     };
     ToggleSaturday = () => {
         this.state.saturday ?  this.setState({ saturday: false })
@@ -158,10 +165,9 @@ const styles = StyleSheet.create({
     container2: {
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     iconStyle: {
-        paddingTop: Constants.windowHeight * 0.05 ,
+        paddingTop: Constants.windowHeight * 0.05,
         paddingLeft: Constants.windowWidth * 0.85,
         backgroundColor: 'white',
         position: 'absolute',
@@ -185,28 +191,19 @@ const styles = StyleSheet.create({
         paddingRight: Constants.waveWidth*0.01,
         paddingBottom: Constants.waveHeight * Constants.waveWidthRatio * 0.3,
     },
-    buttonLayer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        zIndex: 0
-    },
     prompt: {
         paddingTop: Constants.windowHeight * .15,
-        fontSize: 36,
-        // lineHeight: 40,
+        fontSize: Constants.windowWidth*0.08,
+        fontFamily: 'Buenard-Bold',
         color: 'black',
         textAlign: 'left',
         letterSpacing: 0,
         alignSelf: 'flex-start',
-        paddingLeft: Constants.windowWidth * .075,
+        paddingLeft: Constants.windowWidth * .045,
         paddingBottom: Constants.windowHeight * .02,
-        backgroundColor: 'white',
-        width: '100%',
-        fontFamily: 'Buenard-Bold'
     },
     dayButtonTextSelected: {
-        fontSize:30,
+        fontSize: Constants.windowHeight*0.03,
         width: Constants.windowWidth * 0.50,
         textAlign: 'center',
         margin: 3,
@@ -214,7 +211,7 @@ const styles = StyleSheet.create({
         fontFamily: 'ProximaNova',
     },
     dayButtonTextUnselected: {
-        fontSize:30,
+        fontSize: Constants.windowHeight*0.03,
         width: Constants.windowWidth * 0.50,
         textAlign: 'center',
         margin: 3,
@@ -222,7 +219,7 @@ const styles = StyleSheet.create({
         fontFamily: 'ProximaNova',
     },
     dayButtonUnselected: {
-        fontSize:30,
+        fontSize: 30,
         width: Constants.windowWidth * 0.5,
         borderColor: 'black',
         borderWidth: 1,
@@ -233,7 +230,7 @@ const styles = StyleSheet.create({
 
     },
     dayButtonSelected: {
-        fontSize:30,
+        fontSize: 30,
         width: Constants.windowWidth * 0.5,
         borderColor: Constants.secondaryColor,
         borderWidth: 1,
@@ -243,6 +240,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
+
 
 })
 

@@ -4,8 +4,6 @@ import {Drawer} from 'react-native-paper'
 import UserSingleton from "../Singletons/UserSingleton"; 
 import MatchingAlgorithm from "./MatchingAlgorithm";
 import SavedData from "./SavedData"
-import Swipeout from "react-native-swipeout"; 
-import PreferenceProfiles from "./PreferenceProfiles"
 
 function createData() {
     var data = []; 
@@ -26,24 +24,11 @@ function createData() {
     return data; 
 };
 
-function deletePreferenceProfile(props,course) {
-    PreferenceProfiles.deletePreferenceProfile(course);
-    props.navigation.closeDrawer(); 
-
-}
-
-const Item = ({props, course, onPress}) => (
-    
-  <Swipeout butttonWidth={70} backgroundColor={"#FFFFFF"} sensitivity={0} 
-    autoClose={true} left={[{text:"Delete", backgroundColor:"red",
-     onPress: () => deletePreferenceProfile(props,course)}]} >
+const Item = ({course, onPress}) => (
     <TouchableOpacity style={styles.item} onPress={onPress}> 
         <Text style={styles.courses}> {course} </Text>
     </TouchableOpacity>
-   </Swipeout>
-  
 )
-
 
 export function DrawerContent(props) {
 

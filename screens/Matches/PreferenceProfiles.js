@@ -38,7 +38,7 @@ export class PreferenceProfiles {
         console.log("done");
     }
 
-    /*
+    /** 
     * Adds the course name to the user's courses array 
     */
     addCourseToUserArray() {
@@ -65,7 +65,7 @@ export class PreferenceProfiles {
             () => props.navigation.navigate("ShowMatches", {name: this.courseName}));
     }
 
-    /*
+    /** 
     * Creates preference profile of current user with given preferences
     * @param preferences - map of chosen preferences
     * @return preference profile map
@@ -76,34 +76,48 @@ export class PreferenceProfiles {
        var name = userData.firstName + " " + userData.lastName; 
         var preferenceProfle = {
             name: name,
-            profilePicture: "Image.png",
             bio: userData.bio,
-            endorsements: 1,
             preferences: preferences
         }
 
         return preferenceProfle; 
     }
 
-    /*
+    /** *
     * Adds language to preference profile from singleton
     */ 
-   addLanguagePreference() {
-    this.preferences.language = userInstance._user.language; 
-}
+    addLanguagePreference() {
+        this.preferences.language = userInstance._user.language; 
+    }
 
+    /**
+     * Sets course from Courses.js
+     * @param courseName - course where preferences will be added
+     */
     addCourse(courseName) {
         this.courseName = courseName;
     }
 
+    /**
+     * Sets availability map from Availability.js
+     * @param availability - user inputted availability map
+     */
     addAvailability(availability) {
         this.preferences.availability = availability;
     }
 
+    /**
+     * Sets quiet preferences from Quiet.js
+     * @param quiet - quiet preference 
+     */
     addQuiet(quiet) {
         this.preferences.quiet = quiet; 
     }
 
+    /**
+     * Sets remote preference from Remote.js
+     * @param remote - online/offline preference
+     */
     addRemote(remote) {
         this.preferences.remote = remote;
     }
@@ -113,7 +127,7 @@ export class PreferenceProfiles {
         return this.preferences;
     }
 
-    /*
+    /** 
     * Deletes preference profile of current user. 
     * @param courseName - the name of doc being updated
     */
@@ -138,6 +152,11 @@ export class PreferenceProfiles {
 
     }
 
+    /**
+     * Updates availability map in database for current user
+     * @param availability - Edited availability map
+     * @param courseName - Course name to access database
+     */
     async editAvailability(availability,courseName) {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
@@ -148,6 +167,11 @@ export class PreferenceProfiles {
         }
     }
 
+    /**
+     * Updates quiet preference in database for current user
+     * @param quiet - Edited quiet preference
+     * @param courseName - Course name to access database
+     */
     async editQuiet(quiet,courseName) {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
@@ -158,6 +182,11 @@ export class PreferenceProfiles {
         }
     }
 
+    /**
+     * Updates remote preference for current user
+     * @param remote - Edited remote preference
+     * @param courseName - Course name to access database   
+     */
     async editRemote(remote,courseName) {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 

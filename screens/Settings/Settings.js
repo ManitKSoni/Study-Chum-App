@@ -3,10 +3,10 @@ import {Button, Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, Vie
     StatusBar,
     Dimensions,
     TouchableOpacity} from 'react-native';
-//import ImagePicker from 'react-native-image-picker';
-//import { withStyles, Avatar, Icon} from 'react-native-ui-kitten';
 import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
+import * as Constants from '../../Constants.js'
+import { BottomNavigation } from 'react-native-paper';
 
 
 class Settings extends React.Component{
@@ -70,28 +70,9 @@ class Settings extends React.Component{
         this.renderFileData();
     }
 
-    /** launches user's photo library to pick profile picture */
-    /* selectImage = () => {
-        const options= {
-            noData: true
-        }
-        ImagePicker.launchImageLibrary(options, response => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker')
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error)
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton)
-            } else {
-                const source = { uri: response.uri }
-                console.log(source)
-                this.setState({
-                    image: source
-                })
-            }
-        })
-    } */
-
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
     /*
     * Opens the image picker on user's phone
     */
@@ -129,6 +110,10 @@ class Settings extends React.Component{
       return ref.put(blob);
     }
 
+      /*
+      * Retrieves image from firebase. If it does not exist,
+      * the state will stay null
+      */
       async renderFileData() {
 
         var storage = Firebase.storage();
@@ -149,9 +134,15 @@ class Settings extends React.Component{
       */
       showImage = () => {
         if(!this.state.image) {
-          return (<Image source={require('../../assets/dummy.png')} style={styles.images}/>)
+          return (<View style = {styles.contImg}>
+            <Image source={require('../../assets/dummy.png')} style={styles.img}/>
+          </View>)
         } else {
-          return (<Image source = {{uri:this.state.image}} style={styles.images}/>)
+          return (
+          <View style ={styles.contImg}>
+            <Image source = {{uri:this.state.image}} style={styles.img}/>
+          </View>
+          )
         }
       }
 
@@ -166,25 +157,27 @@ class Settings extends React.Component{
                               <View style={styles.ImageSections}>
                                 <View>
                                     {this.showImage()}
-                                    <Text style={{textAlign:'left', fontSize:26, paddingBottom:25, marginHorizontal:20}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
                                  </View>
-
                             </View>
                             <View style={styles.textAlign}>
-                                <Text style={{textAlign:'left', fontSize:20, paddingBottom:25, marginHorizontal:20}}>{this.state.userDetails.major + ", " + this.state.userDetails.year}</Text>
-                                <Text style={{textAlign:'left', fontSize:16, paddingBottom:25, marginHorizontal:20}}>{this.state.userDetails.courses}</Text>
-                                <Text style={{textAlign:'left', fontSize:16, paddingBottom:25, marginHorizontal:20}}>{this.state.userDetails.bio}</Text>
+                                   <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.classes}</Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.bio}</Text>
                             </View>
                              <View style={styles.btnParentSection}>
                                 <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
                                   <Text style={styles.btnText}>Change Profile Picture</Text>
                                 </TouchableOpacity>
-                                 <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
-                                     <Text style={styles.btnText}>Edit Profile</Text>
-                                 </TouchableOpacity>
-                                 <TouchableOpacity onPress={this.onPressLogOut} style={styles.btnSection}  >
-                                     <Text style={styles.btnText}>Log out</Text>
-                                 </TouchableOpacity>
+
+                            <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
+                                <Text style={styles.btnText}>Edit Profile</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.onPressLogOut} style={styles.logoutbtnText}  >
+                                <Text style={styles.logoutbtnText}>Log Out</Text>
+                            </TouchableOpacity>
+
+
                             </View>
                         </View>
                       </SafeAreaView>
@@ -197,17 +190,39 @@ class Settings extends React.Component{
 }
 
 const styles = StyleSheet.create({
+
+    afterPic: {
+      flex: 1,
+      paddingTop:20,
+      alignItems: 'center',
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
         justifyContent: 'center',
+        fontFamily: 'ProximaNova',
+    },
+    contImg : {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ecf0f1',
+    },
+    img: {
+      height: 200,
+      width: 200,
+      borderRadius: 100,
     },
 
     text: {
-        textAlign:'left',
-        fontSize:22,
-        paddingBottom:25,
-        marginHorizontal:20
+        width: '100%',
+        margin: 10,
+        padding: 15,
+        fontSize: 16,
+        borderColor: '#d3d3d3',
+        borderBottomWidth: 1,
+        textAlign: 'left',
+        fontFamily: 'ProximaNova',
     },
 
     button: {
@@ -222,6 +237,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: 200,
         textAlign: 'center',
+        fontFamily: 'ProximaNova',
         fontSize: 15
     },
 
@@ -269,9 +285,29 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom:10
       },
+      logoutbtnSection: {
+        width: 225,
+        height: 50,
+        backgroundColor: '#DCDCDC',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        bottom: 0,
+        borderRadius: 3,
+        marginBottom:10
+      },
+
       btnText: {
         textAlign: 'center',
         color: 'gray',
+        fontSize: 14,
+        fontWeight:'bold',
+        fontFamily: 'ProximaNova',
+      },
+      logoutbtnText: {
+        textAlign: 'center',
+        color: '#B80808',
+        fontFamily: 'ProximaNova',
         fontSize: 14,
         fontWeight:'bold'
       }

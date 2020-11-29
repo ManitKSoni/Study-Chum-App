@@ -10,13 +10,13 @@ import {
     Text
 } from 'react-native';
 import Firebase from '../../config/Firebase';
+import Dropdown from '../Authentication/Dropdown.js';
+import {UPAV} from '../Authentication/UserProfileAnswerView.js';
+import * as Constants from '../../Constants.js'
+import SearchableDropdown from 'react-native-searchable-dropdown';
 import userInstance from "../Singletons/UserSingleton";
 import rnfs from 'react-native-fs'
 import Settings from "./Settings";
-import * as Constants from '../../Constants.js'
-import * as Majors from '../../MajorsList'
-import * as Languages from '../../LanguagesList'
-import Dropdown from "../Authentication/Dropdown";
 
 class EditProfile extends React.Component {
 
@@ -35,7 +35,7 @@ class EditProfile extends React.Component {
         super(props);
         this.onPressSave = this.onPressSave.bind(this);
     }
-    
+
     toTextFile(detail){
         if(rnfs.exists('/bridge.txt') === false){
             rnfs.touch('/brdge.txt');
@@ -59,7 +59,7 @@ class EditProfile extends React.Component {
         userInstance._user.major = major;
         userInstance._user.year = year;
         userInstance._user.bio = bio;
-        
+
         toTextFile(firstName);
         toTextFile(lastName);
         toTextFile(bio);
@@ -122,7 +122,7 @@ class EditProfile extends React.Component {
 
     render() {
         return(<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View style={styles.container} >
+            <View style={[styles.container, styles.searchItem]}>
                 <TextInput
                     style={styles.inputBox}
                     value={this.state.firstName}
@@ -137,15 +137,17 @@ class EditProfile extends React.Component {
                     placeholder='Last Name'
                     autoCapitalize='none'
                 />
-                <View style={styles.answer}>
-                    <Dropdown items={this.getMajorsArray()} update={this.updateField('major')} placeHolder={'Major'} />
-                </View>
-                <TextInput
-                    style={styles.inputBox}
+                <Dropdown
+                    items={UPAV.getMajorsArray()}
+                    value={this.state.major}
+                    update={major => this.setState({ major })}
+                    placeHolder='Major'
+                />
+                <Dropdown
+                    items={UPAV.getYearsArray()}
                     value={this.state.year}
-                    onChangeText={year => this.setState({ year })}
-                    placeholder='Graduation Year'
-                    autoCapitalize='none'
+                    update={year => this.setState({ year })}
+                    placeHolder='Graduation Year'
                 />
                 <TextInput
                     style={styles.inputBox}
@@ -160,6 +162,8 @@ class EditProfile extends React.Component {
                     <Text style={styles.btnText}>Save</Text>
                 </TouchableOpacity>
             </View>
+
+
         </TouchableWithoutFeedback>
         )
     }
@@ -172,7 +176,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-
     },
     inputBox: {
         width: '85%',
