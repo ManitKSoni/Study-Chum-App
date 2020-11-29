@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, LogBox} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -80,6 +80,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    LogBox.ignoreAllLogs(); //IGNORES ALL LOGS
     if (this.state.fontsLoaded && this.state.imagesLoaded) {
       return (
         <NavigationContainer>

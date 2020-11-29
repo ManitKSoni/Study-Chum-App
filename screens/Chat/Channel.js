@@ -1,10 +1,16 @@
 import React from 'react'
-import { View, Text, KeyboardAvoidingView } from 'react-native'
+import { View, ScrollView, Text, KeyboardAvoidingView, Platform, StyleSheet, Keyboard } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import Firebase from '../../config/Firebase'
 import ThreadModel from './ThreadModel'
 import userInstance from '../Singletons/UserSingleton'
+
 import ThreadHeaderView from './ThreadHeaderView';
+
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import * as Constants from '../../Constants.js'
+import { SafeAreaView } from 'react-native-safe-area-context'
+
 
 class Channel extends React.Component {
 
@@ -14,9 +20,11 @@ class Channel extends React.Component {
     this.state = {
       messages: []
     }
+
     this.unsubscribe = () => {}
     this.onPressHeader = this.onPressHeader.bind(this)
   } 
+
 
   async onPressHeader() {
     const { uid, userData } = this.props.route.params;
@@ -42,8 +50,10 @@ class Channel extends React.Component {
 
   componentDidMount() {
     const { userData, uid, title } = this.props.route.params;
+
     this.props.navigation.setOptions({ headerTitle: props => <ThreadHeaderView onPressHeader={this.onPressHeader} displayName={userData[uid].name} userImage={userData.userImage}/>})
     let channelID = userData.channelID 
+
     this.threadModel = new ThreadModel(channelID)
     this.unsubscribe = this.threadModel.threadListener((messages) => {
       let parsedMessages = messages.map(this.parseMessage)
@@ -65,19 +75,25 @@ class Channel extends React.Component {
   render() {
     const { userData, uid } = this.props.route.params;
     return (
-      <View style={{flex: 1}}>
-      <GiftedChat
-        isAnimated
-        messages={this.state.messages}
-        onSend={message => this.onSend(message)}
-        user={{
-          _id: uid,
-          name: userInstance._user.firstName
-        }}
-      />
-     </View>
+      <View style={styles.container}>
+        <GiftedChat
+          isAnimated
+          messages={this.state.messages}
+          onSend={message => this.onSend(message)}
+          user={{
+            _id: uid,
+            name: userInstance._user.firstName
+          }}
+        />
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+})
 
 export default Channel
