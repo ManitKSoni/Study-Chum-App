@@ -26,19 +26,6 @@ class Home extends React.Component {
                 height: Constants.windowHeight * .17,
                 resizeMode: 'contain'
             }} source={require('../../assets/study_chums_title.png')} ></Image>,
-            // currently filled with test events.
-            // would be populated with events from the database in the future
-            /** 
-            items: {
-                '2020-11-22': [{name: 'Study session with Dylan',time: '9:00 AM'},{name: 'Study session with Edward',time: '5:00 PM'}],
-                '2020-11-23': [{name: 'Study session with Julio',time: '2:00 PM'}],
-                '2020-11-24': [{name: 'Study session with Jessica',time: '12:00 PM'},{name: 'Study session with Bruno',time: '4:00 PM'}],
-                '2020-11-25': [{name: 'Study session with Mary',time: '10:00 PM'}],
-                '2020-11-26': [{name: 'Study session with John',time: '10:00 AM'}],
-                '2020-11-28': [{name: 'Study session with Spicoli',time: '4:20 PM'},{name: 'Study session with Chicken Joe',time: '5:00 PM'}],
-                '2020-12-03': [{name: 'Study session with Kendall',time: '5:00 PM'}],
-              },
-              */
             items: {},
             // tells wether the add event pop-up is shown
             show: false,
@@ -189,6 +176,7 @@ class Home extends React.Component {
             console.log(eventMap);
             var eventDate = eventMap[date];
             var key = "events." + date;
+            // if the date already exists in the map
             if (!eventDate) {
                 console.log("date not found")
                 var dayArr = [];
@@ -197,6 +185,7 @@ class Home extends React.Component {
                 doc.update({[key]: dayArr});
                 console.log("map updated");
             }
+            // the date does not exist in the map
             else {
                 console.log("date found");
                 var dayArr = eventDate;
