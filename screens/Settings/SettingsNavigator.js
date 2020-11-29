@@ -5,14 +5,30 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Settings from "./Settings";
 import EditProfile from "./EditProfile";
 
+import * as Constants from "../../Constants"
+
 const Stack = createStackNavigator();
 
 export default class SettingsNavigator extends React.Component {
     render() {
         return (
             <Stack.Navigator>
-                <Stack.Screen name="Settings" component={Settings} />
-                <Stack.Screen name="EditProfile" component={EditProfile} />
+                <Stack.Screen name="Settings" component={Settings} 
+                 options={{
+                    title:"Settings",
+                    headerTitleAlign: "center",
+                    headerStyle: {backgroundColor: Constants.secondaryColor},
+                    headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
+                    fontSize:Constants.headerFontSize},
+                 }}/>
+                <Stack.Screen name="EditProfile" component={EditProfile} 
+                options= {{
+                    title:"Edit Profile",
+                    headerTitleAlign: "center",
+                    headerStyle: {backgroundColor: Constants.secondaryColor},
+                    headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
+                    fontSize:Constants.headerFontSize},
+                }} />
             </Stack.Navigator>
         )
     }
