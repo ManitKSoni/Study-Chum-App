@@ -1,6 +1,5 @@
 import React,{ Fragment, Component }  from 'react';
-import {Button, Keyboard, StyleSheet, Text, Image, TextInput, TouchableWithoutFeedback, View,SafeAreaView,
-    ScrollView,
+import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
     TouchableOpacity} from 'react-native';
@@ -8,39 +7,43 @@ import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
 import * as Constants from '../../Constants.js'
 import { BottomNavigation } from 'react-native-paper';
+import userInstance from "../Singletons/UserSingleton";
 
 
 class Settings extends React.Component{
 
     db = Firebase.firestore();
     userID = Firebase.auth().currentUser.uid;
-    unsubscribe;
 
     state = {
+        firstName: '',
+        lastName: '',
+        major: '',
+        year: '',
         bio: '',
-        userDetails: '',
+        courses: '',
         image: null
     }
-    
-    
+
+
     constructor(props) {
         super(props);
         this.onPressLogOut = this.onPressLogOut.bind(this);
         this.onPressEditProfile = this.onPressEditProfile.bind(this);
-        // subscribes to the document holding the current user's profile details
-        // renders updates on screen based on changes to firestore
-        this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
-            doc => {
-                this.setState({
-                    userDetails: doc.data()
-                })
-            }
-        );
+
+        this.props.route.params = ""; // initial value to prevent errors
+
+        // pull user details from UserSingleton
+        this.state.bio = userInstance._user.bio;
+        this.state.firstName = userInstance._user.firstName;
+        this.state.lastName = userInstance._user.lastName;
+        this.state.major = userInstance._user.major;
+        this.state.year = userInstance._user.year;
+        this.state.courses = userInstance._user.courses;
     }
 
     /** Handle logging out and reset stack */
     onPressLogOut() {
-        this.unsubscribe();
         try {
             Firebase.auth().signOut();
         } catch (e) {
@@ -53,43 +56,14 @@ class Settings extends React.Component{
         this.props.navigation.navigate("EditProfile");
     }
 
-    /** Gets the initial user details */
-    getUserDetails() {
-        return this.db.collection("users")
-            .doc(this.userID)
-            .get()
-            .then(function(doc) {
-                return doc.data()
-        })
-            .catch(function(error) {
-                console.log('Error getting user details: ', error)
-            })
-    }
-
-    /** Initializes state variables based on the firestore data */
-    fetchUserDetails = async () => {
-        try {
-            const userDetails = await this.getUserDetails()
-            this.setState({ userDetails })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     /** Called on Settings screen being rendered */
     componentDidMount() {
-        this.fetchUserDetails();
         this.renderFileData();
     }
 
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
-
-    
     /*
     * Opens the image picker on user's phone
-    */ 
+    */
     chooseImage = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -99,7 +73,7 @@ class Settings extends React.Component{
       });
       if(!result.cancelled) {
         console.log("In library")
-        this.setState({image: result.uri}); 
+        this.setState({image: result.uri});
         console.log(this.state.image);
         this.uploadImage(result.uri, this.userID)
           .then(() => {
@@ -112,7 +86,7 @@ class Settings extends React.Component{
     }
 
     /*
-    * Uploads image to firebase using UID 
+    * Uploads image to firebase using UID
     * @param uri - image uri that saves to firebase
     * @param userID - UID for unique key
     */
@@ -125,21 +99,21 @@ class Settings extends React.Component{
     }
 
       /*
-      * Retrieves image from firebase. If it does not exist, 
+      * Retrieves image from firebase. If it does not exist,
       * the state will stay null
-      */ 
+      */
       async renderFileData() {
 
         var storage = Firebase.storage();
         var imagePath = storage.ref('images/' + this.userID);
         try{
-        var image = await imagePath.getDownloadURL(); 
+        var image = await imagePath.getDownloadURL();
 
           this.setState({image:image})
         } catch(err) {
           console.log("No image on database")
         }
-          
+
       }
 
       /*
@@ -159,7 +133,7 @@ class Settings extends React.Component{
           )
         }
       }
-    
+
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -173,30 +147,39 @@ class Settings extends React.Component{
                                     {this.showImage()}
                                  </View>
                             </View>
-                            <View style={styles.textAlign}>
-                                   <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.classes}</Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.bio}</Text>
+                            <View
+                                style={styles.textAlign}>
+                                   <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >
+                                       {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
+                                   </Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                       {this.props.route.params.courses || this.state.courses}
+                                   </Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                       {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
+                                   </Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                       {this.props.route.params.bio || this.state.bio}
+                                   </Text>
                             </View>
                              <View style={styles.btnParentSection}>
                                 <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
                                   <Text style={styles.btnText}>Change Profile Picture</Text>
                                 </TouchableOpacity>
-                        
+
                             <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
                                 <Text style={styles.btnText}>Edit Profile</Text>
-                            </TouchableOpacity> 
+                            </TouchableOpacity>
                             <TouchableOpacity onPress={this.onPressLogOut} style={styles.logoutbtnText}  >
                                 <Text style={styles.logoutbtnText}>Log Out</Text>
-                            </TouchableOpacity> 
-                            
-                            
+                            </TouchableOpacity>
+
+
                             </View>
                         </View>
                       </SafeAreaView>
                     </Fragment>
-                    
+
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -263,7 +246,7 @@ const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: '#F6820D',
       },
-    
+
       body: {
         backgroundColor: '#FFF',
         justifyContent: 'center',
@@ -310,7 +293,7 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom:10
       },
-      
+
       btnText: {
         textAlign: 'center',
         color: 'gray',

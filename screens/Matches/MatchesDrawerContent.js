@@ -13,10 +13,11 @@ function createData() {
         return courses.indexOf(c) === index;
     });
 
+    unique.sort(); 
     for(var i = 0; i < unique.length; i++) {
         var currData = {
             id: i.toString(),
-            course: courses[i]
+            course: unique[i]
         }
         data.push(currData); 
     }

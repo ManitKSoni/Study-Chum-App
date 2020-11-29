@@ -2,7 +2,6 @@ import React from 'react';
 import {
     View,
     TextInput,
-    Button,
     Keyboard,
     TouchableWithoutFeedback,
     StyleSheet,
@@ -14,37 +13,34 @@ import Dropdown from '../Authentication/Dropdown.js';
 import {UPAV} from '../Authentication/UserProfileAnswerView.js';
 import * as Constants from '../../Constants.js'
 import SearchableDropdown from 'react-native-searchable-dropdown';
+import userInstance from "../Singletons/UserSingleton";
+import Settings from "./Settings";
 
 class EditProfile extends React.Component {
 
     db = Firebase.firestore();
     userID = Firebase.auth().currentUser.uid;
-    unsubscribe; // used to stop checking firestore for updates
 
     state = {
         firstName: '',
         lastName: '',
         major: '',
         year: '',
-        bio: ''
+        bio: '',
+        courses: '',
     }
 
     constructor(props) {
         super(props);
         this.onPressSave = this.onPressSave.bind(this);
-        // subscribes to the document holding the current user's profile details
-        // renders updates on screen based on changes to firestore
-        this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
-            doc => {
-                this.setState({
-                    firstName: doc.data().firstName,
-                    lastName: doc.data().lastName,
-                    major: doc.data().major,
-                    year: doc.data().year,
-                    bio: doc.data().bio
-                })
-            }
-        );
+
+        // pull user details from UserSingleton
+        this.state.bio = userInstance._user.bio;
+        this.state.firstName = userInstance._user.firstName;
+        this.state.lastName = userInstance._user.lastName;
+        this.state.major = userInstance._user.major;
+        this.state.year = userInstance._user.year;
+        this.state.courses = userInstance._user.courses;
     }
 
     /** Updates user data in firestore and navigates to EditProfile form */
@@ -56,10 +52,25 @@ class EditProfile extends React.Component {
             lastName: this.state.lastName,
             major: this.state.major,
             year: this.state.year,
-            bio: this.state.bio
+            bio: this.state.bio,
+            courses: this.state.courses,
         });
-        this.unsubscribe();
-        this.props.navigation.navigate("Settings");
+        // updating user Singleton
+        userInstance._user.firstName = this.state.firstName;
+        userInstance._user.lastName = this.state.lastName;
+        userInstance._user.major = this.state.major;
+        userInstance._user.year = this.state.year;
+        userInstance._user.bio = this.state.bio;
+        userInstance._user.courses = this.state.courses;
+
+        this.props.navigation.navigate("Settings", {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            major: this.state.major,
+            year: this.state.year,
+            bio: this.state.bio,
+            courses: this.state.courses,
+        });
     }
 
     /** Gets the initial user details */
@@ -90,15 +101,6 @@ class EditProfile extends React.Component {
         } catch (error) {
             console.log(error)
         }
-    }
-
-    /** Called on Settings screen being rendered */
-    componentDidMount() {
-        this.fetchUserDetails();
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     render() {
@@ -133,15 +135,15 @@ class EditProfile extends React.Component {
                 <TextInput
                     style={styles.inputBox}
                     value={this.state.bio}
+                    marginHorizontal={2}
+                    maxLength={140}
                     onChangeText={bio => this.setState({ bio })}
                     placeholder='Bio'
                     autoCapitalize='none'
                 />
-                <Button
-                    style={styles.button}
-                    title="Save"
-                    onPress={this.onPressSave}
-                />
+                <TouchableOpacity onPress={this.onPressSave} style={styles.btnSection}  >
+                    <Text style={styles.btnText}>Save</Text>
+                </TouchableOpacity>
             </View>
 
 
@@ -165,7 +167,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderColor: '#d3d3d3',
         borderBottomWidth: 1,
-        textAlign: 'left'
+        textAlign: 'left',
+        paddingHorizontal: 20
     },
     buttonLogin: {
         marginTop: 5,
@@ -190,7 +193,21 @@ const styles = StyleSheet.create({
         color: '#FFA000',
         fontSize: 15
     },
-
+    btnSection: {
+        width: 225,
+        height: 50,
+        backgroundColor: '#DCDCDC',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 3,
+        marginBottom:10
+    },
+    btnText: {
+        textAlign: 'center',
+        color: 'gray',
+        fontSize: 14,
+        fontWeight:'bold'
+    }
 })
 
 export default EditProfile;
