@@ -178,9 +178,34 @@ class Home extends React.Component {
     }
 
     // handles the addition of events
-    onPressAdd() {
+    onPressAdd = async () => {
         var date = this.state.year + '-' + this.state.month + '-' + this.state.day;
         this.setModalVisible(false);
+        var userID = Firebase.auth().currentUser.uid;
+        var doc = this.db.collection("users").doc(userID)
+        var docDetails = await doc.get()
+        if (docDetails.exists) {
+            var eventMap = docDetails.get("events");
+            console.log(eventMap);
+            var eventDate = eventMap[date];
+            var key = "events." + date;
+            if (!eventDate) {
+                console.log("date not found")
+                var dayArr = [];
+                var dateMap = {name: this.state.name, time: this.state.time};
+                dayArr.push(dateMap);
+                doc.update({[key]: dayArr});
+                console.log("map updated");
+            }
+            else {
+                console.log("date found");
+                var dayArr = eventDate;
+                var dateMap = {name: this.state.name, time: this.state.time};
+                dayArr.push(dateMap);
+                doc.update({[key]: dayArr});
+                console.log("map updated");
+            }
+        }
     }
 
     /** Gets the initial user details */
