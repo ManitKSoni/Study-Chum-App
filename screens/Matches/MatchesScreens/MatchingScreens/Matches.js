@@ -49,7 +49,7 @@ class Matches extends React.Component{
                              {this.state.img}
                          </View>
                      </TouchableOpacity>
-                     <Text style={{fontSize: 16, paddingTop: 50,}}> Use Top Left Icon to Add a Class and Find a Chum!</Text>
+                     <Text style={styles.text}>Press the top left icon to add a class and find a chum!</Text>
                  </View>
           </TouchableWithoutFeedback>
        )
@@ -65,6 +65,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
+    },
+    text: {
+        width: '70%',
+        fontSize: Constants.windowHeight / 40,
+        paddingTop: 50,
+        textAlign: 'center',
+        color: 'grey',
     },
     inputBox: {
         width: '85%',
