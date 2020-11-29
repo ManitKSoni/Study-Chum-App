@@ -140,7 +140,6 @@ class EditProfile extends React.Component {
                     onChangeText={bio => this.setState({ bio })}
                     placeholder='Bio'
                     autoCapitalize='none'
-                    maxLength = {160}
                 />
                 <TouchableOpacity onPress={this.onPressSave} style={styles.btnSection}  >
                     <Text style={styles.btnText}>Save</Text>
