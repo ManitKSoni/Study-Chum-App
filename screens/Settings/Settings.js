@@ -21,7 +21,6 @@ class Settings extends React.Component{
         major: '',
         year: '',
         bio: '',
-        courses: '',
         image: null
     }
 
@@ -39,7 +38,6 @@ class Settings extends React.Component{
         this.state.lastName = userInstance._user.lastName;
         this.state.major = userInstance._user.major;
         this.state.year = userInstance._user.year;
-        this.state.courses = userInstance._user.courses;
     }
 
     /** Handle logging out and reset stack */
@@ -151,9 +149,6 @@ class Settings extends React.Component{
                                 style={styles.textAlign}>
                                    <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >
                                        {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
-                                   </Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
-                                       {this.props.route.params.courses || this.state.courses}
                                    </Text>
                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
                                        {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
