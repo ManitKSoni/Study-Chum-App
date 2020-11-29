@@ -141,7 +141,9 @@ class Settings extends React.Component{
                         <SafeAreaView>
                             <View style={styles.body}>
                                 <View style={styles.ImageSections}>
-                                    <TouchableOpacity onPress={this.chooseImage} style={{height: 200, width: 200, backgroundColor: '#DCDCDC',
+                                    <TouchableOpacity onPress={this.chooseImage} style={{
+                                        height: Constants.windowHeight * 0.35,
+                                        width: Constants.windowWidth * 0.4,
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         borderRadius: 3}}>
@@ -150,13 +152,13 @@ class Settings extends React.Component{
                                 </View>
                                 <View
                                     style={styles.textAlign}>
-                                    <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >
+                                    <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .02}} >
                                         {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
                                     </Text>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
                                         {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
                                     </Text>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
                                         {this.props.route.params.bio || this.state.bio}
                                     </Text>
                                 </View>
@@ -183,24 +185,25 @@ const styles = StyleSheet.create({
     afterPic: {
         flex: 1,
         paddingTop:20,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     container: {
         flex: 1,
         backgroundColor: '#fff',
         justifyContent: 'center',
-        fontFamily: 'ProximaNova',
+        fontFamily: 'ProximaNova'
     },
     contImg : {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#FFF'
     },
     img: {
         height: 200,
         width: 200,
         borderRadius: 100,
+        backgroundColor: '#000'
     },
 
     text: {
@@ -211,7 +214,7 @@ const styles = StyleSheet.create({
         borderColor: '#d3d3d3',
         borderBottomWidth: 1,
         textAlign: 'left',
-        fontFamily: 'ProximaNova',
+        fontFamily: 'ProximaNova'
     },
 
     button: {
@@ -252,7 +255,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 8,
         paddingVertical: 0,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     images: {
         width: 150,
