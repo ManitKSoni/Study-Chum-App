@@ -31,7 +31,8 @@ class CreateUserProfile extends React.Component {
             language: '',
             timezone: this.getLocalTimezoneFromDevice(),
             bio: '',
-            courses: []
+            courses: [],
+            events: {},
         }
     }
 

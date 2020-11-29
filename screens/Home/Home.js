@@ -6,8 +6,20 @@ import {Agenda} from 'react-native-calendars';
 import Firebase from '../../config/Firebase';
  
 class Home extends React.Component {
+
+    db = Firebase.firestore();
+    userID = Firebase.auth().currentUser.uid;
+    unsubscribe; // used to stop checking firestore for updates
+
     constructor(props) {
         super(props);
+        this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
+            doc => {
+                this.setState({
+                    items: doc.data().events
+                })
+            }
+        );
         this.state = {
             img: <Image style={{
                 width: Constants.windowHeight * .35,
@@ -16,6 +28,7 @@ class Home extends React.Component {
             }} source={require('../../assets/study_chums_logo.png')} ></Image>,
             // currently filled with test events.
             // would be populated with events from the database in the future
+            /** 
             items: {
                 '2020-11-22': [{name: 'Study session with Dylan',time: '9:00 AM'},{name: 'Study session with Edward',time: '5:00 PM'}],
                 '2020-11-23': [{name: 'Study session with Julio',time: '2:00 PM'}],
@@ -25,6 +38,8 @@ class Home extends React.Component {
                 '2020-11-28': [{name: 'Study session with Spicoli',time: '4:20 PM'},{name: 'Study session with Chicken Joe',time: '5:00 PM'}],
                 '2020-12-03': [{name: 'Study session with Kendall',time: '5:00 PM'}],
               },
+              */
+            items: {},
             // tells wether the add event pop-up is shown
             show: false,
             // event creation input
@@ -32,8 +47,17 @@ class Home extends React.Component {
             day: '',
             year: '',
             name: '',
-            time: ''
+            time: '',
         };
+    }
+
+    /** Called on Settings screen being rendered */
+    componentDidMount() {
+        this.fetchUserDetails();
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
     }
  
     render() {
@@ -153,11 +177,61 @@ class Home extends React.Component {
         this.setState({ show: visible});
     }
 
-    // handles the addition of 
-    onPressAdd() {
+    // handles the addition of events
+    onPressAdd = async () => {
         var date = this.state.year + '-' + this.state.month + '-' + this.state.day;
-        console.log(this.state.name, date, this.state.time);
         this.setModalVisible(false);
+        var userID = Firebase.auth().currentUser.uid;
+        var doc = this.db.collection("users").doc(userID)
+        var docDetails = await doc.get()
+        if (docDetails.exists) {
+            var eventMap = docDetails.get("events");
+            console.log(eventMap);
+            var eventDate = eventMap[date];
+            var key = "events." + date;
+            if (!eventDate) {
+                console.log("date not found")
+                var dayArr = [];
+                var dateMap = {name: this.state.name, time: this.state.time};
+                dayArr.push(dateMap);
+                doc.update({[key]: dayArr});
+                console.log("map updated");
+            }
+            else {
+                console.log("date found");
+                var dayArr = eventDate;
+                var dateMap = {name: this.state.name, time: this.state.time};
+                dayArr.push(dateMap);
+                doc.update({[key]: dayArr});
+                console.log("map updated");
+            }
+        }
+    }
+
+    /** Gets the initial user details */
+    getUserDetails() {
+        var userID = Firebase.auth().currentUser.uid;
+        return this.db.collection("users")
+            .doc(userID)
+            .get()
+            .then(function(doc) {
+                return doc.data()
+            })
+            .catch(function(error) {
+                console.log('Error getting user details: ', error)
+            })
+    }
+
+    /** Initializes state variables based on the firestore data */
+    fetchUserDetails = async () => {
+        try {
+            const userDetails = await this.getUserDetails()
+            this.setState({
+                items: userDetails.events
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     // returns the current date in yyyy-mm-dd format
