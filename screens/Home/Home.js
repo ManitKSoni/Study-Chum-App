@@ -4,6 +4,7 @@ import { View, StyleSheet, Image, TouchableOpacity, Text, Button, Alert, Modal, 
 import * as Constants from '../../Constants.js';
 import {Agenda} from 'react-native-calendars';
 import Firebase from '../../config/Firebase';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
  
 class Home extends React.Component {
 
@@ -151,6 +152,7 @@ class Home extends React.Component {
                                     </View>
                                 </View>
                             </View>
+                            <KeyboardSpacer/>
                         </Modal>
                         <View style={{paddingTop:Constants.windowHeight * 0.02}}>
                             <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF",}}
@@ -344,7 +346,7 @@ const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         width: Constants.windowWidth * 0.7,
-        height: Constants.windowHeight * 0.42,
+        height: Constants.windowHeight * 0.4,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
