@@ -9,4 +9,4 @@ export const placeholderTextcolor = "#AEAEAE";
 export const waveHeight = 848;
 export const waveWidth = 1200;
 export const waveWidthRatio = windowWidth / waveWidth;
-export const headerFontSize = 34; 
+export const headerFontSize = windowHeight / 25;
