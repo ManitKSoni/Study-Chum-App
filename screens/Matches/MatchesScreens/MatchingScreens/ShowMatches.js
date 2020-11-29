@@ -126,39 +126,66 @@ class ShowMatches extends React.Component {
 /**
  * Each slot of flatlist that is linked to a user
  */
-const Item = ({ name, bio, onPress, URI, tally }) => (
-
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-        <View style={styles.itemRow}> 
-            <View style={styles.itemColumn}> 
-                <Image source={{uri:URI}} style={styles.images}/> 
-            </View>
-       
-      
-            <View>
-                <View style = {styles.centerText}> 
-                    <Text style={styles.name}>  
-                        {name} {"\n"} 
-                        <Text style={styles.bio}>
-                            {((bio).length > (Constants.windowWidth/10)) ?
-                            (((bio).substring(0,(Constants.windowWidth/10)-3)) + '...') :
-                            bio}
-                        </Text>
-                        {/*<Text style={styles.tally}> {tally}  </Text>*/}
-                    </Text>
-                </View>
-            </View>
-        </View>
-       
+const Item = ({ name, bio, onPress, URI, tally }) => {
     
-      
-    </TouchableOpacity>
 
-)
+    if(URI) {
+        return(
+            <TouchableOpacity style={styles.item} onPress={onPress}>
+                <View style={styles.itemRow}> 
+                    <View style={styles.itemColumn}> 
+                        <Image source={{uri:URI}} style={styles.images}/> 
+                    </View>
+            
+            
+                    <View>
+                        <View style = {styles.centerText}> 
+                            <Text style={styles.name}>  
+                                {name} {"\n"} 
+                                <Text style={styles.bio}>
+                                    {((bio).length > (Constants.windowWidth/10)) ?
+                                    (((bio).substring(0,(Constants.windowWidth/10)-3)) + '...') :
+                                    bio}
+                                </Text>
+                                {/*<Text style={styles.tally}> {tally}  </Text>*/}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    } else {
+        return(
+            <TouchableOpacity style={styles.item} onPress={onPress}>
+                <View style={styles.itemRow}> 
+                    <View style={styles.itemColumn}> 
+                        <Image source={require('../../../../assets/dummy.png')} style={styles.images}/> 
+                    </View>
+            
+            
+                    <View>
+                        <View style = {styles.centerText}> 
+                            <Text style={styles.name}>  
+                                {name} {"\n"} 
+                                <Text style={styles.bio}>
+                                    {((bio).length > (Constants.windowWidth/10)) ?
+                                    (((bio).substring(0,(Constants.windowWidth/10)-3)) + '...') :
+                                    bio}
+                                </Text>
+                                {/*<Text style={styles.tally}> {tally}  </Text>*/}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+}
+                            
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop:.5
+        paddingTop:.5,
     },
     item: {
         borderColor: 'black',
