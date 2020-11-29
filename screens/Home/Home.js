@@ -22,10 +22,10 @@ class Home extends React.Component {
         );
         this.state = {
             img: <Image style={{
-                width: Constants.windowHeight * .35,
-                height: Constants.windowHeight * .35,
+                width: Constants.windowHeight * .40,
+                height: Constants.windowHeight * .17,
                 resizeMode: 'contain'
-            }} source={require('../../assets/study_chums_logo.png')} ></Image>,
+            }} source={require('../../assets/study_chums_title.png')} ></Image>,
             // currently filled with test events.
             // would be populated with events from the database in the future
             /** 
