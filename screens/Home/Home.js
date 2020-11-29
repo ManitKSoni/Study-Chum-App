@@ -188,8 +188,8 @@ class Home extends React.Component {
         var hours = this.state.time.substring(0,2);
         var mins = this.state.time.substring(3,5);
         var hoursCheck = (hours <= 23 && hours >= 0  
-            && this.state.time <= '');
-        var minssCheck = (mins <= 59 && mins >= 0);
+            && this.state.time != '');
+        var minsCheck = (mins <= 59 && mins >= 0);
         return (nameCheck && monthCheck && dayCheck && yearCheck 
             && hoursCheck && minsCheck);
     }
