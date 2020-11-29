@@ -326,9 +326,9 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     text: {
-        fontSize:12,
-        paddingTop:40,
-        paddingRight:10,
+        fontSize: Constants.windowWidth * 0.045,
+        paddingTop: Constants.windowHeight * 0.045,
+        paddingLeft: Constants.windowWidth * 0.05,
         textAlign:'left'
     },
     dateSelection: {
