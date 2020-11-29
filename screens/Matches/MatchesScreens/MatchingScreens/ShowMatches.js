@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         paddingTop:.5
     },
     item: {
-        borderColor: 'black',
+        borderColor: 'grey',
         borderWidth: 1,
         marginHorizontal:.15,
         height:80,
