@@ -1,11 +1,23 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
 import MatchingAlgorithm from "../../MatchingAlgorithm"
 import SavedData from "../../SavedData"
 import PreferenceProfiles from "../../PreferenceProfiles"
 import * as Constants from "../../../../Constants";
 
 class EditPreferences extends React.Component {
+
+    state = {
+        showModal: false
+    }
+
+    /**
+     * Pop ups modal screen
+     * @param visible - new value of state  
+     */
+    setModalVisible = (visible) => {
+        this.setState({ showModal: visible});
+    }
 
     /**
      * Go to ShowMatches screen refreshing the data and rerendering the screen
@@ -22,10 +34,12 @@ class EditPreferences extends React.Component {
      */
      deletePreferenceProfile = () => {
         PreferenceProfiles.deletePreferenceProfile(SavedData.title);
+        this.setModalVisible(false); 
         this.props.navigation.navigate("Matches") 
     }
 
     onPressEditAvailability = () => {
+        //console.log(Constants.windowWidth);
         this.props.navigation.navigate("Blank");
         this.props.navigation.navigate("EditAvailability");
     }
@@ -52,10 +66,36 @@ class EditPreferences extends React.Component {
                 <View style={styles.container2}>
                     <TouchableOpacity
                         style = {styles.borderDelete}
-                        onPress={this.deletePreferenceProfile}>
+                        onPress={() => this.setModalVisible(true)}>
                         <Text style={styles.deleteButton}> Delete Class Profile </Text>
                     </TouchableOpacity>
                 </View>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.showModal}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}> 
+                            <Text style={styles.modalQuestion}> Are you sure? </Text>
+
+                            <View style={styles.confirmationContainer}>
+                            <View style={styles.noContainer}>
+                                    <TouchableOpacity onPress={() => this.setModalVisible(false)} style={styles.modalNo}> 
+                                        <Text style={styles.buttonText}> No </Text>
+                                    </TouchableOpacity>
+                            </View>
+                                <View style={styles.yesContainer}> 
+                                <TouchableOpacity style={styles.modalYes} onPress={this.deletePreferenceProfile}>
+                                    <Text style={styles.buttonText}> Yes </Text>
+                                </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+
+                </Modal>
             </View>
 
         )
@@ -83,12 +123,14 @@ const styles = StyleSheet.create({
         color: 'grey',
         paddingVertical: 7,
         paddingLeft: 4,
+        fontFamily: "ProximaNova"
 
     },
     deleteButton: {
         fontSize: Constants.windowHeight * 0.035,
         color: 'grey',
         margin: 5,
+        fontFamily: "ProximaNova"
     },
     border: {
         borderBottomWidth: 1,
@@ -102,6 +144,68 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderTopColor: 'gray',
         margin: 6,
+    },
+    modalView: {
+        margin: 20,
+        width: Constants.windowWidth * 0.7,
+        height: Constants.windowHeight * 0.155,
+        backgroundColor: "white",
+        borderRadius: 22,
+        padding: 35,
+        alignItems: "center",
+        justifyContent: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+        
+    },
+    modalQuestion: {
+        fontSize: Constants.windowHeight * 0.033,
+        fontFamily: "ProximaNova"
+    },
+    modalYes: {
+        justifyContent: "flex-end",
+        backgroundColor: Constants.primaryColor,
+        borderRadius: 60,
+        width: 80,
+        height: 40,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    modalNo: {
+        justifyContent: "flex-start",
+        backgroundColor: '#CAD5CA',
+        borderRadius: 60,
+        width: 80,
+        height: 40,
+        alignItems: "center",
+        justifyContent:"center"
+    },
+    confirmationContainer: {
+        flexDirection:"row",
+        paddingTop: 10
+    }, 
+    buttonText: {
+        color:"white",
+        fontSize:Constants.windowHeight * 0.031,
+        fontFamily:"ProximaNova"
+    },
+    yesContainer: {
+        paddingLeft:20
+    },
+    noContainer: {
+        paddingRight: 20
     }
 
 })

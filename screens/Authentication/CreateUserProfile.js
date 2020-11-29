@@ -16,6 +16,14 @@ class CreateUserProfile extends React.Component {
         "Tell us a little about yourself!",
     ]
 
+    alerts = [
+        "Please enter your full name!",
+        "Please select a major from the list!",
+        "Please select a graduating year!",
+        "Please select a language from the list!",
+        "Please enter a bio!"
+    ]
+
     constructor() {
         super()
         this.onPressContinue = this.onPressContinue.bind(this)
@@ -48,7 +56,56 @@ class CreateUserProfile extends React.Component {
     }
 
     onPressContinue() {
-        if (this.state.index < this.questions.length-1) {
+        switch (this.state.index) {
+            case 0:
+                if (this.state.userProfile.firstName === '' || this.state.userProfile.lastName === '' ) {
+                    alert(this.alerts[0])
+                } else {
+                    this.setState({ index: this.state.index + 1 })
+                }
+                break;
+            case 1:
+                if (this.state.userProfile.major === '') {
+                    alert(this.alerts[1])
+                } else {
+                    this.setState({ index: this.state.index + 1 })
+                }
+                break;
+            case 2:
+                if (this.state.userProfile.year === '') {
+                    alert(this.alerts[2])
+                } else {
+                    this.setState({ index: this.state.index + 1 })
+                }
+                break;
+            case 3:
+                if (this.state.userProfile.language === '') {
+                    alert(this.alerts[3])
+                } else {
+                    this.setState({ index: this.state.index + 1 })
+                }
+                break;
+            case 4:
+                if (this.state.userProfile.bio === '') {
+                    alert(this.alerts[4])
+                } else {
+                    userInstance.createUser(this.state.userProfile, () => {
+                        this.props.navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Home' }]
+                        });
+                    });
+                }
+                break;
+            default:
+                userInstance.createUser(this.state.userProfile, () => {
+                    this.props.navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Home' }]
+                    });
+                });
+        }
+        /*if (this.state.index < this.questions.length-1) {
             this.setState({ index: this.state.index + 1 })
         } else {
             userInstance.createUser(this.state.userProfile, () => {
@@ -57,7 +114,7 @@ class CreateUserProfile extends React.Component {
                     routes: [{ name: 'Home' }]
                 });
             });
-        }
+        }*/
     }
 
     render() {

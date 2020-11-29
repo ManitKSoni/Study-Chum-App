@@ -65,7 +65,6 @@ class Settings extends React.Component{
     }
 
     handleEvent(profile) {
-        console.log(`rerendered: ${profile}`)
         this.setState({userProfile: profile})
     }
 

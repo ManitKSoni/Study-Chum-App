@@ -16,12 +16,13 @@ export default class ChatNavigator extends React.Component {
         return (
             <Stack.Navigator initialRouteName="Chat">
                 <Stack.Screen name="Chat" component={Chat} 
-                options= {{
-                    title: "Chat",
+                 options={{
+                    title:"Chat",
+                    headerTitleAlign: "center",
                     headerStyle: {backgroundColor: Constants.secondaryColor},
                     headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
-                    fontSize:Constants.headerFontSize}
-                }} />
+                    fontSize:Constants.headerFontSize},
+                 }}/>
                 <Stack.Screen name="Channel" component={Channel} />
                 <Stack.Screen name="UserProfile" component={UserProfile} />
             </Stack.Navigator>

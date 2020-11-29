@@ -133,26 +133,38 @@ class Home extends React.Component {
                                         onChangeText={time => this.setState({ time })}
                                         />
                                     </View>
-                                    <View style={{flexDirection:"row"}}>
-                                        <Button style={{justifyContent: 'flex-start',}}
-                                            color='#8075FF'
-                                            title="Cancel"
-                                            onPress={() => this.setModalVisible(false)}
-                                        />
-                                        <Button tyle={{justifyContent: 'flex-end',}}
-                                            color='#8075FF'
-                                            title="Add Event"
-                                            onPress={this.onPressAdd.bind(this)}
-                                        />
+                                    <View style={{flexDirection:"row", paddingTop: Constants.windowWidth * 0.02}}>
+                                        <View style={{paddingRight: Constants.windowWidth * 0.05}}>
+                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF", paddingHorizontal: Constants.windowWidth * 0.03}}
+                                            onPress={() => this.setModalVisible(false)}>
+                                            <Text style={styles.cancel}>
+                                                Cancel     
+                                            </Text>
+                                        </TouchableOpacity>
+                                        </View>
+                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF",}}
+                                            onPress={this.onPressAdd.bind(this)}>
+                                            <Text style={styles.addEvent}>
+                                                Add Event
+                                            </Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
                         </Modal>
-                        <Button
-                        onPress={() => this.setModalVisible(true)}
-                        title='Add an Event'
-                        color='#8075FF'
-                    />
+                        <View style={{paddingTop:Constants.windowHeight * 0.02}}>
+                            <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF",}}
+                            onPress={() => this.setModalVisible(true)}>
+                                <Text style={styles.addAnEvent}
+                                    //onPress={() => this.setModalVisible(true)}
+
+                                    title='Add an Event'
+                                    color='#8075FF'
+                                >
+                                    Add an Event
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     
             </View>
@@ -184,6 +196,8 @@ class Home extends React.Component {
                 dayArr.push(dateMap);
                 doc.update({[key]: dayArr});
                 console.log("map updated");
+                this.setState({items: eventMap})
+                console.log()
             }
             // the date does not exist in the map
             else {
@@ -193,7 +207,10 @@ class Home extends React.Component {
                 dayArr.push(dateMap);
                 doc.update({[key]: dayArr});
                 console.log("map updated");
+                this.setState({items: eventMap})
             }
+            this.setState({items: eventMap})
+            Alert.alert("Event Added")
         }
     }
 
@@ -309,16 +326,37 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     text: {
-        fontSize:12,
-        paddingTop:40,
-        paddingRight:10,
+        fontSize: Constants.windowWidth * 0.045,
+        paddingTop: Constants.windowHeight * 0.045,
+        paddingLeft: Constants.windowWidth * 0.05,
         textAlign:'left'
     },
     dateSelection: {
         flexDirection:"row", 
-        justifyContent: "center", 
-        alignItems: "center",
+        justifyContent: "flex-start", 
+        alignItems: "flex-start",
         padding: 10
+    },
+    addAnEvent: {
+        textAlign:'center',
+        color:'#FFFFFF',
+        fontSize: Constants.windowHeight * 0.025, 
+        padding: Constants.windowHeight * 0.015,
+        borderRadius:10
+    },
+    cancel: {
+        justifyContent: 'flex-start',
+        color:'#FFFFFF', 
+        fontSize: Constants.windowHeight * 0.02,
+        padding: Constants.windowHeight * 0.01,
+        borderRadius: 10
+    },
+    addEvent: {
+        justifyContent: 'flex-end', 
+        color:'#FFFFFF', 
+        fontSize: Constants.windowHeight * 0.02,
+        padding: Constants.windowHeight * 0.01,
+        borderRadius: 10
     }
 });
  
