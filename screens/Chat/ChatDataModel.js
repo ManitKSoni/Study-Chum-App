@@ -26,6 +26,7 @@ class ChatDataModel {
                         let json = change.doc.data()
                         json['userImage'] = await this.getImage(this.getOtherUserID(json.users))
                         json['channelID'] = change.doc.id
+                        json['otherUserID'] = this.getOtherUserID(json.users)
 
                         this.channels.unshift(json)
                         break;

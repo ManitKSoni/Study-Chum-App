@@ -78,7 +78,6 @@ class Chat extends React.Component {
         this.props.navigation.navigate("Channel", {
             userData: item,
             uid: uid,
-            title: item[uid].name
         });
     }
 
@@ -168,8 +167,6 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         marginHorizontal: 3,
-        width: 75,
-        height: 75,
         borderRadius:75/2,
         resizeMode: 'contain',
       },
