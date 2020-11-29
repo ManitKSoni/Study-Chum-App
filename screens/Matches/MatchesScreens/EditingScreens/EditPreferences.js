@@ -26,7 +26,6 @@ class EditPreferences extends React.Component {
     }
 
     onPressEditAvailability = () => {
-        //console.log(Constants.windowWidth);
         this.props.navigation.navigate("Blank");
         this.props.navigation.navigate("EditAvailability");
     }

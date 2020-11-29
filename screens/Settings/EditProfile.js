@@ -27,7 +27,7 @@ class EditProfile extends React.Component {
         major: '',
         year: '',
         bio: '',
-    }
+    } 
 
     constructor(props) {
         super(props);

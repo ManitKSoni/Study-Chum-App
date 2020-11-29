@@ -2,7 +2,7 @@ import React,{ Fragment }  from 'react';
 import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
-    TouchableOpacity} from 'react-native';
+    TouchableOpacity, DeviceEventEmitter} from 'react-native';
 import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
 import * as Constants from '../../Constants.js'
@@ -15,28 +15,33 @@ class Settings extends React.Component{
     userID = Firebase.auth().currentUser.uid;
 
     state = {
-        firstName: '',
-        lastName: '',
-        major: '',
-        year: '',
-        bio: '',
+        userProfile : {
+            firstName: '',
+            lastName: '',
+            major: '',
+            year: '',
+            language: '',
+            bio: '',
+        },
         image: null
     }
+
 
 
     constructor(props) {
         super(props);
         this.onPressLogOut = this.onPressLogOut.bind(this);
         this.onPressEditProfile = this.onPressEditProfile.bind(this);
+        this.handleEvent = this.handleEvent.bind(this);
 
         this.props.route.params = ""; // initial value to prevent errors
 
         // pull user details from UserSingleton
-        this.state.bio = userInstance._user.bio;
-        this.state.firstName = userInstance._user.firstName;
-        this.state.lastName = userInstance._user.lastName;
-        this.state.major = userInstance._user.major;
-        this.state.year = userInstance._user.year;
+        this.state.userProfile.bio = userInstance._user.bio;
+        this.state.userProfile.firstName = userInstance._user.firstName;
+        this.state.userProfile.lastName = userInstance._user.lastName;
+        this.state.userProfile.major = userInstance._user.major;
+        this.state.userProfile.year = userInstance._user.year;
     }
 
     /** Handle logging out and reset stack */
@@ -50,12 +55,18 @@ class Settings extends React.Component{
 
     /** Navigates to EditProfile form */
     onPressEditProfile() {
-        this.props.navigation.navigate("EditProfile");
+        this.props.navigation.navigate("EditProfileMainScreen");
     }
 
     /** Called on Settings screen being rendered */
     componentDidMount() {
         this.renderFileData();
+        this.eventListener = DeviceEventEmitter.addListener('eventKey',this.handleEvent);
+    }
+
+    handleEvent(profile) {
+        console.log(`rerendered: ${profile}`)
+        this.setState({userProfile: profile})
     }
 
     /*
@@ -69,9 +80,7 @@ class Settings extends React.Component{
             quality: 1,
         });
         if(!result.cancelled) {
-            console.log("In library")
             this.setState({image: result.uri});
-            console.log(this.state.image);
             this.uploadImage(result.uri, this.userID)
                 .then(() => {
                     console.log("Success")
@@ -152,13 +161,13 @@ class Settings extends React.Component{
                                 <View
                                     style={styles.textAlign}>
                                     <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .02}} >
-                                        {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
+                                        {this.state.userProfile.firstName + " " +  this.state.userProfile.lastName}
                                     </Text>
                                     <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.055, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
-                                        {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
+                                        {this.state.userProfile.major + " " +  this.state.userProfile.year}
                                     </Text>
                                     <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.055, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
-                                        {this.props.route.params.bio || this.state.bio}
+                                        {this.state.userProfile.bio}
                                     </Text>
                                 </View>
                                 <View style={styles.btnParentSection}>

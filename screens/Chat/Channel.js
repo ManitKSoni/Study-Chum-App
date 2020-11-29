@@ -4,6 +4,7 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import Firebase from '../../config/Firebase'
 import ThreadModel from './ThreadModel'
 import userInstance from '../Singletons/UserSingleton'
+import ThreadHeaderView from './ThreadHeaderView';
 
 class Channel extends React.Component {
 
@@ -14,12 +15,22 @@ class Channel extends React.Component {
       messages: []
     }
     this.unsubscribe = () => {}
+    this.onPressHeader = this.onPressHeader.bind(this)
   } 
+
+  async onPressHeader() {
+    const { uid, userData } = this.props.route.params;
+    let snapshot = await Firebase.firestore().collection('users').doc(userData.otherUserID).get()
+    this.props.navigation.navigate('UserProfile', {
+      userID: uid,
+      profile: snapshot.data(),
+    });
+  }
 
   parseMessage(message) {
     if (message.createdAt == NaN) {
       return null
-    }
+    } 
 
     const seconds = parseInt(message.createdAt.seconds);
     var date = new Date(0);
@@ -31,7 +42,7 @@ class Channel extends React.Component {
 
   componentDidMount() {
     const { userData, uid, title } = this.props.route.params;
-    this.props.navigation.setOptions({title: title})
+    this.props.navigation.setOptions({ headerTitle: props => <ThreadHeaderView onPressHeader={this.onPressHeader} displayName={userData[uid].name} userImage={userData.userImage}/>})
     let channelID = userData.channelID 
     this.threadModel = new ThreadModel(channelID)
     this.unsubscribe = this.threadModel.threadListener((messages) => {
