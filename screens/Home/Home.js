@@ -153,8 +153,7 @@ class Home extends React.Component {
                         title='Add an Event'
                         color='#8075FF'
                     />
-                    </View>
-                    
+                    </View> 
             </View>
         );
     }
