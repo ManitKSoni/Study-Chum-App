@@ -124,13 +124,13 @@ class EditProfile extends React.Component {
                     items={UPAV.getMajorsArray()}
                     value={this.state.major}
                     update={major => this.setState({ major })}
-                    placeHolder='Major'
+                    placeHolder={this.state.major}
                 />
                 <Dropdown
                     items={UPAV.getYearsArray()}
                     value={this.state.year}
                     update={year => this.setState({ year })}
-                    placeHolder='Graduation Year'
+                    placeHolder={this.state.year}
                 />
                 <TextInput
                     style={styles.inputBox}
@@ -138,7 +138,7 @@ class EditProfile extends React.Component {
                     marginHorizontal={2}
                     maxLength={140}
                     onChangeText={bio => this.setState({ bio })}
-                    placeholder='Bio'
+                    placeholder={this.state.bio}
                     autoCapitalize='none'
                 />
                 <TouchableOpacity onPress={this.onPressSave} style={styles.btnSection}  >

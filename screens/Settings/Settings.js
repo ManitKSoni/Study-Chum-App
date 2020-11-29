@@ -155,10 +155,10 @@ class Settings extends React.Component{
                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
                                        {this.props.route.params.courses || this.state.courses}
                                    </Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingHorizontal: Constants.windowWidth*.15}} >
                                        {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
                                    </Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035,paddingHorizontal: Constants.windowWidth*.15}} >
                                        {this.props.route.params.bio || this.state.bio}
                                    </Text>
                             </View>
@@ -170,7 +170,7 @@ class Settings extends React.Component{
                             <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
                                 <Text style={styles.btnText}>Edit Profile</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={this.onPressLogOut} style={styles.logoutbtnText}  >
+                            <TouchableOpacity onPress={this.onPressLogOut} style={styles.logoutbtn}  >
                                 <Text style={styles.logoutbtnText}>Log Out</Text>
                             </TouchableOpacity>
 
