@@ -2,7 +2,6 @@ import React from 'react';
 import {
     View,
     TextInput,
-    Button,
     Keyboard,
     TouchableWithoutFeedback,
     StyleSheet,
@@ -15,7 +14,6 @@ import {UPAV} from '../Authentication/UserProfileAnswerView.js';
 import * as Constants from '../../Constants.js'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import userInstance from "../Singletons/UserSingleton";
-import rnfs from 'react-native-fs'
 import Settings from "./Settings";
 
 class EditProfile extends React.Component {
@@ -28,20 +26,23 @@ class EditProfile extends React.Component {
         lastName: '',
         major: '',
         year: '',
-        bio: ''
+        bio: '',
+        courses: '',
     }
 
     constructor(props) {
         super(props);
         this.onPressSave = this.onPressSave.bind(this);
+
+        // pull user details from UserSingleton
+        this.state.bio = userInstance._user.bio;
+        this.state.firstName = userInstance._user.firstName;
+        this.state.lastName = userInstance._user.lastName;
+        this.state.major = userInstance._user.major;
+        this.state.year = userInstance._user.year;
+        this.state.courses = userInstance._user.courses;
     }
 
-    toTextFile(detail){
-        if(rnfs.exists('/bridge.txt') === false){
-            rnfs.touch('/brdge.txt');
-        }
-        rnfs.writeFile('/bridge.txt',detail);
-    }
     /** Updates user data in firestore and navigates to EditProfile form */
     onPressSave() {
         var userID = Firebase.auth().currentUser.uid;
@@ -51,22 +52,25 @@ class EditProfile extends React.Component {
             lastName: this.state.lastName,
             major: this.state.major,
             year: this.state.year,
-            bio: this.state.bio
+            bio: this.state.bio,
+            courses: this.state.courses,
         });
         // updating user Singleton
-        userInstance._user.firstName = firstName;
-        userInstance._user.lastName = lastName;
-        userInstance._user.major = major;
-        userInstance._user.year = year;
-        userInstance._user.bio = bio;
+        userInstance._user.firstName = this.state.firstName;
+        userInstance._user.lastName = this.state.lastName;
+        userInstance._user.major = this.state.major;
+        userInstance._user.year = this.state.year;
+        userInstance._user.bio = this.state.bio;
+        userInstance._user.courses = this.state.courses;
 
-        toTextFile(firstName);
-        toTextFile(lastName);
-        toTextFile(bio);
-        toTextFile(major);
-        toTextFile(year);
-
-        this.props.navigation.navigate("Settings");
+        this.props.navigation.navigate("Settings", {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            major: this.state.major,
+            year: this.state.year,
+            bio: this.state.bio,
+            courses: this.state.courses,
+        });
     }
 
     /** Gets the initial user details */
@@ -97,27 +101,6 @@ class EditProfile extends React.Component {
         } catch (error) {
             console.log(error)
         }
-    }
-
-    getMajorsArray() {
-        return this.createItemsFromArray(Majors.majorsArray);
-    }
-
-    getLanguagesArray() {
-        return this.createItemsFromArray(Languages.languagesArray);
-    }
-
-    updateField(key) {
-        return (value) => { this.props.update(key, value) }
-    }
-
-    /** Called on Settings screen being rendered */
-    componentDidMount() {
-    this.state.bio = userInstance._user.bio;
-    this.state.firstName = userInstance._user.firstName;
-    this.state.lastName = userInstance._user.lastName;
-    this.state.major = userInstance._user.major;
-    this.state.year = userInstance._user.year;
     }
 
     render() {

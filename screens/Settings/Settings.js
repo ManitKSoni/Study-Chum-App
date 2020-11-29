@@ -1,5 +1,5 @@
 import React,{ Fragment, Component }  from 'react';
-import {Button, Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
+import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
     TouchableOpacity} from 'react-native';
@@ -7,16 +7,21 @@ import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
 import * as Constants from '../../Constants.js'
 import { BottomNavigation } from 'react-native-paper';
+import userInstance from "../Singletons/UserSingleton";
 
 
 class Settings extends React.Component{
 
     db = Firebase.firestore();
     userID = Firebase.auth().currentUser.uid;
-    unsubscribe;
 
     state = {
-        userDetails: '',
+        firstName: '',
+        lastName: '',
+        major: '',
+        year: '',
+        bio: '',
+        courses: '',
         image: null
     }
 
@@ -25,6 +30,16 @@ class Settings extends React.Component{
         super(props);
         this.onPressLogOut = this.onPressLogOut.bind(this);
         this.onPressEditProfile = this.onPressEditProfile.bind(this);
+
+        this.props.route.params = ""; // initial value to prevent errors
+
+        // pull user details from UserSingleton
+        this.state.bio = userInstance._user.bio;
+        this.state.firstName = userInstance._user.firstName;
+        this.state.lastName = userInstance._user.lastName;
+        this.state.major = userInstance._user.major;
+        this.state.year = userInstance._user.year;
+        this.state.courses = userInstance._user.courses;
     }
 
     /** Handle logging out and reset stack */
@@ -41,38 +56,11 @@ class Settings extends React.Component{
         this.props.navigation.navigate("EditProfile");
     }
 
-    /** Gets the initial user details */
-    getUserDetails() {
-        return this.db.collection("users")
-            .doc(this.userID)
-            .get()
-            .then(function(doc) {
-                return doc.data()
-        })
-            .catch(function(error) {
-                console.log('Error getting user details: ', error)
-            })
-    }
-
-    /** Initializes state variables based on the firestore data */
-    fetchUserDetails = async () => {
-        try {
-            const userDetails = await this.getUserDetails()
-            this.setState({ userDetails })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     /** Called on Settings screen being rendered */
     componentDidMount() {
-        this.fetchUserDetails();
         this.renderFileData();
     }
 
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
     /*
     * Opens the image picker on user's phone
     */
@@ -159,11 +147,20 @@ class Settings extends React.Component{
                                     {this.showImage()}
                                  </View>
                             </View>
-                            <View style={styles.textAlign}>
-                                   <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >{this.state.userDetails.firstName + " " + this.state.userDetails.lastName}</Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.classes}</Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.major + " " + this.state.userDetails.year}</Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >{this.state.userDetails.bio}</Text>
+                            <View
+                                style={styles.textAlign}>
+                                   <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >
+                                       {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
+                                   </Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                       {this.props.route.params.courses || this.state.courses}
+                                   </Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                       {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
+                                   </Text>
+                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                       {this.props.route.params.bio || this.state.bio}
+                                   </Text>
                             </View>
                              <View style={styles.btnParentSection}>
                                 <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
