@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         width: Constants.windowWidth * 0.7,
-        height: Constants.windowHeight * 0.15,
+        height: Constants.windowHeight * 0.155,
         backgroundColor: "white",
         borderRadius: 22,
         padding: 35,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
         
     },
     modalQuestion: {
-        fontSize: 30,
+        fontSize: Constants.windowHeight * 0.033,
         fontFamily: "ProximaNova"
     },
     modalYes: {
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     }, 
     buttonText: {
         color:"white",
-        fontSize:28,
+        fontSize:Constants.windowHeight * 0.031,
         fontFamily:"ProximaNova"
     },
     yesContainer: {
