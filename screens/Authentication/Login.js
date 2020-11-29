@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
         padding: 15,
         fontSize: 16,
         borderColor: Constants.boxGrey,
-        borderBottomWidth: 1,
         textAlign: 'left',
         borderLeftWidth: 1,
         borderRightWidth: 1,
