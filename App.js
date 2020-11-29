@@ -67,6 +67,7 @@ export default class App extends React.Component {
     await Expo.Asset.fromModule(require('./assets/fish_button.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/study_chums_logo.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/logo_trimmed.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/dummy.png')).downloadAsync();
     this.setState({ imagesLoaded: true });
   }
 

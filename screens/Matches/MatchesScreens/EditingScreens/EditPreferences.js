@@ -11,6 +11,7 @@ class EditPreferences extends React.Component {
      * Go to ShowMatches screen refreshing the data and rerendering the screen
      */
     onPressGoToShowMatches = () => {
+
         this.props.navigation.navigate("Blank");
         MatchingAlgorithm.getStudentMap(SavedData.title, 
             () => this.props.navigation.navigate("ShowMatches", {name:SavedData.title}));
@@ -25,6 +26,7 @@ class EditPreferences extends React.Component {
     }
 
     onPressEditAvailability = () => {
+        //console.log(Constants.windowWidth);
         this.props.navigation.navigate("Blank");
         this.props.navigation.navigate("EditAvailability");
     }
@@ -78,15 +80,14 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     text: {
-        fontSize: 32,
-        borderBottomWidth: 1,
-        borderBottomColor: 'black',
-        paddingVertical: 5,
+        fontSize: Constants.windowHeight * 0.04,
+        color: 'grey',
+        paddingVertical: 7,
         paddingLeft: 4,
 
     },
     deleteButton: {
-        fontSize: 32,
+        fontSize: Constants.windowHeight * 0.035,
         color: 'grey',
         margin: 5,
     },

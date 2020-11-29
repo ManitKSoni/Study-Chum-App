@@ -27,7 +27,6 @@ class EditProfile extends React.Component {
         major: '',
         year: '',
         bio: '',
-        courses: '',
     }
 
     constructor(props) {
@@ -40,7 +39,6 @@ class EditProfile extends React.Component {
         this.state.lastName = userInstance._user.lastName;
         this.state.major = userInstance._user.major;
         this.state.year = userInstance._user.year;
-        this.state.courses = userInstance._user.courses;
     }
 
     /** Updates user data in firestore and navigates to EditProfile form */
@@ -53,7 +51,6 @@ class EditProfile extends React.Component {
             major: this.state.major,
             year: this.state.year,
             bio: this.state.bio,
-            courses: this.state.courses,
         });
         // updating user Singleton
         userInstance._user.firstName = this.state.firstName;
@@ -61,7 +58,6 @@ class EditProfile extends React.Component {
         userInstance._user.major = this.state.major;
         userInstance._user.year = this.state.year;
         userInstance._user.bio = this.state.bio;
-        userInstance._user.courses = this.state.courses;
 
         this.props.navigation.navigate("Settings", {
             firstName: this.state.firstName,
@@ -69,38 +65,7 @@ class EditProfile extends React.Component {
             major: this.state.major,
             year: this.state.year,
             bio: this.state.bio,
-            courses: this.state.courses,
         });
-    }
-
-    /** Gets the initial user details */
-    getUserDetails() {
-        var userID = Firebase.auth().currentUser.uid;
-        return this.db.collection("users")
-            .doc(userID)
-            .get()
-            .then(function(doc) {
-                return doc.data()
-            })
-            .catch(function(error) {
-                console.log('Error getting user details: ', error)
-            })
-    }
-
-    /** Initializes state variables based on the firestore data */
-    fetchUserDetails = async () => {
-        try {
-            const userDetails = await this.getUserDetails()
-            this.setState({
-                firstName: userDetails.firstName,
-                lastName: userDetails.lastName,
-                major: userDetails.major,
-                year: userDetails.year,
-                bio: userDetails.bio
-            })
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     render() {

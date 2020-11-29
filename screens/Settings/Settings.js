@@ -21,7 +21,6 @@ class Settings extends React.Component{
         major: '',
         year: '',
         bio: '',
-        courses: '',
         image: null
     }
 
@@ -39,7 +38,6 @@ class Settings extends React.Component{
         this.state.lastName = userInstance._user.lastName;
         this.state.major = userInstance._user.major;
         this.state.year = userInstance._user.year;
-        this.state.courses = userInstance._user.courses;
     }
 
     /** Handle logging out and reset stack */
@@ -65,24 +63,24 @@ class Settings extends React.Component{
     * Opens the image picker on user's phone
     */
     chooseImage = async () => {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-      if(!result.cancelled) {
-        console.log("In library")
-        this.setState({image: result.uri});
-        console.log(this.state.image);
-        this.uploadImage(result.uri, this.userID)
-          .then(() => {
-            console.log("Success")
-          })
-          .catch((error) => {
-            console.log(error)
-          });
-      }
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+        if(!result.cancelled) {
+            console.log("In library")
+            this.setState({image: result.uri});
+            console.log(this.state.image);
+            this.uploadImage(result.uri, this.userID)
+                .then(() => {
+                    console.log("Success")
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+        }
     }
 
     /*
@@ -91,48 +89,48 @@ class Settings extends React.Component{
     * @param userID - UID for unique key
     */
     uploadImage = async (uri, userID) => {
-      const response = await fetch(uri);
-      const blob = await response.blob();
+        const response = await fetch(uri);
+        const blob = await response.blob();
 
-      var ref = Firebase.storage().ref().child("images/" + userID)
-      return ref.put(blob);
+        var ref = Firebase.storage().ref().child("images/" + userID)
+        return ref.put(blob);
     }
 
-      /*
-      * Retrieves image from firebase. If it does not exist,
-      * the state will stay null
-      */
-      async renderFileData() {
+    /*
+    * Retrieves image from firebase. If it does not exist,
+    * the state will stay null
+    */
+    async renderFileData() {
 
         var storage = Firebase.storage();
         var imagePath = storage.ref('images/' + this.userID);
         try{
-        var image = await imagePath.getDownloadURL();
+            var image = await imagePath.getDownloadURL();
 
-          this.setState({image:image})
+            this.setState({image:image})
         } catch(err) {
-          console.log("No image on database")
+            console.log("No image on database")
         }
 
-      }
+    }
 
-      /*
-      * If the image state is null, show default image.
-      * Otherwise show image from firebase
-      */
-      showImage = () => {
+    /*
+    * If the image state is null, show default image.
+    * Otherwise show image from firebase
+    */
+    showImage = () => {
         if(!this.state.image) {
-          return (<View style = {styles.contImg}>
-            <Image source={require('../../assets/dummy.png')} style={styles.img}/>
-          </View>)
+            return (<View style = {styles.contImg}>
+                <Image source={require('../../assets/dummy.png')} style={styles.img}/>
+            </View>)
         } else {
-          return (
-          <View style ={styles.contImg}>
-            <Image source = {{uri:this.state.image}} style={styles.img}/>
-          </View>
-          )
+            return (
+                <View style ={styles.contImg}>
+                    <Image source = {{uri:this.state.image}} style={styles.img}/>
+                </View>
+            )
         }
-      }
+    }
 
     render() {
         return (
@@ -142,42 +140,36 @@ class Settings extends React.Component{
                         <StatusBar barStyle="dark-content" />
                         <SafeAreaView>
                             <View style={styles.body}>
-                              <View style={styles.ImageSections}>
-                                <View>
-                                    {this.showImage()}
-                                 </View>
+                                <View style={styles.ImageSections}>
+                                    <TouchableOpacity onPress={this.chooseImage} style={{height: 200, width: 200, backgroundColor: '#DCDCDC',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        borderRadius: 3}}>
+                                        {this.showImage()}
+                                    </TouchableOpacity>
+                                </View>
+                                <View
+                                    style={styles.textAlign}>
+                                    <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >
+                                        {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
+                                    </Text>
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                        {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
+                                    </Text>
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                        {this.props.route.params.bio || this.state.bio}
+                                    </Text>
+                                </View>
+                                <View style={styles.btnParentSection}>
+                                    <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
+                                        <Text style={styles.btnText}>Edit Profile</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={this.onPressLogOut} style={styles.logoutbtnText}  >
+                                        <Text style={styles.logoutbtnText}>Log Out</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                            <View
-                                style={styles.textAlign}>
-                                   <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .12}} >
-                                       {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
-                                   </Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
-                                       {this.props.route.params.courses || this.state.courses}
-                                   </Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingHorizontal: Constants.windowWidth*.15}} >
-                                       {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
-                                   </Text>
-                                   <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035,paddingHorizontal: Constants.windowWidth*.15}} >
-                                       {this.props.route.params.bio || this.state.bio}
-                                   </Text>
-                            </View>
-                             <View style={styles.btnParentSection}>
-                                <TouchableOpacity onPress={this.chooseImage} style={styles.btnSection}  >
-                                  <Text style={styles.btnText}>Change Profile Picture</Text>
-                                </TouchableOpacity>
-
-                            <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
-                                <Text style={styles.btnText}>Edit Profile</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={this.onPressLogOut} style={styles.logoutbtn}  >
-                                <Text style={styles.logoutbtnText}>Log Out</Text>
-                            </TouchableOpacity>
-
-
-                            </View>
-                        </View>
-                      </SafeAreaView>
+                        </SafeAreaView>
                     </Fragment>
 
                 </View>
@@ -189,9 +181,9 @@ class Settings extends React.Component{
 const styles = StyleSheet.create({
 
     afterPic: {
-      flex: 1,
-      paddingTop:20,
-      alignItems: 'center',
+        flex: 1,
+        paddingTop:20,
+        alignItems: 'center',
     },
     container: {
         flex: 1,
@@ -206,9 +198,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#ecf0f1',
     },
     img: {
-      height: 200,
-      width: 200,
-      borderRadius: 100,
+        height: 200,
+        width: 200,
+        borderRadius: 100,
     },
 
     text: {
@@ -245,35 +237,35 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         backgroundColor: '#F6820D',
-      },
+    },
 
-      body: {
+    body: {
         backgroundColor: '#FFF',
         justifyContent: 'center',
         borderColor: 'black',
         borderWidth: 1,
         height: Dimensions.get('screen').height - 20,
         width: Dimensions.get('screen').width
-      },
-      ImageSections: {
+    },
+    ImageSections: {
         display: 'flex',
         flexDirection: 'row',
         paddingHorizontal: 8,
-        paddingVertical: 8,
+        paddingVertical: 0,
         justifyContent: 'center'
-      },
-      images: {
+    },
+    images: {
         width: 150,
         height: 150,
         borderColor: 'black',
         borderWidth: 1,
         marginHorizontal: 3
-      },
-      btnParentSection: {
+    },
+    btnParentSection: {
         alignItems: 'center',
         marginTop:10
-      },
-      btnSection: {
+    },
+    btnSection: {
         width: 225,
         height: 50,
         backgroundColor: '#DCDCDC',
@@ -281,8 +273,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 3,
         marginBottom:10
-      },
-      logoutbtnSection: {
+    },
+    logoutbtnSection: {
         width: 225,
         height: 50,
         backgroundColor: '#DCDCDC',
@@ -292,22 +284,22 @@ const styles = StyleSheet.create({
         bottom: 0,
         borderRadius: 3,
         marginBottom:10
-      },
+    },
 
-      btnText: {
+    btnText: {
         textAlign: 'center',
         color: 'gray',
         fontSize: 14,
         fontWeight:'bold',
         fontFamily: 'ProximaNova',
-      },
-      logoutbtnText: {
+    },
+    logoutbtnText: {
         textAlign: 'center',
         color: '#B80808',
         fontFamily: 'ProximaNova',
         fontSize: 14,
         fontWeight:'bold'
-      }
+    }
 })
 
 export default Settings;
