@@ -16,7 +16,7 @@ class Home extends React.Component {
         this.unsubscribe = this.db.collection("users").doc(this.userID).onSnapshot(
             doc => {
                 this.setState({
-                    items: doc.data().Events
+                    items: doc.data().events
                 })
             }
         );
@@ -202,7 +202,7 @@ class Home extends React.Component {
         try {
             const userDetails = await this.getUserDetails()
             this.setState({
-                items: userDetails.Events
+                items: userDetails.events
             })
         } catch (error) {
             console.log(error)
