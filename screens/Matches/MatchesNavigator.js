@@ -31,6 +31,7 @@ const Stack = createStackNavigator();
 export default class MatchesNavigator extends React.Component {
 
   onPressGoToShowMatches = () => {
+
     this.props.navigation.navigate("Blank");
     MatchingAlgorithm.getStudentMap(SavedData.title, 
         () => this.props.navigation.navigate("ShowMatches", {name:SavedData.title}));
@@ -43,6 +44,7 @@ export default class MatchesNavigator extends React.Component {
           <Stack.Screen name="Matches" component={Matches} 
             options = {{
               title: "Matches",
+              headerTitleAlign: "center",
               headerStyle: {backgroundColor: Constants.secondaryColor},
               headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
                 fontSize:Constants.headerFontSize},
@@ -74,6 +76,7 @@ export default class MatchesNavigator extends React.Component {
                 headerStyle: {backgroundColor: Constants.secondaryColor},
                 headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
                   fontSize:Constants.headerFontSize},
+                headerTitleAlign: "center",
                 headerLeft: () => (
                   <Icon name="menu" size ={40} containerStyle={{paddingLeft:5}} color="#FFFFFF"
                   backgroundColor="#009387" onPress={() => this.props.navigation.openDrawer()}/>
@@ -98,6 +101,7 @@ export default class MatchesNavigator extends React.Component {
 
           <Stack.Screen name="EditPreferences" component={EditPreferences} 
               options={({ route }) => ({ 
+                headerTitleAlign: "center",
                 headerLeft: () => (
                   <Icon name="arrow-left" type="foundation" size={40} containerStyle={{paddingLeft:7}}
                   color="#FFFFFF" onPress={this.onPressGoToShowMatches}/>
