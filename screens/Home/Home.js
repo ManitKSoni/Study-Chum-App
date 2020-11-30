@@ -4,6 +4,7 @@ import { View, StyleSheet, Image, TouchableOpacity, Text, Button, Alert, Modal, 
 import * as Constants from '../../Constants.js';
 import {Agenda} from 'react-native-calendars';
 import Firebase from '../../config/Firebase';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
  
 class Home extends React.Component {
 
@@ -133,26 +134,39 @@ class Home extends React.Component {
                                         onChangeText={time => this.setState({ time })}
                                         />
                                     </View>
-                                    <View style={{flexDirection:"row"}}>
-                                        <Button style={{justifyContent: 'flex-start',}}
-                                            color='#8075FF'
-                                            title="Cancel"
-                                            onPress={() => this.setModalVisible(false)}
-                                        />
-                                        <Button tyle={{justifyContent: 'flex-end',}}
-                                            color='#8075FF'
-                                            title="Add Event"
-                                            onPress={this.onPressAdd.bind(this)}
-                                        />
+                                    <View style={{flexDirection:"row", paddingTop: Constants.windowWidth * 0.02}}>
+                                        <View style={{paddingRight: Constants.windowWidth * 0.05}}>
+                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF", paddingHorizontal: Constants.windowWidth * 0.03}}
+                                            onPress={() => this.setModalVisible(false)}>
+                                            <Text style={styles.cancel}>
+                                                Cancel     
+                                            </Text>
+                                        </TouchableOpacity>
+                                        </View>
+                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF",}}
+                                            onPress={this.onPressAdd.bind(this)}>
+                                            <Text style={styles.addEvent}>
+                                                Add Event
+                                            </Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
+                            <KeyboardSpacer/>
                         </Modal>
-                        <Button
-                        onPress={() => this.setModalVisible(true)}
-                        title='Add an Event'
-                        color='#8075FF'
-                    />
+                        <View style={{paddingTop:Constants.windowHeight * 0.02}}>
+                            <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF",}}
+                            onPress={() => this.setModalVisible(true)}>
+                                <Text style={styles.addAnEvent}
+                                    //onPress={() => this.setModalVisible(true)}
+
+                                    title='Add an Event'
+                                    color='#8075FF'
+                                >
+                                    Add an Event
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     
             </View>
@@ -164,37 +178,75 @@ class Home extends React.Component {
         this.setState({ show: visible});
     }
 
+    checkFields() {
+        var nameCheck = (this.state.name != '');
+        var monthCheck = (this.state.month <= 12 && this.state.month >= 1 
+            && this.state.month != '');
+        var dayCheck = (this.state.day <= 31 && this.state.day >= 1 
+            && this.state.day != '');
+        var yearCheck = (this.state.year >= 0 && this.state.month != '');
+        var hours = this.state.time.substring(0,2);
+        var mins = this.state.time.substring(3,5);
+        var hoursCheck = (hours <= 23 && hours >= 0  
+            && this.state.time != '');
+        var minsCheck = (mins <= 59 && mins >= 0);
+        return (nameCheck && monthCheck && dayCheck && yearCheck 
+            && hoursCheck && minsCheck);
+    }
+
     // handles the addition of events
     onPressAdd = async () => {
-        var date = this.state.year + '-' + this.state.month + '-' + this.state.day;
-        this.setModalVisible(false);
-        var userID = Firebase.auth().currentUser.uid;
-        var doc = this.db.collection("users").doc(userID)
-        var docDetails = await doc.get()
-        if (docDetails.exists) {
-            var eventMap = docDetails.get("events");
-            console.log(eventMap);
-            var eventDate = eventMap[date];
-            var key = "events." + date;
-            // if the date already exists in the map
-            if (!eventDate) {
-                console.log("date not found")
-                var dayArr = [];
-                var dateMap = {name: this.state.name, time: this.state.time};
-                dayArr.push(dateMap);
-                doc.update({[key]: dayArr});
-                console.log("map updated");
+        if (this.checkFields()) {
+            var date = this.state.year + '-' + this.state.month + '-' + this.state.day;
+            this.setModalVisible(false);
+            var userID = Firebase.auth().currentUser.uid;
+            var doc = this.db.collection("users").doc(userID)
+            var docDetails = await doc.get()
+            if (docDetails.exists) {
+                var eventMap = docDetails.get("events");
+                console.log(eventMap);
+                var eventDate = eventMap[date];
+                var key = "events." + date;
+                // if the date already exists in the map
+                if (!eventDate) {
+                    console.log("date not found")
+                    var dayArr = [];
+                    var dateMap = {name: this.state.name, time: this.state.time};
+                    dayArr.push(dateMap);
+                    doc.update({[key]: dayArr});
+                    console.log("map updated");
+                    this.setState({items: eventMap})
+                    console.log()
+                }
+                // the date does not exist in the map
+                else {
+                    console.log("date found");
+                    var dayArr = eventDate;
+                    var dateMap = {name: this.state.name, time: this.state.time};
+                    dayArr.push(dateMap);
+                    doc.update({[key]: dayArr});
+                    console.log("map updated");
+                    this.setState({items: eventMap})
+                }
+                this.setState({items: eventMap})
             }
-            // the date does not exist in the map
-            else {
-                console.log("date found");
-                var dayArr = eventDate;
-                var dateMap = {name: this.state.name, time: this.state.time};
-                dayArr.push(dateMap);
-                doc.update({[key]: dayArr});
-                console.log("map updated");
-            }
+            Alert.alert("Event Added")
         }
+        else {
+            Alert.alert("inncorrect date/time entry \ncheck that it is of the form:\nMM/DD/YYY HH:MM")
+        }
+        this.clearInput
+        
+    }
+
+    clearInput() {
+        this.setState({
+            day: '',
+            month: '',
+            year: '',
+            time: '',
+            name: ''
+        });
     }
 
     /** Gets the initial user details */
@@ -294,7 +346,7 @@ const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         width: Constants.windowWidth * 0.7,
-        height: 300,
+        height: Constants.windowHeight * 0.4,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
@@ -309,16 +361,37 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     text: {
-        fontSize:12,
-        paddingTop:40,
-        paddingRight:10,
+        fontSize: Constants.windowWidth * 0.045,
+        paddingTop: Constants.windowHeight * 0.045,
+        paddingLeft: Constants.windowWidth * 0.05,
         textAlign:'left'
     },
     dateSelection: {
         flexDirection:"row", 
-        justifyContent: "center", 
-        alignItems: "center",
+        justifyContent: "flex-start", 
+        alignItems: "flex-start",
         padding: 10
+    },
+    addAnEvent: {
+        textAlign:'center',
+        color:'#FFFFFF',
+        fontSize: Constants.windowHeight * 0.025, 
+        padding: Constants.windowHeight * 0.015,
+        borderRadius:10
+    },
+    cancel: {
+        justifyContent: 'flex-start',
+        color:'#FFFFFF', 
+        fontSize: Constants.windowHeight * 0.02,
+        padding: Constants.windowHeight * 0.01,
+        borderRadius: 10
+    },
+    addEvent: {
+        justifyContent: 'flex-end', 
+        color:'#FFFFFF', 
+        fontSize: Constants.windowHeight * 0.02,
+        padding: Constants.windowHeight * 0.01,
+        borderRadius: 10
     }
 });
  

@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, LogBox} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,12 +16,14 @@ import MainTabBar from './screens/MainTabBar';
 import Spinner from './screens/Reusable/Spinner';
 import CreateUserProfile from './screens/Authentication/CreateUserProfile'
 import SettingsNavigator from "./screens/Settings/SettingsNavigator";
+import * as Constants from "./Constants"
 
 let customFonts = {
   'Papyrus': require('./assets/Fonts/PAPYRUS.ttf'),
   'ProximaNova': require('./assets/Fonts/ProximaNova.ttf'),
   'MrsEaves-Bold': require('./assets/Fonts/MrsEaves-Bold.ttf'),
   'Buenard-Bold': require('./assets/Fonts/Buenard-Bold.ttf'),
+  'DroidSansMono' : require('./assets/Fonts/DroidSansMono.ttf')
 };
 
 let imageAssets = [
@@ -68,6 +70,7 @@ export default class App extends React.Component {
     await Expo.Asset.fromModule(require('./assets/study_chums_logo.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/logo_trimmed.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/dummy.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/study_chums_title.png')).downloadAsync();
     this.setState({ imagesLoaded: true });
   }
 
@@ -77,6 +80,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    LogBox.ignoreAllLogs(); //IGNORES ALL LOGS
     if (this.state.fontsLoaded && this.state.imagesLoaded) {
       return (
         <NavigationContainer>
@@ -92,8 +96,16 @@ export default class App extends React.Component {
             <Stack.Screen name="Home" component={MainTabBar}
               options={{ headerShown: false }} />
             <Stack.Screen name="Spinner" component={Spinner} />
-            <Stack.Screen name="CreateUser" component={CreateUserProfile} />
-            <Stack.Screen name="Settings" component={SettingsNavigator} />
+            <Stack.Screen name="CreateUser" component={CreateUserProfile} 
+              options={{
+                title:"Create Profile",
+                headerTitleAlign: "center",
+                headerStyle: {backgroundColor: Constants.secondaryColor},
+                headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
+                fontSize:Constants.headerFontSize},
+              }} 
+            />
+            <Stack.Screen name="Settings" component={SettingsNavigator}/>
           </Stack.Navigator>
         </NavigationContainer>
       )

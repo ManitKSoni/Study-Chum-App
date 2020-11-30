@@ -1,12 +1,11 @@
-import React,{ Fragment, Component }  from 'react';
+import React,{ Fragment }  from 'react';
 import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
-    TouchableOpacity} from 'react-native';
+    TouchableOpacity, DeviceEventEmitter} from 'react-native';
 import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
 import * as Constants from '../../Constants.js'
-import { BottomNavigation } from 'react-native-paper';
 import userInstance from "../Singletons/UserSingleton";
 
 
@@ -16,28 +15,33 @@ class Settings extends React.Component{
     userID = Firebase.auth().currentUser.uid;
 
     state = {
-        firstName: '',
-        lastName: '',
-        major: '',
-        year: '',
-        bio: '',
+        userProfile : {
+            firstName: '',
+            lastName: '',
+            major: '',
+            year: '',
+            language: '',
+            bio: '',
+        },
         image: null
     }
+
 
 
     constructor(props) {
         super(props);
         this.onPressLogOut = this.onPressLogOut.bind(this);
         this.onPressEditProfile = this.onPressEditProfile.bind(this);
+        this.handleEvent = this.handleEvent.bind(this);
 
         this.props.route.params = ""; // initial value to prevent errors
 
         // pull user details from UserSingleton
-        this.state.bio = userInstance._user.bio;
-        this.state.firstName = userInstance._user.firstName;
-        this.state.lastName = userInstance._user.lastName;
-        this.state.major = userInstance._user.major;
-        this.state.year = userInstance._user.year;
+        this.state.userProfile.bio = userInstance._user.bio;
+        this.state.userProfile.firstName = userInstance._user.firstName;
+        this.state.userProfile.lastName = userInstance._user.lastName;
+        this.state.userProfile.major = userInstance._user.major;
+        this.state.userProfile.year = userInstance._user.year;
     }
 
     /** Handle logging out and reset stack */
@@ -51,12 +55,17 @@ class Settings extends React.Component{
 
     /** Navigates to EditProfile form */
     onPressEditProfile() {
-        this.props.navigation.navigate("EditProfile");
+        this.props.navigation.navigate("EditProfileMainScreen");
     }
 
     /** Called on Settings screen being rendered */
     componentDidMount() {
         this.renderFileData();
+        this.eventListener = DeviceEventEmitter.addListener('eventKey',this.handleEvent);
+    }
+
+    handleEvent(profile) {
+        this.setState({userProfile: profile})
     }
 
     /*
@@ -70,9 +79,7 @@ class Settings extends React.Component{
             quality: 1,
         });
         if(!result.cancelled) {
-            console.log("In library")
             this.setState({image: result.uri});
-            console.log(this.state.image);
             this.uploadImage(result.uri, this.userID)
                 .then(() => {
                     console.log("Success")
@@ -142,24 +149,27 @@ class Settings extends React.Component{
                             <View style={styles.body}>
                                 <View style={styles.ImageSections}>
                                     <TouchableOpacity onPress={this.chooseImage} style={{
-                                        height: Constants.windowHeight * 0.35,
-                                        width: Constants.windowWidth * 0.4,
+                                        height: Constants.windowHeight * 0.29,
+                                        width: Constants.windowWidth * 0.55,
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         borderRadius: 3}}>
                                         {this.showImage()}
+                                        <View style ={styles.img_icon}>
+                                            <Image source ={require('../../assets/edit_bubble_icon.png')} style={styles.img_icon}/>
+                                        </View>
                                     </TouchableOpacity>
                                 </View>
                                 <View
                                     style={styles.textAlign}>
-                                    <Text style={{textAlign:'center',fontSize:30,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .02}} >
-                                        {(this.props.route.params.firstName || this.state.firstName) + " " + (this.props.route.params.lastName || this.state.lastName)}
+                                    <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .02}} >
+                                        {this.state.userProfile.firstName + " " +  this.state.userProfile.lastName}
                                     </Text>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
-                                        {(this.props.route.params.major || this.state.major) + " " + (this.props.route.params.year || this.state.year)}
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.055, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                        {this.state.userProfile.major + " " +  this.state.userProfile.year}
                                     </Text>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:20, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
-                                        {this.props.route.params.bio || this.state.bio}
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.055, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                        {this.state.userProfile.bio}
                                     </Text>
                                 </View>
                                 <View style={styles.btnParentSection}>
@@ -182,11 +192,6 @@ class Settings extends React.Component{
 
 const styles = StyleSheet.create({
 
-    afterPic: {
-        flex: 1,
-        paddingTop:20,
-        alignItems: 'center'
-    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -200,48 +205,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF'
     },
     img: {
-        height: 200,
-        width: 200,
+        height: Constants.windowHeight * 0.29,
+        width: Constants.windowWidth * 0.55,
         borderRadius: 100,
         backgroundColor: '#000'
     },
-
-    text: {
-        width: '100%',
-        margin: 10,
-        padding: 15,
-        fontSize: 16,
-        borderColor: '#d3d3d3',
-        borderBottomWidth: 1,
-        textAlign: 'left',
-        fontFamily: 'ProximaNova'
+    img_icon: {
+        height: Dimensions.get('screen').height * 0.05,
+        width: Dimensions.get('screen').width * 0.10,
+        left: Constants.windowWidth * 0.08,
+        top: Constants.windowHeight * -0.01,
+        backgroundColor: 'transparent'
     },
-
-    button: {
-        marginTop: 5,
-        marginBottom: 5,
-        paddingVertical: 15,
-        paddingBottom: 10,
-        alignItems: 'center',
-        backgroundColor: '#F6820D',
-        borderColor: '#F6820D',
-        borderWidth: 1,
-        borderRadius: 5,
-        width: 200,
-        textAlign: 'center',
-        fontFamily: 'ProximaNova',
-        fontSize: 15
-    },
-
-    image: {
-        alignSelf: 'center',
-        width: 100,
-        height: 100
-    },
-    scrollView: {
-        backgroundColor: '#F6820D',
-    },
-
     body: {
         backgroundColor: '#FFF',
         justifyContent: 'center',
@@ -256,13 +231,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 0,
         justifyContent: 'center',
-    },
-    images: {
-        width: 150,
-        height: 150,
-        borderColor: 'black',
-        borderWidth: 1,
-        marginHorizontal: 3
     },
     btnParentSection: {
         alignItems: 'center',
@@ -288,19 +256,18 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom:10
     },
-
     btnText: {
         textAlign: 'center',
         color: 'gray',
-        fontSize: 14,
+        fontSize: Constants.windowWidth*0.038,
         fontWeight:'bold',
         fontFamily: 'ProximaNova',
     },
     logoutbtnText: {
         textAlign: 'center',
-        color: '#B80808',
+        color: '#b80808',
         fontFamily: 'ProximaNova',
-        fontSize: 14,
+        fontSize: Constants.windowWidth*0.038,
         fontWeight:'bold'
     }
 })

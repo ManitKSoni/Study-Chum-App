@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
-import React from 'react'
-import { Dimensions, View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
+import React from 'react';
+import { Dimensions, View, TextInput, StyleSheet, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
 
 import Firebase from '../../config/Firebase'
 import userInstance from '../Singletons/UserSingleton'
@@ -94,15 +94,17 @@ class Login extends React.Component {
     }
 
     render() {
+
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 
                 <View style={styles.container}>
                     <View style={styles.imgContainer}>
                         <Image style={styles.studyChumsLogo} source={require('../../assets/study_chums_logo.png')} />
-                        <Image style={styles.studyChumsTextLogo} source={require('../../assets/logo_trimmed.png')} />
+                        <Image style={styles.studyChumsTextLogo} source={require('../../assets/study_chums_title.png')} />
                     </View>
 
+                    
                     <View style={styles.loginContainer}>
                         <TextInput
                             style={styles.inputBox}
@@ -116,6 +118,7 @@ class Login extends React.Component {
                             value={this.state.password}
                             onChangeText={password => this.setState({ password })}
                             placeholder='Password'
+                            autoCapitalize='none'
                             secureTextEntry={true}
                         />
                         <Text style={styles.textForgotPassword} onPress={this.onPressGoToForgotPassword}>
@@ -125,14 +128,9 @@ class Login extends React.Component {
                             <Text style={{ color: 'white', fontSize: 18 }}>Log In</Text>
                         </TouchableOpacity>
                     </View>
-
-
-
                     <Text style={styles.textSignUp} onPress={this.onPressGoToSignUp}>
                         Don't have an account? Sign up
                     </Text>
-
-
                 </View>
 
             </TouchableWithoutFeedback>
@@ -142,16 +140,13 @@ class Login extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff',
         alignItems: 'center',
         alignContent: 'flex-start',
         fontFamily: 'ProximaNova',
         height: '100%',
-        flex: 1,
-    },
-    ProximaNova: {
-        fontFamily: 'ProximaNova'
     },
     loginContainer: {
         backgroundColor: '#fff',
@@ -165,36 +160,30 @@ const styles = StyleSheet.create({
         paddingTop: Constants.windowHeight / 15,
         flexDirection: 'column',
         resizeMode: 'contain',
-        alignItems: 'center'
+        alignItems: 'center',
     },
-
     studyChumsLogo: {
         resizeMode: 'contain',
-        width: Constants.windowWidth,//windowWidth,
+        width: Constants.windowWidth,
         height: logoHeight * logoRatio,
         maxHeight: Constants.windowHeight / 5,
         overflow: 'hidden',
         justifyContent: 'space-around',
-        transform: [{rotate: `331deg`}], //331 normal
     },
     studyChumsTextLogo: {
-        maxWidth: (9 * Constants.windowWidth / 10),
-        maxHeight: Constants.windowHeight / 7,
-        justifyContent: 'center',
+        maxWidth: Constants.windowWidth,
+        maxHeight: Constants.windowHeight/10,
         resizeMode: 'contain',
     },
     inputBox: {
+        fontFamily: 'DroidSansMono',
         width: '85%',
         margin: 5,
-        padding: 15,
-        fontSize: 16,
+        padding: 10,
+        fontSize: 15,
         borderColor: Constants.boxGrey,
         textAlign: 'left',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderBottomWidth: 1,
-        borderTopWidth: 1,
-        fontFamily: 'ProximaNova'
+        borderWidth: 1,
     },
     buttonLogin: {
         marginTop: Constants.windowHeight*.02,
