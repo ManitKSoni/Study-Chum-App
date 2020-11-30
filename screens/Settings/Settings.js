@@ -1,4 +1,4 @@
-import React, { Fragment, Component }  from 'react';
+import React, { Fragment, Component}  from 'react';
 import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
