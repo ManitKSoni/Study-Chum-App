@@ -15,6 +15,11 @@ class SavedData {
         this.profile = preferences; 
     }
 
+    /**
+     * Renders the pressed users profile from ShowMatches.js
+     * @param uid - the uid of the pressed user
+     * @param goToUserProfile - callback to go to UserProfile.js
+     */
     async renderProfile(uid, goToUserProfile) {
         const db = Firebase.firestore(); 
         const usersRef = db.collection("users").doc(uid);
