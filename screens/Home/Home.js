@@ -232,7 +232,17 @@ class Home extends React.Component {
     // modifies the visibility of the add event pop-up
     setModalVisible = (visible) => {
         this.setState({ show: visible});
-        this.clearInput();
+        if (visible == false) {
+            this.setState({
+                descBack: "#ececec",
+                monthBack: "#ececec",
+                dayBack: "#ececec",
+                yearBack: "#ececec",
+                hourBack: "#ececec",
+                minBack: "#ececec",
+                timeOfDayBack: "#ececec",
+            });
+        }
     }
 
     checkFields() {
@@ -412,13 +422,11 @@ class Home extends React.Component {
                 //console.log(this.state.items);
                 this.setState({year: ''})
             }
-            Alert.alert("Event Added")
-            this.clearInput
         }
         else {
             Alert.alert("Invalid date/time entry");
         }
-        //this.clearInput();
+        this.clearInput();
         this.forceUpdate();
     }
 
@@ -427,15 +435,10 @@ class Home extends React.Component {
             day: '',
             month: '',
             year: '',
-            time: '',
+            hour: '',
+            minute: '',
+            timeOfDay: '',
             name: '',
-            descBack: "#ececec",
-            monthBack: "#ececec",
-            dayBack: "#ececec",
-            yearBack: "#ececec",
-            hourBack: "#ececec",
-            minBack: "#ececec",
-            timeOfDayBack: "#ececec",
         });
     }
 
