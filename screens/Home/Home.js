@@ -1,6 +1,6 @@
  
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text, Button, Alert, Modal, TextInput } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text, Button, Alert, Modal, TextInput, Platform } from 'react-native';
 import * as Constants from '../../Constants.js';
 import {Agenda} from 'react-native-calendars';
 import Firebase from '../../config/Firebase';
@@ -21,23 +21,29 @@ class Home extends React.Component {
                 })
             }
         );
-        this.state = {
-            img: <Image style={{
-                width: Constants.windowHeight * .40,
-                height: Constants.windowHeight * .17,
-                resizeMode: 'contain'
-            }} source={require('../../assets/study_chums_title.png')} ></Image>,
-            items: {},
-            // tells wether the add event pop-up is shown
-            show: false,
-            // event creation input
-            month: '',
-            day: '',
-            year: '',
-            name: '',
-            time: '',
-        };
+        
+        this.fetchUserDetails();
     }
+
+    state = {
+        img: <Image style={{
+            width: Constants.windowHeight * .40,
+            height: Constants.windowHeight * .17,
+            resizeMode: 'contain'
+        }} source={require('../../assets/study_chums_title.png')} ></Image>,
+        items: {},
+        // tells wether the add event pop-up is shown
+        show: false,
+        // event creation input
+        month: '',
+        day: '',
+        year: '',
+        name: '',
+        hour: '',
+        minute: '',
+        timeOfDay: '',
+        time: '',
+    };
 
     /** Called on Settings screen being rendered */
     componentDidMount() {
@@ -80,58 +86,99 @@ class Home extends React.Component {
                         >
                             <View style = {styles.centeredView}>
                                 <View style={styles.modalView}>
-                                    <Text style={{paddingBottom: 10}}>
-                                        Event Description
-                                    </Text>
-                                    <TextInput 
-                                        style={{height: 20}}
-                                        placeholder="Type an event description"
-                                        onChangeText={name => this.setState({ name })}
-                                    />
+                                    <View style={{paddingBottom: Constants.windowHeight * 0.012}}>
+                                        <Text style={{paddingBottom: 10, textAlign:'center'}}>
+                                            Event Description
+                                        </Text>
+                                        <TextInput 
+                                            style={{height: 20, width: Constants.windowWidth * 0.55, textAlign:'center', borderRadius: 5}}
+                                            placeholder="Type an event description"
+                                            placeholderTextColor='#8a8a8a'
+                                            backgroundColor="#ececec"
+                                            onChangeText={name => this.setState({ name })}
+                                        />
+                                    </View>
                                     <View style={styles.dateSelection} >
-                                        <Text style={{paddingRight:40}}>
+                                        <Text style={{paddingRight:Constants.windowWidth * 0.1}}>
                                             Month:
                                         </Text>
                                         <TextInput  
-                                        style={{height: 20,}}
+                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center'}}
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="MM"
+                                        placeholderTextColor='#8a8a8a'
+                                        backgroundColor="#ececec"
                                         onChangeText={month => this.setState({ month })}
                                         />
                                     </View>
                                     <View style={styles.dateSelection}>
-                                        <Text style={{paddingRight:40}}>
+                                        <Text style={{paddingRight:Constants.windowWidth * 0.14, fontSize: Constants.windowHeight * 0.017}}>
                                             Day: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: 20,}}
+                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="DD"
+                                        placeholderTextColor='#8a8a8a'
+                                        backgroundColor="#ececec"
                                         onChangeText={day => this.setState({ day })}
                                         />
                                     </View>
                                     <View style={styles.dateSelection}>
-                                        <Text style={{paddingRight:40}}>
+                                        <Text style={{paddingRight:Constants.windowWidth * 0.13, fontSize: Constants.windowHeight * 0.017}}>
                                             Year: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: 20,}}
+                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         keyboardType = 'numeric'
                                         maxLength = {4}
                                         placeholder="YYYY"
+                                        placeholderTextColor='#8a8a8a'
+                                        backgroundColor="#ececec"
                                         onChangeText={year => this.setState({ year })}
                                         />
                                     </View>
                                     <View style={styles.dateSelection}>
-                                        <Text style={{paddingRight:40}}>
-                                            Time: 
+                                        <Text style={{paddingRight:Constants.windowWidth * 0.13, fontSize: Constants.windowHeight * 0.017}}>
+                                            Hour: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: 20,}}
-                                        placeholder="00:00"
-                                        onChangeText={time => this.setState({ time })}
+                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        keyboardType = 'numeric'
+                                        maxLength = {2}
+                                        placeholder="hh"
+                                        placeholderTextColor='#8a8a8a'
+                                        backgroundColor="#ececec"
+                                        onChangeText={hour => this.setState({ hour })}
+                                        />
+                                    </View>
+                                    <View style={styles.dateSelection}>
+                                        <Text style={{paddingRight:Constants.windowWidth * 0.1, fontSize: Constants.windowHeight * 0.017}}>
+                                            Minute: 
+                                        </Text>
+                                        <TextInput 
+                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        keyboardType = 'numeric'
+                                        maxLength = {2}
+                                        placeholder="mm"
+                                        placeholderTextColor='#8a8a8a'
+                                        backgroundColor="#ececec"
+                                        onChangeText={minute => this.setState({ minute })}
+                                        />
+                                    </View>
+                                    <View style={styles.dateSelection}>
+                                        <Text style={{paddingRight:Constants.windowWidth * 0.02, fontSize: Constants.windowHeight * 0.017}}>
+                                            Time of Day: 
+                                        </Text>
+                                        <TextInput 
+                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        maxLength = {2}
+                                        placeholder="AM/PM"
+                                        placeholderTextColor='#8a8a8a'
+                                        backgroundColor="#ececec"
+                                        onChangeText={timeOfDay => this.setState({ timeOfDay })}
                                         />
                                     </View>
                                     <View style={{flexDirection:"row", paddingTop: Constants.windowWidth * 0.02}}>
@@ -151,8 +198,9 @@ class Home extends React.Component {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
+                                {Platform.OS === 'ios' &&
+                                <KeyboardSpacer/>}
                             </View>
-                            <KeyboardSpacer/>
                         </Modal>
                         <View style={{paddingTop:Constants.windowHeight * 0.02}}>
                             <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF",}}
@@ -187,16 +235,58 @@ class Home extends React.Component {
         var yearCheck = (this.state.year >= 0 && this.state.month != '');
         var hours = this.state.time.substring(0,2);
         var mins = this.state.time.substring(3,5);
-        var hoursCheck = (hours <= 23 && hours >= 0  
-            && this.state.time != '');
-        var minsCheck = (mins <= 59 && mins >= 0);
+        var hoursCheck = (this.state.hour <= 12 && this.state.hour >= 1  
+            && this.state.hour != '');
+        var minsCheck = (this.state.minute <= 59 && this.state.minute >= 0
+            && this.state.minute != '');
+        var timeOfDayCheck = (this.state.timeOfDay == "AM" || 
+        this.state.timeOfDay == "PM");
         return (nameCheck && monthCheck && dayCheck && yearCheck 
-            && hoursCheck && minsCheck);
+            && hoursCheck && minsCheck && timeOfDayCheck);
+    }
+
+    formatTime() {
+        var time = this.state.hour + ":" + this.state.minute + " " + this.state.timeOfDay;
+        this.setState({time: time});
+    }
+
+    timeToInt(time) {
+        console.log(time);
+        var timeVal = time.substring(0,2) + time.substring(3,5);
+        console.log("timeVal: ", timeVal);
+        //timeVal = parseInt(timeVal);
+        var timeOfDay = time.substring(6,8);
+        if (timeOfDay == 'PM') {
+            timeVal = timeVal + '1200'
+        }
+        console.log(timeVal);
+        return timeVal;
+    }
+
+    sortTime(a, b) {
+        console.log("Atime:", a.time);
+        console.log("Btime:", b.time);
+        var aTime = a.time;
+        var aTimeVal = aTime.substring(0,2) + aTime.substring(3,5);
+        var aTimeOfDay = aTime.substring(6,8);
+        if (aTimeOfDay == 'PM') {
+            aTimeVal = aTimeVal + '1200'
+        }
+        var bTime = b.time;
+        var bTimeVal = bTime.substring(0,2) + bTime.substring(3,5);
+        var bTimeOfDay = bTime.substring(6,8);
+        if (bTimeOfDay == 'PM') {
+            bTimeVal = bTimeVal + '1200'
+        }
+        //var aVal = this.timeToInt(aTime);
+        //var bVal = this.timeToInt(bTime);
+        return aTimeVal - bTimeVal;
     }
 
     // handles the addition of events
     onPressAdd = async () => {
         if (this.checkFields()) {
+            this.formatTime();
             var date = this.state.year + '-' + this.state.month + '-' + this.state.day;
             this.setModalVisible(false);
             var userID = Firebase.auth().currentUser.uid;
@@ -204,7 +294,8 @@ class Home extends React.Component {
             var docDetails = await doc.get()
             if (docDetails.exists) {
                 var eventMap = docDetails.get("events");
-                console.log(eventMap);
+                //console.log(eventMap);
+                //var eventMap = this.state.items;
                 var eventDate = eventMap[date];
                 var key = "events." + date;
                 // if the date already exists in the map
@@ -215,8 +306,7 @@ class Home extends React.Component {
                     dayArr.push(dateMap);
                     doc.update({[key]: dayArr});
                     console.log("map updated");
-                    this.setState({items: eventMap})
-                    console.log()
+                    //this.setState({items: eventMap})
                 }
                 // the date does not exist in the map
                 else {
@@ -224,19 +314,23 @@ class Home extends React.Component {
                     var dayArr = eventDate;
                     var dateMap = {name: this.state.name, time: this.state.time};
                     dayArr.push(dateMap);
+                    dayArr.sort(this.sortTime);
                     doc.update({[key]: dayArr});
                     console.log("map updated");
-                    this.setState({items: eventMap})
+                    this.state.items[date] = dateMap;
+                    //this.setState({items: eventMap})
                 }
                 this.setState({items: eventMap})
+                //console.log(this.state.items);
+                this.setState({year: ''})
             }
             Alert.alert("Event Added")
         }
         else {
             Alert.alert("inncorrect date/time entry \ncheck that it is of the form:\nMM/DD/YYY HH:MM")
         }
-        this.clearInput
-        
+        this.clearInput();
+        this.forceUpdate();
     }
 
     clearInput() {
@@ -286,8 +380,9 @@ class Home extends React.Component {
 
     // loads the day items to be displayed on the agenda 
     loadItems(day) {
+        //console.log("THIS IS DAY -------------\n", day)
         setTimeout(() => {
-          for (let i = -15; i < 60; i++) {
+          for (let i = -15; i < 85; i++) {
             const time = day.timestamp + i * 24 * 60 * 60 * 1000;
             const strTime = this.timeToString(time);
             if (!this.state.items[strTime]) {
@@ -341,15 +436,15 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: Constants.windowHeight * 0.01
     },
     modalView: {
-        margin: 20,
+        margin: Constants.windowHeight * 0.2,
         width: Constants.windowWidth * 0.7,
-        height: Constants.windowHeight * 0.4,
+        height: Constants.windowHeight * 0.52,
         backgroundColor: "white",
         borderRadius: 20,
-        padding: 35,
+        padding: Constants.windowHeight * 0.026,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -370,7 +465,8 @@ const styles = StyleSheet.create({
         flexDirection:"row", 
         justifyContent: "flex-start", 
         alignItems: "flex-start",
-        padding: 10
+        padding: Constants.windowHeight * 0.015,
+        fontSize: Constants.windowHeight * 0.01
     },
     addAnEvent: {
         textAlign:'center',
