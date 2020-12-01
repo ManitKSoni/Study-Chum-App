@@ -97,7 +97,9 @@ export default class MatchesNavigator extends React.Component {
           <Stack.Screen name="UserProfile" component={UserProfile} 
             options={{headerShown:null}}/>
 
-          <Stack.Screen name="ChatChannel" component={Channel} />
+          <Stack.Screen name="ChatChannel" component={Channel} options={{
+            headerStyle: {backgroundColor: Constants.secondaryColor}
+          }} />
 
           <Stack.Screen name="EditPreferences" component={EditPreferences} 
               options={({ route }) => ({ 

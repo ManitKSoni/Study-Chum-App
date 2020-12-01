@@ -72,7 +72,11 @@ class ChatDataModel {
             console.log("channel created")
             this.createChannel(otherUserID, otherUserName, completion)
         } else {
-            completion(snapshot.docs[0].id)
+            let userData = snapshot.docs[0].data()
+            userData['channelID'] = snapshot.docs[0].id
+            userData['userImage'] = await this.getImage(otherUserID)
+            userData['otherUserID'] = otherUserID
+            completion(userData)
         }
     }
 
@@ -105,6 +109,7 @@ class ChatDataModel {
         userData['channelID'] = docRef.id
         userData['userImage'] = await this.getImage(otherUserID)
         userData['otherUserID'] = otherUserID
+        completion(userData)
     }
 
     /**
