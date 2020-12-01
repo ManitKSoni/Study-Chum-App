@@ -243,6 +243,9 @@ class Home extends React.Component {
                 timeOfDayBack: "#ececec",
             });
         }
+        else {
+            this.clearInput();
+        }
     }
 
     checkFields() {
