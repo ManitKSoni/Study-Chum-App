@@ -43,6 +43,14 @@ class Home extends React.Component {
         minute: '',
         timeOfDay: '',
         time: '',
+        // backround of event text input
+        descBack: "#ececec",
+        monthBack: "#ececec",
+        dayBack: "#ececec",
+        yearBack: "#ececec",
+        hourBack: "#ececec",
+        minBack: "#ececec",
+        timeOfDayBack: "#ececec",
     };
 
     /** Called on Settings screen being rendered */
@@ -64,7 +72,7 @@ class Home extends React.Component {
                             loadItemsForMonth={this.loadItems.bind(this)}
                             renderItem={this.renderItem.bind(this)}
                             rowHasChanged={this.rowHasChanged.bind(this)} 
-                            selected={ this.getTodaysDate }
+                            selected={ this.getTodaysDate.bind(this) }
                             theme={{
                             calendarBackground: '#ffffff',
                             selectedDayBackgroundColor: '#8075FF',
@@ -94,7 +102,7 @@ class Home extends React.Component {
                                             style={{height: 20, width: Constants.windowWidth * 0.55, textAlign:'center', borderRadius: 5}}
                                             placeholder="Type an event description"
                                             placeholderTextColor='#8a8a8a'
-                                            backgroundColor="#ececec"
+                                            backgroundColor={this.state.descBack}
                                             onChangeText={name => this.setState({ name })}
                                         />
                                     </View>
@@ -108,7 +116,7 @@ class Home extends React.Component {
                                         maxLength = {2}
                                         placeholder="MM"
                                         placeholderTextColor='#8a8a8a'
-                                        backgroundColor="#ececec"
+                                        backgroundColor={this.state.monthBack}
                                         onChangeText={month => this.setState({ month })}
                                         />
                                     </View>
@@ -122,7 +130,7 @@ class Home extends React.Component {
                                         maxLength = {2}
                                         placeholder="DD"
                                         placeholderTextColor='#8a8a8a'
-                                        backgroundColor="#ececec"
+                                        backgroundColor={this.state.dayBack}
                                         onChangeText={day => this.setState({ day })}
                                         />
                                     </View>
@@ -136,7 +144,7 @@ class Home extends React.Component {
                                         maxLength = {4}
                                         placeholder="YYYY"
                                         placeholderTextColor='#8a8a8a'
-                                        backgroundColor="#ececec"
+                                        backgroundColor={this.state.yearBack}
                                         onChangeText={year => this.setState({ year })}
                                         />
                                     </View>
@@ -150,7 +158,7 @@ class Home extends React.Component {
                                         maxLength = {2}
                                         placeholder="hh"
                                         placeholderTextColor='#8a8a8a'
-                                        backgroundColor="#ececec"
+                                        backgroundColor={this.state.hourBack}
                                         onChangeText={hour => this.setState({ hour })}
                                         />
                                     </View>
@@ -164,7 +172,7 @@ class Home extends React.Component {
                                         maxLength = {2}
                                         placeholder="mm"
                                         placeholderTextColor='#8a8a8a'
-                                        backgroundColor="#ececec"
+                                        backgroundColor={this.state.minBack}
                                         onChangeText={minute => this.setState({ minute })}
                                         />
                                     </View>
@@ -177,7 +185,7 @@ class Home extends React.Component {
                                         maxLength = {2}
                                         placeholder="AM/PM"
                                         placeholderTextColor='#8a8a8a'
-                                        backgroundColor="#ececec"
+                                        backgroundColor={this.state.timeOfDayBack}
                                         onChangeText={timeOfDay => this.setState({ timeOfDay })}
                                         />
                                     </View>
@@ -224,25 +232,107 @@ class Home extends React.Component {
     // modifies the visibility of the add event pop-up
     setModalVisible = (visible) => {
         this.setState({ show: visible});
+        this.clearInput();
     }
 
     checkFields() {
-        var nameCheck = (this.state.name != '');
-        var monthCheck = (this.state.month <= 12 && this.state.month >= 1 
-            && this.state.month != '');
-        var dayCheck = (this.state.day <= 31 && this.state.day >= 1 
-            && this.state.day != '');
-        var yearCheck = (this.state.year >= 0 && this.state.month != '');
-        var hours = this.state.time.substring(0,2);
-        var mins = this.state.time.substring(3,5);
-        var hoursCheck = (this.state.hour <= 12 && this.state.hour >= 1  
-            && this.state.hour != '');
-        var minsCheck = (this.state.minute <= 59 && this.state.minute >= 0
-            && this.state.minute != '');
-        var timeOfDayCheck = (this.state.timeOfDay == "AM" || 
-        this.state.timeOfDay == "PM");
+        var nameCheck = this.checkName();
+        var monthCheck = this.checkMonth();
+        var dayCheck = this.checkDay();
+        var yearCheck = this.checkYear();
+        var hoursCheck = this.checkHour();
+        var minsCheck = this.checkMin();
+        var timeOfDayCheck = this.checkTimeOfDay();
         return (nameCheck && monthCheck && dayCheck && yearCheck 
             && hoursCheck && minsCheck && timeOfDayCheck);
+    }
+
+    checkName() {
+        var nameCheck = (this.state.name != '');
+        if (!nameCheck) {
+            this.setState({descBack: "#FFCCCB"})
+        }
+        else {
+            this.setState({descBack: "#ececec"})
+        }
+        return nameCheck;
+    }
+
+    checkMonth() {
+        var month = this.state.month;
+        var monthCheck = (month <= 12 && month >= 1 
+            && month.length == 2);
+        if (!monthCheck) {
+            this.setState({monthBack: "#FFCCCB"})
+        }
+        else {
+            this.setState({monthBack: "#ececec"})
+        }
+        return monthCheck;
+    }
+
+    checkDay() {
+        var day = this.state.day;
+        var dayCheck = (day <= 31 && day >= 1 
+            && day.length == 2);
+        if (!dayCheck) {
+            this.setState({dayBack: "#FFCCCB"})
+        }
+        else {
+            this.setState({dayBack: "#ececec"})
+        }
+        return dayCheck;
+    }
+
+    checkYear() {
+        var year = this.state.year;
+        var yearCheck = (year >= 0 && year.length === 4);
+        if (!yearCheck) {
+            this.setState({yearBack: "#FFCCCB"})
+        }
+        else {
+            this.setState({yearBack: "#ececec"})
+        }
+        return yearCheck;
+    }
+
+    checkHour() {
+        var hour = this.state.hour;
+        var hourCheck = (hour <= 12 && hour >= 1  
+            && hour.length) == 2;
+        if (!hourCheck) {
+            this.setState({hourBack: "#FFCCCB"})
+        }
+        else {
+            this.setState({hourBack: "#ececec"})
+        }
+        return hourCheck;
+    }
+
+    checkMin() {
+        var min = this.state.minute;
+        var minCheck = (min <= 59 && min >= 0
+            && min.length == 2);
+        if (!minCheck) {
+            this.setState({minBack: "#FFCCCB"})
+        }
+        else {
+            this.setState({minBack: "#ececec"})
+        }
+        return minCheck;
+    }
+
+    checkTimeOfDay() {
+        var min = this.state.timeOfDay;
+        var timeOfDayCheck = (this.state.timeOfDay == "AM" || 
+        this.state.timeOfDay == "PM");
+        if (!timeOfDayCheck) {
+            this.setState({timeOfDayBack: "#FFCCCB"})
+        }
+        else {
+            this.setState({timeOfDayBack: "#ececec"})
+        }
+        return timeOfDayCheck;
     }
 
     formatTime() {
@@ -264,8 +354,6 @@ class Home extends React.Component {
     }
 
     sortTime(a, b) {
-        console.log("Atime:", a.time);
-        console.log("Btime:", b.time);
         var aTime = a.time;
         var aTimeVal = aTime.substring(0,2) + aTime.substring(3,5);
         var aTimeOfDay = aTime.substring(6,8);
@@ -325,11 +413,12 @@ class Home extends React.Component {
                 this.setState({year: ''})
             }
             Alert.alert("Event Added")
+            this.clearInput
         }
         else {
-            Alert.alert("inncorrect date/time entry \ncheck that it is of the form:\nMM/DD/YYY HH:MM")
+            Alert.alert("Invalid date/time entry");
         }
-        this.clearInput();
+        //this.clearInput();
         this.forceUpdate();
     }
 
@@ -339,7 +428,14 @@ class Home extends React.Component {
             month: '',
             year: '',
             time: '',
-            name: ''
+            name: '',
+            descBack: "#ececec",
+            monthBack: "#ececec",
+            dayBack: "#ececec",
+            yearBack: "#ececec",
+            hourBack: "#ececec",
+            minBack: "#ececec",
+            timeOfDayBack: "#ececec",
         });
     }
 
@@ -370,17 +466,21 @@ class Home extends React.Component {
     }
 
     // returns the current date in yyyy-mm-dd format
-    getTodaysDate = () => {
+    getTodaysDate()  {
         var year = new Date().getFullYear();
         var month = new Date().getMonth() + 1;
         var day = new Date().getDate();
-        var formattedDate = year + "-" + month + "-" + day;
-        return (formattedDate);
+        if (day.length == 1) {
+            day = "0 " + day;
+        }
+        var formattedDate = year + '-' + month + "-" + day;
+        console.log(formattedDate);
+        this.setState({today: formattedDate});
+        return (formattedDate.toString);
     }
 
     // loads the day items to be displayed on the agenda 
     loadItems(day) {
-        //console.log("THIS IS DAY -------------\n", day)
         setTimeout(() => {
           for (let i = -15; i < 85; i++) {
             const time = day.timestamp + i * 24 * 60 * 60 * 1000;
