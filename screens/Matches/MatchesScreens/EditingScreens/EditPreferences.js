@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         fontSize: Constants.windowHeight * 0.035,
-        color: 'grey',
+        color: 'red',
         margin: 5,
         fontFamily: "ProximaNova"
     },
@@ -140,9 +140,9 @@ const styles = StyleSheet.create({
     },
     borderDelete: {
         borderBottomWidth: 1,
-        borderBottomColor: 'gray',
+        borderBottomColor: 'red',
         borderTopWidth: 1,
-        borderTopColor: 'gray',
+        borderTopColor: 'red',
         margin: 6,
     },
     modalView: {
