@@ -23,7 +23,9 @@ export default class ChatNavigator extends React.Component {
                     headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
                     fontSize:Constants.headerFontSize},
                  }}/>
-                <Stack.Screen name="Channel" component={Channel} />
+                <Stack.Screen name="Channel" component={Channel} options={{
+                    headerStyle: {backgroundColor: Constants.secondaryColor}
+                 }}/>
                 <Stack.Screen name="UserProfile" component={UserProfile} />
             </Stack.Navigator>
         )

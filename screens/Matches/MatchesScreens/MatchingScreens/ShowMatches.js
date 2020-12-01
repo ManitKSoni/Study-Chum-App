@@ -55,9 +55,9 @@ class ShowMatches extends React.Component {
      * Go to pressed user's profile
      * @param uid - The pressed users UID to retrieve their info in SavedData 
      */
-    onPressGoToUserProfile = (uid) => {
+    onPressGoToUserProfile = (uid, uri) => {
         SavedData.renderProfile(uid, () => 
-            this.props.navigation.navigate("UserProfile", {userID: uid}));
+            this.props.navigation.navigate("UserProfile", {userID: uid, URI: uri}));
         console.log(uid)
     }
 
@@ -88,7 +88,7 @@ class ShowMatches extends React.Component {
                 endorsements = {item.endorsements}
                 URI = {item.uri} 
                 tally = {item.tally}
-                onPress = {() => this.onPressGoToUserProfile(item.userID, item.preferences)}
+                onPress = {() => this.onPressGoToUserProfile(item.userID, item.uri)}
             />
         );
         

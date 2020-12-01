@@ -1,5 +1,6 @@
 import React from 'react'
 import {Image, View, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import * as Constants from '../../Constants.js'
 
 export default class ThreadHeaderView extends React.Component {
 
@@ -24,6 +25,7 @@ const styles = StyleSheet.create({
     headerView: {
         flex: 1,
         flexDirection: 'row',
+        backgroundColor: Constants.secondaryColor
     },
     profileImg: {
         width: 35,
@@ -33,7 +35,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     headerName: {
-        
+        paddingLeft: 10,
+        fontSize: 24,
+        color: 'white'
     }
 })
 

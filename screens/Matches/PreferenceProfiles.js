@@ -26,6 +26,7 @@ export class PreferenceProfiles {
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
         this.addLanguagePreference(); 
+        this.addTimezonePreference();
         var preferenceProfile = this.createPreferenceProifle(this.preferences); 
 
         console.log("Adding...")
@@ -83,11 +84,18 @@ export class PreferenceProfiles {
         return preferenceProfle; 
     }
 
-    /** *
+    /** 
     * Adds language to preference profile from singleton
     */ 
     addLanguagePreference() {
         this.preferences.language = userInstance._user.language; 
+    }
+
+    /**
+     * Adds timezone to preference profile from singleton
+     */
+    addTimezonePreference() {
+        this.preferences.timezone = userInstance._user.timezone; 
     }
 
     /**

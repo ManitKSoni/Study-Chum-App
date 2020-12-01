@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, ScrollView, Text, KeyboardAvoidingView, Platform, StyleSheet, Keyboard } from 'react-native'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { View, ScrollView, Text, KeyboardAvoidingView, Platform, StyleSheet, Keyboard, SafeAreaView, Image } from 'react-native'
+import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import Firebase from '../../config/Firebase'
 import ThreadModel from './ThreadModel'
 import userInstance from '../Singletons/UserSingleton'
@@ -9,7 +9,6 @@ import ThreadHeaderView from './ThreadHeaderView';
 
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import * as Constants from '../../Constants.js'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 class Channel extends React.Component {
@@ -70,21 +69,46 @@ class Channel extends React.Component {
 
   onSend(messages = []) {
     this.threadModel.sendMessage(messages[0])
+  } 
+
+  renderBubble(props) {
+    return (
+      <Bubble
+        {...props}
+        textStyle={{
+          right: {
+            color: 'white',
+          },
+          left: {
+            color: 'black',
+          }
+        }}
+        wrapperStyle={{
+          right: {
+            backgroundColor: Constants.primaryColor
+          },
+          left: {
+            backgroundColor: '#e5e5ea',
+          },
+        }}
+      />
+    );
   }
 
   render() {
     const { userData, uid } = this.props.route.params;
     return (
       <View style={styles.container}>
-        <GiftedChat
-          isAnimated
-          messages={this.state.messages}
-          onSend={message => this.onSend(message)}
-          user={{
-            _id: uid,
-            name: userInstance._user.firstName
-          }}
-        />
+          <GiftedChat
+            isAnimated
+            messages={this.state.messages}
+            renderBubble={this.renderBubble}
+            onSend={message => this.onSend(message)}
+            user={{
+              _id: uid,
+              name: userInstance._user.firstName
+            }}
+          />
       </View>
     );
   }
@@ -93,6 +117,14 @@ class Channel extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
+  },
+  profileImg: {
+    width: 35,
+    height: 35,
+    borderRadius: 40,
+    borderColor: 'gray',
+    borderWidth: 2,
   },
 })
 

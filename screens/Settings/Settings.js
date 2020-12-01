@@ -1,4 +1,4 @@
-import React,{ Fragment }  from 'react';
+import React, { Fragment, Component}  from 'react';
 import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
@@ -8,7 +8,8 @@ import * as ImagePicker from "expo-image-picker";
 import * as Constants from '../../Constants.js'
 import userInstance from "../Singletons/UserSingleton";
 
-
+//ensures size is proportional across devices
+var imDiam = Math.sqrt(Math.pow(Constants.windowHeight, 2) + Math.pow(Constants.windowWidth, 2)) / 4;
 class Settings extends React.Component{
 
     db = Firebase.firestore();
@@ -149,25 +150,31 @@ class Settings extends React.Component{
                             <View style={styles.body}>
                                 <View style={styles.ImageSections}>
                                     <TouchableOpacity onPress={this.chooseImage} style={{
-                                        height: Constants.windowHeight * 0.29,
-                                        width: Constants.windowWidth * 0.55,
+                                        height: imDiam, //Constants.windowHeight * 0.29,
+                                        width: imDiam, //Constants.windowWidth * 0.55,
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        borderRadius: 3}}>
+                                        borderRadius: imDiam / 2/*3*/}}>
                                         {this.showImage()}
+                                        <View style ={styles.img_icon}>
+                                            <Image source ={require('../../assets/edit_bubble_icon.png')} style={styles.img_icon}/>
+                                        </View>
                                     </TouchableOpacity>
                                 </View>
                                 <View
                                     style={styles.textAlign}>
-                                    <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .03, paddingTop:Constants.windowHeight * .02}} >
+                                    <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .010, paddingTop:Constants.windowHeight * .005}} >
                                         {this.state.userProfile.firstName + " " +  this.state.userProfile.lastName}
                                     </Text>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.055, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                    <View style={styles.border}/>
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
                                         {this.state.userProfile.major + " " +  this.state.userProfile.year}
                                     </Text>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.055, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035}} >
+                                    <View style={styles.border}/>
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
                                         {this.state.userProfile.bio}
                                     </Text>
+                                    <View style={styles.border}/>
                                 </View>
                                 <View style={styles.btnParentSection}>
                                     <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
@@ -202,16 +209,27 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF'
     },
     img: {
-        height: Constants.windowHeight * 0.29,
-        width: Constants.windowWidth * 0.55,
-        borderRadius: 100,
+        height: imDiam, //Constants.windowHeight * 0.29,
+        width: imDiam, //Constants.windowWidth * 0.55,
+        borderRadius: imDiam / 2,
         backgroundColor: '#000'
+    },
+    img_icon: {
+        height: Dimensions.get('screen').height * 0.05,
+        width: Dimensions.get('screen').width * 0.10,
+        left: Constants.windowWidth * 0.08,
+        top: Constants.windowHeight * -0.01,
+        backgroundColor: 'transparent'
+    },
+    border: {
+        borderBottomColor: '#AAAAAA',
+        borderBottomWidth: 1,
+        marginLeft: Constants.windowWidth * .035,
+        marginRight: Constants.windowWidth * .035,
     },
     body: {
         backgroundColor: '#FFF',
         justifyContent: 'center',
-        borderColor: 'black',
-        borderWidth: 1,
         height: Dimensions.get('screen').height - 20,
         width: Dimensions.get('screen').width
     },

@@ -27,7 +27,8 @@ class EditProfile extends React.Component {
         major: '',
         year: '',
         bio: '',
-    } 
+        courses: [],
+    }
 
     constructor(props) {
         super(props);
@@ -39,6 +40,7 @@ class EditProfile extends React.Component {
         this.state.lastName = userInstance._user.lastName;
         this.state.major = userInstance._user.major;
         this.state.year = userInstance._user.year;
+        this.state.courses = userInstance._user.courses;
     }
 
     /** Updates user data in firestore and navigates to EditProfile form */
@@ -51,6 +53,7 @@ class EditProfile extends React.Component {
             major: this.state.major,
             year: this.state.year,
             bio: this.state.bio,
+            
         });
         // updating user Singleton
         userInstance._user.firstName = this.state.firstName;
@@ -58,6 +61,18 @@ class EditProfile extends React.Component {
         userInstance._user.major = this.state.major;
         userInstance._user.year = this.state.year;
         userInstance._user.bio = this.state.bio;
+        
+        // updated bio and name on matches
+        for (let userCourse of this.state.courses){
+            var keyBio = 'students.'+ userID+'.bio';
+            var keyName = 'students.'+ userID+'.name';
+            this.db.collection('courses').doc(userCourse).update({
+                [keyBio]: this.state.bio,
+                [keyName]: this.state.firstName+ ' '+ this.state.lastName,
+            })
+        }
+    
+
 
         this.props.navigation.navigate("Settings", {
             firstName: this.state.firstName,
