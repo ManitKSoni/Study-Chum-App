@@ -44,13 +44,13 @@ class Home extends React.Component {
         timeOfDay: '',
         time: '',
         // backround of event text input
-        descBack: "#ececec",
-        monthBack: "#ececec",
-        dayBack: "#ececec",
-        yearBack: "#ececec",
-        hourBack: "#ececec",
-        minBack: "#ececec",
-        timeOfDayBack: "#ececec",
+        descBack: Constants.calendarInputBox,
+        monthBack: Constants.calendarInputBox,
+        dayBack: Constants.calendarInputBox,
+        yearBack: Constants.calendarInputBox,
+        hourBack: Constants.calendarInputBox,
+        minBack: Constants.calendarInputBox,
+        timeOfDayBack: Constants.calendarInputBox,
     };
 
     /** Called on Settings screen being rendered */
@@ -80,13 +80,13 @@ class Home extends React.Component {
                             }} source={require('../../assets/drop_down_arrow.png')} ></Image>)}}
                             theme={{
                             calendarBackground: '#ffffff',
-                            selectedDayBackgroundColor: '#8075FF',
+                            selectedDayBackgroundColor: Constants.secondaryColor,
                             selectedDayTextColor: '#FFFFFF',
-                            todayTextColor: '#8075FF',
-                            dotColor: '#8075FF',
+                            todayTextColor: Constants.secondaryColor,
+                            dotColor: Constants.secondaryColor,
                             agendaKnobColor: '#000000',
-                            monthTextColor: '#8075FF',
-                            agendaTodayColor: '#8075FF',
+                            monthTextColor: Constants.secondaryColor,
+                            agendaTodayColor: Constants.secondaryColor,
                             }}
                         />
                         <Modal
@@ -196,14 +196,14 @@ class Home extends React.Component {
                                     </View>
                                     <View style={{flexDirection:"row", paddingTop: Constants.windowWidth * 0.02}}>
                                         <View style={{paddingRight: Constants.windowWidth * 0.05}}>
-                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF", paddingHorizontal: Constants.windowWidth * 0.03}}
+                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, paddingHorizontal: Constants.windowWidth * 0.03}}
                                             onPress={() => this.setModalVisible(false)}>
                                             <Text style={styles.cancel}>
                                                 Cancel     
                                             </Text>
                                         </TouchableOpacity>
                                         </View>
-                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF",}}
+                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor,}}
                                             onPress={this.onPressAdd.bind(this)}>
                                             <Text style={styles.addEvent}>
                                                 Add Event
@@ -216,14 +216,9 @@ class Home extends React.Component {
                             </View>
                         </Modal>
                         <View style={{paddingTop:Constants.windowHeight * 0.02}}>
-                            <TouchableOpacity style={{borderRadius:10, backgroundColor: "#8075FF",}}
+                            <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor,}}
                             onPress={() => this.setModalVisible(true)}>
-                                <Text style={styles.addAnEvent}
-                                    //onPress={() => this.setModalVisible(true)}
-
-                                    title='Add an Event'
-                                    color='#8075FF'
-                                >
+                                <Text style={styles.addAnEvent}>
                                     Add an Event
                                 </Text>
                             </TouchableOpacity>
@@ -239,13 +234,13 @@ class Home extends React.Component {
         this.setState({ show: visible});
         if (visible == false) {
             this.setState({
-                descBack: "#ececec",
-                monthBack: "#ececec",
-                dayBack: "#ececec",
-                yearBack: "#ececec",
-                hourBack: "#ececec",
-                minBack: "#ececec",
-                timeOfDayBack: "#ececec",
+                descBack: Constants.calendarInputBox,
+                monthBack: Constants.calendarInputBox,
+                dayBack: Constants.calendarInputBox,
+                yearBack: Constants.calendarInputBox,
+                hourBack: Constants.calendarInputBox,
+                minBack: Constants.calendarInputBox,
+                timeOfDayBack: Constants.calendarInputBox,
             });
         }
         else {
@@ -253,6 +248,7 @@ class Home extends React.Component {
         }
     }
 
+    /** Checks all fields for valid user input */
     checkFields() {
         var nameCheck = this.checkName();
         var monthCheck = this.checkMonth();
@@ -265,94 +261,102 @@ class Home extends React.Component {
             && hoursCheck && minsCheck && timeOfDayCheck);
     }
 
+    /** checks for valid event description user input */
     checkName() {
         var nameCheck = (this.state.name != '');
         if (!nameCheck) {
-            this.setState({descBack: "#FFCCCB"})
+            this.setState({descBack: Constants.invalidInputBox})
         }
         else {
-            this.setState({descBack: "#ececec"})
+            this.setState({descBack: Constants.calendarInputBox})
         }
         return nameCheck;
     }
 
+    /** Checks for valid month user input */
     checkMonth() {
         var month = this.state.month;
         var monthCheck = (month <= 12 && month >= 1 
             && month.length == 2);
         if (!monthCheck) {
-            this.setState({monthBack: "#FFCCCB"})
+            this.setState({monthBack: Constants.invalidInputBox})
         }
         else {
-            this.setState({monthBack: "#ececec"})
+            this.setState({monthBack: Constants.calendarInputBox})
         }
         return monthCheck;
     }
 
+    /** Checks for valid day user input */
     checkDay() {
         var day = this.state.day;
         var dayCheck = (day <= 31 && day >= 1 
             && day.length == 2);
         if (!dayCheck) {
-            this.setState({dayBack: "#FFCCCB"})
+            this.setState({dayBack: Constants.invalidInputBox})
         }
         else {
-            this.setState({dayBack: "#ececec"})
+            this.setState({dayBack: Constants.calendarInputBox})
         }
         return dayCheck;
     }
 
+    /** Checks for valid year user input */
     checkYear() {
         var year = this.state.year;
         var yearCheck = (year >= 0 && year.length === 4);
         if (!yearCheck) {
-            this.setState({yearBack: "#FFCCCB"})
+            this.setState({yearBack: Constants.invalidInputBox})
         }
         else {
-            this.setState({yearBack: "#ececec"})
+            this.setState({yearBack: Constants.calendarInputBox})
         }
         return yearCheck;
     }
 
+    /** Checks for valid hour user input */
     checkHour() {
         var hour = this.state.hour;
         var hourCheck = (hour <= 12 && hour >= 1  
             && hour.length) == 2;
         if (!hourCheck) {
-            this.setState({hourBack: "#FFCCCB"})
+            this.setState({hourBack: Constants.invalidInputBox})
         }
         else {
-            this.setState({hourBack: "#ececec"})
+            this.setState({hourBack: Constants.calendarInputBox})
         }
         return hourCheck;
     }
 
+    /** Checks for valid minute user input */
     checkMin() {
         var min = this.state.minute;
         var minCheck = (min <= 59 && min >= 0
             && min.length == 2);
         if (!minCheck) {
-            this.setState({minBack: "#FFCCCB"})
+            this.setState({minBack: Constants.invalidInputBox})
         }
         else {
-            this.setState({minBack: "#ececec"})
+            this.setState({minBack: Constants.calendarInputBox})
         }
         return minCheck;
     }
 
+    // checks for valid time of day user input
     checkTimeOfDay() {
         var min = this.state.timeOfDay;
         var timeOfDayCheck = (this.state.timeOfDay == "AM" || 
         this.state.timeOfDay == "PM");
         if (!timeOfDayCheck) {
-            this.setState({timeOfDayBack: "#FFCCCB"})
+            this.setState({timeOfDayBack: Constants.invalidInputBox})
         }
         else {
-            this.setState({timeOfDayBack: "#ececec"})
+            this.setState({timeOfDayBack: Constants.calendarInputBox})
         }
         return timeOfDayCheck;
     }
 
+    // formats a string to be displayed based off of user input
     formatTime() {
         var time = this.state.hour + ":" + this.state.minute + " " + this.state.timeOfDay;
         this.setState({time: time});
@@ -371,6 +375,7 @@ class Home extends React.Component {
         return timeVal;
     }
 
+    // sort function used to rank events by thier scheduled time
     sortTime(a, b) {
         var aTime = a.time;
         var aTimeVal = aTime.substring(0,2) + aTime.substring(3,5);
@@ -434,10 +439,10 @@ class Home extends React.Component {
         else {
             Alert.alert("Invalid date/time entry");
         }
-        //this.clearInput();
         this.forceUpdate();
     }
 
+    // clears the saved user input for creating an event
     clearInput() {
         this.setState({
             day: '',
@@ -519,6 +524,7 @@ class Home extends React.Component {
         );
       }
 
+      // converts time to a string format accepted by the agenda component
       timeToString(time) {
         const date = new Date(time);
         return date.toISOString().split('T')[0];
