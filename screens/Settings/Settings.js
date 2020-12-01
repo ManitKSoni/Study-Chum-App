@@ -9,7 +9,7 @@ import * as Constants from '../../Constants.js'
 import userInstance from "../Singletons/UserSingleton";
 
 //ensures size is proportional across devices
-imDiam = Math.sqrt(Math.pow(Constants.windowHeight, 2) + Math.pow(Constants.windowWidth, 2)) / 4;
+var imDiam = Math.sqrt(Math.pow(Constants.windowHeight, 2) + Math.pow(Constants.windowWidth, 2)) / 4;
 class Settings extends React.Component{
 
     db = Firebase.firestore();
@@ -230,8 +230,6 @@ const styles = StyleSheet.create({
     body: {
         backgroundColor: '#FFF',
         justifyContent: 'center',
-        borderColor: 'black',
-        borderWidth: 1,
         height: Dimensions.get('screen').height - 20,
         width: Dimensions.get('screen').width
     },
