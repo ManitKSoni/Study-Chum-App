@@ -34,7 +34,7 @@ class ChatDataModel {
                         let id = change.doc.id
                         let index = 0
                         let newChannel = null
-                        this.channels.forEach((channel, i) => {
+                        this.channels.forEach((channel, i) => { 
                             if (channel.channelID === id) {
                                 index = i
                                 newChannel = channel
@@ -83,7 +83,7 @@ class ChatDataModel {
      */
     async createChannel(otherUserID, otherUserName, completion) {
 
-        let docRef = await this.db.collection('chat').add({
+        let userData = {
             users: [
                 otherUserID, this.uid
             ], // TODO: fill in real info
@@ -98,9 +98,13 @@ class ChatDataModel {
             lastTimestamp: "",
             lastSentMessage: "",
             lastSender: ""
-        })
+        } 
+
+        let docRef = await this.db.collection('chat').add(userData)
         console.log(`Channel id: ${docRef.id}`)
-        completion(docRef.id)
+        userData['channelID'] = docRef.id
+        userData['userImage'] = await this.getImage(otherUserID)
+        userData['otherUserID'] = otherUserID
     }
 
     /**

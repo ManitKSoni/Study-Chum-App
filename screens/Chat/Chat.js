@@ -78,7 +78,7 @@ class Chat extends React.Component {
         this.props.navigation.navigate("Channel", {
             userData: item,
             uid: uid,
-        });
+        }); 
     }
 
     generateImage(image) {

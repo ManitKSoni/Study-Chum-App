@@ -33,7 +33,7 @@ class Channel extends React.Component {
       userID: uid,
       profile: snapshot.data(),
     });
-  }
+  } 
 
   parseMessage(message) {
     if (message.createdAt == NaN) {

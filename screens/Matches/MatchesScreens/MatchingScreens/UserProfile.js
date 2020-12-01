@@ -13,11 +13,9 @@ class UserProfile extends React.Component {
 
 
     goToChannel() {
-        this.chatDataModel.getChannel(this.userID, `${this.profile.firstName} ${this.profile.lastName}`, (channelID) => {
+        this.chatDataModel.getChannel(this.userID, `${this.profile.firstName} ${this.profile.lastName}`, (userData) => {
             this.props.navigation.navigate("ChatChannel", {
-                userData: {
-                    channelID: channelID
-                },
+                userData: userData,
                 uid: Firebase.auth().currentUser.uid,
                 title: `${this.profile.firstName} ${this.profile.lastName}`
             });
