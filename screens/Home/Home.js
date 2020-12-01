@@ -73,6 +73,11 @@ class Home extends React.Component {
                             renderItem={this.renderItem.bind(this)}
                             rowHasChanged={this.rowHasChanged.bind(this)} 
                             selected={ this.getTodaysDate.bind(this) }
+                            renderKnob={() => {return(<Image style={{
+                                width: Constants.windowHeight * .11,
+                                height: Constants.windowHeight * .035,
+                                resizeMode:'stretch'
+                            }} source={require('../../assets/drop_down_arrow.png')} ></Image>)}}
                             theme={{
                             calendarBackground: '#ffffff',
                             selectedDayBackgroundColor: '#8075FF',
