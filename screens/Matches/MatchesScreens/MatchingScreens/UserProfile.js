@@ -65,50 +65,39 @@ class UserProfile extends React.Component {
                     <Text style={styles.text}>Chat</Text>
                 </TouchableOpacity>
             </View>*/
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                <View> 
-                <Icon name="chevron-left" type="octicon" size={40} color={Constants.primaryColor}
-                        containerStyle={styles.iconStyle}
-                    onPress={this.onPressGoBack}
-                />
+           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
-                    <Fragment>
-                        <StatusBar barStyle="dark-content" />
-                        <SafeAreaView>
-                            <View style={styles.body}>
-                                <View style={styles.ImageSections}>
-                                    <View style={{
-                                        height: imDiam, //Constants.windowHeight * 0.29,
-                                        width: imDiam, //Constants.windowWidth * 0.55,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        borderRadius: imDiam / 2/*3*/}}>
-                                        {this.showImage()}
-                                    </View>
-                                </View>
-                                <View
-                                    style={styles.textAlign}>
-                                    <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .010, paddingTop:Constants.windowHeight * .005}} >
-                                        {this.profile.firstName + " " +  this.profile.lastName}
-                                    </Text>
-                                    <View style={styles.border}/>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
-                                        {this.profile.major + " " +  this.profile.year}
-                                    </Text>
-                                    <View style={styles.border}/>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
-                                        {this.profile.bio}
-                                    </Text>
-                                    <View style={styles.border}/>
-                                    <View style={styles.btnPosition}> 
-                                    <TouchableOpacity style={styles.btnContainer} onPress={() => {this.goToChannel()}}>
-                                        <Text style={styles.btnText}>Send a message</Text>
-                                    </TouchableOpacity>
-                                    </View>
-                                </View>
+                    <Icon name="chevron-left" type="octicon" size={40} color={Constants.primaryColor}
+                        containerStyle={styles.iconStyle}
+                        onPress={this.onPressGoBack}
+                    />
+                    <View style={styles.body}>
+                        <View style={styles.ImageSections}>
+                            <View style={{
+                                height: imDiam, //Constants.windowHeight * 0.29,
+                                width: imDiam, //Constants.windowWidth * 0.55,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: imDiam / 2/*3*/}}>
+                                {this.showImage()}
                             </View>
-                        </SafeAreaView>
-                    </Fragment>
+                        </View>
+
+                        <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .010, paddingTop:Constants.windowHeight * .005}} >
+                            {this.profile.firstName + " " +  this.profile.lastName}</Text>
+                        <View style={styles.border}/>
+                        <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
+                            {this.profile.major + " " +  this.profile.year} </Text>
+                        <View style={styles.border}/>
+                        <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
+                        {this.profile.bio} </Text>
+                        <View style={styles.border}/>
+                    </View>
+
+                    <View style={styles.btnPosition}>
+                        <TouchableOpacity style={styles.btnContainer} onPress={() => {this.goToChannel()}}>
+                            <Text style={styles.btnText}>Send a message</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
@@ -121,7 +110,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        justifyContent: 'center',
         fontFamily: 'ProximaNova'
     },
     contImg : {
@@ -150,12 +138,11 @@ const styles = StyleSheet.create({
         marginRight: Constants.windowWidth * .035,
     },
     body: {
-        backgroundColor: '#FFF',
+        backgroundColor: 'white',
         justifyContent: 'center',
-       // borderColor: 'black',
-        //borderWidth: 1,
-        height: Dimensions.get('screen').height - 20,
-        width: Dimensions.get('screen').width
+        alignSelf: 'center',
+        flex: 1,
+        width: '95%'
     },
     ImageSections: {
         display: 'flex',
@@ -165,8 +152,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     iconStyle: {
-        paddingTop: Constants.windowHeight * 0.05,
-        paddingLeft: Constants.windowWidth * 0.02,
+        paddingTop: Constants.windowHeight * 0.035,
+        paddingLeft: Constants.windowWidth * 0.025,
         backgroundColor: 'white',
         position: 'absolute',
         alignSelf: 'flex-start',
@@ -176,18 +163,21 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: Constants.primaryColor,
-        width: Constants.windowWidth * .75,
-        height: Constants.windowHeight * .05,
+        width: Constants.windowWidth * .60,
+        height: Constants.windowHeight * .055,
         borderRadius: Constants.windowWidth * .03
     },
     btnText: {
-        fontSize: 34,
+        fontSize: Constants.windowWidth * .06,
         color: "white",
         fontFamily: "ProximaNova",
     },
     btnPosition: {
-        paddingTop: Constants.windowHeight * .2,
         alignItems: 'center',
+        paddingBottom: 15,
+        bottom: 0,
+        position: 'absolute',
+        width: '100%'
     }
 
 })

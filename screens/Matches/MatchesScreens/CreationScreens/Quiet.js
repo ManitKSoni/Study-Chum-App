@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
     },
     buttonTextOn: {
         fontFamily: 'ProximaNova',
-        fontSize: 30,
+        fontSize: Constants.windowWidth * 0.07,
         color: 'white',
         textAlign: 'center',
     },
     buttonTextOff: {
         fontFamily: 'ProximaNova',
-        fontSize: 30,
+        fontSize: Constants.windowWidth * 0.07,
         color: 'grey',
         textAlign: 'center',
     },
