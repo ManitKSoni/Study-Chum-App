@@ -59,6 +59,7 @@ class MatchingAlgorithm {
         var tally = 0; 
         var preferences = student.preferences;
         var currentPref = this.currentStudent.preferences;
+        
         if(preferences.language === currentPref.language) {
             tally++; 
         }
@@ -67,16 +68,13 @@ class MatchingAlgorithm {
             tally++; 
         }
         
-        // TODO: put back when in user singleton
-       /* if(preferences.timezone === currentPref.timezone) {
+        if(preferences.timezone === currentPref.timezone) {
             tally++; 
-        }*/
+        }
 
-        //TODO: turn on once people update their added courses
-        /*
         if(preferences.remote === currentPref.remote) {
             tally++; 
-        }*/ 
+        } 
 
         var availability = preferences.availability; 
         var currentAvailibility = currentPref.availability;
