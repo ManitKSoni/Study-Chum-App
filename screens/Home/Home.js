@@ -426,7 +426,7 @@ class Home extends React.Component {
         else {
             Alert.alert("Invalid date/time entry");
         }
-        this.clearInput();
+        //this.clearInput();
         this.forceUpdate();
     }
 
