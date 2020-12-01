@@ -103,7 +103,7 @@ export default class MatchesNavigator extends React.Component {
               options={({ route }) => ({ 
                 headerTitleAlign: "center",
                 headerLeft: () => (
-                  <Icon name="arrow-left" type="foundation" size={40} containerStyle={{paddingLeft:7}}
+                  <Icon name="chevron-left" type="octicon" size={40} containerStyle={{paddingLeft:Constants.windowWidth*.025}}
                   color="#FFFFFF" onPress={this.onPressGoToShowMatches}/>
                 ),
                 headerStyle: {backgroundColor: Constants.secondaryColor},
