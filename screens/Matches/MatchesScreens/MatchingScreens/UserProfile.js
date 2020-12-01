@@ -1,8 +1,7 @@
-import React, {Fragment} from 'react'
-import { Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
-    StatusBar,
+import React from 'react'
+import { Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,
     Dimensions,
-    TouchableOpacity, DeviceEventEmitter} from 'react-native';
+    TouchableOpacity} from 'react-native';
 import Firebase from '../../../../config/Firebase'
 import SavedData from "../../SavedData"
 import ChatDataModel from "../../../Chat/ChatDataModel"
