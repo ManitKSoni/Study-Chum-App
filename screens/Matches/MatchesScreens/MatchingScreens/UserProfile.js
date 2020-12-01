@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import { Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
     StatusBar,
     Dimensions,
@@ -7,12 +7,13 @@ import Firebase from '../../../../config/Firebase'
 import SavedData from "../../SavedData"
 import ChatDataModel from "../../../Chat/ChatDataModel"
 import * as Constants from '../../../../Constants.js'
+import {Icon} from 'react-native-elements';
 
 imDiam = Math.sqrt(Math.pow(Constants.windowHeight, 2) + Math.pow(Constants.windowWidth, 2)) / 4;
 class UserProfile extends React.Component {
 
         userID = this.props.route.params.userID
-        uri = this.props.route.params.userID; 
+        uri = this.props.route.params.URI; 
         profile = SavedData.profile; 
         chatDataModel = new ChatDataModel()
 
@@ -41,10 +42,14 @@ class UserProfile extends React.Component {
         } else {
             return (
                 <View style ={styles.contImg}>
-                    <Image source = {{uri:this.state.image}} style={styles.img}/>
+                    <Image source = {{uri:this.uri}} style={styles.img}/>
                 </View>
             )
         }
+    }
+
+    onPressGoBack = () => {
+        this.props.navigation.navigate("ShowMatches");
     }
 
     render() {
@@ -63,6 +68,11 @@ class UserProfile extends React.Component {
                 </TouchableOpacity>
             </View>*/
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View> 
+                <Icon name="chevron-left" type="octicon" size={40} color={Constants.primaryColor}
+                        containerStyle={styles.iconStyle}
+                    onPress={this.onPressGoBack}
+                />
                 <View style={styles.container}>
                     <Fragment>
                         <StatusBar barStyle="dark-content" />
@@ -92,11 +102,16 @@ class UserProfile extends React.Component {
                                         {this.profile.bio}
                                     </Text>
                                     <View style={styles.border}/>
+                                    <View style={styles.btnPosition}> 
+                                    <TouchableOpacity style={styles.btnContainer} onPress={() => {this.goToChannel()}}>
+                                        <Text style={styles.btnText}>Send a message</Text>
+                                    </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>
                         </SafeAreaView>
                     </Fragment>
-
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -139,8 +154,8 @@ const styles = StyleSheet.create({
     body: {
         backgroundColor: '#FFF',
         justifyContent: 'center',
-        borderColor: 'black',
-        borderWidth: 1,
+       // borderColor: 'black',
+        //borderWidth: 1,
         height: Dimensions.get('screen').height - 20,
         width: Dimensions.get('screen').width
     },
@@ -151,6 +166,31 @@ const styles = StyleSheet.create({
         paddingVertical: 0,
         justifyContent: 'center',
     },
+    iconStyle: {
+        paddingTop: Constants.windowHeight * 0.05,
+        paddingLeft: Constants.windowWidth * 0.02,
+        backgroundColor: 'white',
+        position: 'absolute',
+        alignSelf: 'flex-start',
+        zIndex: 999,
+    },
+    btnContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: Constants.primaryColor,
+        width: Constants.windowWidth * .75,
+        height: Constants.windowHeight * .05,
+        borderRadius: Constants.windowWidth * .03
+    },
+    btnText: {
+        fontSize: 34,
+        color: "white",
+        fontFamily: "ProximaNova",
+    },
+    btnPosition: {
+        paddingTop: Constants.windowHeight * .2,
+        alignItems: 'center',
+    }
 
 })
 
