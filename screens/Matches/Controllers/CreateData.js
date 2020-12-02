@@ -32,11 +32,13 @@ export function createDrawerData() {
  * database
  */
 export async function createMatchesData() {
-    var pq = MatchingAlgorithm.queue;
     var data = []
+    var pq = MatchingAlgorithm.queue;
+    //var data = []
     var count = 0;
     while (pq.length != 0) {
         var currStudent = pq.dequeue();
+       // console.log(currStudent);
         var URI = await getImage(currStudent.userID)
         var currData = {
             id: count.toString(),
@@ -47,7 +49,9 @@ export async function createMatchesData() {
             tally: currStudent.tally,
         };
         count++;
+       
         data.push(currData);
+        
     }
     
     return data; 

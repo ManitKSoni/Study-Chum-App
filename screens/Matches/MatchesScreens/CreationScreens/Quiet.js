@@ -10,7 +10,8 @@ import {Icon} from 'react-native-elements';
 class Quiet extends React.Component {
 
     state = {
-        quiet: false 
+        quiet: false,
+        loading: false
     }
 
     onPressToggle = (id) => {
@@ -22,7 +23,6 @@ class Quiet extends React.Component {
     }
 
     generateMatches = () => {
-        console.log(this.state);
         PreferenceProfiles.addQuiet(this.state.quiet);
         PreferenceProfiles.addAndShow(this.props);
     }

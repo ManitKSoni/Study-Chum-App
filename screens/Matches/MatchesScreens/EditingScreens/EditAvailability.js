@@ -37,13 +37,13 @@ class EditAvailibility extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({sunday:SavedData.profile.availability.sunday});
-        this.setState({monday:SavedData.profile.availability.monday});
-        this.setState({tuesday:SavedData.profile.availability.tuesday});
-        this.setState({wednesday:SavedData.profile.availability.wednesday});
-        this.setState({thursday:SavedData.profile.availability.thursday});
-        this.setState({friday:SavedData.profile.availability.friday});
-        this.setState({saturday:SavedData.profile.availability.saturday});
+        this.setState({sunday:SavedData.preferences.availability.sunday});
+        this.setState({monday:SavedData.preferences.availability.monday});
+        this.setState({tuesday:SavedData.preferences.availability.tuesday});
+        this.setState({wednesday:SavedData.preferences.availability.wednesday});
+        this.setState({thursday:SavedData.preferences.availability.thursday});
+        this.setState({friday:SavedData.preferences.availability.friday});
+        this.setState({saturday:SavedData.preferences.availability.saturday});
     }
 
     onPressCancel = () => {
@@ -52,9 +52,8 @@ class EditAvailibility extends React.Component {
 
     onPressGoBackToEditPreferences = () => {
         var availability = this.createAvailabilityMap();
-        console.log(availability);
         PreferenceProfiles.editAvailability(availability, SavedData.title);
-        SavedData.profile.availability = availability;
+        SavedData.preferences.availability = availability;
         this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
 

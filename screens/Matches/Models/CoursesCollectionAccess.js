@@ -2,7 +2,6 @@ import Firebase from '../../../config/Firebase'
 import "firebase/firestore";
 import firebase from "firebase/app";
 import userInstance from "../../Singletons/UserSingleton";
-import SavedData from "../Controllers/SavedData"
 
 export class CoursesCollectionAccess {
 
@@ -12,7 +11,7 @@ export class CoursesCollectionAccess {
      * Adds preference profile of current user to chosen course.
      */
     async addPreferenceProfile(preferences, courseName) {
-        console.log(preferences);
+      
         var courseRef = this.db.collection("courses");
         var userID = "students." + Firebase.auth().currentUser.uid; 
 
@@ -38,7 +37,9 @@ export class CoursesCollectionAccess {
     }
 
     addCourseToSingleton(courseName) {
-        userInstance._user.courses.push(courseName); 
+        if( !userInstance._user.courses.includes(courseName)) {
+            userInstance._user.courses.push(courseName); 
+        }
     }
 
       /**

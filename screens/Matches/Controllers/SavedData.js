@@ -3,16 +3,18 @@ import "firebase/firestore";
 class SavedData {
 
     constructor(){
-        this.title = "";
-        this.profile = {}
+        this.title = ""; // current class 
+        this.profile = {}, // OTHER USERS PROFILE
+        this.preferences = {} // SPAGHETTI CODE: CURRENT USERS PROFILE
     }
 
     changeTitle(courseName) {
         this.title = courseName; 
     }
 
-    setProfile(preferences) {
-        this.profile = preferences; 
+    //CALLED IN MATCHING ALGORITHM IN GET CURRENT STUDENT
+    setPreferences(preferences) {
+        this.preferences = preferences; 
     }
 
     /**

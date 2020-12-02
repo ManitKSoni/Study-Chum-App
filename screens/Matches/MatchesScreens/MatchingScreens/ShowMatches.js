@@ -8,7 +8,7 @@ class ShowMatches extends React.Component {
 
     state = {
         data: [],
-        loaded: false
+        loaded: false,
     }
 
     constructor(props) {
@@ -100,10 +100,11 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                                     (((bio).substring(0,(Constants.windowWidth/10)-3)) + '...') :
                                     bio}
                                 </Text>
-                                {/*<Text style={styles.tally}> {tally}  </Text>*/}
+            
                             </Text>
                         </View>
                     </View>
+                    <Text style={styles.tally}> {tally}  </Text>
                 </View>
             </TouchableOpacity>
         )
@@ -125,10 +126,10 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                                     (((bio).substring(0,(Constants.windowWidth/10)-3)) + '...') :
                                     bio}
                                 </Text>
-                                {/*<Text style={styles.tally}> {tally}  </Text>*/}
                             </Text>
                         </View>
                     </View>
+                    <Text style={styles.tally}> {tally}  </Text>
                 </View>
             </TouchableOpacity>
         )

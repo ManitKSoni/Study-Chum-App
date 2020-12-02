@@ -28,6 +28,7 @@ class MatchingAlgorithm {
             this.getCurrentStudent();
             this.orderStudents();
             showMatchesScreen();
+
         } else {
             console.log("Failed to retrieve student map")
         }
@@ -37,10 +38,10 @@ class MatchingAlgorithm {
     /** 
     * Retrieves current users preferences and info
     */ 
-    getCurrentStudent() {
+    async getCurrentStudent() {
        var userID = Firebase.auth().currentUser.uid;
        this.currentStudent = this.studentsMap[userID]; 
-       SavedData.setProfile(this.currentStudent.preferences);
+       SavedData.setPreferences(this.currentStudent.preferences);
     }
 
 

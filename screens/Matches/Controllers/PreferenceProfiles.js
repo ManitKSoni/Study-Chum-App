@@ -29,7 +29,7 @@ export class PreferenceProfiles {
         this.addLanguagePreference();
         this.addTimezonePreference();
         var preferences = this.createPreferenceProifle(this.preferences)
-        CoursesCollectionAccess.addPreferenceProfile(preferences, this.courseName); 
+        await CoursesCollectionAccess.addPreferenceProfile(preferences, this.courseName); 
         SavedData.changeTitle(this.courseName);
         MatchingAlgorithm.getStudentMap(this.courseName, 
         () => props.navigation.navigate("ShowMatches", {name: this.courseName}));

@@ -16,7 +16,7 @@ class EditRemote extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({remote: SavedData.profile.remote});
+        this.setState({remote: SavedData.preferences.remote});
     }
 
     onPressToggle = (id) => {
@@ -28,7 +28,7 @@ class EditRemote extends React.Component {
     }
 
     onPressGoBackToEditPreferences = () => {
-        SavedData.profile.remote = this.state.remote; 
+        SavedData.preferences.remote = this.state.remote; 
         PreferenceProfiles.editRemote(this.state.remote, SavedData.title);
         this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
     }
