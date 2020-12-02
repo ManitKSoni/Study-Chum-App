@@ -1,13 +1,14 @@
-import Firebase from '../../config/Firebase'
-import "firebase/firestore";
-import firebase from "firebase/app";
+import Firebase from '../../../config/Firebase'
 import SavedData from "./SavedData";
+import CoursesCollectionAccess from "../Models/CoursesCollectionAccess";
 
 var PriorityQueue = require("js-priority-queue");
 
+/**
+ * Controller to process data of users through their preferences
+ */
 class MatchingAlgorithm {
 
-    db = Firebase.firestore(); 
     queue =  new PriorityQueue({comparator: MaxComparator}); 
 
     constructor() {
@@ -21,27 +22,23 @@ class MatchingAlgorithm {
     * @param courseName - name of course doc
     */ 
     async getStudentMap(courseName, showMatchesScreen) {
-        const docRef = this.db.collection("courses").doc(courseName);
-        const doc = await docRef.get();
-      
-        if(doc.exists) {
-            console.log("Getting students...")
-            this.studentsMap = doc.get("students");
+        this.studentsMap = await CoursesCollectionAccess.getStudentMap(courseName)
+        if( this.studentsMap) {
+            console.log("Retrieved student map")
             this.getCurrentStudent();
             this.orderStudents();
             showMatchesScreen();
-            
         } else {
-            console.log("Course does not exist.");
+            console.log("Failed to retrieve student map")
         }
-
+        
     }
 
     /** 
     * Retrieves current users preferences and info
     */ 
     getCurrentStudent() {
-       var userID= Firebase.auth().currentUser.uid;
+       var userID = Firebase.auth().currentUser.uid;
        this.currentStudent = this.studentsMap[userID]; 
        SavedData.setProfile(this.currentStudent.preferences);
     }

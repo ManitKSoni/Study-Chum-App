@@ -3,7 +3,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import { Switch, StyleSheet, TouchableWithoutFeedback, Keyboard, Button, ImageBackground, Image, TouchableOpacity } from 'react-native'
-import PreferenceProfiles from "../../PreferenceProfiles"
+import PreferenceProfiles from "../../Controllers/PreferenceProfiles"
 import { Icon } from 'react-native-elements';
 import * as Constants from '../../../../Constants.js'
 import { getBackgroundColor } from "react-native/Libraries/LogBox/UI/LogBoxStyle";

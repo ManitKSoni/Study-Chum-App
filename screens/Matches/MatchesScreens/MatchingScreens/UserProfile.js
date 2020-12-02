@@ -3,7 +3,7 @@ import { Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,
     Dimensions,
     TouchableOpacity} from 'react-native';
 import Firebase from '../../../../config/Firebase'
-import SavedData from "../../SavedData"
+import SavedData from "../../Controllers/SavedData"
 import ChatDataModel from "../../../Chat/ChatDataModel"
 import * as Constants from '../../../../Constants.js'
 import {Icon} from 'react-native-elements';

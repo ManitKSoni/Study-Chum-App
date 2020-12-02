@@ -4,9 +4,9 @@ import { View, Text } from 'react-native'
 
 import {Keyboard, StyleSheet, TouchableWithoutFeedback, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import * as Constants from '../../../../Constants.js'
-import PreferenceProfiles from "../../PreferenceProfiles";
+import PreferenceProfiles from "../../Controllers/PreferenceProfiles";
 import {Icon} from 'react-native-elements';
-import SavedData from "../../SavedData"
+import SavedData from "../../Controllers/SavedData"
 
 class EditQuiet extends React.Component {
 

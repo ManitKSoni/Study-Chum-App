@@ -1,37 +1,10 @@
 import React from 'react'
 import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator} from 'react-native'
-import MatchingAlgorithm from "../../MatchingAlgorithm"
-import SavedData from "../../SavedData"
+import SavedData from "../../Controllers/SavedData"
 import * as Constants from '../../../../Constants.js'
-import Firebase from '../../../../config/Firebase';
+import {createMatchesData} from "../../Controllers/CreateData"
 
 class ShowMatches extends React.Component {
-
-    /**
-     * Gets all data from PQ from MatchingAlgorithm for each user in courses 
-     * database
-     */
-   async createData() {
-        var pq = MatchingAlgorithm.queue;
-        var data = []
-        var count = 0;
-        while (pq.length != 0) {
-            var currStudent = pq.dequeue();
-            var URI = await this.getImage(currStudent.userID)
-            var currData = {
-                id: count.toString(),
-                userID: currStudent.userID, //use to go to user profile
-                name: currStudent.student.name,
-                bio: currStudent.student.bio,
-                uri: URI,
-                tally: currStudent.tally,
-            };
-            count++;
-            data.push(currData);
-        }
-      
-        return data; 
-    };
 
     state = {
         data: [],
@@ -46,7 +19,7 @@ class ShowMatches extends React.Component {
      * Retrieves all data of users from the PQ from MatchingAlgorithm.js
      */
     async componentDidMount() {
-        var data = await this.createData();
+        var data = await createMatchesData();
         this.setState({data: data})
         this.setState({loaded:true})
     }
@@ -59,26 +32,6 @@ class ShowMatches extends React.Component {
         SavedData.renderProfile(uid, () => 
             this.props.navigation.navigate("UserProfile", {userID: uid, URI: uri}));
         console.log(uid)
-    }
-
-    /**
-     * Retrieves image of users in current course's database
-     * @param userID - The image ID to retrieve from firebase storage
-     */
-    async getImage(userID) {
-
-        var storage = Firebase.storage();
-        var imagePath = storage.ref('images/' + userID);
-        var imageURI = null
-        try{
-            imageURI = await imagePath.getDownloadURL(); 
-    
-        } catch(err) {
-          console.log("No image on database")
-          imageURI = null;
-        }
-    
-        return imageURI; 
     }
    
     render() {

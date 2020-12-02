@@ -3,10 +3,10 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import {Keyboard, StyleSheet, TouchableWithoutFeedback, ImageBackground, Image, TouchableOpacity} from 'react-native'
-import PreferenceProfiles from "../../PreferenceProfiles"
+import PreferenceProfiles from "../../Controllers/PreferenceProfiles"
 import * as Constants from '../../../../Constants.js'
 import {Icon} from 'react-native-elements';
-import SavedData from "../../SavedData"
+import SavedData from "../../Controllers/SavedData"
 
 class EditRemote extends React.Component {
      

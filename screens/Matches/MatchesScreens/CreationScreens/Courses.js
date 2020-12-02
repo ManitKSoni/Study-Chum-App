@@ -3,7 +3,7 @@ import React from 'react'
 import { View, Text, ImageBackground, Image } from 'react-native'
 
 import {TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
-import PreferenceProfiles from "../../PreferenceProfiles"
+import PreferenceProfiles from "../../Controllers/PreferenceProfiles"
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import * as FileSystem from 'expo-file-system';
 import {Fragment} from 'react'

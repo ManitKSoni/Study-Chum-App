@@ -1,29 +1,9 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet, FlatList, View, StatusBar} from 'react-native';
 import {Drawer} from 'react-native-paper'
-import UserSingleton from "../Singletons/UserSingleton"; 
-import MatchingAlgorithm from "./MatchingAlgorithm";
-import SavedData from "./SavedData"
-
-function createData() {
-    var data = []; 
-    //Will have to get data from database to display when updated or add to singleton maybe
-    var courses = UserSingleton._user.courses;
-    let unique = courses.filter((c, index) => {
-        return courses.indexOf(c) === index;
-    });
-
-    unique.sort(); 
-    for(var i = 0; i < unique.length; i++) {
-        var currData = {
-            id: i.toString(),
-            course: unique[i]
-        }
-        data.push(currData); 
-    }
-
-    return data; 
-};
+import {createDrawerData} from '../Controllers/CreateData';
+import MatchingAlgorithm from "../Controllers/MatchingAlgorithm";
+import SavedData from "../Controllers/SavedData"
 
 const Item = ({course, onPress}) => (
     <TouchableOpacity style={styles.item} onPress={onPress}> 
@@ -50,7 +30,7 @@ export function DrawerContent(props) {
         />
     );
 
-    const data = createData();
+    const data = createDrawerData();
 
     return (
         <View style={{flex:1}}>

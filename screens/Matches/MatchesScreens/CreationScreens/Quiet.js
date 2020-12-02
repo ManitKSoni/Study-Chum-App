@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 
 import {Keyboard, Switch, StyleSheet, TouchableWithoutFeedback, Button,  ImageBackground, Image, TouchableOpacity} from 'react-native'
 import * as Constants from '../../../../Constants.js'
-import PreferenceProfiles from "../../PreferenceProfiles";
+import PreferenceProfiles from "../../Controllers/PreferenceProfiles";
 import {Icon} from 'react-native-elements';
 
 class Quiet extends React.Component {

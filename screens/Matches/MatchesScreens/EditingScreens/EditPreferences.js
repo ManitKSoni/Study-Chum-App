@@ -1,8 +1,8 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
-import MatchingAlgorithm from "../../MatchingAlgorithm"
-import SavedData from "../../SavedData"
-import PreferenceProfiles from "../../PreferenceProfiles"
+import MatchingAlgorithm from "../../Controllers/MatchingAlgorithm"
+import SavedData from "../../Controllers/SavedData"
+import PreferenceProfiles from "../../Controllers/PreferenceProfiles"
 import * as Constants from "../../../../Constants";
 
 class EditPreferences extends React.Component {

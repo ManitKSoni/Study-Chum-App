@@ -4,25 +4,25 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import SavedData from "./SavedData"
-import MatchingAlgorithm from "./MatchingAlgorithm"
+import SavedData from "../Controllers/SavedData"
+import MatchingAlgorithm from "../Controllers/MatchingAlgorithm"
 
-import Matches from "./MatchesScreens/MatchingScreens/Matches"; 
-import Courses from "./MatchesScreens/CreationScreens/Courses"
-import Availibility from './MatchesScreens/CreationScreens/Availibility';
-import Blank from "./MatchesScreens/Blank";
-import Quiet from "./MatchesScreens/CreationScreens/Quiet";
-import ShowMatches from "./MatchesScreens/MatchingScreens/ShowMatches";
-import Remote from "./MatchesScreens/CreationScreens/Remote";
-import UserProfile from "./MatchesScreens/MatchingScreens/UserProfile"
+import Matches from "../MatchesScreens/MatchingScreens/Matches"; 
+import Courses from "../MatchesScreens/CreationScreens/Courses"
+import Availibility from '../MatchesScreens/CreationScreens/Availibility';
+import Blank from "../MatchesScreens/Blank";
+import Quiet from "../MatchesScreens/CreationScreens/Quiet";
+import ShowMatches from "../MatchesScreens/MatchingScreens/ShowMatches";
+import Remote from "../MatchesScreens/CreationScreens/Remote";
+import UserProfile from "../MatchesScreens/MatchingScreens/UserProfile"
 import {Icon} from 'react-native-elements';
-import EditPreferences from './MatchesScreens/EditingScreens/EditPreferences';
-import EditAvailability from './MatchesScreens/EditingScreens/EditAvailability';
-import EditQuiet from "./MatchesScreens/EditingScreens/EditQuiet"
-import EditRemote from "./MatchesScreens/EditingScreens/EditRemote"
-import Channel from "./../Chat/Channel"
+import EditPreferences from '../MatchesScreens/EditingScreens/EditPreferences';
+import EditAvailability from '../MatchesScreens/EditingScreens/EditAvailability';
+import EditQuiet from "../MatchesScreens/EditingScreens/EditQuiet"
+import EditRemote from "../MatchesScreens/EditingScreens/EditRemote"
+import Channel from "../../Chat/Channel"
 
-import * as Constants from '../../Constants.js'
+import * as Constants from '../../../Constants.js'
 
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
