@@ -129,7 +129,7 @@ class Settings extends React.Component{
     showImage = () => {
         if(!this.state.image) {
             return (<View style = {styles.contImg}>
-                <Image source={require('../../assets/dummy.png')} style={styles.img}/>
+                <Image source={require('../../assets/default_pic.png')} style={styles.img}/>
             </View>)
         } else {
             return (

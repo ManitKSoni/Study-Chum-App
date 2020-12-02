@@ -50,7 +50,7 @@ class Channel extends React.Component {
   componentDidMount() {
     const { userData, uid, title } = this.props.route.params;
 
-    this.props.navigation.setOptions({ headerTitle: props => <ThreadHeaderView onPressHeader={this.onPressHeader} displayName={userData[uid].name} userImage={userData.userImage}/>})
+    this.props.navigation.setOptions({ headerTitle: (props) => <ThreadHeaderView onPressHeader={this.onPressHeader} displayName={userData[uid].name} userImage={userData.userImage}/>})
     let channelID = userData.channelID 
 
     this.threadModel = new ThreadModel(channelID)

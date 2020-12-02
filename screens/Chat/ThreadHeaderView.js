@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, View, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import * as Constants from '../../Constants.js'
 
 export default class ThreadHeaderView extends React.Component {
@@ -7,16 +7,10 @@ export default class ThreadHeaderView extends React.Component {
 
     render() {
         return (
-        <TouchableOpacity onPress={() => this.props.onPressHeader()}>
-            <View style={styles.headerView}>
-                <Image
-                    style={styles.profileImg}
-                    source={{uri:this.props.userImage}} 
-                />
-                <Text style={styles.headerName}>{this.props.displayName}</Text>
-            </View>
-
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.headerView} onPress={() => this.props.onPressHeader()}>
+                <Image style={styles.profileImg}source={{ uri: this.props.userImage }}/>
+                <Text numberOfLines={1} ellipsizeMode='tail' style={styles.headerName}>{this.props.displayName}</Text>
+            </TouchableOpacity>
         );
     }
 }
@@ -25,18 +19,20 @@ const styles = StyleSheet.create({
     headerView: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: Constants.secondaryColor
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Constants.secondaryColor,
     },
     profileImg: {
-        width: 35,
-        height: 35,
-        borderRadius: 40,
+        width: Constants.windowWidth * 0.1,
+        height: Constants.windowHeight * 0.05,
+        borderRadius: Constants.windowWidth * 0.1,
         borderColor: 'gray',
         borderWidth: 2,
     },
     headerName: {
         paddingLeft: 10,
-        fontSize: 24,
+        fontSize: Constants.windowHeight * 0.034,
         color: 'white'
     }
 })

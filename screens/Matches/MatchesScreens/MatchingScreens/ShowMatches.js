@@ -113,7 +113,7 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
             <TouchableOpacity style={styles.item} onPress={onPress}>
                 <View style={styles.itemRow}> 
                     <View style={styles.itemColumn}> 
-                        <Image source={require('../../../../assets/dummy.png')} style={styles.images}/> 
+                        <Image source={require('../../../../assets/default_pic.png')} style={styles.images}/> 
                     </View>
             
             

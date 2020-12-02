@@ -26,21 +26,6 @@ let customFonts = {
   'DroidSansMono' : require('./assets/Fonts/DroidSansMono.ttf')
 };
 
-let imageAssets = [
-  require('./assets/home_selected.png'),
-  require('./assets/home_unselected.png'),
-  require('./assets/matches_selected.png'),
-  require('./assets/matches_unselected.png'),
-  require('./assets/chat_selected.png'),
-  require('./assets/chat_unselected.png'),
-  require('./assets/settings_selected.png'),
-  require('./assets/settings_unselected.png'),
-  require('./assets/wave.png'),
-  require('./assets/fish_button.png'),
-  require('./assets/study_chums_logo.png'),
-  require('./assets/logo_trimmed.png'),
-]
-
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
 const Stack = createStackNavigator();
 
@@ -71,6 +56,7 @@ export default class App extends React.Component {
     await Expo.Asset.fromModule(require('./assets/logo_trimmed.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/dummy.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/study_chums_title.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/default_pic.png')).downloadAsync();
     this.setState({ imagesLoaded: true });
   }
 

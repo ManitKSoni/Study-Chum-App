@@ -29,7 +29,7 @@ class Chat extends React.Component {
         var convertedTime = "";
         var hour = lastSentDate.getHours();
         var minutes = lastSentDate.getMinutes();
-        if (minutes === 0) { minutes = "00"; }
+        if (minutes < 10) { minutes = "0" + minutes; }
 
         if (hour === 0) {
             convertedTime = "12" + ":" + minutes + " am";
@@ -61,6 +61,9 @@ class Chat extends React.Component {
         if (timeDifference >= 0 && timeDifference < oneDay) {
             return this.convertToStandardTime(lastSentDate); //returns hour:minute am/pm
         } else {
+            if(lastSentDate.toLocaleDateString() === "Invalid Date") {
+                return "";
+            }
             return lastSentDate.toLocaleDateString(); //returns day/month/year format
         }
     }
@@ -74,16 +77,15 @@ class Chat extends React.Component {
 
     /** Handles an individual channel and launches a new screen passing data required **/
     onPressRow(item, uid) {
-
-        this.props.navigation.navigate("Channel", {
-            userData: item,
-            uid: uid,
-        }); 
+        this.props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'Channel', params: { userData: item, uid: uid } }],
+        });
     }
 
     generateImage(image) {
         if (image == null) {
-            return <Image source={require('../../assets/study_chums_logo.png')} style={styles.profileImg}/>
+            return <Image source={require('../../assets/default_pic.png')} style={styles.profileImg}/>
         } else {
             return <Image source={{uri:image}} style={styles.profileImg}/>
         }
@@ -96,7 +98,7 @@ class Chat extends React.Component {
                 <View style={styles.row}>
                 {this.generateImage(item.userImage)}
                     <View style={styles.columnContainer}>
-                        <Text style={styles.name}> {item[uid].name} </Text>
+                        <Text style={styles.name} ellipsizeMode='tail' numberOfLines={1} > {item[uid].name} </Text>
                         <Text style={styles.messages} ellipsizeMode='tail' numberOfLines={1}>
                             {this.processMessage(item, uid)}
                         </Text>
