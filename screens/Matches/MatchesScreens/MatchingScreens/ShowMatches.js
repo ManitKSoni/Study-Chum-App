@@ -20,7 +20,15 @@ class ShowMatches extends React.Component {
      */
     async componentDidMount() {
         var data = await createMatchesData();
-        this.setState({data: data})
+        var dupeMap = new Map(); 
+        var trueData = [];
+        for(let i = 0; i < data.length; i++) {
+            if(!dupeMap.has(data[i].userID)) {
+                dupeMap.set(data[i].userID, true);
+                trueData.push(data[i]);
+            }
+        }
+        this.setState({data: trueData})
         this.setState({loaded:true})
     }
     
