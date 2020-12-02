@@ -242,6 +242,8 @@ class Home extends React.Component {
                 minBack: Constants.calendarInputBox,
                 timeOfDayBack: Constants.calendarInputBox,
             });
+            this.loadItems({timestamp: Date.now()});
+            //console.log("items:", this.state.items);
         }
         else {
             this.clearInput();
@@ -399,7 +401,7 @@ class Home extends React.Component {
         if (this.checkFields()) {
             this.formatTime();
             var date = this.state.year + '-' + this.state.month + '-' + this.state.day;
-            this.setModalVisible(false);
+            //this.setModalVisible(false);
             var userID = Firebase.auth().currentUser.uid;
             var doc = this.db.collection("users").doc(userID)
             var docDetails = await doc.get()
@@ -417,7 +419,6 @@ class Home extends React.Component {
                     dayArr.push(dateMap);
                     doc.update({[key]: dayArr});
                     console.log("map updated");
-                    //this.setState({items: eventMap})
                 }
                 // the date does not exist in the map
                 else {
@@ -429,12 +430,13 @@ class Home extends React.Component {
                     doc.update({[key]: dayArr});
                     console.log("map updated");
                     this.state.items[date] = dateMap;
-                    //this.setState({items: eventMap})
+                    //this.setModalVisible(false);
                 }
-                this.setState({items: eventMap})
+                //this.setState({items: eventMap})
                 //console.log(this.state.items);
                 this.setState({year: ''})
             }
+            this.setModalVisible(false);
         }
         else {
             Alert.alert("Invalid date/time entry");
@@ -497,6 +499,9 @@ class Home extends React.Component {
 
     // loads the day items to be displayed on the agenda 
     loadItems(day) {
+        //this.fetchUserDetails();
+        //console.log("timestamp:", day.timestamp);
+        //console.log("Date.now(): ", Date.now());
         setTimeout(() => {
           for (let i = -15; i < 85; i++) {
             const time = day.timestamp + i * 24 * 60 * 60 * 1000;
