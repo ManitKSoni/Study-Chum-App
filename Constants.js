@@ -10,3 +10,5 @@ export const waveHeight = 848;
 export const waveWidth = 1200;
 export const waveWidthRatio = windowWidth / waveWidth;
 export const headerFontSize = windowHeight / 25;
+export const calendarInputBox = "#ECECEC";
+export const invalidInputBox = "#FFCCCB";
