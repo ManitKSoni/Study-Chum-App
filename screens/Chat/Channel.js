@@ -29,6 +29,7 @@ class Channel extends React.Component {
     this.props.navigation.navigate('UserProfile', {
       userID: uid,
       profile: snapshot.data(),
+      URI: userData.userImage
     });
   }
 
@@ -64,7 +65,7 @@ class Channel extends React.Component {
   componentWillUnmount() {
     this.props.navigation.dangerouslyGetParent().setOptions({
       tabBarVisible: true
-    });
+  });
     this.unsubscribe() // Closes the listener
   }
 

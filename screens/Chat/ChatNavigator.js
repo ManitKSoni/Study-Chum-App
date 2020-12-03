@@ -16,6 +16,7 @@ export default class ChatNavigator extends React.Component {
     constructor(props) {
         super(props)
         this.onPressGoToChat = this.onPressGoToChat.bind(this);
+        this.onPressGoToChannel = this.onPressGoToChannel.bind(this);
     }
 
     onPressGoToChat() {
@@ -23,6 +24,10 @@ export default class ChatNavigator extends React.Component {
         this.props.navigation.setOptions({
             tabBarVisible: true
         });
+    }
+
+    onPressGoToChannel() {
+        this.props.navigation.pop()
     }
 
     render() {
@@ -51,7 +56,18 @@ export default class ChatNavigator extends React.Component {
                         fontSize: Constants.headerFontSize
                     },
                 }} />
-                <Stack.Screen name="UserProfile" component={UserProfile} />
+                
+                <Stack.Screen name="UserProfile" component={UserProfile} options={{
+                    headerLeft: () => (
+                        <Icon name="chevron-left" type="octicon" size={40} containerStyle={{paddingLeft:Constants.windowWidth*.025}}
+                        color="#FFFFFF" onPress={this.onPressGoToChannel}/>
+                    ),
+                    title:"",
+                    headerTitleAlign: "center",
+                    headerStyle: {backgroundColor: Constants.secondaryColor},
+                    headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
+                    fontSize:Constants.headerFontSize},
+                }}/>
             </Stack.Navigator>
         )
     }

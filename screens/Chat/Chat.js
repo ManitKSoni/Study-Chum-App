@@ -1,7 +1,9 @@
 import React from 'react'
-import { View, FlatList, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
+import { View, FlatList, Text, StyleSheet, Image, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
 import Firebase from '../../config/Firebase'
 import ChatDataModel from './ChatDataModel'
+import * as Constants from '../../Constants'
+
 
 class Chat extends React.Component {
 
@@ -10,14 +12,15 @@ class Chat extends React.Component {
         this.onPressRow = this.onPressRow.bind(this)
         this.chatDataModel = new ChatDataModel()
         this.state = {
-            buddies: []
+            buddies: [],
+            loaded: false
         }
     }
 
     /** Will assign the buddies array state to database array */
     componentDidMount() {
-        this.chatDataModel.newChatListener((channels) => {
-            this.setState({ buddies: channels })
+        this.chatDataModel.newChatListener( (channels) => {
+            this.setState({buddies: channels, loaded: true})
         })
     }
 
@@ -90,6 +93,7 @@ class Chat extends React.Component {
 
     /** Function to render a specific channel/row of the flatlist **/
     renderItem(item, uid) {
+        if (item.lastTimestamp == "") { return; }
         return (
             <TouchableWithoutFeedback onPress={() => this.onPressRow(item, uid)}>
                 <View style={styles.row}>
@@ -109,14 +113,22 @@ class Chat extends React.Component {
     render() {
         const buddiesArray = Object.values(this.state.buddies)
         const uid = Firebase.auth().currentUser.uid
-        return (
-            <View style={styles.container}>
-                <FlatList
-                    data={buddiesArray}
-                    renderItem={({ item }) => this.renderItem(item, uid)}
-                />
-            </View>
-        )
+        if (this.state.loaded) {
+            return (
+                <View style = {styles.container}>
+                    <FlatList
+                        data={buddiesArray}
+                        renderItem={({ item }) => this.renderItem(item, uid)}
+                    />
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.loadingContainer}>
+                    <Text style={styles.loadingText}> Loading...</Text>
+                    <ActivityIndicator size="large" color={Constants.secondaryColor} />
+                </View>
+            )}
     }
 }
 
@@ -168,7 +180,18 @@ const styles = StyleSheet.create({
         marginHorizontal: 3,
         borderRadius: 75 / 2,
         resizeMode: 'contain',
-    },
+      },
+      loadingContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white'
+      },
+      loadingText: {
+          fontSize: 36,
+          fontFamily: "ProximaNova",
+          color: Constants.secondaryColor
+      },
 })
 
 export default Chat
