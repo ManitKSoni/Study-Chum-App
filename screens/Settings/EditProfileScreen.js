@@ -57,6 +57,9 @@ class EditProfileScreen extends React.Component {
         this.props.navigation.navigate('EditProfileMainScreen', {
             profile: this.state.userProfile
         })
+        this.props.navigation.dangerouslyGetParent().setOptions({
+            tabBarVisible: false
+        });
     }
 
     render() {

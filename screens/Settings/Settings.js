@@ -57,6 +57,9 @@ class Settings extends React.Component{
     /** Navigates to EditProfile form */
     onPressEditProfile() {
         this.props.navigation.navigate("EditProfileMainScreen");
+        this.props.navigation.dangerouslyGetParent().setOptions({
+            tabBarVisible: false
+        });
     }
 
     /** Called on Settings screen being rendered */
