@@ -22,6 +22,9 @@ export default class ChatNavigator extends React.Component {
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: 'Chat' }],
+        })
+        this.props.navigation.dangerouslyGetParent().setOptions({
+            tabBarVisible: true
         });
     }
 

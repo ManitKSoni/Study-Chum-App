@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ScrollView, Text, KeyboardAvoidingView, Platform, StyleSheet, Keyboard, SafeAreaView, Image } from 'react-native'
+import { View, ScrollView, Text, KeyboardAvoidingView, StyleSheet, Keyboard, SafeAreaView, Image, Platform, Content } from 'react-native'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import Firebase from '../../config/Firebase'
 import ThreadModel from './ThreadModel'
@@ -10,7 +10,6 @@ import ThreadHeaderView from './ThreadHeaderView';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import * as Constants from '../../Constants.js'
 
-
 class Channel extends React.Component {
 
   constructor(props) {
@@ -20,10 +19,9 @@ class Channel extends React.Component {
       messages: []
     }
 
-    this.unsubscribe = () => {}
+    this.unsubscribe = () => { }
     this.onPressHeader = this.onPressHeader.bind(this)
-  } 
-
+  }
 
   async onPressHeader() {
     const { uid, userData } = this.props.route.params;
@@ -32,12 +30,12 @@ class Channel extends React.Component {
       userID: uid,
       profile: snapshot.data(),
     });
-  } 
+  }
 
   parseMessage(message) {
     if (message.createdAt == NaN) {
       return null
-    } 
+    }
 
     const seconds = parseInt(message.createdAt.seconds);
     var date = new Date(0);
@@ -48,10 +46,11 @@ class Channel extends React.Component {
   }
 
   componentDidMount() {
+
     const { userData, uid, title } = this.props.route.params;
 
-    this.props.navigation.setOptions({ headerTitle: (props) => <ThreadHeaderView onPressHeader={this.onPressHeader} displayName={userData[uid].name} userImage={userData.userImage}/>})
-    let channelID = userData.channelID 
+    this.props.navigation.setOptions({ headerTitle: (props) => <ThreadHeaderView onPressHeader={this.onPressHeader} displayName={userData[uid].name} userImage={userData.userImage} /> })
+    let channelID = userData.channelID
 
     this.threadModel = new ThreadModel(channelID)
     this.unsubscribe = this.threadModel.threadListener((messages) => {
@@ -69,7 +68,7 @@ class Channel extends React.Component {
 
   onSend(messages = []) {
     this.threadModel.sendMessage(messages[0])
-  } 
+  }
 
   renderBubble(props) {
     return (
@@ -98,18 +97,19 @@ class Channel extends React.Component {
   render() {
     const { userData, uid } = this.props.route.params;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
           <GiftedChat
             isAnimated
             messages={this.state.messages}
             renderBubble={this.renderBubble}
             onSend={message => this.onSend(message)}
+            renderAvatar={null}
             user={{
               _id: uid,
-              name: userInstance._user.firstName
+              name: userInstance._user.firstName,
             }}
           />
-      </View>
+      </SafeAreaView>
     );
   }
 }

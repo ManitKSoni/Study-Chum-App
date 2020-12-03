@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         height: 35,
         overflow: 'hidden',
         justifyContent: 'space-around',
-    }
+    },
 })
 
 export default MainTabBar

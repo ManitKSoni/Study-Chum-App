@@ -6,7 +6,7 @@ class Blank extends React.Component {
 
     render() {
         return(
-            <View></View>
+            <View style={{flex:1, backgroundColor: 'white'}}></View>
         )
     }
 }

@@ -12,7 +12,7 @@ import {
 
 import Firebase from '../../config/Firebase';
 import Dropdown from '../Authentication/Dropdown.js';
-import {UPAV} from '../Authentication/UserProfileAnswerView.js';
+import { UPAV } from '../Authentication/UserProfileAnswerView.js';
 import * as Constants from '../../Constants.js'
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import userInstance from "../Singletons/UserSingleton";
@@ -23,7 +23,7 @@ import Settings from "./Settings";
 class EditProfileMainScreen extends React.Component {
 
     state = {
-        userProfile : {
+        userProfile: {
             firstName: '',
             lastName: '',
             major: '',
@@ -42,7 +42,7 @@ class EditProfileMainScreen extends React.Component {
         this.state.userProfile.major = userInstance._user.major;
         this.state.userProfile.language = userInstance._user.language;
         this.state.userProfile.year = userInstance._user.year;
-        
+
         this.db = Firebase.firestore();
     }
 
@@ -53,9 +53,9 @@ class EditProfileMainScreen extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        
+
         if (prevProps.route.params?.profile !== this.props.route.params?.profile) {
-            this.setState({userProfile: this.props.route.params.profile})
+            this.setState({ userProfile: this.props.route.params.profile })
         }
     }
 
@@ -88,29 +88,29 @@ class EditProfileMainScreen extends React.Component {
             <View style={styles.container}>
 
                 <TouchableOpacity
-                    style = {styles.border}
+                    style={styles.border}
                     onPress={() => this.navigateToEdit(0)}>
                     <Text style={styles.text}> Name </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style = {styles.border}
+                    style={styles.border}
                     onPress={() => this.navigateToEdit(1)}>
                     <Text style={styles.text}> Major </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style = {styles.border}
+                    style={styles.border}
                     onPress={() => this.navigateToEdit(2)}>
                     <Text style={styles.text}> Year of Graduation </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                style = {styles.border}
-                onPress={() => this.navigateToEdit(3)}>
-                <Text style={styles.text}> Preferred Language </Text>
+                    style={styles.border}
+                    onPress={() => this.navigateToEdit(3)}>
+                    <Text style={styles.text}> Preferred Language </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                style = {styles.border}
-                onPress={() => this.navigateToEdit(4)}>
-                <Text style={styles.text}> Bio </Text>
+                    style={styles.border}
+                    onPress={() => this.navigateToEdit(4)}>
+                    <Text style={styles.text}> Bio </Text>
                 </TouchableOpacity>
             </View>
 
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
         //backgroundColor: '#fff',
         //alignItems: 'center',
         //justifyContent: 'center',
-        paddingBottom:20,
+        paddingBottom: 20,
+        backgroundColor: 'white',
     },
     container2: {
         //backgroundColor: '#fff',

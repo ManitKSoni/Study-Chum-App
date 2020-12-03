@@ -247,10 +247,10 @@ const styles = StyleSheet.create({
     btnSection: {
         width: 225,
         height: 50,
-        backgroundColor: '#DCDCDC',
+        backgroundColor: Constants.primaryColor,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 3,
+        borderRadius: 10,
         marginBottom:10
     },
     logoutbtnSection: {
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         textAlign: 'center',
-        color: 'gray',
+        color: 'white',
         fontSize: Constants.windowWidth*0.038,
         fontWeight:'bold',
         fontFamily: 'ProximaNova',

@@ -21,9 +21,6 @@ class Chat extends React.Component {
         })
     }
 
-    componentWillUnmount() {
-    }
-
     //converts 24 hour to 12 hour format with am/pm
     convertToStandardTime(lastSentDate) {
         var convertedTime = "";
@@ -80,6 +77,9 @@ class Chat extends React.Component {
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: 'Channel', params: { userData: item, uid: uid } }],
+        })
+        this.props.navigation.dangerouslyGetParent().setOptions({
+            tabBarVisible: false
         });
     }
 

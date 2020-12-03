@@ -147,11 +147,14 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         paddingTop:.5,
+        backgroundColor: 'white',
     },
     item: {
-        borderColor: 'grey',
-        borderWidth: 1,
+        borderBottomColor: 'grey',
+        borderBottomWidth: 0.5,
+        backgroundColor: 'white',
         marginHorizontal:.15,
         height:80,
         width: Constants.windowWidth,
@@ -190,6 +193,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'white'
       },
       loadingText: {
           fontSize: 36,

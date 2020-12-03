@@ -63,14 +63,14 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight || 0,
     },
     item: {
+        flex:1,
         borderColor: 'white',
         borderBottomColor: 'grey',
-        borderWidth: 1,
+        borderBottomWidth: 0.50,
         marginVertical: 5,
         marginHorizontal: 5,
         paddingBottom: 10
     },
-
     courses: {
         fontSize: 30,
         textAlign: 'left',
