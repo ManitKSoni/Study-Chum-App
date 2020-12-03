@@ -31,8 +31,6 @@ class EditProfileScreen extends React.Component {
     constructor() {
         super()
         this.onPressContinue = this.onPressContinue.bind(this)
-        
-
         this.state.userProfile.bio = userInstance._user.bio;
         this.state.userProfile.firstName = userInstance._user.firstName;
         this.state.userProfile.lastName = userInstance._user.lastName;
@@ -57,9 +55,6 @@ class EditProfileScreen extends React.Component {
         this.props.navigation.navigate('EditProfileMainScreen', {
             profile: this.state.userProfile
         })
-        this.props.navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        });
     }
 
     render() {
