@@ -29,6 +29,7 @@ class Channel extends React.Component {
     this.props.navigation.navigate('UserProfile', {
       userID: uid,
       profile: snapshot.data(),
+      URI: userData.userImage
     });
   }
 

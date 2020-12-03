@@ -23,6 +23,7 @@ class ChatDataModel {
             for (change of snapshots.docChanges()) {
                 switch (change.type) {
                     case "added": // When a new channel is created 
+                        if (change.doc.get('lastTimestamp') == "") {break;}
                         let json = change.doc.data()
                         json['userImage'] = await this.getImage(this.getOtherUserID(json.users))
                         json['channelID'] = change.doc.id

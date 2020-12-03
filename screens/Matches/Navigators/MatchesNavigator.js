@@ -37,6 +37,10 @@ export default class MatchesNavigator extends React.Component {
         () => this.props.navigation.navigate("ShowMatches", {name:SavedData.title}));
   }
 
+  onPressGoBack = () => {
+    this.props.navigation.pop()
+  }
+
   render() {
     return (
         <Stack.Navigator>
@@ -98,7 +102,15 @@ export default class MatchesNavigator extends React.Component {
             options={{headerShown:null}}/>
 
           <Stack.Screen name="ChatChannel" component={Channel} options={{
-            headerStyle: {backgroundColor: Constants.secondaryColor}
+                  headerLeft: () => (
+                      <Icon name="chevron-left" type="octicon" size={40} containerStyle={{paddingLeft:Constants.windowWidth*.025}}
+                      color="#FFFFFF" onPress={this.onPressGoBack}/>
+                  ),
+                  title:"",
+                  headerTitleAlign: "center",
+                  headerStyle: {backgroundColor: Constants.secondaryColor},
+                  headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
+                  fontSize:Constants.headerFontSize},
           }} />
 
           <Stack.Screen name="EditPreferences" component={EditPreferences} 
