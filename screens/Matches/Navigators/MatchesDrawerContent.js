@@ -4,6 +4,7 @@ import {Drawer} from 'react-native-paper'
 import {createDrawerData} from '../Controllers/CreateData';
 import MatchingAlgorithm from "../Controllers/MatchingAlgorithm";
 import SavedData from "../Controllers/SavedData"
+import * as Constants from "../../../Constants"
 
 const Item = ({course, onPress}) => (
     <TouchableOpacity style={styles.item} onPress={onPress}> 
@@ -22,9 +23,6 @@ export function DrawerContent(props) {
     var onPressGoToCourses = () => {
         props.navigation.navigate("Blank"); 
         props.navigation.navigate("Courses");
-     /*   props.navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        });*/
     }
 
     const renderItem = ({item}) => (
@@ -75,19 +73,19 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     courses: {
-        fontSize: 30,
+        fontSize: Constants.windowWidth * .08,
         textAlign: 'left',
         fontFamily: 'ProximaNova'
     },
 
     header: {
-        fontSize: 24,
+        fontSize: Constants.windowWidth * .08,
         textAlign: 'center',
         fontFamily: 'ProximaNova'
     },
 
     addButton: {
-        fontSize: 30,
+        fontSize: Constants.windowWidth * .085,
         fontFamily: 'ProximaNova',
         color: 'grey'
     }

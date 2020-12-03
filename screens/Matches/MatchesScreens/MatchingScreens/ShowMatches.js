@@ -102,7 +102,7 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                     <View>
                         <View style = {styles.centerText}> 
                             <Text style={styles.name}>  
-                            {((name).length > (Constants.windowWidth/20)) ?
+                            {((name).length > (Constants.windowWidth/10)) ?
                                     (((name).substring(0,(Constants.windowWidth/20)-3)) + '...') :
                                     name} {"\n"} 
                                 <Text style={styles.bio}>
@@ -130,7 +130,7 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                     <View>
                         <View style = {styles.centerText}> 
                             <Text style={styles.name}>  
-                            {((name).length > (Constants.windowWidth/20)) ?
+                            {((name).length > (Constants.windowWidth/10)) ?
                                     (((name).substring(0,(Constants.windowWidth/20)-3)) + '...') :
                                     name} {"\n"} 
                                 <Text style={styles.bio}>
@@ -178,12 +178,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontFamily: "ProximaNova"
     },
-    header: {
-        fontSize: 36,
-        fontFamily: "ProximaNova",
-        textAlign: "center"
-
-    },
     images: {
         width: 65,
         height: 65,
@@ -206,7 +200,8 @@ const styles = StyleSheet.create({
       },
       itemColumn: {
         flexDirection: 'column',
-        width: '22%',
+        width: '21%',
+        alignItems: "center",
       },
       itemRow: {
         flexDirection: 'row',

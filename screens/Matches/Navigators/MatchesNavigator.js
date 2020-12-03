@@ -53,7 +53,7 @@ export default class MatchesNavigator extends React.Component {
               headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
                 fontSize:Constants.headerFontSize},
               headerLeft: () => (
-                <Icon name="menu" size={40} containerStyle={{paddingLeft:5}} color="#FFFFFF"
+                <Icon name="menu" size={40} containerStyle={{paddingLeft:Constants.windowWidth*.025}} color="#FFFFFF"
                 backgroundColor="#009387" onPress={()=> this.props.navigation.openDrawer()}/>
               )
             }}
@@ -82,11 +82,11 @@ export default class MatchesNavigator extends React.Component {
                   fontSize:Constants.headerFontSize},
                 headerTitleAlign: "center",
                 headerLeft: () => (
-                  <Icon name="menu" size ={40} containerStyle={{paddingLeft:5}} color="#FFFFFF"
+                  <Icon name="menu" size ={40} containerStyle={{paddingLeft:Constants.windowWidth*.025}} color="#FFFFFF"
                   backgroundColor="#009387" onPress={() => this.props.navigation.openDrawer()}/>
                 ),
                 headerRight: () => (
-                  <Icon name="edit" size={31} type="material" containerStyle={{paddingRight:5}} 
+                  <Icon name="edit" size={31} type="material" containerStyle={{paddingRight:Constants.windowWidth*.025}} 
                   color="#FFFFFF" onPress={() => this.props.navigation.navigate("EditPreferences", {title:SavedData.title})}/>
                 )
               })}
