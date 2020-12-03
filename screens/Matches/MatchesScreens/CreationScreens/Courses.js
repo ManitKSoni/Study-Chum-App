@@ -34,6 +34,12 @@ class Courses extends React.Component {
         selectedItem: []
     }
 
+    componentDidMount() {
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: false
+        });
+    }
+
     onPressGoToAvailability = () => {
         //console.log(this.state.selectedItem[0].name === undefined)
         if (this.state.selectedItem.length == 0) {
@@ -50,6 +56,9 @@ class Courses extends React.Component {
 
     onPressGoToMatches = () => {
         this.props.navigation.navigate("Matches");
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        });
     }
 
 

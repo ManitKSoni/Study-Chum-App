@@ -102,7 +102,9 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                     <View>
                         <View style = {styles.centerText}> 
                             <Text style={styles.name}>  
-                                {name} {"\n"} 
+                            {((name).length > (Constants.windowWidth/10)) ?
+                                    (((name).substring(0,(Constants.windowWidth/20)-3)) + '...') :
+                                    name} {"\n"} 
                                 <Text style={styles.bio}>
                                     {((bio).length > (Constants.windowWidth/10)) ?
                                     (((bio).substring(0,(Constants.windowWidth/10)-3)) + '...') :
@@ -128,7 +130,9 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                     <View>
                         <View style = {styles.centerText}> 
                             <Text style={styles.name}>  
-                                {name} {"\n"} 
+                            {((name).length > (Constants.windowWidth/10)) ?
+                                    (((name).substring(0,(Constants.windowWidth/20)-3)) + '...') :
+                                    name} {"\n"} 
                                 <Text style={styles.bio}>
                                     {((bio).length > (Constants.windowWidth/10)) ?
                                     (((bio).substring(0,(Constants.windowWidth/10)-3)) + '...') :

@@ -22,6 +22,9 @@ export function DrawerContent(props) {
     var onPressGoToCourses = () => {
         props.navigation.navigate("Blank"); 
         props.navigation.navigate("Courses");
+     /*   props.navigation.dangerouslyGetParent().setOptions({
+            tabBarVisible: false
+        });*/
     }
 
     const renderItem = ({item}) => (
