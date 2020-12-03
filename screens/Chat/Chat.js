@@ -96,7 +96,7 @@ class Chat extends React.Component {
 
     /** Function to render a specific channel/row of the flatlist **/
     renderItem(item, uid) {
-        console.log(item.lastTimestamp)
+        if (item.lastTimestamp == "") { return; }
         return (
             <TouchableWithoutFeedback onPress={() => this.onPressRow(item, uid)}>
                 <View style={styles.row}>
