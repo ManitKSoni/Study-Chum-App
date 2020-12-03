@@ -33,6 +33,9 @@ export class PreferenceProfiles {
         SavedData.changeTitle(this.courseName);
         MatchingAlgorithm.getStudentMap(this.courseName, 
         () => props.navigation.navigate("ShowMatches", {name: this.courseName}));
+        props.navigation.dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        });
     }
 
     /** 

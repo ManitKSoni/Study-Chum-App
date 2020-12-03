@@ -38,6 +38,9 @@ class Availibility extends React.Component {
 
     onPressGoToMatches = () => {
         this.props.navigation.navigate("Matches");
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        });
     }
 
     onPressGoToRemote = () => {

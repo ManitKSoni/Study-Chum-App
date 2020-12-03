@@ -20,11 +20,17 @@ class Quiet extends React.Component {
 
     onPressGoToMatches = () => {
         this.props.navigation.navigate("Matches");
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        });
     }
 
     generateMatches = () => {
         PreferenceProfiles.addQuiet(this.state.quiet);
         PreferenceProfiles.addAndShow(this.props);
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        });
     }
 
     render() {
