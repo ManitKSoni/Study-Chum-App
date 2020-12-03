@@ -35,6 +35,8 @@ class Home extends React.Component {
         // tells wether the add event pop-up is shown
         showAdd: false,
         showConfirm: false,
+        // subtraction adjusts for the 8 hour gap bug
+        today: this.timeToString(Date.now() - 28800000 ),
         // event creation input
         month: '',
         day: '',
@@ -73,7 +75,7 @@ class Home extends React.Component {
                             loadItemsForMonth={this.loadItems.bind(this)}
                             renderItem={this.renderItem.bind(this)}
                             rowHasChanged={this.rowHasChanged.bind(this)} 
-                            selected={ this.getTodaysDate.bind(this) }
+                            selected={this.state.today}
                             renderKnob={() => {return(<Image style={{
                                 width: Constants.windowHeight * .11,
                                 height: Constants.windowHeight * .035,
@@ -426,9 +428,9 @@ class Home extends React.Component {
             var doc = this.db.collection("users").doc(userID)
             var docDetails = await doc.get()
             if (docDetails.exists) {
-                var eventMap = docDetails.get("events");
+                //var eventMap = docDetails.get("events");
                 //console.log(eventMap);
-                //var eventMap = this.state.items;
+                var eventMap = this.state.items;
                 var eventDate = eventMap[date];
                 var key = "events." + date;
                 // if the date already exists in the map
@@ -458,7 +460,6 @@ class Home extends React.Component {
         else {
             Alert.alert("Invalid date/time entry");
         }
-        this.forceUpdate();
     }
 
     // clears the saved user input for creating an event
@@ -500,20 +501,6 @@ class Home extends React.Component {
         }
     }
 
-    // returns the current date in yyyy-mm-dd format
-    getTodaysDate()  {
-        var year = new Date().getFullYear();
-        var month = new Date().getMonth() + 1;
-        var day = new Date().getDate();
-        if (day.length == 1) {
-            day = "0 " + day;
-        }
-        var formattedDate = year + '-' + month + "-" + day;
-        console.log(formattedDate);
-        this.setState({today: formattedDate});
-        return (formattedDate.toString);
-    }
-
     // loads the day items to be displayed on the agenda 
     loadItems(day) {
         //this.fetchUserDetails();
@@ -541,7 +528,10 @@ class Home extends React.Component {
           <TouchableOpacity
             onPress={() => Alert.alert(item.name, item.time)}
           >
-            <Text style={styles.text}>{item.name + '\n'}{item.time}</Text>
+            <View style={{paddingRight: Constants.windowWidth * 0.08,}}>
+                <Text style={styles.text}>{item.name}</Text>
+                <Text style={styles.time}>{item.time}</Text>
+            </View>
           </TouchableOpacity>
         );
       }
@@ -614,6 +604,13 @@ const styles = StyleSheet.create({
     text: {
         fontSize: Constants.windowWidth * 0.045,
         paddingTop: Constants.windowHeight * 0.045,
+        paddingLeft: Constants.windowWidth * 0.05,
+        textAlign:'left'
+    },
+    time: {
+        fontSize: Constants.windowWidth * 0.037,
+        fontWeight: "700",
+        paddingTop: Constants.windowHeight * 0.003,
         paddingLeft: Constants.windowWidth * 0.05,
         textAlign:'left'
     },
