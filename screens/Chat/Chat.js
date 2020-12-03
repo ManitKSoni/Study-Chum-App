@@ -16,8 +16,8 @@ class Chat extends React.Component {
 
     /** Will assign the buddies array state to database array */
     componentDidMount() {
-        this.chatDataModel.newChatListener( (channels) => {
-            this.setState({buddies: channels})
+        this.chatDataModel.newChatListener((channels) => {
+            this.setState({ buddies: channels })
         })
     }
 
@@ -58,7 +58,7 @@ class Chat extends React.Component {
         if (timeDifference >= 0 && timeDifference < oneDay) {
             return this.convertToStandardTime(lastSentDate); //returns hour:minute am/pm
         } else {
-            if(lastSentDate.toLocaleDateString() === "Invalid Date") {
+            if (lastSentDate.toLocaleDateString() === "Invalid Date") {
                 return "";
             }
             return lastSentDate.toLocaleDateString(); //returns day/month/year format
@@ -74,10 +74,7 @@ class Chat extends React.Component {
 
     /** Handles an individual channel and launches a new screen passing data required **/
     onPressRow(item, uid) {
-        this.props.navigation.reset({
-            index: 0,
-            routes: [{ name: 'Channel', params: { userData: item, uid: uid } }],
-        })
+        this.props.navigation.navigate('Channel',{userData: item, uid: uid});
         this.props.navigation.dangerouslyGetParent().setOptions({
             tabBarVisible: false
         });
@@ -85,9 +82,9 @@ class Chat extends React.Component {
 
     generateImage(image) {
         if (image == null) {
-            return <Image source={require('../../assets/default_pic.png')} style={styles.profileImg}/>
+            return <Image source={require('../../assets/default_pic.png')} style={styles.profileImg} />
         } else {
-            return <Image source={{uri:image}} style={styles.profileImg}/>
+            return <Image source={{ uri: image }} style={styles.profileImg} />
         }
     }
 
@@ -96,7 +93,7 @@ class Chat extends React.Component {
         return (
             <TouchableWithoutFeedback onPress={() => this.onPressRow(item, uid)}>
                 <View style={styles.row}>
-                {this.generateImage(item.userImage)}
+                    {this.generateImage(item.userImage)}
                     <View style={styles.columnContainer}>
                         <Text style={styles.name} ellipsizeMode='tail' numberOfLines={1} > {item[uid].name} </Text>
                         <Text style={styles.messages} ellipsizeMode='tail' numberOfLines={1}>
@@ -113,7 +110,7 @@ class Chat extends React.Component {
         const buddiesArray = Object.values(this.state.buddies)
         const uid = Firebase.auth().currentUser.uid
         return (
-            <View style = {styles.container}>
+            <View style={styles.container}>
                 <FlatList
                     data={buddiesArray}
                     renderItem={({ item }) => this.renderItem(item, uid)}
@@ -124,7 +121,7 @@ class Chat extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container :{
+    container: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -156,7 +153,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     messages: {
-        marginLeft: 6, 
+        marginLeft: 6,
         fontSize: 12,
     },
     timestamp: {
@@ -169,9 +166,9 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         marginHorizontal: 3,
-        borderRadius:75/2,
+        borderRadius: 75 / 2,
         resizeMode: 'contain',
-      },
+    },
 })
 
 export default Chat

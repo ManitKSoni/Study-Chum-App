@@ -62,6 +62,9 @@ class Channel extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.navigation.dangerouslyGetParent().setOptions({
+      tabBarVisible: true
+    });
     this.unsubscribe() // Closes the listener
   }
 

@@ -21,7 +21,6 @@ class MainTabBar extends React.Component {
         return (
             <Tab.Navigator screenOptions={({route}) => ({
                 tabBarIcon: ({focused, color, size}) => {
-
                     switch(route.name) {
                         case 'Home':
                             if (focused) {
@@ -51,7 +50,7 @@ class MainTabBar extends React.Component {
                 },
             })} 
             tabBarOptions={{
-                showLabel: false
+                showLabel: false,
             }}>
                 <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Matches" component={MatchesDrawerNavigator} />
