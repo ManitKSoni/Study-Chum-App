@@ -33,7 +33,8 @@ class Home extends React.Component {
         }} source={require('../../assets/study_chums_title.png')} ></Image>,
         items: {},
         // tells wether the add event pop-up is shown
-        show: false,
+        showAdd: false,
+        showConfirm: false,
         // event creation input
         month: '',
         day: '',
@@ -92,10 +93,7 @@ class Home extends React.Component {
                         <Modal
                           animationType="slide"
                           transparent={true}
-                          visible={this.state.show}
-                          onRequestClose={() => {
-                            Alert.alert("Modal has been closed.");
-                          }}
+                          visible={this.state.showAdd}
                         >
                             <View style = {styles.centeredView}>
                                 <View style={styles.modalView}>
@@ -197,7 +195,7 @@ class Home extends React.Component {
                                     <View style={{flexDirection:"row", paddingTop: Constants.windowWidth * 0.02}}>
                                         <View style={{paddingRight: Constants.windowWidth * 0.05}}>
                                         <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, paddingHorizontal: Constants.windowWidth * 0.03}}
-                                            onPress={() => this.setModalVisible(false)}>
+                                            onPress={() => this.setAddVisible(false)}>
                                             <Text style={styles.cancel}>
                                                 Cancel     
                                             </Text>
@@ -215,9 +213,28 @@ class Home extends React.Component {
                                 <KeyboardSpacer/>}
                             </View>
                         </Modal>
+                        <Modal
+                          animationType="slide"
+                          transparent={true}
+                          visible={this.state.showConfirm}
+                        >
+                            <View style = {styles.centeredView}>
+                                <View style = {styles.confirmView}>
+                                    <Text style = {{textAlign: 'center', fontSize: Constants.windowHeight * 0.027, paddingBottom: Constants.windowHeight * 0.02}}>
+                                        Event Added
+                                    </Text>
+                                    <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, paddingHorizontal: Constants.windowWidth * 0.07}}
+                                            onPress={() => this.setConfirmVisible(false)}>
+                                            <Text style={styles.addEvent}>
+                                                OK
+                                            </Text>
+                                        </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
                         <View style={{paddingTop:Constants.windowHeight * 0.02}}>
                             <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor,}}
-                            onPress={() => this.setModalVisible(true)}>
+                            onPress={() => this.setAddVisible(true)}>
                                 <Text style={styles.addAnEvent}>
                                     Add an Event
                                 </Text>
@@ -230,8 +247,8 @@ class Home extends React.Component {
     }
 
     // modifies the visibility of the add event pop-up
-    setModalVisible = (visible) => {
-        this.setState({ show: visible});
+    setAddVisible = (visible) => {
+        this.setState({ showAdd: visible});
         if (visible == false) {
             this.setState({
                 descBack: Constants.calendarInputBox,
@@ -248,6 +265,10 @@ class Home extends React.Component {
         else {
             this.clearInput();
         }
+    }
+
+    setConfirmVisible = (visible) => {
+        this.setState({showConfirm: visible});
     }
 
     /** Checks all fields for valid user input */
@@ -401,7 +422,6 @@ class Home extends React.Component {
         if (this.checkFields()) {
             this.formatTime();
             var date = this.state.year + '-' + this.state.month + '-' + this.state.day;
-            //this.setModalVisible(false);
             var userID = Firebase.auth().currentUser.uid;
             var doc = this.db.collection("users").doc(userID)
             var docDetails = await doc.get()
@@ -413,30 +433,27 @@ class Home extends React.Component {
                 var key = "events." + date;
                 // if the date already exists in the map
                 if (!eventDate) {
-                    console.log("date not found")
+                    //console.log("date not found")
                     var dayArr = [];
                     var dateMap = {name: this.state.name, time: this.state.time};
                     dayArr.push(dateMap);
                     doc.update({[key]: dayArr});
-                    console.log("map updated");
+                    //console.log("map updated");
                 }
                 // the date does not exist in the map
                 else {
-                    console.log("date found");
+                    //console.log("date found");
                     var dayArr = eventDate;
                     var dateMap = {name: this.state.name, time: this.state.time};
                     dayArr.push(dateMap);
                     dayArr.sort(this.sortTime);
                     doc.update({[key]: dayArr});
-                    console.log("map updated");
+                    //console.log("map updated");
                     this.state.items[date] = dateMap;
-                    //this.setModalVisible(false);
                 }
-                //this.setState({items: eventMap})
-                //console.log(this.state.items);
-                this.setState({year: ''})
+                this.setConfirmVisible(true);
             }
-            this.setModalVisible(false);
+            this.setAddVisible(false);
         }
         else {
             Alert.alert("Invalid date/time entry");
@@ -577,6 +594,23 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5
     },
+    confirmView: {
+        margin: Constants.windowHeight * 0.2,
+        width: Constants.windowWidth * 0.7,
+        height: Constants.windowHeight * 0.16,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: Constants.windowHeight * 0.026,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
     text: {
         fontSize: Constants.windowWidth * 0.045,
         paddingTop: Constants.windowHeight * 0.045,
@@ -610,7 +644,7 @@ const styles = StyleSheet.create({
         fontSize: Constants.windowHeight * 0.02,
         padding: Constants.windowHeight * 0.01,
         borderRadius: 10
-    }
+    },
 });
  
  
