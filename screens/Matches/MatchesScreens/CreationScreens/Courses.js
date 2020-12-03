@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     },
     prompt: {
         paddingTop: Constants.windowHeight * .15,
-        fontSize: 36,
+        fontSize: Constants.windowWidth * 0.087,
         // lineHeight: 40,
         color: 'black',
         textAlign: 'left',
