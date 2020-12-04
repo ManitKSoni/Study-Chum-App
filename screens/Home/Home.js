@@ -112,7 +112,7 @@ class Home extends React.Component {
                                             Month:
                                         </Text>
                                         <TextInput  
-                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center'}}
+                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="MM"
@@ -140,7 +140,7 @@ class Home extends React.Component {
                                             Year: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        style={{height: Constants.windowHeight * 0.026, height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         keyboardType = 'numeric'
                                         maxLength = {4}
                                         placeholder="YYYY"
