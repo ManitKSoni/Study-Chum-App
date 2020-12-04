@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'white',
         borderBottomColor: "gray",
-        borderBottomWidth: 0.5
+        borderBottomWidth: 0.7,
     },
     columnContainer: {
         flex: 1,

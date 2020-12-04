@@ -44,7 +44,6 @@ class EditProfileScreen extends React.Component {
         this.index = this.props.route.params.index
     }
 
-
     updateUser = (key, value) => {
         this.state.userProfile[key] = value
         this.setState({ userProfile: this.state.userProfile })

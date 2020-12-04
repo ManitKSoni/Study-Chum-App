@@ -9,6 +9,7 @@ import ThreadHeaderView from './ThreadHeaderView';
 
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import * as Constants from '../../Constants.js'
+import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 class Channel extends React.Component {
 
@@ -65,7 +66,7 @@ class Channel extends React.Component {
   componentWillUnmount() {
     this.props.navigation.dangerouslyGetParent().setOptions({
       tabBarVisible: true
-  });
+    });
     this.unsubscribe() // Closes the listener
   }
 
@@ -102,17 +103,18 @@ class Channel extends React.Component {
     const { userData, uid } = this.props.route.params;
     return (
       <SafeAreaView style={styles.container}>
-          <GiftedChat
-            isAnimated
-            messages={this.state.messages}
-            renderBubble={this.renderBubble}
-            onSend={message => this.onSend(message)}
-            renderAvatar={null}
-            user={{
-              _id: uid,
-              name: userInstance._user.firstName,
-            }}
-          />
+        <GiftedChat
+          isAnimated
+          messages={this.state.messages}
+          renderBubble={this.renderBubble}
+          onSend={message => this.onSend(message)}
+          renderAvatar={null}
+          user={{
+            _id: uid,
+            name: userInstance._user.firstName,
+          }}
+          bottomOffset={getBottomSpace()}
+        />
       </SafeAreaView>
     );
   }

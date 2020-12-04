@@ -14,26 +14,8 @@ const Stack = createStackNavigator();
 export default class SettingsNavigator extends React.Component {
     constructor(props){
         super(props)
-        this.onPressGoToSettings= this.onPressGoToSettings.bind(this);
-        this.onPressGoToEditProfileMain= this.onPressGoToEditProfileMain.bind(this);
-    }
-    onPressGoToSettings() {
-        this.props.navigation.reset({
-            index: 0,
-            routes: [{ name: 'Settings' }],
-        })
-        this.props.navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: true
-        });
-    }
-    onPressGoToEditProfileMain() {
-        this.props.navigation.reset({
-            index: 0,
-            routes: [{ name: 'EditProfileMainScreen' }],
-        })
-        this.props.navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: true
-        });
+        //this.onPressGoToSettings= this.onPressGoToSettings.bind(this);
+        //this.onPressGoToEditProfileMain= this.onPressGoToEditProfileMain.bind(this);
     }
 
     render() {
@@ -53,7 +35,7 @@ export default class SettingsNavigator extends React.Component {
                     options={{
                         headerLeft: () => (
                             <Icon name="chevron-left" type="octicon" size={40} containerStyle={{ paddingLeft: Constants.windowWidth * .025 }}
-                                color="#FFFFFF" onPress={this.onPressGoToEditProfileMain} />
+                                color="#FFFFFF" onPress={() => this.props.navigation.pop()} />
                         ),
                         title: "Edit Profile",
                         headerTitleAlign: "center",
@@ -67,7 +49,7 @@ export default class SettingsNavigator extends React.Component {
                     options={{
                         headerLeft: () => (
                             <Icon name="chevron-left" type="octicon" size={40} containerStyle={{ paddingLeft: Constants.windowWidth * .025 }}
-                                color="#FFFFFF" onPress={this.onPressGoToSettings} />
+                                color="#FFFFFF" onPress={() => this.props.navigation.pop()} />
                         ),
                         title: "Edit Profile",
                         headerTitleAlign: "center",

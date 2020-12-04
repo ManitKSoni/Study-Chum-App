@@ -27,7 +27,6 @@ import * as Constants from '../../../Constants.js'
 
 /**Create Stack Navigator and provide it the various screens it should know for navigation */
 const Stack = createStackNavigator();
-
 export default class MatchesNavigator extends React.Component {
 
   onPressGoToShowMatches = () => {
@@ -60,17 +59,15 @@ export default class MatchesNavigator extends React.Component {
           />
 
           <Stack.Screen name="Courses" component={Courses} 
-            options = {{headerShown:null}} 
+            options = {{headerShown:null, gestureEnabled: false}} 
           />
 
           <Stack.Screen name="Availibility" component={Availibility} 
-            options = {{headerShown:null}}
+            options = {{headerShown:null, gestureEnabled: false}}
           />
 
           <Stack.Screen name="Quiet" component={Quiet}
-            options = {{
-              headerShown: false
-            }}
+            options = {{headerShown: false, gestureEnabled: false}}
           />
 
           <Stack.Screen name="ShowMatches" component={ShowMatches}
@@ -93,7 +90,7 @@ export default class MatchesNavigator extends React.Component {
             />
 
           <Stack.Screen name="Remote" component={Remote} 
-            options = {{headerShown:null}}/>  
+            options = {{headerShown:null, gestureEnabled: false}}/>  
             
           <Stack.Screen name="Blank" component={Blank} 
             options={{headerShown:null}}/> 

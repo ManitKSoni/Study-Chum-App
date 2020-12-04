@@ -5,10 +5,18 @@ import * as Constants from '../../Constants.js'
 export default class ThreadHeaderView extends React.Component {
 
 
+    generateImage(image) {
+        if (image == null) {
+            return <Image source={require('../../assets/default_pic.png')} style={styles.profileImg} />
+        } else {
+            return <Image source={{ uri: image }} style={styles.profileImg} />
+        }
+    }
+
     render() {
         return (
             <TouchableOpacity style={styles.headerView} onPress={() => this.props.onPressHeader()}>
-                <Image style={styles.profileImg}source={{ uri: this.props.userImage }}/>
+                {this.generateImage(this.props.userImage)}
                 <Text numberOfLines={1} ellipsizeMode='tail' style={styles.headerName}>{this.props.displayName}</Text>
             </TouchableOpacity>
         );
