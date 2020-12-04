@@ -1,6 +1,6 @@
  
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text, Button, Alert, Modal, TextInput, Platform } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text, Alert, Modal, TextInput, Platform } from 'react-native';
 import * as Constants from '../../Constants.js';
 import {Agenda} from 'react-native-calendars';
 import Firebase from '../../config/Firebase';
@@ -21,16 +21,11 @@ class Home extends React.Component {
                 })
             }
         );
-        
         this.fetchUserDetails();
     }
 
     state = {
-        img: <Image style={{
-            width: Constants.windowHeight * .40,
-            height: Constants.windowHeight * .17,
-            resizeMode: 'contain'
-        }} source={require('../../assets/study_chums_title.png')} ></Image>,
+        // holds the event items for the calendar
         items: {},
         // tells wether the add event pop-up is shown
         showAdd: false,
@@ -56,7 +51,7 @@ class Home extends React.Component {
         timeOfDayBack: Constants.calendarInputBox,
     };
 
-    /** Called on Settings screen being rendered */
+    /** Called on Home screen being rendered */
     componentDidMount() {
         this.fetchUserDetails();
     }
@@ -68,8 +63,9 @@ class Home extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                    <View style>
-                        {this.state.img}
+                    <View>
+                        <Image style={styles.titleImage} 
+                        source={require('../../assets/study_chums_title.png')} ></Image>
                         <Agenda style={styles.calendar}
                             items={this.state.items}
                             loadItemsForMonth={this.loadItems.bind(this)}
@@ -84,7 +80,7 @@ class Home extends React.Component {
                             theme={{
                             calendarBackground: '#ffffff',
                             selectedDayBackgroundColor: Constants.secondaryColor,
-                            selectedDayTextColor: '#FFFFFF',
+                            selectedDayTextColor: '#ffffff',
                             todayTextColor: Constants.secondaryColor,
                             dotColor: Constants.secondaryColor,
                             agendaKnobColor: '#000000',
@@ -100,11 +96,11 @@ class Home extends React.Component {
                             <View style = {styles.centeredView}>
                                 <View style={styles.modalView}>
                                     <View style={{paddingBottom: Constants.windowHeight * 0.012}}>
-                                        <Text style={{paddingBottom: 10, textAlign:'center'}}>
+                                        <Text style={{paddingBottom: Constants.windowHeight*0.015, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}>
                                             Event Description
                                         </Text>
                                         <TextInput 
-                                            style={{height: 20, width: Constants.windowWidth * 0.55, textAlign:'center', borderRadius: 5}}
+                                            style={{height: Constants.windowHeight * 0.026, width: Constants.windowWidth * 0.55, textAlign:'center', borderRadius: 5}}
                                             placeholder="Type an event description"
                                             placeholderTextColor='#8a8a8a'
                                             backgroundColor={this.state.descBack}
@@ -112,11 +108,11 @@ class Home extends React.Component {
                                         />
                                     </View>
                                     <View style={styles.dateSelection} >
-                                        <Text style={{paddingRight:Constants.windowWidth * 0.1}}>
+                                        <Text style={{paddingRight:Constants.windowWidth * 0.1,fontSize: Constants.windowHeight * 0.017}}>
                                             Month:
                                         </Text>
                                         <TextInput  
-                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center'}}
+                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center'}}
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="MM"
@@ -130,7 +126,7 @@ class Home extends React.Component {
                                             Day: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="DD"
@@ -144,7 +140,7 @@ class Home extends React.Component {
                                             Year: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         keyboardType = 'numeric'
                                         maxLength = {4}
                                         placeholder="YYYY"
@@ -158,7 +154,7 @@ class Home extends React.Component {
                                             Hour: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="hh"
@@ -172,7 +168,7 @@ class Home extends React.Component {
                                             Minute: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         keyboardType = 'numeric'
                                         maxLength = {2}
                                         placeholder="mm"
@@ -186,7 +182,7 @@ class Home extends React.Component {
                                             Time of Day: 
                                         </Text>
                                         <TextInput 
-                                        style={{height: 20, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
+                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
                                         maxLength = {2}
                                         placeholder="AM/PM"
                                         placeholderTextColor='#8a8a8a'
@@ -194,7 +190,7 @@ class Home extends React.Component {
                                         onChangeText={timeOfDay => this.setState({ timeOfDay })}
                                         />
                                     </View>
-                                    <View style={{flexDirection:"row", paddingTop: Constants.windowWidth * 0.02}}>
+                                    <View style={{flexDirection:"row", paddingTop: Constants.windowHeight * 0.01}}>
                                         <View style={{paddingRight: Constants.windowWidth * 0.05}}>
                                         <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, paddingHorizontal: Constants.windowWidth * 0.03}}
                                             onPress={() => this.setAddVisible(false)}>
@@ -389,7 +385,7 @@ class Home extends React.Component {
 
     timeToInt(time) {
         console.log(time);
-        var timeVal = time.substring(0,2) + time.substring(3,5);
+        var timeVal = (time.substring(0,2)%12) + time.substring(3,5);
         console.log("timeVal: ", timeVal);
         //timeVal = parseInt(timeVal);
         var timeOfDay = time.substring(6,8);
@@ -403,16 +399,16 @@ class Home extends React.Component {
     // sort function used to rank events by thier scheduled time
     sortTime(a, b) {
         var aTime = a.time;
-        var aTimeVal = aTime.substring(0,2) + aTime.substring(3,5);
+        var aTimeVal = (aTime.substring(0,2)%12) + aTime.substring(3,5);
         var aTimeOfDay = aTime.substring(6,8);
         if (aTimeOfDay == 'PM') {
-            aTimeVal = aTimeVal + '1200'
+            aTimeVal = aTimeVal + '1200';
         }
         var bTime = b.time;
-        var bTimeVal = bTime.substring(0,2) + bTime.substring(3,5);
+        var bTimeVal = (bTime.substring(0,2)%12) + bTime.substring(3,5);
         var bTimeOfDay = bTime.substring(6,8);
         if (bTimeOfDay == 'PM') {
-            bTimeVal = bTimeVal + '1200'
+            bTimeVal = bTimeVal + '1200';
         }
         //var aVal = this.timeToInt(aTime);
         //var bVal = this.timeToInt(bTime);
@@ -557,6 +553,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',  
     },
+    titleImage: {
+        width: Constants.windowHeight * .40,
+        height: Constants.windowHeight * .17,
+        resizeMode: 'contain'
+    },
     calendar: {
         flex: 1,
         height: Constants.windowHeight * .4,
@@ -570,7 +571,7 @@ const styles = StyleSheet.create({
     modalView: {
         margin: Constants.windowHeight * 0.2,
         width: Constants.windowWidth * 0.7,
-        height: Constants.windowHeight * 0.52,
+        height: Constants.windowHeight * 0.54,
         backgroundColor: "white",
         borderRadius: 20,
         padding: Constants.windowHeight * 0.026,
