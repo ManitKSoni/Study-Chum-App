@@ -48,7 +48,8 @@ class EditProfileMainScreen extends React.Component {
 
     navigateToEdit(index) {
         this.props.navigation.navigate('EditProfileScreen', {
-            index: index
+            index: index,
+            userProfile: this.state.userProfile
         });
         this.props.navigation.dangerouslyGetParent().setOptions({
             tabBarVisible: false

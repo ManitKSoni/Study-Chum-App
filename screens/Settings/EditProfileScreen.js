@@ -31,17 +31,19 @@ class EditProfileScreen extends React.Component {
     constructor() {
         super()
         this.onPressContinue = this.onPressContinue.bind(this)
-        this.state.userProfile.bio = userInstance._user.bio;
-        this.state.userProfile.firstName = userInstance._user.firstName;
-        this.state.userProfile.lastName = userInstance._user.lastName;
-        this.state.userProfile.major = userInstance._user.major;
-        this.state.userProfile.language = userInstance._user.language;
-        this.state.userProfile.year = userInstance._user.year;
+        // this.state.userProfile.bio = userInstance._user.bio;
+        // this.state.userProfile.firstName = userInstance._user.firstName;
+        // this.state.userProfile.lastName = userInstance._user.lastName;
+        // this.state.userProfile.major = userInstance._user.major;
+        // this.state.userProfile.language = userInstance._user.language;
+        // this.state.userProfile.year = userInstance._user.year;
     }
 
     componentDidMount() {
-        this.setState({index: this.props.route.params.index})
-        this.index = this.props.route.params.index
+        this.setState({
+            index: this.props.route.params.index, 
+            userProfile: this.props.route.params.userProfile
+        })
     }
 
     updateUser = (key, value) => {
