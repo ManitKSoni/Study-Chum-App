@@ -25,6 +25,7 @@ class EditProfileScreen extends React.Component {
             year: '',
             language: '',
             bio: '',
+            courses: []
         }
     }
 
@@ -37,6 +38,7 @@ class EditProfileScreen extends React.Component {
         this.state.userProfile.major = userInstance._user.major;
         this.state.userProfile.language = userInstance._user.language;
         this.state.userProfile.year = userInstance._user.year;
+        this.state.userProfile.courses = userInstance._user.courses;
     }
 
     componentDidMount() {

@@ -39,6 +39,9 @@ class ShowMatches extends React.Component {
     onPressGoToUserProfile = (uid, uri) => {
         SavedData.renderProfile(uid, () => 
             this.props.navigation.navigate("UserProfile", {userID: uid, URI: uri}));
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: false
+        });
         console.log(uid)
     }
    
