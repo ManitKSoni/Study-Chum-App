@@ -77,7 +77,8 @@ class UserProfile extends React.Component {
                                 width: imDiam, //Constants.windowWidth * 0.55,
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                borderRadius: imDiam / 2/*3*/}}>
+                                borderRadius: imDiam / 2,
+                                }}>
                                 {this.showImage()}
                             </View>
                         </View>
@@ -121,7 +122,9 @@ const styles = StyleSheet.create({
         height: imDiam, //Constants.windowHeight * 0.29,
         width: imDiam, //Constants.windowWidth * 0.55,
         borderRadius: imDiam / 2,
-        backgroundColor: '#000'
+        backgroundColor: '#000',
+        borderWidth: 2,
+        borderColor: "grey", 
     },
     img_icon: {
         height: Dimensions.get('screen').height * 0.05,
