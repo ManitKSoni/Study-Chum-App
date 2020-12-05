@@ -19,18 +19,30 @@ class EditRemote extends React.Component {
         this.setState({remote: SavedData.preferences.remote});
     }
 
+    componentWillUnmount(){
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        }); 
+    }
+
     onPressToggle = (id) => {
         this.setState({remote:id});
     };
 
     onPressCancel = () => {
         this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        }); 
     }
 
     onPressGoBackToEditPreferences = () => {
         SavedData.preferences.remote = this.state.remote; 
         PreferenceProfiles.editRemote(this.state.remote, SavedData.title);
         this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        }); 
     }
 
     render() {

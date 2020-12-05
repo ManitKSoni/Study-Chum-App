@@ -25,6 +25,7 @@ class EditProfileScreen extends React.Component {
             year: '',
             language: '',
             bio: '',
+            courses: []
         }
     }
 
@@ -37,18 +38,29 @@ class EditProfileScreen extends React.Component {
         // this.state.userProfile.major = userInstance._user.major;
         // this.state.userProfile.language = userInstance._user.language;
         // this.state.userProfile.year = userInstance._user.year;
+        // this.state.userProfile.courses = userInstance._user.courses;
     }
 
     componentDidMount() {
+        const userProfile = this.props.route.params.userProfile
         this.setState({
             index: this.props.route.params.index, 
-            userProfile: this.props.route.params.userProfile
+            userProfile: {
+                firstName: userProfile.firstName,
+                lastName: userProfile.lastName,
+                major: userProfile.major,
+                year: userProfile.year,
+                language: userProfile.language,
+                bio: userProfile.bio,
+                courses: userProfile.courses
+            }
         })
     }
 
     updateUser = (key, value) => {
         this.state.userProfile[key] = value
         this.setState({ userProfile: this.state.userProfile })
+
     }
 
     onPressContinue() {

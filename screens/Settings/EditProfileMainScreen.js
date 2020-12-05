@@ -30,23 +30,25 @@ class EditProfileMainScreen extends React.Component {
             year: '',
             language: '',
             bio: '',
+            courses: ''
         }
     }
 
     constructor() {
         super()
-
         this.state.userProfile.bio = userInstance._user.bio;
         this.state.userProfile.firstName = userInstance._user.firstName;
         this.state.userProfile.lastName = userInstance._user.lastName;
         this.state.userProfile.major = userInstance._user.major;
         this.state.userProfile.language = userInstance._user.language;
         this.state.userProfile.year = userInstance._user.year;
-
+        this.state.userProfile.courses = userInstance._user.courses;
         this.db = Firebase.firestore();
     }
 
     navigateToEdit(index) {
+        console.log('navigating')
+        console.log(this.state.userProfile)
         this.props.navigation.navigate('EditProfileScreen', {
             index: index,
             userProfile: this.state.userProfile
@@ -72,7 +74,11 @@ class EditProfileMainScreen extends React.Component {
         userInstance._user.year = this.state.userProfile.year;
         userInstance._user.bio = this.state.userProfile.bio;
         userInstance._user.language = this.state.userProfile.language;
-        var userID = Firebase.auth().currentUser.uid;
+        userInstance._user.courses = this.state.userProfile.courses;
+        const userID = Firebase.auth().currentUser.uid;
+
+        console.log(this.state.userProfile);
+
         // update user data
         this.db.collection('users').doc(userID).update({
             firstName: this.state.userProfile.firstName,
@@ -83,9 +89,16 @@ class EditProfileMainScreen extends React.Component {
             language: this.state.userProfile.language
         });
 
+        this.state.userProfile.courses.forEach((userCourse) => {
+            var keyBio = 'students.'+ userID+'.bio';
+            var keyName = 'students.'+ userID+'.name';
+            this.db.collection('courses').doc(userCourse).update({
+                [keyBio]: this.state.userProfile.bio,
+                [keyName]: this.state.userProfile.firstName+ ' '+ this.state.userProfile.lastName,
+            })
+        })
 
         DeviceEventEmitter.emit('eventKey', this.state.userProfile)
-
 
         this.props.navigation.dangerouslyGetParent().setOptions({
             tabBarVisible: true

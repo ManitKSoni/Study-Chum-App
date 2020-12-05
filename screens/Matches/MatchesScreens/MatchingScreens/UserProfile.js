@@ -1,20 +1,22 @@
 import React from 'react'
-import { Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,
+import {
+    Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,
     Dimensions,
-    TouchableOpacity} from 'react-native';
+    TouchableOpacity
+} from 'react-native';
 import Firebase from '../../../../config/Firebase'
 import SavedData from "../../Controllers/SavedData"
 import ChatDataModel from "../../../Chat/ChatDataModel"
 import * as Constants from '../../../../Constants.js'
-import {Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 
 imDiam = Math.sqrt(Math.pow(Constants.windowHeight, 2) + Math.pow(Constants.windowWidth, 2)) / 4;
 class UserProfile extends React.Component {
 
-        userID = this.props.route.params.userID
-        uri = this.props.route.params.URI; 
-        profile = SavedData.profile; 
-        chatDataModel = new ChatDataModel()
+    userID = this.props.route.params.userID
+    uri = this.props.route.params.URI;
+    profile = SavedData.profile;
+    chatDataModel = new ChatDataModel()
 
 
     goToChannel() {
@@ -25,6 +27,9 @@ class UserProfile extends React.Component {
                 title: `${this.profile.firstName} ${this.profile.lastName}`
             });
         })
+        this.props.navigation.setOptions({
+            tabBarVisible: false
+        });
     }
 
     /*
@@ -32,43 +37,52 @@ class UserProfile extends React.Component {
     * Otherwise show image from firebase
     */
     showImage = () => {
-        if(!this.uri) {
-            return (<View style = {styles.contImg}>
-                <Image source={require('../../../../assets/dummy.png')} style={styles.img}/>
-            </View>)
+        if (!this.uri) {
+            return (
+                <View style={styles.contImg}>
+                    <Image source={require('../../../../assets/default_pic.png')} style={styles.img} />
+                </View>
+            )
         } else {
             return (
-                <View style ={styles.contImg}>
-                    <Image source = {{uri:this.uri}} style={styles.img}/>
+                <View style={styles.contImg}>
+                    <Image source={{ uri: this.uri }} style={styles.img} />
                 </View>
             )
         }
     }
 
+    /**
     onPressGoBack = () => {
         this.props.navigation.navigate("ShowMatches");
+    } **/
+
+    componentWillUnmount() {
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        });
     }
 
     render() {
-      
-        return (
-           /* <View style={styles.container}> 
-                <Text> USERID: {this.userID} </Text>
-                <Text style={styles.text}>{this.profile.firstName} {this.profile.lastName}</Text>
-                <Text style={styles.text}>{this.profile.bio}</Text>
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate("ShowMatches")}>
-                    <Text style={styles.text}>Go back</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {this.goToChannel()}}>
-                    <Text style={styles.text}>Chat</Text>
-                </TouchableOpacity>
-            </View>*/
-           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        return (
+            /* <View style={styles.container}> 
+                 <Text> USERID: {this.userID} </Text>
+                 <Text style={styles.text}>{this.profile.firstName} {this.profile.lastName}</Text>
+                 <Text style={styles.text}>{this.profile.bio}</Text>
+                 <TouchableOpacity onPress={()=>this.props.navigation.navigate("ShowMatches")}>
+                     <Text style={styles.text}>Go back</Text>
+                 </TouchableOpacity>
+ 
+                 <TouchableOpacity onPress={() => {this.goToChannel()}}>
+                     <Text style={styles.text}>Chat</Text>
+                 </TouchableOpacity>
+             </View>*/
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
                     <Icon name="chevron-left" type="octicon" size={40} color={Constants.primaryColor}
                         containerStyle={styles.iconStyle}
-                        onPress={this.onPressGoBack}
+                        onPress={() => this.props.navigation.pop()}
                     />
                     <View style={styles.body}>
                         <View style={styles.ImageSections}>
@@ -77,26 +91,26 @@ class UserProfile extends React.Component {
                                 width: imDiam, //Constants.windowWidth * 0.55,
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                borderRadius: imDiam / 2/*3*/}}>
+                                borderRadius: imDiam / 2/*3*/
+                            }}>
                                 {this.showImage()}
                             </View>
                         </View>
 
-                        <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .010, paddingTop:Constants.windowHeight * .005}} >
-                            {this.profile.firstName + " " +  this.profile.lastName}</Text>
-                        <View style={styles.border}/>
-                        <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
-                            {this.profile.major + " " +  this.profile.year} </Text>
-                        <View style={styles.border}/>
-                        <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
-                        {this.profile.bio} </Text>
-                        <View style={styles.border}/>
-                    </View>
-
-                    <View style={styles.btnPosition}>
-                        <TouchableOpacity style={styles.btnContainer} onPress={() => {this.goToChannel()}}>
+                        <Text style={{ textAlign: 'center', fontSize: Constants.windowWidth * 0.083, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .010, paddingTop: Constants.windowHeight * .005 }} >
+                            {this.profile.firstName + " " + this.profile.lastName}</Text>
+                        <View style={styles.border} />
+                        <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
+                            {this.profile.major + " " + this.profile.year} </Text>
+                        <View style={styles.border} />
+                        <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
+                            {this.profile.bio} </Text>
+                        <View style={styles.border} />
+                        <View style={styles.btnPosition}>
+                        <TouchableOpacity style={styles.btnContainer} onPress={() => { this.goToChannel() }}>
                             <Text style={styles.btnText}>Send a message</Text>
                         </TouchableOpacity>
+                    </View>
                     </View>
                 </View>
             </TouchableWithoutFeedback>
@@ -111,7 +125,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         fontFamily: 'ProximaNova'
     },
-    contImg : {
+    contImg: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -172,11 +186,8 @@ const styles = StyleSheet.create({
         fontFamily: "ProximaNova",
     },
     btnPosition: {
+        padding: Constants.windowHeight*0.02,
         alignItems: 'center',
-        paddingBottom: 15,
-        bottom: 0,
-        position: 'absolute',
-        width: '100%'
     }
 
 })
