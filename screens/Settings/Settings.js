@@ -157,7 +157,7 @@ class Settings extends React.Component{
                                         width: imDiam, //Constants.windowWidth * 0.55,
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        borderRadius: imDiam / 2/*3*/}}>
+                                        borderRadius: imDiam/2 }}>
                                         {this.showImage()}
                                         <View style ={styles.img_icon}>
                                             <Image source ={require('../../assets/edit_bubble_icon.png')} style={styles.img_icon}/>
@@ -203,17 +203,19 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         justifyContent: 'center',
-        fontFamily: 'ProximaNova'
+        fontFamily: 'ProximaNova',
     },
     contImg : {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
     },
     img: {
         height: imDiam, //Constants.windowHeight * 0.29,
         width: imDiam, //Constants.windowWidth * 0.55,
+        borderWidth: 2,
+        borderColor: 'grey',
         borderRadius: imDiam / 2,
         backgroundColor: '#000'
     },
@@ -234,7 +236,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         justifyContent: 'center',
         height: Dimensions.get('screen').height - 20,
-        width: Dimensions.get('screen').width
+        width: Dimensions.get('screen').width,
     },
     ImageSections: {
         display: 'flex',

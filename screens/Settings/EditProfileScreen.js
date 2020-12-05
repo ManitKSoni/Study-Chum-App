@@ -25,28 +25,42 @@ class EditProfileScreen extends React.Component {
             year: '',
             language: '',
             bio: '',
+            courses: []
         }
     }
 
     constructor() {
         super()
         this.onPressContinue = this.onPressContinue.bind(this)
-        this.state.userProfile.bio = userInstance._user.bio;
-        this.state.userProfile.firstName = userInstance._user.firstName;
-        this.state.userProfile.lastName = userInstance._user.lastName;
-        this.state.userProfile.major = userInstance._user.major;
-        this.state.userProfile.language = userInstance._user.language;
-        this.state.userProfile.year = userInstance._user.year;
+        // this.state.userProfile.bio = userInstance._user.bio;
+        // this.state.userProfile.firstName = userInstance._user.firstName;
+        // this.state.userProfile.lastName = userInstance._user.lastName;
+        // this.state.userProfile.major = userInstance._user.major;
+        // this.state.userProfile.language = userInstance._user.language;
+        // this.state.userProfile.year = userInstance._user.year;
+        // this.state.userProfile.courses = userInstance._user.courses;
     }
 
     componentDidMount() {
-        this.setState({index: this.props.route.params.index})
-        this.index = this.props.route.params.index
+        const userProfile = this.props.route.params.userProfile
+        this.setState({
+            index: this.props.route.params.index, 
+            userProfile: {
+                firstName: userProfile.firstName,
+                lastName: userProfile.lastName,
+                major: userProfile.major,
+                year: userProfile.year,
+                language: userProfile.language,
+                bio: userProfile.bio,
+                courses: userProfile.courses
+            }
+        })
     }
 
     updateUser = (key, value) => {
         this.state.userProfile[key] = value
         this.setState({ userProfile: this.state.userProfile })
+
     }
 
     onPressContinue() {

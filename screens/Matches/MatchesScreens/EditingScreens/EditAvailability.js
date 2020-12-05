@@ -10,7 +10,6 @@ import SavedData from "../../Controllers/SavedData";
 
 
 class EditAvailibility extends React.Component {
-     
 
     state = {
         sunday: false,
@@ -46,8 +45,17 @@ class EditAvailibility extends React.Component {
         this.setState({saturday:SavedData.preferences.availability.saturday});
     }
 
+    componentWillUnmount(){
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        }); 
+    }
+
     onPressCancel = () => {
         this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        }); 
     }
 
     onPressGoBackToEditPreferences = () => {
@@ -55,6 +63,9 @@ class EditAvailibility extends React.Component {
         PreferenceProfiles.editAvailability(availability, SavedData.title);
         SavedData.preferences.availability = availability;
         this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        }); 
     }
 
     ToggleSunday = () => {

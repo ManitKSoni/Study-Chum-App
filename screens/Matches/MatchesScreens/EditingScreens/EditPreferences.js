@@ -11,6 +11,15 @@ class EditPreferences extends React.Component {
         showModal: false
     }
 
+    /** 
+    constructor(props){
+        super(props);
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        });
+    }
+    **/
+
     /**
      * Pop ups modal screen
      * @param visible - new value of state  
@@ -38,10 +47,21 @@ class EditPreferences extends React.Component {
         this.props.navigation.navigate("Matches") 
     }
 
+    /** 
     onPressEditAvailability = () => {
         //console.log(Constants.windowWidth);
-        this.props.navigation.navigate("Blank");
+        //this.props.navigation.navigate("Blank");
         this.props.navigation.navigate("EditAvailability");
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: false
+        });
+    } **/
+
+    onPressEditSpecificPreference = (routeName) => {
+        this.props.navigation.navigate(routeName);
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: false
+        });
     }
 
     render() {
@@ -50,17 +70,17 @@ class EditPreferences extends React.Component {
 
                 <TouchableOpacity
                     style = {styles.border}
-                    onPress={this.onPressEditAvailability}>
+                    onPress={() => this.onPressEditSpecificPreference("EditAvailability")}>
                     <Text style={styles.text}> Availability </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style = {styles.border}
-                    onPress={() => this.props.navigation.navigate("EditQuiet")}>
+                    onPress={() => this.onPressEditSpecificPreference("EditQuiet")}>
                     <Text style={styles.text}> Quiet/Chatty </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style = {styles.border}
-                    onPress={() => this.props.navigation.navigate("EditRemote")}>
+                    onPress={() => this.onPressEditSpecificPreference("EditRemote")}>
                     <Text style={styles.text}> IRL/Remote</Text>
                 </TouchableOpacity>
                 <View style={styles.container2}>
