@@ -30,6 +30,7 @@ class EditProfileMainScreen extends React.Component {
             year: '',
             language: '',
             bio: '',
+            courses: []
         }
     }
 
@@ -42,6 +43,10 @@ class EditProfileMainScreen extends React.Component {
         this.state.userProfile.major = userInstance._user.major;
         this.state.userProfile.language = userInstance._user.language;
         this.state.userProfile.year = userInstance._user.year;
+        this.state.userProfile.courses = userInstance._user.courses;
+
+        console.log("HUMMUS");
+        console.log(this.state.userProfile);
 
         this.db = Firebase.firestore();
     }
@@ -82,6 +87,18 @@ class EditProfileMainScreen extends React.Component {
             language: this.state.userProfile.language
         });
 
+        // updated bio and name on matches
+        /*for (let userCourse of this.state.userProfile.courses){
+            var keyBio = 'students.'+ userID +'.bio';
+            var keyName = 'students.'+ userID +'.name';
+            this.db.collection('courses').doc(userCourse).update({
+                [keyBio]: this.state.userProfile.bio,
+                [keyName]: this.state.userProfile.firstName + ' '+ this.state.userProfile.lastName
+            })
+        }*/
+        console.log("GREG");
+        console.log(userInstance._user);
+        console.log(this.state.userProfile);
 
         DeviceEventEmitter.emit('eventKey', this.state.userProfile)
 

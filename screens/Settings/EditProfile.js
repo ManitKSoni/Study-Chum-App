@@ -64,11 +64,11 @@ class EditProfile extends React.Component {
         
         // updated bio and name on matches
         for (let userCourse of this.state.courses){
-            var keyBio = 'students.'+ userID+'.bio';
-            var keyName = 'students.'+ userID+'.name';
+            var keyBio = 'students.'+ userID +'.bio';
+            var keyName = 'students.'+ userID +'.name';
             this.db.collection('courses').doc(userCourse).update({
                 [keyBio]: this.state.bio,
-                [keyName]: this.state.firstName+ ' '+ this.state.lastName,
+                [keyName]: this.state.firstName + ' '+ this.state.lastName,
             })
         }
     
