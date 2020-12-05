@@ -102,93 +102,117 @@ class Home extends React.Component {
                                         <TextInput 
                                             style={{height: Constants.windowHeight * 0.026, width: Constants.windowWidth * 0.55, textAlign:'center', borderRadius: 5}}
                                             placeholder="Type an event description"
+                                            maxLength = {40}
                                             placeholderTextColor='#8a8a8a'
                                             backgroundColor={this.state.descBack}
                                             onChangeText={name => this.setState({ name })}
                                         />
                                     </View>
-                                    <View style={styles.dateSelection} >
-                                        <Text style={{paddingRight:Constants.windowWidth * 0.1,fontSize: Constants.windowHeight * 0.017}}>
-                                            Month:
-                                        </Text>
-                                        <TextInput  
-                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
-                                        keyboardType = 'numeric'
-                                        maxLength = {2}
-                                        placeholder="MM"
-                                        placeholderTextColor='#8a8a8a'
-                                        backgroundColor={this.state.monthBack}
-                                        onChangeText={month => this.setState({ month })}
-                                        />
-                                    </View>
-                                    <View style={styles.dateSelection}>
-                                        <Text style={{paddingRight:Constants.windowWidth * 0.14, fontSize: Constants.windowHeight * 0.017}}>
-                                            Day: 
-                                        </Text>
-                                        <TextInput 
-                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
-                                        keyboardType = 'numeric'
-                                        maxLength = {2}
-                                        placeholder="DD"
-                                        placeholderTextColor='#8a8a8a'
-                                        backgroundColor={this.state.dayBack}
-                                        onChangeText={day => this.setState({ day })}
-                                        />
-                                    </View>
-                                    <View style={styles.dateSelection}>
-                                        <Text style={{paddingRight:Constants.windowWidth * 0.13, fontSize: Constants.windowHeight * 0.017}}>
-                                            Year: 
-                                        </Text>
-                                        <TextInput 
-                                        style={{height: Constants.windowHeight * 0.026, height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
-                                        keyboardType = 'numeric'
-                                        maxLength = {4}
-                                        placeholder="YYYY"
-                                        placeholderTextColor='#8a8a8a'
-                                        backgroundColor={this.state.yearBack}
-                                        onChangeText={year => this.setState({ year })}
-                                        />
-                                    </View>
-                                    <View style={styles.dateSelection}>
-                                        <Text style={{paddingRight:Constants.windowWidth * 0.13, fontSize: Constants.windowHeight * 0.017}}>
-                                            Hour: 
-                                        </Text>
-                                        <TextInput 
-                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
-                                        keyboardType = 'numeric'
-                                        maxLength = {2}
-                                        placeholder="hh"
-                                        placeholderTextColor='#8a8a8a'
-                                        backgroundColor={this.state.hourBack}
-                                        onChangeText={hour => this.setState({ hour })}
-                                        />
-                                    </View>
-                                    <View style={styles.dateSelection}>
-                                        <Text style={{paddingRight:Constants.windowWidth * 0.1, fontSize: Constants.windowHeight * 0.017}}>
-                                            Minute: 
-                                        </Text>
-                                        <TextInput 
-                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
-                                        keyboardType = 'numeric'
-                                        maxLength = {2}
-                                        placeholder="mm"
-                                        placeholderTextColor='#8a8a8a'
-                                        backgroundColor={this.state.minBack}
-                                        onChangeText={minute => this.setState({ minute })}
-                                        />
-                                    </View>
-                                    <View style={styles.dateSelection}>
-                                        <Text style={{paddingRight:Constants.windowWidth * 0.02, fontSize: Constants.windowHeight * 0.017}}>
-                                            Time of Day: 
-                                        </Text>
-                                        <TextInput 
-                                        style={{height: Constants.windowHeight * 0.026, width:Constants.windowWidth * 0.14, borderRadius: 5, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}
-                                        maxLength = {2}
-                                        placeholder="AM/PM"
-                                        placeholderTextColor='#8a8a8a'
-                                        backgroundColor={this.state.timeOfDayBack}
-                                        onChangeText={timeOfDay => this.setState({ timeOfDay })}
-                                        />
+
+                                    <View style={{flexDirection:"row", justifyContent: "flex-start", alignItems: "flex-start",}}>
+                                        <View style={{flexDirection:"column", justifyContent: "flex-start"}}>
+                                            <View >
+                                            <View style={styles.dateSelection}>
+                                                <Text style={styles.inputLabel}>
+                                                    Month:
+                                                </Text>
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <Text style={styles.inputLabel}>
+                                                    Day: 
+                                                </Text>
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <Text style={styles.inputLabel}>
+                                                    Year: 
+                                                </Text>
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <Text style={styles.inputLabel}>
+                                                    Hour: 
+                                                </Text>
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <Text style={styles.inputLabel}>
+                                                    Minute: 
+                                                </Text>
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <Text style={styles.inputLabel}>
+                                                    Time of Day: 
+                                                </Text>
+                                            </View>
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"column"}}>
+                                        <View >
+                                            <View style={styles.dateSelection} >
+                                                <TextInput  
+                                                style={styles.textInput}
+                                                keyboardType = 'numeric'
+                                                maxLength = {2}
+                                                placeholder="MM"
+                                                placeholderTextColor='#8a8a8a'
+                                                backgroundColor={this.state.monthBack}
+                                                onChangeText={month => this.setState({ month })}
+                                                />
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <TextInput 
+                                                style={styles.textInput}
+                                                keyboardType = 'numeric'
+                                                maxLength = {2}
+                                                placeholder="DD"
+                                                placeholderTextColor='#8a8a8a'
+                                                backgroundColor={this.state.dayBack}
+                                                onChangeText={day => this.setState({ day })}
+                                                />
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <TextInput 
+                                                style={styles.textInput}
+                                                keyboardType = 'numeric'
+                                                maxLength = {4}
+                                                placeholder="YYYY"
+                                                placeholderTextColor='#8a8a8a'
+                                                backgroundColor={this.state.yearBack}
+                                                onChangeText={year => this.setState({ year })}
+                                                />
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <TextInput 
+                                                style={styles.textInput}
+                                                keyboardType = 'numeric'
+                                                maxLength = {2}
+                                                placeholder="hh"
+                                                placeholderTextColor='#8a8a8a'
+                                                backgroundColor={this.state.hourBack}
+                                                onChangeText={hour => this.setState({ hour })}
+                                                />
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <TextInput 
+                                                style={styles.textInput}
+                                                keyboardType = 'numeric'
+                                                maxLength = {2}
+                                                placeholder="mm"
+                                                placeholderTextColor='#8a8a8a'
+                                                backgroundColor={this.state.minBack}
+                                                onChangeText={minute => this.setState({ minute })}
+                                                />
+                                            </View>
+                                            <View style={styles.dateSelection}>
+                                                <TextInput 
+                                                style={styles.textInput}
+                                                maxLength = {2}
+                                                placeholder="AM/PM"
+                                                placeholderTextColor='#8a8a8a'
+                                                backgroundColor={this.state.timeOfDayBack}
+                                                onChangeText={timeOfDay => this.setState({ timeOfDay })}
+                                                />
+                                            </View>
+                                            </View>
+                                        </View>
                                     </View>
                                     <View style={{flexDirection:"row", paddingTop: Constants.windowHeight * 0.01}}>
                                         <View style={{paddingRight: Constants.windowWidth * 0.05}}>
@@ -620,7 +644,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start", 
         alignItems: "flex-start",
         padding: Constants.windowHeight * 0.015,
-        fontSize: Constants.windowHeight * 0.01
     },
     addAnEvent: {
         textAlign:'center',
@@ -643,6 +666,16 @@ const styles = StyleSheet.create({
         padding: Constants.windowHeight * 0.01,
         borderRadius: 10
     },
+    inputLabel: {
+        fontSize: Constants.windowHeight * 0.017, 
+        height: Constants.windowHeight * 0.026
+    },
+    textInput: {
+        height: Constants.windowHeight * 0.026, 
+        width:Constants.windowWidth * 0.14, borderRadius: 5, 
+        textAlign:'center', 
+        fontSize: Constants.windowHeight * 0.017
+    }
 });
  
  
