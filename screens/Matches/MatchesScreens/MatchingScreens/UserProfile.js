@@ -66,18 +66,6 @@ class UserProfile extends React.Component {
     render() {
 
         return (
-            /* <View style={styles.container}> 
-                 <Text> USERID: {this.userID} </Text>
-                 <Text style={styles.text}>{this.profile.firstName} {this.profile.lastName}</Text>
-                 <Text style={styles.text}>{this.profile.bio}</Text>
-                 <TouchableOpacity onPress={()=>this.props.navigation.navigate("ShowMatches")}>
-                     <Text style={styles.text}>Go back</Text>
-                 </TouchableOpacity>
- 
-                 <TouchableOpacity onPress={() => {this.goToChannel()}}>
-                     <Text style={styles.text}>Chat</Text>
-                 </TouchableOpacity>
-             </View>*/
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
                     <Icon name="chevron-left" type="octicon" size={40} color={Constants.primaryColor}
@@ -101,7 +89,10 @@ class UserProfile extends React.Component {
                             {this.profile.firstName + " " + this.profile.lastName}</Text>
                         <View style={styles.border} />
                         <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
-                            {this.profile.major + " " + this.profile.year} </Text>
+                            {this.profile.major + ", " + this.profile.year} </Text>
+                        <View style={styles.border} />
+                        <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
+                            {"Preferred Language: " + this.profile.language} </Text>
                         <View style={styles.border} />
                         <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
                             {this.profile.bio} </Text>
