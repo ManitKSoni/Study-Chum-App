@@ -75,13 +75,13 @@ class EditPreferences extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style = {styles.border}
-                    onPress={() => this.onPressEditSpecificPreference("EditQuiet")}>
-                    <Text style={styles.text}> Quiet/Chatty </Text>
+                    onPress={() => this.onPressEditSpecificPreference("EditRemote")}>
+                    <Text style={styles.text}> IRL/Remote</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style = {styles.border}
-                    onPress={() => this.onPressEditSpecificPreference("EditRemote")}>
-                    <Text style={styles.text}> IRL/Remote</Text>
+                    onPress={() => this.onPressEditSpecificPreference("EditQuiet")}>
+                    <Text style={styles.text}> Quiet/Chatty </Text>
                 </TouchableOpacity>
                 <View style={styles.container2}>
                     <TouchableOpacity
