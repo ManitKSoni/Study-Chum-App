@@ -41,7 +41,12 @@ class MatchingAlgorithm {
     async getCurrentStudent() {
        var userID = Firebase.auth().currentUser.uid;
        this.currentStudent = this.studentsMap[userID]; 
-       SavedData.setPreferences(this.currentStudent.preferences);
+       if(this.currentStudent) {
+        SavedData.setPreferences(this.currentStudent.preferences);
+       } else {
+        console.log("RACE CONDITION DETECTED. BACKUP GIVEN")
+        SavedData.setPreferences( SavedData.preferences2 );
+        }
     }
 
 

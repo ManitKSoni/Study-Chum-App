@@ -6,6 +6,7 @@ class SavedData {
         this.title = ""; // current class 
         this.profile = {}, // OTHER USERS PROFILE
         this.preferences = {} // SPAGHETTI CODE: CURRENT USERS PROFILE
+        this.preferences2 = {}; 
     }
 
     changeTitle(courseName) {
@@ -15,6 +16,10 @@ class SavedData {
     //CALLED IN MATCHING ALGORITHM IN GET CURRENT STUDENT
     setPreferences(preferences) {
         this.preferences = preferences; 
+    }
+
+    setPreferences2(preferences) {
+        this.preferences2 = preferences; 
     }
 
     /**
