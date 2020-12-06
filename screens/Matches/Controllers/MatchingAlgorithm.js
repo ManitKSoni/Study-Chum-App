@@ -41,7 +41,25 @@ class MatchingAlgorithm {
     async getCurrentStudent() {
        var userID = Firebase.auth().currentUser.uid;
        this.currentStudent = this.studentsMap[userID]; 
-       SavedData.setPreferences(this.currentStudent.preferences);
+       if(this.currentStudent) {
+        SavedData.setPreferences(this.currentStudent.preferences);
+       } else {
+        console.log("RACE CONDITION DETECTED. SET TO DEFAULT")
+        var preferences = {
+            availability: {
+                sunday: false,
+                monday: false,
+                tuesday: false,
+                wednesday: false,
+                thursday: false,
+                friday: false,
+                saturday: false
+            },
+            quiet: false,
+            remote: false
+        }
+        SavedData.setPreferences( preferences );
+        }
     }
 
 
