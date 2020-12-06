@@ -3,6 +3,7 @@ import { View, FlatList, Text, StyleSheet, Image, TouchableWithoutFeedback, Acti
 import Firebase from '../../config/Firebase'
 import ChatDataModel from './ChatDataModel'
 import * as Constants from '../../Constants'
+import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 
 class Chat extends React.Component {
@@ -15,9 +16,6 @@ class Chat extends React.Component {
             buddies: [],
             loaded: false
         }
-        this.props.navigation.setOptions({
-            tabBarVisible: true
-        });
     }
 
     /** Will assign the buddies array state to database array */
@@ -88,7 +86,7 @@ class Chat extends React.Component {
 
     generateImage(image) {
         if (image == null) {
-            return <Image source={require('../../assets/default_pic.png')} style={styles.profileImg} />
+            return <Image source={require('../../assets/default_pic_gray_2.png')} style={styles.profileImg} />
         } else {
             return <Image source={{ uri: image }} style={styles.profileImg} />
         }
