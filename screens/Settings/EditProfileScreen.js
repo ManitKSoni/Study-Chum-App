@@ -16,6 +16,14 @@ class EditProfileScreen extends React.Component {
         "Tell us a little about yourself!",
     ]
 
+    alerts = [
+        "Please enter your full name!",
+        "Please select a major from the list!",
+        "Please select a graduating year!",
+        "Please select a language from the list!",
+        "Please enter a bio!"
+    ]
+
     state = {
         index: 0,
         userProfile: {
@@ -64,10 +72,43 @@ class EditProfileScreen extends React.Component {
     }
 
     onPressContinue() {
-        // navigate back 
-        this.props.navigation.navigate('EditProfileMainScreen', {
-            profile: this.state.userProfile
-        })
+        switch (this.state.index) {
+            case 0:
+                if (this.state.userProfile.firstName === '' || this.state.userProfile.lastName === '' ) {
+                    alert(this.alerts[0])
+                    return
+                } 
+                break;
+            case 1:
+                if (this.state.userProfile.major === '') {
+                    alert(this.alerts[1])
+                    return
+                } 
+                break;
+            case 2:
+                if (this.state.userProfile.year === '') {
+                    alert(this.alerts[2])
+                    return
+                } 
+                break;
+            case 3:
+                if (this.state.userProfile.language === '') {
+                    alert(this.alerts[3])
+                    return
+                } 
+                break;
+            case 4:
+                if (this.state.userProfile.bio === '') {
+                    alert(this.alerts[4])
+                    return
+                } 
+                break;
+            default: 
+                return
+            }
+            this.props.navigation.navigate('EditProfileMainScreen', {
+                profile: this.state.userProfile
+            })
     }
 
     render() {
