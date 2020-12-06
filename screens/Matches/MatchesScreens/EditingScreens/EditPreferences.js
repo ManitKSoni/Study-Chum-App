@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
         //alignItems: 'center',
         //justifyContent: 'center',
         paddingBottom:20,
+        backgroundColor: 'white',
     },
     container2: {
         //backgroundColor: '#fff',

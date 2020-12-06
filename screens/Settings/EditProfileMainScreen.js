@@ -164,12 +164,13 @@ const styles = StyleSheet.create({
         color: 'grey',
         paddingVertical: 7,
         paddingLeft: 4,
-
+        fontFamily: "ProximaNova"
     },
     deleteButton: {
         fontSize: Constants.windowHeight * 0.035,
         color: 'grey',
         margin: 5,
+        fontFamily: "ProximaNova"
     },
     border: {
         borderBottomWidth: 1,

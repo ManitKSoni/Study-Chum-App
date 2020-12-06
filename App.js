@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { StyleSheet, View, LogBox} from 'react-native';
+import { StyleSheet, View, LogBox, StatusBar} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -53,8 +53,6 @@ export default class App extends React.Component {
     await Expo.Asset.fromModule(require('./assets/wave.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/fish_button.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/study_chums_logo.png')).downloadAsync();
-    await Expo.Asset.fromModule(require('./assets/logo_trimmed.png')).downloadAsync();
-    await Expo.Asset.fromModule(require('./assets/dummy.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/study_chums_title.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/default_pic.png')).downloadAsync();
     this.setState({ imagesLoaded: true });
@@ -70,6 +68,7 @@ export default class App extends React.Component {
     if (this.state.fontsLoaded && this.state.imagesLoaded) {
       return (
         <NavigationContainer>
+          <StatusBar barStyle="dark-content" />
           <Stack.Navigator initialRouteName="LoginSpinner">
             <Stack.Screen name="LoginSpinner" component={LoginSpinner}
               options={{ headerShown: false }} />

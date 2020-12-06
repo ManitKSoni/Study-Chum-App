@@ -15,12 +15,15 @@ class Chat extends React.Component {
             buddies: [],
             loaded: false
         }
+        this.props.navigation.setOptions({
+            tabBarVisible: true
+        });
     }
 
     /** Will assign the buddies array state to database array */
     componentDidMount() {
-        this.chatDataModel.newChatListener( (channels) => {
-            this.setState({buddies: channels, loaded: true})
+        this.chatDataModel.newChatListener((channels) => {
+            this.setState({ buddies: channels, loaded: true })
         })
     }
 
@@ -64,7 +67,7 @@ class Chat extends React.Component {
             if (lastSentDate.toLocaleDateString() === "Invalid Date") {
                 return "";
             }
-            return lastSentDate.toLocaleDateString(); //returns day/month/year format
+            return lastSentDate.toLocaleDateString();
         }
     }
 
@@ -77,7 +80,7 @@ class Chat extends React.Component {
 
     /** Handles an individual channel and launches a new screen passing data required **/
     onPressRow(item, uid) {
-        this.props.navigation.navigate('Channel',{userData: item, uid: uid});
+        this.props.navigation.navigate('Channel', { userData: item, uid: uid });
         this.props.navigation.dangerouslyGetParent().setOptions({
             tabBarVisible: false
         });
@@ -115,7 +118,7 @@ class Chat extends React.Component {
         const uid = Firebase.auth().currentUser.uid
         if (this.state.loaded) {
             return (
-                <View style = {styles.container}>
+                <View style={styles.container}>
                     <FlatList
                         data={buddiesArray}
                         renderItem={({ item }) => this.renderItem(item, uid)}
@@ -128,7 +131,8 @@ class Chat extends React.Component {
                     <Text style={styles.loadingText}> Loading...</Text>
                     <ActivityIndicator size="large" color={Constants.secondaryColor} />
                 </View>
-            )}
+            )
+        }
     }
 }
 
@@ -144,22 +148,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         padding: 10,
+        /** 
         backgroundColor: 'white',
         borderBottomColor: "gray",
-        borderBottomWidth: 0.7,
+        borderBottomWidth: 0.7, **/
     },
     columnContainer: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: 10,
+        padding: 15,
     },
     profileImg: {
         width: 75,
         height: 75,
         borderRadius: 40,
+        /** 
         borderColor: 'gray',
-        borderWidth: 2,
+        borderWidth: 2, **/
     },
     name: {
         fontSize: 20,
@@ -167,10 +173,11 @@ const styles = StyleSheet.create({
     messages: {
         marginLeft: 6,
         fontSize: 12,
+        color: 'grey',
     },
     timestamp: {
         fontSize: 12,
-        padding: 15,
+        padding: 20,
     },
     images: {
         width: 75,
@@ -180,18 +187,18 @@ const styles = StyleSheet.create({
         marginHorizontal: 3,
         borderRadius: 75 / 2,
         resizeMode: 'contain',
-      },
-      loadingContainer: {
+    },
+    loadingContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white'
-      },
-      loadingText: {
-          fontSize: 36,
-          fontFamily: "ProximaNova",
-          color: Constants.secondaryColor
-      },
+    },
+    loadingText: {
+        fontSize: 36,
+        fontFamily: "ProximaNova",
+        color: Constants.secondaryColor
+    },
 })
 
 export default Chat

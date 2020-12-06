@@ -24,7 +24,8 @@ class Settings extends React.Component{
             language: '',
             bio: '',
         },
-        image: null
+        image: null,
+        loaded: false
     }
 
 
@@ -43,6 +44,7 @@ class Settings extends React.Component{
         this.state.userProfile.lastName = userInstance._user.lastName;
         this.state.userProfile.major = userInstance._user.major;
         this.state.userProfile.year = userInstance._user.year;
+        this.state.userProfile.language = userInstance._user.language;
     }
 
     /** Handle logging out and reset stack */
@@ -118,7 +120,7 @@ class Settings extends React.Component{
         try{
             var image = await imagePath.getDownloadURL();
 
-            this.setState({image:image})
+            this.setState({image:image, loaded: true})
         } catch(err) {
             console.log("No image on database")
         }
@@ -130,6 +132,11 @@ class Settings extends React.Component{
     * Otherwise show image from firebase
     */
     showImage = () => {
+        if(this.state.loaded === false){
+            return (<View style = {styles.contImg}>
+                <Image/>
+            </View>)
+        }
         if(!this.state.image) {
             return (<View style = {styles.contImg}>
                 <Image source={require('../../assets/default_pic.png')} style={styles.img}/>
@@ -171,7 +178,11 @@ class Settings extends React.Component{
                                     </Text>
                                     <View style={styles.border}/>
                                     <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
-                                        {this.state.userProfile.major + " " +  this.state.userProfile.year}
+                                        {this.state.userProfile.major + ", " +  this.state.userProfile.year}
+                                    </Text>
+                                    <View style={styles.border}/>
+                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
+                                        {"Preferred Language: " + this.state.userProfile.language}
                                     </Text>
                                     <View style={styles.border}/>
                                     <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >

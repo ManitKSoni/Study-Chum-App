@@ -1,16 +1,18 @@
 import React from 'react'
-import { Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,
+import {
+    Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,
     Dimensions,
-    TouchableOpacity} from 'react-native';
+    TouchableOpacity
+} from 'react-native';
 import * as Constants from '../../Constants'
-import {Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 
 imDiam = Math.sqrt(Math.pow(Constants.windowHeight, 2) + Math.pow(Constants.windowWidth, 2)) / 4;
 class UserProfile extends React.Component {
 
-        userID = this.props.route.params.userID
-        uri = this.props.route.params.URI; 
-        profile = this.props.route.params.profile
+    userID = this.props.route.params.userID
+    uri = this.props.route.params.URI;
+    profile = this.props.route.params.profile
 
 
     /*
@@ -18,24 +20,28 @@ class UserProfile extends React.Component {
     * Otherwise show image from firebase
     */
     showImage = () => {
-        if(!this.uri) {
-            return (<View style = {styles.contImg}>
-                <Image source={require('../../assets/dummy.png')} style={styles.img}/>
+        if (!this.uri) {
+            return (<View style={styles.contImg}>
+                <Image source={require('../../assets/dummy.png')} style={styles.img} />
             </View>)
         } else {
             return (
-                <View style ={styles.contImg}>
-                    <Image source = {{uri:this.uri}} style={styles.img}/>
+                <View style={styles.contImg}>
+                    <Image source={{ uri: this.uri }} style={styles.img} />
                 </View>
             )
         }
     }
 
     render() {
-        
+
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
+                    <Icon name="chevron-left" type="octicon" size={40} color={Constants.primaryColor}
+                        containerStyle={styles.iconStyle}
+                        onPress={() => this.props.navigation.pop()}
+                    />
                     <View style={styles.body}>
                         <View style={styles.ImageSections}>
                             <View style={{
@@ -43,20 +49,25 @@ class UserProfile extends React.Component {
                                 width: imDiam, //Constants.windowWidth * 0.55,
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                borderRadius: imDiam / 2/*3*/}}>
+                                borderRadius: imDiam / 2/*3*/
+                            }}>
                                 {this.showImage()}
                             </View>
                         </View>
 
-                        <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .010, paddingTop:Constants.windowHeight * .005}} >
-                            {this.profile.firstName + " " +  this.profile.lastName}</Text>
-                        <View style={styles.border}/>
-                        <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
-                            {this.profile.major + " " +  this.profile.year} </Text>
-                        <View style={styles.border}/>
-                        <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
-                        {this.profile.bio} </Text>
-                        <View style={styles.border}/>
+                        <Text style={{ textAlign: 'center', fontSize: Constants.windowWidth * 0.083, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .010, paddingTop: Constants.windowHeight * .005 }} >
+                            {this.profile.firstName + " " + this.profile.lastName}</Text>
+                        <View style={styles.border} />
+                        <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
+                            {this.profile.major + ", " + this.profile.year} </Text>
+                        <View style={styles.border} />
+                        <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
+                            {"Preferred Language: " + this.profile.language}
+                        </Text>
+                        <View style={styles.border} />
+                        <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
+                            {this.profile.bio} </Text>
+                        <View style={styles.border} />
                     </View>
 
                 </View>
@@ -71,7 +82,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         fontFamily: 'ProximaNova'
     },
-    contImg : {
+    contImg: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',

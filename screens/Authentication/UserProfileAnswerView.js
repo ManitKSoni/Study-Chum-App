@@ -66,12 +66,14 @@ class UserProfileAnswerView extends React.Component {
                             value={this.props.profile.firstName}
                             onChangeText={firstName => this.props.update('firstName', firstName)}
                             placeholder='First Name'
+                            maxLength={35}
                         />
                         <TextInput
                             style={styles.inputBox}
                             value={this.props.profile.lastName}
                             onChangeText={lastName => this.props.update('lastName', lastName)}
                             placeholder='Last Name'
+                            maxLength={35}
                         />
                     </View>
                 )
