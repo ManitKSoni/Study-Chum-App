@@ -340,8 +340,37 @@ class Home extends React.Component {
     /** Checks for valid day user input */
     checkDay() {
         var day = this.state.day;
-        var dayCheck = (day <= 31 && day >= 1 
-            && day.length == 2);
+        var month = this.state.month;
+        var year = this.state.year;
+        var dayCheck = (day >= 1 && day.length == 2);
+        var dateCheck = 0
+        switch (month) {
+            case "01": 
+            case "03":
+            case "05":
+            case "07": 
+            case "08":
+            case "10":
+            case "12": 
+                dateCheck = (day <= 31);
+                break;
+            case "04":
+            case "06":
+            case "09":
+            case "11": 
+                console.log("4,6,9")
+                dateCheck = (day <= 30);
+                break;
+            case "02" : 
+                if ((year % 4) == 0) {
+                    dateCheck = (day <= 29);
+                }
+                else {
+                    dateCheck = (day <= 28);
+                }
+                break;
+        }
+        dayCheck = dayCheck && dateCheck;
         if (!dayCheck) {
             this.setState({dayBack: Constants.invalidInputBox})
         }
