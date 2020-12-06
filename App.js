@@ -55,6 +55,7 @@ export default class App extends React.Component {
     await Expo.Asset.fromModule(require('./assets/study_chums_logo.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/study_chums_title.png')).downloadAsync();
     await Expo.Asset.fromModule(require('./assets/default_pic.png')).downloadAsync();
+    await Expo.Asset.fromModule(require('./assets/default_pic_gray.png')).downloadAsync();
     this.setState({ imagesLoaded: true });
   }
 

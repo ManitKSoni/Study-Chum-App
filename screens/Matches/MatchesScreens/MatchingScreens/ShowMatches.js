@@ -105,8 +105,8 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                     <View>
                         <View style = {styles.centerText}> 
                             <Text style={styles.name}>  
-                            {((name).length > (Constants.windowWidth/15)) ?
-                                    (((name).substring(0,(Constants.windowWidth/15)-3)) + '...') :
+                            {((name).length > (Constants.windowWidth/20)) ?
+                                    (((name).substring(0,(Constants.windowWidth/20)-3)) + '...') :
                                     name} {"\n"} 
                                 <Text style={styles.bio}>
                                     {((bio).length > (Constants.windowWidth/10)) ?
@@ -126,15 +126,15 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
             <TouchableOpacity style={styles.item} onPress={onPress}>
                 <View style={styles.itemRow}> 
                     <View style={styles.itemColumn}> 
-                        <Image source={require('../../../../assets/default_pic.png')} style={styles.images}/> 
+                        <Image source={require('../../../../assets/default_pic_gray.png')} style={styles.images}/> 
                     </View>
             
             
                     <View>
                         <View style = {styles.centerText}> 
                             <Text style={styles.name}>  
-                            {((name).length > (Constants.windowWidth/15)) ?
-                                    (((name).substring(0,(Constants.windowWidth/15)-3)) + '...') :
+                            {((name).length > (Constants.windowWidth/20)) ?
+                                    (((name).substring(0,(Constants.windowWidth/20)-3)) + '...') :
                                     name} {"\n"} 
                                 <Text style={styles.bio}>
                                     {((bio).length > (Constants.windowWidth/10)) ?

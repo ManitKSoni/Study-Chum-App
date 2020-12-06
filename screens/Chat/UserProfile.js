@@ -22,7 +22,7 @@ class UserProfile extends React.Component {
     showImage = () => {
         if (!this.uri) {
             return (<View style={styles.contImg}>
-                <Image source={require('../../assets/dummy.png')} style={styles.img} />
+                <Image source={require('../../assets/default_pic_gray.png')} style={styles.img} />
             </View>)
         } else {
             return (
@@ -92,7 +92,9 @@ const styles = StyleSheet.create({
         height: imDiam, //Constants.windowHeight * 0.29,
         width: imDiam, //Constants.windowWidth * 0.55,
         borderRadius: imDiam / 2,
-        backgroundColor: '#000'
+        backgroundColor: '#000',
+        borderWidth: 2,
+        borderColor: "grey", 
     },
     img_icon: {
         height: Dimensions.get('screen').height * 0.05,

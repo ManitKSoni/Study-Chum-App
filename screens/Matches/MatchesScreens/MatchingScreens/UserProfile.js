@@ -40,7 +40,7 @@ class UserProfile extends React.Component {
         if (!this.uri) {
             return (
                 <View style={styles.contImg}>
-                    <Image source={require('../../../../assets/default_pic.png')} style={styles.img} />
+                    <Image source={require('../../../../assets/default_pic_gray.png')} style={styles.img} />
                 </View>
             )
         } else {

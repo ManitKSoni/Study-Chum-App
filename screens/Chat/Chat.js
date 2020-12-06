@@ -86,7 +86,7 @@ class Chat extends React.Component {
 
     generateImage(image) {
         if (image == null) {
-            return <Image source={require('../../assets/default_pic_gray_2.png')} style={styles.profileImg} />
+            return <Image source={require('../../assets/default_pic_gray.png')} style={styles.profileImg} />
         } else {
             return <Image source={{ uri: image }} style={styles.profileImg} />
         }
