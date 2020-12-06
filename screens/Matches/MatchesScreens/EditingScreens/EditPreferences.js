@@ -114,10 +114,8 @@ class EditPreferences extends React.Component {
                             </View>
                         </View>
                     </View>
-
                 </Modal>
             </View>
-
         )
     }
 }

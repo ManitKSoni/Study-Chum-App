@@ -52,11 +52,6 @@ class UserProfile extends React.Component {
         }
     }
 
-    /**
-    onPressGoBack = () => {
-        this.props.navigation.navigate("ShowMatches");
-    } **/
-
     componentWillUnmount() {
         this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
             tabBarVisible: true

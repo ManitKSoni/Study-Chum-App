@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Text,View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, Image } from 'react-native'
+import {Text,View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
 import * as Constants from '../../../../Constants.js'
 
 class Matches extends React.Component{
@@ -30,14 +30,6 @@ class Matches extends React.Component{
             }} source={require('../../../../assets/study_chums_logo.png')} />
         });
     }
-
-    /*
-    * TODO: 
-    * 
-    * Update course docs when user edits profile(like language, bio, etc)
-    * When editing pref profile, get info and send to SavedData (change the flow of data) LOW PRIO 
-    * When deleting from ShowMatches on current matches, still shows current matches
-    */
 
     render() {
 

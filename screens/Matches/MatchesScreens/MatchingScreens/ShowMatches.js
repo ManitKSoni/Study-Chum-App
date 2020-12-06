@@ -117,7 +117,7 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                             </Text>
                         </View>
                     </View>
-                    <Text style={styles.tally}> {tally}  </Text>
+                    {/*<Text style={styles.tally}> {tally}  </Text>*/}
                 </View>
             </TouchableOpacity>
         )
@@ -144,7 +144,7 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                             </Text>
                         </View>
                     </View>
-                    <Text style={styles.tally}> {tally}  </Text>
+                   {/* <Text style={styles.tally}> {tally}  </Text>*/}
                 </View>
             </TouchableOpacity>
         )
