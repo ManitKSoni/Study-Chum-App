@@ -31,6 +31,7 @@ export class PreferenceProfiles {
         var preferences = this.createPreferenceProifle(this.preferences)
         await CoursesCollectionAccess.addPreferenceProfile(preferences, this.courseName); 
         SavedData.changeTitle(this.courseName);
+        SavedData.setPreferences2(preferences.preferences); 
         MatchingAlgorithm.getStudentMap(this.courseName, 
         () => props.navigation.navigate("ShowMatches", {name: this.courseName}));
         props.navigation.dangerouslyGetParent().setOptions({
