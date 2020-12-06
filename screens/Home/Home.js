@@ -96,11 +96,13 @@ class Home extends React.Component {
                             <View style = {styles.centeredView}>
                                 <View style={styles.modalView}>
                                     <View style={{paddingBottom: Constants.windowHeight * 0.012}}>
-                                        <Text style={{paddingBottom: Constants.windowHeight*0.015, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}>
+                                        <Text style={{paddingBottom: Constants.windowHeight*0.015, textAlign:'center', 
+                                        fontSize: Constants.windowHeight * 0.017}}>
                                             Event Description
                                         </Text>
                                         <TextInput 
-                                            style={{height: Constants.windowHeight * 0.026, width: Constants.windowWidth * 0.55, textAlign:'center', borderRadius: 5}}
+                                            style={{height: Constants.windowHeight * 0.026, width: Constants.windowWidth * 0.55, 
+                                                textAlign:'center', borderRadius: 5}}
                                             placeholder="Type an event description"
                                             maxLength = {40}
                                             placeholderTextColor='#8a8a8a'
@@ -216,7 +218,8 @@ class Home extends React.Component {
                                     </View>
                                     <View style={{flexDirection:"row", paddingTop: Constants.windowHeight * 0.01}}>
                                         <View style={{paddingRight: Constants.windowWidth * 0.05}}>
-                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, paddingHorizontal: Constants.windowWidth * 0.03}}
+                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, 
+                                        paddingHorizontal: Constants.windowWidth * 0.03}}
                                             onPress={() => this.setAddVisible(false)}>
                                             <Text style={styles.cancel}>
                                                 Cancel     
@@ -242,10 +245,12 @@ class Home extends React.Component {
                         >
                             <View style = {styles.centeredView}>
                                 <View style = {styles.confirmView}>
-                                    <Text style = {{textAlign: 'center', fontSize: Constants.windowHeight * 0.027, paddingBottom: Constants.windowHeight * 0.02}}>
+                                    <Text style = {{textAlign: 'center', fontSize: Constants.windowHeight * 0.027, 
+                                    paddingBottom: Constants.windowHeight * 0.02}}>
                                         Event Added
                                     </Text>
-                                    <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, paddingHorizontal: Constants.windowWidth * 0.07}}
+                                    <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, 
+                                    paddingHorizontal: Constants.windowWidth * 0.07}}
                                             onPress={() => this.setConfirmVisible(false)}>
                                             <Text style={styles.addEvent}>
                                                 OK
@@ -407,19 +412,6 @@ class Home extends React.Component {
         this.setState({time: time});
     }
 
-    timeToInt(time) {
-        console.log(time);
-        var timeVal = (time.substring(0,2)%12) + time.substring(3,5);
-        console.log("timeVal: ", timeVal);
-        //timeVal = parseInt(timeVal);
-        var timeOfDay = time.substring(6,8);
-        if (timeOfDay == 'PM') {
-            timeVal = timeVal + '1200'
-        }
-        console.log(timeVal);
-        return timeVal;
-    }
-
     // sort function used to rank events by thier scheduled time
     sortTime(a, b) {
         var aTime = a.time;
@@ -434,8 +426,6 @@ class Home extends React.Component {
         if (bTimeOfDay == 'PM') {
             bTimeVal = bTimeVal + '1200';
         }
-        //var aVal = this.timeToInt(aTime);
-        //var bVal = this.timeToInt(bTime);
         return aTimeVal - bTimeVal;
     }
 
