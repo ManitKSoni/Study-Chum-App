@@ -210,7 +210,7 @@ class Home extends React.Component {
                                                 placeholder="AM/PM"
                                                 placeholderTextColor='#8a8a8a'
                                                 backgroundColor={this.state.timeOfDayBack}
-                                                onChangeText={timeOfDay => this.setState({ timeOfDay })}
+                                                onChangeText={timeOfDay => this.setState({ timeOfDay: timeOfDay.toUpperCase() })}
                                                 />
                                             </View>
                                             </View>
@@ -423,9 +423,9 @@ class Home extends React.Component {
 
     // checks for valid time of day user input
     checkTimeOfDay() {
-        var min = this.state.timeOfDay;
-        var timeOfDayCheck = (this.state.timeOfDay == "AM" || 
-        this.state.timeOfDay == "PM");
+        var timeOfDay = this.state.timeOfDay;
+        var timeOfDayCheck = (timeOfDay == "AM" || 
+        timeOfDay == "PM");
         if (!timeOfDayCheck) {
             this.setState({timeOfDayBack: Constants.invalidInputBox})
         }
