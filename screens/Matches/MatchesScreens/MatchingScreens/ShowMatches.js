@@ -22,6 +22,7 @@ class ShowMatches extends React.Component {
         var data = await createMatchesData();
         var dupeMap = new Map(); 
         var trueData = [];
+        //checks if there are duplicates in case of race condition
         for(let i = 0; i < data.length; i++) {
             if(!dupeMap.has(data[i].userID)) {
                 dupeMap.set(data[i].userID, true);

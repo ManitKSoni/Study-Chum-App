@@ -2,10 +2,9 @@ import React from 'react'
 
 import { View, Text, ImageBackground, Image } from 'react-native'
 
-import {TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button } from 'react-native'
+import {StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import PreferenceProfiles from "../../Controllers/PreferenceProfiles"
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import * as FileSystem from 'expo-file-system';
 import {Fragment} from 'react'
 import * as Constants from '../../../../Constants.js'
 import {Icon} from 'react-native-elements';
@@ -48,7 +47,6 @@ class Courses extends React.Component {
             alert("Class already added! Check sidebar.")
         } else {
             PreferenceProfiles.addCourse(this.state.selectedItem[0].name);
-            console.log("eat pant");
             console.log(this.state.selectedItem[0].name);
             this.props.navigation.navigate("Availibility");
         }

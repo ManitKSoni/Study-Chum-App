@@ -2,7 +2,7 @@ import React from 'react'
 
 import { View, Text } from 'react-native'
 
-import {Keyboard, Switch, StyleSheet, TouchableWithoutFeedback, Button,  ImageBackground, Image, TouchableOpacity} from 'react-native'
+import {Keyboard, StyleSheet, TouchableWithoutFeedback, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import * as Constants from '../../../../Constants.js'
 import PreferenceProfiles from "../../Controllers/PreferenceProfiles";
 import {Icon} from 'react-native-elements';
