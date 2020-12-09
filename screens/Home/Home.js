@@ -287,7 +287,6 @@ class Home extends React.Component {
                 timeOfDayBack: Constants.calendarInputBox,
             });
             this.loadItems({timestamp: Date.now()});
-            //console.log("items:", this.state.items);
         }
         else {
             this.clearInput();
@@ -467,29 +466,22 @@ class Home extends React.Component {
             var doc = this.db.collection("users").doc(userID)
             var docDetails = await doc.get()
             if (docDetails.exists) {
-                //var eventMap = docDetails.get("events");
-                //console.log(eventMap);
                 var eventMap = this.state.items;
                 var eventDate = eventMap[date];
                 var key = "events." + date;
-                // if the date already exists in the map
                 if (!eventDate) {
-                    //console.log("date not found")
                     var dayArr = [];
                     var dateMap = {name: this.state.name, time: this.state.time};
                     dayArr.push(dateMap);
                     doc.update({[key]: dayArr});
-                    //console.log("map updated");
                 }
                 // the date does not exist in the map
                 else {
-                    //console.log("date found");
                     var dayArr = eventDate;
                     var dateMap = {name: this.state.name, time: this.state.time};
                     dayArr.push(dateMap);
                     dayArr.sort(this.sortTime);
                     doc.update({[key]: dayArr});
-                    //console.log("map updated");
                     this.state.items[date] = dateMap;
                 }
                 this.setConfirmVisible(true);
@@ -542,9 +534,6 @@ class Home extends React.Component {
 
     // loads the day items to be displayed on the agenda 
     loadItems(day) {
-        //this.fetchUserDetails();
-        //console.log("timestamp:", day.timestamp);
-        //console.log("Date.now(): ", Date.now());
         setTimeout(() => {
           for (let i = -15; i < 85; i++) {
             const time = day.timestamp + i * 24 * 60 * 60 * 1000;
