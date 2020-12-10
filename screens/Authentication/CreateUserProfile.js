@@ -19,7 +19,7 @@ class CreateUserProfile extends React.Component {
     alerts = [
         "Please enter your full name!",
         "Please select a major from the list!",
-        "Please select a graduating year!",
+        "Please select a graduation year from the list!",
         "Please select a language from the list!",
         "Please enter a bio!"
     ]
