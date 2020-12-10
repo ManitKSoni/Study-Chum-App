@@ -16,6 +16,14 @@ class EditProfileScreen extends React.Component {
         "Tell us a little about yourself!",
     ]
 
+    alerts = [
+        "Please enter your full name!",
+        "Please select a major from the list!",
+        "Please select a graduating year!",
+        "Please select a language from the list!",
+        "Please enter a bio!"
+    ]
+
     state = {
         index: 0,
         userProfile: {
@@ -25,35 +33,82 @@ class EditProfileScreen extends React.Component {
             year: '',
             language: '',
             bio: '',
+            courses: []
         }
     }
 
     constructor() {
         super()
         this.onPressContinue = this.onPressContinue.bind(this)
-        this.state.userProfile.bio = userInstance._user.bio;
-        this.state.userProfile.firstName = userInstance._user.firstName;
-        this.state.userProfile.lastName = userInstance._user.lastName;
-        this.state.userProfile.major = userInstance._user.major;
-        this.state.userProfile.language = userInstance._user.language;
-        this.state.userProfile.year = userInstance._user.year;
+        // this.state.userProfile.bio = userInstance._user.bio;
+        // this.state.userProfile.firstName = userInstance._user.firstName;
+        // this.state.userProfile.lastName = userInstance._user.lastName;
+        // this.state.userProfile.major = userInstance._user.major;
+        // this.state.userProfile.language = userInstance._user.language;
+        // this.state.userProfile.year = userInstance._user.year;
+        // this.state.userProfile.courses = userInstance._user.courses;
     }
 
     componentDidMount() {
-        this.setState({index: this.props.route.params.index})
-        this.index = this.props.route.params.index
+        const userProfile = this.props.route.params.userProfile
+        this.setState({
+            index: this.props.route.params.index, 
+            userProfile: {
+                firstName: userProfile.firstName,
+                lastName: userProfile.lastName,
+                major: userProfile.major,
+                year: userProfile.year,
+                language: userProfile.language,
+                bio: userProfile.bio,
+                courses: userProfile.courses
+            }
+        })
     }
 
     updateUser = (key, value) => {
         this.state.userProfile[key] = value
         this.setState({ userProfile: this.state.userProfile })
+
     }
 
     onPressContinue() {
-        // navigate back 
-        this.props.navigation.navigate('EditProfileMainScreen', {
-            profile: this.state.userProfile
-        })
+        switch (this.state.index) {
+            case 0:
+                if (this.state.userProfile.firstName === '' || this.state.userProfile.lastName === '' ) {
+                    alert(this.alerts[0])
+                    return
+                } 
+                break;
+            case 1:
+                if (this.state.userProfile.major === '') {
+                    alert(this.alerts[1])
+                    return
+                } 
+                break;
+            case 2:
+                if (this.state.userProfile.year === '') {
+                    alert(this.alerts[2])
+                    return
+                } 
+                break;
+            case 3:
+                if (this.state.userProfile.language === '') {
+                    alert(this.alerts[3])
+                    return
+                } 
+                break;
+            case 4:
+                if (this.state.userProfile.bio === '') {
+                    alert(this.alerts[4])
+                    return
+                } 
+                break;
+            default: 
+                return
+            }
+            this.props.navigation.navigate('EditProfileMainScreen', {
+                profile: this.state.userProfile
+            })
     }
 
     render() {

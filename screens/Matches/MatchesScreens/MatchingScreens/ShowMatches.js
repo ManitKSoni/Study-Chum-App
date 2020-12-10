@@ -22,6 +22,7 @@ class ShowMatches extends React.Component {
         var data = await createMatchesData();
         var dupeMap = new Map(); 
         var trueData = [];
+        //checks if there are duplicates in case of race condition
         for(let i = 0; i < data.length; i++) {
             if(!dupeMap.has(data[i].userID)) {
                 dupeMap.set(data[i].userID, true);
@@ -39,6 +40,9 @@ class ShowMatches extends React.Component {
     onPressGoToUserProfile = (uid, uri) => {
         SavedData.renderProfile(uid, () => 
             this.props.navigation.navigate("UserProfile", {userID: uid, URI: uri}));
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: false
+        });
         console.log(uid)
     }
    
@@ -102,7 +106,7 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                     <View>
                         <View style = {styles.centerText}> 
                             <Text style={styles.name}>  
-                            {((name).length > (Constants.windowWidth/10)) ?
+                            {((name).length > (Constants.windowWidth/20)) ?
                                     (((name).substring(0,(Constants.windowWidth/20)-3)) + '...') :
                                     name} {"\n"} 
                                 <Text style={styles.bio}>
@@ -114,7 +118,7 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                             </Text>
                         </View>
                     </View>
-                    <Text style={styles.tally}> {tally}  </Text>
+                    {/*<Text style={styles.tally}> {tally}  </Text>*/}
                 </View>
             </TouchableOpacity>
         )
@@ -123,14 +127,14 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
             <TouchableOpacity style={styles.item} onPress={onPress}>
                 <View style={styles.itemRow}> 
                     <View style={styles.itemColumn}> 
-                        <Image source={require('../../../../assets/default_pic.png')} style={styles.images}/> 
+                        <Image source={require('../../../../assets/default_pic_gray.png')} style={styles.images}/> 
                     </View>
             
             
                     <View>
                         <View style = {styles.centerText}> 
                             <Text style={styles.name}>  
-                            {((name).length > (Constants.windowWidth/10)) ?
+                            {((name).length > (Constants.windowWidth/20)) ?
                                     (((name).substring(0,(Constants.windowWidth/20)-3)) + '...') :
                                     name} {"\n"} 
                                 <Text style={styles.bio}>
@@ -141,7 +145,7 @@ const Item = ({ name, bio, onPress, URI, tally }) => {
                             </Text>
                         </View>
                     </View>
-                    <Text style={styles.tally}> {tally}  </Text>
+                   {/* <Text style={styles.tally}> {tally}  </Text>*/}
                 </View>
             </TouchableOpacity>
         )

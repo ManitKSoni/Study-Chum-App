@@ -57,17 +57,8 @@ export default class ChatNavigator extends React.Component {
                     },
                 }} />
                 
-                <Stack.Screen name="UserProfile" component={UserProfile} options={{
-                    headerLeft: () => (
-                        <Icon name="chevron-left" type="octicon" size={40} containerStyle={{paddingLeft:Constants.windowWidth*.025}}
-                        color="#FFFFFF" onPress={this.onPressGoToChannel}/>
-                    ),
-                    title:"",
-                    headerTitleAlign: "center",
-                    headerStyle: {backgroundColor: Constants.secondaryColor},
-                    headerTitleStyle: {color:"#FFFFFF", fontFamily:"ProximaNova", 
-                    fontSize:Constants.headerFontSize},
-                }}/>
+                <Stack.Screen name="UserProfile" component={UserProfile} 
+                    options={{headerShown:null}}/>
             </Stack.Navigator>
         )
     }

@@ -96,11 +96,13 @@ class Home extends React.Component {
                             <View style = {styles.centeredView}>
                                 <View style={styles.modalView}>
                                     <View style={{paddingBottom: Constants.windowHeight * 0.012}}>
-                                        <Text style={{paddingBottom: Constants.windowHeight*0.015, textAlign:'center', fontSize: Constants.windowHeight * 0.017}}>
+                                        <Text style={{paddingBottom: Constants.windowHeight*0.015, textAlign:'center', 
+                                        fontSize: Constants.windowHeight * 0.017}}>
                                             Event Description
                                         </Text>
                                         <TextInput 
-                                            style={{height: Constants.windowHeight * 0.026, width: Constants.windowWidth * 0.55, textAlign:'center', borderRadius: 5}}
+                                            style={{height: Constants.windowHeight * 0.026, width: Constants.windowWidth * 0.55, 
+                                                textAlign:'center', borderRadius: 5}}
                                             placeholder="Type an event description"
                                             maxLength = {40}
                                             placeholderTextColor='#8a8a8a'
@@ -208,7 +210,7 @@ class Home extends React.Component {
                                                 placeholder="AM/PM"
                                                 placeholderTextColor='#8a8a8a'
                                                 backgroundColor={this.state.timeOfDayBack}
-                                                onChangeText={timeOfDay => this.setState({ timeOfDay })}
+                                                onChangeText={timeOfDay => this.setState({ timeOfDay: timeOfDay.toUpperCase() })}
                                                 />
                                             </View>
                                             </View>
@@ -216,7 +218,8 @@ class Home extends React.Component {
                                     </View>
                                     <View style={{flexDirection:"row", paddingTop: Constants.windowHeight * 0.01}}>
                                         <View style={{paddingRight: Constants.windowWidth * 0.05}}>
-                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, paddingHorizontal: Constants.windowWidth * 0.03}}
+                                        <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, 
+                                        paddingHorizontal: Constants.windowWidth * 0.03}}
                                             onPress={() => this.setAddVisible(false)}>
                                             <Text style={styles.cancel}>
                                                 Cancel     
@@ -242,10 +245,12 @@ class Home extends React.Component {
                         >
                             <View style = {styles.centeredView}>
                                 <View style = {styles.confirmView}>
-                                    <Text style = {{textAlign: 'center', fontSize: Constants.windowHeight * 0.027, paddingBottom: Constants.windowHeight * 0.02}}>
+                                    <Text style = {{textAlign: 'center', fontSize: Constants.windowHeight * 0.027, 
+                                    paddingBottom: Constants.windowHeight * 0.02}}>
                                         Event Added
                                     </Text>
-                                    <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, paddingHorizontal: Constants.windowWidth * 0.07}}
+                                    <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor, 
+                                    paddingHorizontal: Constants.windowWidth * 0.07}}
                                             onPress={() => this.setConfirmVisible(false)}>
                                             <Text style={styles.addEvent}>
                                                 OK
@@ -282,7 +287,6 @@ class Home extends React.Component {
                 timeOfDayBack: Constants.calendarInputBox,
             });
             this.loadItems({timestamp: Date.now()});
-            //console.log("items:", this.state.items);
         }
         else {
             this.clearInput();
@@ -335,8 +339,37 @@ class Home extends React.Component {
     /** Checks for valid day user input */
     checkDay() {
         var day = this.state.day;
-        var dayCheck = (day <= 31 && day >= 1 
-            && day.length == 2);
+        var month = this.state.month;
+        var year = this.state.year;
+        var dayCheck = (day >= 1 && day.length == 2);
+        var dateCheck = 0
+        switch (month) {
+            case "01": 
+            case "03":
+            case "05":
+            case "07": 
+            case "08":
+            case "10":
+            case "12": 
+                dateCheck = (day <= 31);
+                break;
+            case "04":
+            case "06":
+            case "09":
+            case "11": 
+                console.log("4,6,9")
+                dateCheck = (day <= 30);
+                break;
+            case "02" : 
+                if ((year % 4) == 0) {
+                    dateCheck = (day <= 29);
+                }
+                else {
+                    dateCheck = (day <= 28);
+                }
+                break;
+        }
+        dayCheck = dayCheck && dateCheck;
         if (!dayCheck) {
             this.setState({dayBack: Constants.invalidInputBox})
         }
@@ -389,9 +422,9 @@ class Home extends React.Component {
 
     // checks for valid time of day user input
     checkTimeOfDay() {
-        var min = this.state.timeOfDay;
-        var timeOfDayCheck = (this.state.timeOfDay == "AM" || 
-        this.state.timeOfDay == "PM");
+        var timeOfDay = this.state.timeOfDay;
+        var timeOfDayCheck = (timeOfDay == "AM" || 
+        timeOfDay == "PM");
         if (!timeOfDayCheck) {
             this.setState({timeOfDayBack: Constants.invalidInputBox})
         }
@@ -405,19 +438,6 @@ class Home extends React.Component {
     formatTime() {
         var time = this.state.hour + ":" + this.state.minute + " " + this.state.timeOfDay;
         this.setState({time: time});
-    }
-
-    timeToInt(time) {
-        console.log(time);
-        var timeVal = (time.substring(0,2)%12) + time.substring(3,5);
-        console.log("timeVal: ", timeVal);
-        //timeVal = parseInt(timeVal);
-        var timeOfDay = time.substring(6,8);
-        if (timeOfDay == 'PM') {
-            timeVal = timeVal + '1200'
-        }
-        console.log(timeVal);
-        return timeVal;
     }
 
     // sort function used to rank events by thier scheduled time
@@ -434,8 +454,6 @@ class Home extends React.Component {
         if (bTimeOfDay == 'PM') {
             bTimeVal = bTimeVal + '1200';
         }
-        //var aVal = this.timeToInt(aTime);
-        //var bVal = this.timeToInt(bTime);
         return aTimeVal - bTimeVal;
     }
 
@@ -448,29 +466,22 @@ class Home extends React.Component {
             var doc = this.db.collection("users").doc(userID)
             var docDetails = await doc.get()
             if (docDetails.exists) {
-                //var eventMap = docDetails.get("events");
-                //console.log(eventMap);
                 var eventMap = this.state.items;
                 var eventDate = eventMap[date];
                 var key = "events." + date;
-                // if the date already exists in the map
                 if (!eventDate) {
-                    //console.log("date not found")
                     var dayArr = [];
                     var dateMap = {name: this.state.name, time: this.state.time};
                     dayArr.push(dateMap);
                     doc.update({[key]: dayArr});
-                    //console.log("map updated");
                 }
                 // the date does not exist in the map
                 else {
-                    //console.log("date found");
                     var dayArr = eventDate;
                     var dateMap = {name: this.state.name, time: this.state.time};
                     dayArr.push(dateMap);
                     dayArr.sort(this.sortTime);
                     doc.update({[key]: dayArr});
-                    //console.log("map updated");
                     this.state.items[date] = dateMap;
                 }
                 this.setConfirmVisible(true);
@@ -523,9 +534,6 @@ class Home extends React.Component {
 
     // loads the day items to be displayed on the agenda 
     loadItems(day) {
-        //this.fetchUserDetails();
-        //console.log("timestamp:", day.timestamp);
-        //console.log("Date.now(): ", Date.now());
         setTimeout(() => {
           for (let i = -15; i < 85; i++) {
             const time = day.timestamp + i * 24 * 60 * 60 * 1000;

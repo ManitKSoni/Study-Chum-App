@@ -1,8 +1,10 @@
-import React, { Fragment, Component}  from 'react';
-import {Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,SafeAreaView,
+import React, { Fragment, Component } from 'react';
+import {
+    Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View, SafeAreaView,
     StatusBar,
     Dimensions,
-    TouchableOpacity, DeviceEventEmitter} from 'react-native';
+    TouchableOpacity, DeviceEventEmitter
+} from 'react-native';
 import Firebase from '../../config/Firebase';
 import * as ImagePicker from "expo-image-picker";
 import * as Constants from '../../Constants.js'
@@ -10,13 +12,13 @@ import userInstance from "../Singletons/UserSingleton";
 
 //ensures size is proportional across devices
 var imDiam = Math.sqrt(Math.pow(Constants.windowHeight, 2) + Math.pow(Constants.windowWidth, 2)) / 4;
-class Settings extends React.Component{
+class Settings extends React.Component {
 
     db = Firebase.firestore();
     userID = Firebase.auth().currentUser.uid;
 
     state = {
-        userProfile : {
+        userProfile: {
             firstName: '',
             lastName: '',
             major: '',
@@ -24,7 +26,8 @@ class Settings extends React.Component{
             language: '',
             bio: '',
         },
-        image: null
+        image: null,
+        loaded: false
     }
 
 
@@ -43,6 +46,7 @@ class Settings extends React.Component{
         this.state.userProfile.lastName = userInstance._user.lastName;
         this.state.userProfile.major = userInstance._user.major;
         this.state.userProfile.year = userInstance._user.year;
+        this.state.userProfile.language = userInstance._user.language;
     }
 
     /** Handle logging out and reset stack */
@@ -65,11 +69,11 @@ class Settings extends React.Component{
     /** Called on Settings screen being rendered */
     componentDidMount() {
         this.renderFileData();
-        this.eventListener = DeviceEventEmitter.addListener('eventKey',this.handleEvent);
+        this.eventListener = DeviceEventEmitter.addListener('eventKey', this.handleEvent);
     }
 
     handleEvent(profile) {
-        this.setState({userProfile: profile})
+        this.setState({ userProfile: profile })
     }
 
     /*
@@ -82,8 +86,8 @@ class Settings extends React.Component{
             aspect: [4, 3],
             quality: 1,
         });
-        if(!result.cancelled) {
-            this.setState({image: result.uri});
+        if (!result.cancelled) {
+            this.setState({ image: result.uri });
             this.uploadImage(result.uri, this.userID)
                 .then(() => {
                     console.log("Success")
@@ -115,11 +119,11 @@ class Settings extends React.Component{
 
         var storage = Firebase.storage();
         var imagePath = storage.ref('images/' + this.userID);
-        try{
+        try {
             var image = await imagePath.getDownloadURL();
-
-            this.setState({image:image})
-        } catch(err) {
+            this.setState({ image: image, loaded: true })
+        } catch (err) {
+            this.setState({loaded: true})
             console.log("No image on database")
         }
 
@@ -129,15 +133,22 @@ class Settings extends React.Component{
     * If the image state is null, show default image.
     * Otherwise show image from firebase
     */
-    showImage = () => {
-        if(!this.state.image) {
-            return (<View style = {styles.contImg}>
-                <Image source={require('../../assets/default_pic.png')} style={styles.img}/>
+    showImage = () => { 
+        if(this.state.loaded === false){
+            return (
+            <View style = {styles.contImg}>
+                <Image/>
+            </View>)
+        } 
+        if (!this.state.image) {
+            return (
+            <View style={styles.contImg}>
+                <Image source={require('../../assets/default_pic_gray.png')} style={styles.img} />
             </View>)
         } else {
             return (
-                <View style ={styles.contImg}>
-                    <Image source = {{uri:this.state.image}} style={styles.img}/>
+                <View style={styles.contImg}>
+                    <Image source={{ uri: this.state.image }} style={styles.img} />
                 </View>
             )
         }
@@ -157,27 +168,32 @@ class Settings extends React.Component{
                                         width: imDiam, //Constants.windowWidth * 0.55,
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        borderRadius: imDiam / 2/*3*/}}>
+                                        borderRadius: imDiam / 2
+                                    }}>
                                         {this.showImage()}
-                                        <View style ={styles.img_icon}>
-                                            <Image source ={require('../../assets/edit_bubble_icon.png')} style={styles.img_icon}/>
+                                        <View style={styles.img_icon}>
+                                            <Image source={require('../../assets/edit_bubble_icon.png')} style={styles.img_icon} />
                                         </View>
                                     </TouchableOpacity>
                                 </View>
                                 <View
                                     style={styles.textAlign}>
-                                    <Text style={{textAlign:'center',fontSize:Constants.windowWidth*0.083,fontFamily: 'ProximaNova',paddingBottom:Constants.windowHeight * .010, paddingTop:Constants.windowHeight * .005}} >
-                                        {this.state.userProfile.firstName + " " +  this.state.userProfile.lastName}
+                                    <Text style={{ textAlign: 'center', fontSize: Constants.windowWidth * 0.083, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .010, paddingTop: Constants.windowHeight * .005 }} >
+                                        {this.state.userProfile.firstName + " " + this.state.userProfile.lastName}
                                     </Text>
-                                    <View style={styles.border}/>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
-                                        {this.state.userProfile.major + " " +  this.state.userProfile.year}
+                                    <View style={styles.border} />
+                                    <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
+                                        {this.state.userProfile.major + ", " + this.state.userProfile.year}
                                     </Text>
-                                    <View style={styles.border}/>
-                                    <Text style={{textAlign:'left', color: '#AAAAAA',fontSize:Constants.windowWidth*0.045, fontFamily: 'ProximaNova', paddingBottom:Constants.windowHeight * .012, paddingHorizontal:Constants.windowWidth * .035, paddingTop:Constants.windowHeight * .012}} >
+                                    <View style={styles.border} />
+                                    <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
+                                        {"Preferred Language: " + this.state.userProfile.language}
+                                    </Text>
+                                    <View style={styles.border} />
+                                    <Text style={{ textAlign: 'left', color: '#AAAAAA', fontSize: Constants.windowWidth * 0.045, fontFamily: 'ProximaNova', paddingBottom: Constants.windowHeight * .012, paddingHorizontal: Constants.windowWidth * .035, paddingTop: Constants.windowHeight * .012 }} >
                                         {this.state.userProfile.bio}
                                     </Text>
-                                    <View style={styles.border}/>
+                                    <View style={styles.border} />
                                 </View>
                                 <View style={styles.btnParentSection}>
                                     <TouchableOpacity onPress={this.onPressEditProfile} style={styles.btnSection}  >
@@ -203,17 +219,19 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         justifyContent: 'center',
-        fontFamily: 'ProximaNova'
+        fontFamily: 'ProximaNova',
     },
-    contImg : {
+    contImg: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
     },
     img: {
         height: imDiam, //Constants.windowHeight * 0.29,
         width: imDiam, //Constants.windowWidth * 0.55,
+        borderWidth: 2,
+        borderColor: 'grey',
         borderRadius: imDiam / 2,
         backgroundColor: '#000'
     },
@@ -234,7 +252,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         justifyContent: 'center',
         height: Dimensions.get('screen').height - 20,
-        width: Dimensions.get('screen').width
+        width: Dimensions.get('screen').width,
     },
     ImageSections: {
         display: 'flex',
@@ -245,7 +263,7 @@ const styles = StyleSheet.create({
     },
     btnParentSection: {
         alignItems: 'center',
-        marginTop:10
+        marginTop: 10
     },
     btnSection: {
         width: 225,
@@ -254,7 +272,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        marginBottom:10
+        marginBottom: 10
     },
     logoutbtnSection: {
         width: 225,
@@ -265,21 +283,21 @@ const styles = StyleSheet.create({
         position: 'relative',
         bottom: 0,
         borderRadius: 3,
-        marginBottom:10
+        marginBottom: 10
     },
     btnText: {
         textAlign: 'center',
         color: 'white',
-        fontSize: Constants.windowWidth*0.038,
-        fontWeight:'bold',
+        fontSize: Constants.windowWidth * 0.038,
+        fontWeight: 'bold',
         fontFamily: 'ProximaNova',
     },
     logoutbtnText: {
         textAlign: 'center',
         color: '#b80808',
         fontFamily: 'ProximaNova',
-        fontSize: Constants.windowWidth*0.038,
-        fontWeight:'bold'
+        fontSize: Constants.windowWidth * 0.038,
+        fontWeight: 'bold'
     }
 })
 

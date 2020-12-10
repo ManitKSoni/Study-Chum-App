@@ -18,12 +18,21 @@ class EditQuiet extends React.Component {
       this.setState({quiet: SavedData.preferences.quiet});
     }
 
+    componentWillUnmount(){
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        }); 
+    }
+
     onPressToggle = (id) => {
         this.setState({quiet:id});
     };
 
     onPressCancel = () => {
         this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
+        this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+            tabBarVisible: true
+        }); 
     }
 
 
@@ -31,6 +40,9 @@ class EditQuiet extends React.Component {
       SavedData.preferences.quiet = this.state.quiet; 
       PreferenceProfiles.editQuiet(this.state.quiet, SavedData.title)
       this.props.navigation.navigate("EditPreferences", {title:SavedData.title});
+      this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+        tabBarVisible: true
+    }); 
     }
 
     render() {
