@@ -1,5 +1,5 @@
-import Firebase from '../../config/Firebase'
-import userInstance from '../Singletons/UserSingleton'
+import Firebase from '../../../config/Firebase'
+import userInstance from '../../Singletons/UserSingleton'
 
 var firebase = require('firebase')
 

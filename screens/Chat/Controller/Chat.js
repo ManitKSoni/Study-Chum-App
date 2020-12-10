@@ -1,9 +1,8 @@
 import React from 'react'
 import { View, FlatList, Text, StyleSheet, Image, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
-import Firebase from '../../config/Firebase'
-import ChatDataModel from './ChatDataModel'
-import * as Constants from '../../Constants'
-import { getBottomSpace } from 'react-native-iphone-x-helper'
+import Firebase from '../../../config/Firebase'
+import ChatDataModel from '../Model/ChatDataModel'
+import * as Constants from '../../../Constants'
 
 
 class Chat extends React.Component {
@@ -86,7 +85,7 @@ class Chat extends React.Component {
 
     generateImage(image) {
         if (image == null) {
-            return <Image source={require('../../assets/default_pic_gray.png')} style={styles.profileImg} />
+            return <Image source={require('../../../assets/default_pic_gray.png')} style={styles.profileImg} />
         } else {
             return <Image source={{ uri: image }} style={styles.profileImg} />
         }
@@ -146,10 +145,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         padding: 10,
-        /** 
-        backgroundColor: 'white',
-        borderBottomColor: "gray",
-        borderBottomWidth: 0.7, **/
     },
     columnContainer: {
         flex: 1,
@@ -161,9 +156,6 @@ const styles = StyleSheet.create({
         width: 75,
         height: 75,
         borderRadius: 40,
-        /** 
-        borderColor: 'gray',
-        borderWidth: 2, **/
     },
     name: {
         fontSize: 20,

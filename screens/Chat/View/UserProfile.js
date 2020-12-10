@@ -1,10 +1,9 @@
 import React from 'react'
 import {
     Keyboard, StyleSheet, Text, Image, TouchableWithoutFeedback, View,
-    Dimensions,
-    TouchableOpacity
+    Dimensions
 } from 'react-native';
-import * as Constants from '../../Constants'
+import * as Constants from '../../../Constants'
 import { Icon } from 'react-native-elements';
 
 imDiam = Math.sqrt(Math.pow(Constants.windowHeight, 2) + Math.pow(Constants.windowWidth, 2)) / 4;
@@ -22,7 +21,7 @@ class UserProfile extends React.Component {
     showImage = () => {
         if (!this.uri) {
             return (<View style={styles.contImg}>
-                <Image source={require('../../assets/default_pic_gray.png')} style={styles.img} />
+                <Image source={require('../../../assets/default_pic_gray.png')} style={styles.img} />
             </View>)
         } else {
             return (

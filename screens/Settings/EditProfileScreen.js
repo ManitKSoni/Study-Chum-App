@@ -3,7 +3,6 @@ import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ImageBackground, Image } from 'react-native'
 
 import * as Constants from '../../Constants.js'
-import userInstance from '../Singletons/UserSingleton'
 import UserProfileAnswerView from '../Authentication/UserProfileAnswerView'
 
 class EditProfileScreen extends React.Component {
@@ -40,13 +39,6 @@ class EditProfileScreen extends React.Component {
     constructor() {
         super()
         this.onPressContinue = this.onPressContinue.bind(this)
-        // this.state.userProfile.bio = userInstance._user.bio;
-        // this.state.userProfile.firstName = userInstance._user.firstName;
-        // this.state.userProfile.lastName = userInstance._user.lastName;
-        // this.state.userProfile.major = userInstance._user.major;
-        // this.state.userProfile.language = userInstance._user.language;
-        // this.state.userProfile.year = userInstance._user.year;
-        // this.state.userProfile.courses = userInstance._user.courses;
     }
 
     componentDidMount() {

@@ -4,11 +4,10 @@ import {Image, StyleSheet} from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './Home/Home';
-import ChatNavigator from './Chat/ChatNavigator';
+import ChatNavigator from './Chat/Controller/ChatNavigator';
 import SettingsNavigator from './Settings/SettingsNavigator'
 import MatchesDrawerNavigator from './Matches/Navigators/MatchesDrawerNavigator'
 
-import * as Constants from '../Constants.js'
 
 const Tab = createBottomTabNavigator();
 

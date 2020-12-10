@@ -1,6 +1,5 @@
 
-import Firebase from '../../config/Firebase'
-import userInstance from '../Singletons/UserSingleton'
+import Firebase from '../../../config/Firebase'
 
 var firebase = require('firebase')
 
@@ -8,7 +7,6 @@ var firebase = require('firebase')
 class ThreadModel {
     db = Firebase.firestore()
     uid = Firebase.auth().currentUser.uid
-    // messages = []
 
     constructor(channelID) {
         this.channelID = channelID

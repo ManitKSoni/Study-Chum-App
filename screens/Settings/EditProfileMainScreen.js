@@ -1,9 +1,6 @@
 import React from 'react';
 import {
     View,
-    TextInput,
-    Keyboard,
-    TouchableWithoutFeedback,
     StyleSheet,
     TouchableOpacity,
     Text,
@@ -11,12 +8,8 @@ import {
 } from 'react-native';
 
 import Firebase from '../../config/Firebase';
-import Dropdown from '../Authentication/Dropdown.js';
-import { UPAV } from '../Authentication/UserProfileAnswerView.js';
 import * as Constants from '../../Constants.js'
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import userInstance from "../Singletons/UserSingleton";
-import Settings from "./Settings";
 
 
 
@@ -145,14 +138,10 @@ export default EditProfileMainScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //backgroundColor: '#fff',
-        //alignItems: 'center',
-        //justifyContent: 'center',
         paddingBottom: 20,
         backgroundColor: 'white',
     },
     container2: {
-        //backgroundColor: '#fff',
         alignItems: 'center',
         paddingBottom: 15,
         bottom: 0,

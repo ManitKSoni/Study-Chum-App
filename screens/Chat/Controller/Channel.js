@@ -1,14 +1,13 @@
 import React from 'react'
-import { View, ScrollView, Text, KeyboardAvoidingView, StyleSheet, Keyboard, SafeAreaView, Image, Platform, Content } from 'react-native'
+import { StyleSheet, SafeAreaView} from 'react-native'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
-import Firebase from '../../config/Firebase'
-import ThreadModel from './ThreadModel'
-import userInstance from '../Singletons/UserSingleton'
+import Firebase from '../../../config/Firebase'
+import ThreadModel from '../Model/ThreadModel'
+import userInstance from '../../Singletons/UserSingleton'
 
-import ThreadHeaderView from './ThreadHeaderView';
+import ThreadHeaderView from '../View/ThreadHeaderView';
 
-import KeyboardSpacer from 'react-native-keyboard-spacer';
-import * as Constants from '../../Constants.js'
+import * as Constants from '../../../Constants.js'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 class Channel extends React.Component {

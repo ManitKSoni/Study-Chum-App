@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import Firebase from '../../../../config/Firebase'
 import SavedData from "../../Controllers/SavedData"
-import ChatDataModel from "../../../Chat/ChatDataModel"
+import ChatDataModel from "../../../Chat/Model/ChatDataModel"
 import * as Constants from '../../../../Constants.js'
 import { Icon } from 'react-native-elements';
 

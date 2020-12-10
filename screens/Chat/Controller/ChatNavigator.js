@@ -3,10 +3,12 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
+
+
 import Chat from './Chat';
 import Channel from './Channel';
-import UserProfile from './UserProfile';
-import * as Constants from '../../Constants.js';
+import UserProfile from '../View/UserProfile';
+import * as Constants from '../../../Constants.js';
 import { Icon } from 'react-native-elements';
 
 const Stack = createStackNavigator();
