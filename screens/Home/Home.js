@@ -1,6 +1,6 @@
  
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text, Alert, Modal, TextInput, Platform } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text, Alert, Modal, TextInput, Platform, StatusBar } from 'react-native';
 import * as Constants from '../../Constants.js';
 import {Agenda} from 'react-native-calendars';
 import Firebase from '../../config/Firebase';
@@ -259,7 +259,7 @@ class Home extends React.Component {
                                 </View>
                             </View>
                         </Modal>
-                        <View style={{paddingTop:Constants.windowHeight * 0.02}}>
+                        <View style={{paddingVertical:Constants.windowHeight * 0.02}}>
                             <TouchableOpacity style={{borderRadius:10, backgroundColor: Constants.secondaryColor,}}
                             onPress={() => this.setAddVisible(true)}>
                                 <Text style={styles.addAnEvent}>
@@ -579,11 +579,11 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
     container: {
         width:Constants.windowWidth,
-        paddingTop:50,
-        paddingBottom: 25,
+        paddingTop:Constants.windowHeight * 0.07,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',  
+        justifyContent: 'center',
+        minHeight: Constants.windowHeight - Constants.windowHeight * 0.09,
     },
     titleImage: {
         width: Constants.windowHeight * .40,
