@@ -64,12 +64,20 @@ export default class App extends React.Component {
     this._loadImagesAsync();
   }
 
+  checkPlatform(){
+    if(Platform.OS === "android"){
+      return "light-content";
+    } else{
+      return "dark-content";
+    }
+  }
+
   render() {
     LogBox.ignoreAllLogs(); //IGNORES ALL LOGS
     if (this.state.fontsLoaded && this.state.imagesLoaded) {
       return (
         <NavigationContainer>
-          <StatusBar barStyle="dark-content" />
+          <StatusBar barStyle={this.checkPlatform()} />
           <Stack.Navigator initialRouteName="LoginSpinner">
             <Stack.Screen name="LoginSpinner" component={LoginSpinner}
               options={{ headerShown: false }} />

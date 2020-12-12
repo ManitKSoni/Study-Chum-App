@@ -3,6 +3,8 @@
     "name": "Study Chum",
     "slug": "Study-Chum",
     "version": "1.0.0",
+    "githubUrl": "https://github.com/ryuenle/Study-Chum",
+    "description" : "Study Chums aims to streamline the process of finding quality partners to study with by allowing students to set their study preferences, chat with prospective study partners, and easily schedule times to meet.",
     "orientation": "portrait",
     "icon": "./assets/study_chums_logo1.png",
     "splash": {

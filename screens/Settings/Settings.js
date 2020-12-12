@@ -159,7 +159,6 @@ class Settings extends React.Component {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
                     <Fragment>
-                        <StatusBar barStyle="light-content" />
                         <SafeAreaView>
                             <View style={styles.body}>
                                 <View style={styles.ImageSections}>
